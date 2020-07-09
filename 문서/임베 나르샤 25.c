@@ -24,211 +24,8 @@ volatile int x_distance = 0;
 volatile char is_y_reset = 0;
 volatile int y_distance = 0;
 
-volatile float currunt_x = 0; // 현재 좌표 && mm 단위로 봄
-volatile float currunt_y = 0;
-
-volatile const float xy_pos[200][2] = {
-66.268 , 82.377,
-66.527 , 82.217,
-66.796 , 82.073,
-67.072 , 81.946,
-67.356 , 81.836,
-67.647 , 81.743,
-67.942 , 81.669,
-68.241 , 81.613,
-68.544 , 81.576,
-68.848 , 81.557,
-131.152, 81.557,
-131.456, 81.576,
-131.759, 81.613,
-132.058, 81.669,
-132.353, 81.743,
-132.644, 81.836,
-132.928, 81.946,
-133.204, 82.073,
-133.473, 82.217,
-133.732, 82.377,
-133.980, 82.553,
-134.218, 82.744,
-134.443, 82.950,
-134.655, 83.168,
-134.853, 83.400,
-135.036, 83.643,
-135.205, 83.897,
-135.357, 84.160,
-135.493, 84.433,
-135.611, 84.714,
-135.713, 85.001,
-135.796, 85.294,
-135.861, 85.591,
-135.908, 85.892,
-135.936, 86.196,
-135.945, 86.500,
-135.936, 86.804,
-135.908, 87.108,
-135.861, 87.409,
-135.796, 87.706,
-135.713, 87.999,
-135.611, 88.286,
-135.493, 88.567,
-135.357, 88.840,
-135.205, 89.103,
-135.036, 89.357,
-134.853, 89.600,
-134.664, 89.821,
-134.225, 90.251,
-103.227, 117.248,
-102.980, 117.446,
-102.732, 117.622,
-102.473, 117.783,
-102.204, 117.927,
-101.928, 118.054,
-101.644, 118.164,
-101.353, 118.257,
-101.058, 118.331,
-100.759, 118.387,
-100.456, 118.424,
-100.152, 118.443,
-99.848 , 118.443,
-99.544 , 118.424,
-99.241 , 118.387,
-98.942 , 118.331,
-98.647 , 118.257,
-98.356 , 118.164,
-98.072 , 118.054,
-97.796 , 117.927,
-97.527 , 117.783,
-97.268 , 117.622,
-97.021 , 117.447,
-96.737 , 117.217,
-65.775 , 90.251,
-65.336 , 89.821,
-65.147 , 89.600,
-64.964 , 89.357,
-64.795 , 89.103,
-64.643 , 88.840,
-64.507 , 88.567,
-64.389 , 88.286,
-64.287 , 87.999,
-64.204 , 87.706,
-64.139 , 87.409,
-64.092 , 87.108,
-64.064 , 86.804,
-64.055 , 86.500,
-64.064 , 86.196,
-64.092 , 85.892,
-64.139 , 85.591,
-64.204 , 85.294,
-64.287 , 85.001,
-64.389 , 84.714,
-64.507 , 84.433,
-64.643 , 84.160,
-64.795 , 83.897,
-64.964 , 83.643,
-65.147 , 83.400,
-65.345 , 83.168,
-65.557 , 82.950,
-65.782 , 82.745,
-66.020 , 82.553,
-65.586 , 81.979,
-65.870 , 81.777,
-66.167 , 81.593,
-66.475 , 81.428,
-66.792 , 81.282,
-67.117 , 81.156,
-67.449 , 81.051,
-67.788 , 80.965,
-68.131 , 80.901,
-68.477 , 80.858,
-68.826 , 80.837,
-131.174, 80.837,
-131.523, 80.858,
-131.869, 80.901,
-132.212, 80.965,
-132.551, 81.051,
-132.883, 81.156,
-133.208, 81.282,
-133.525, 81.428,
-133.833, 81.593,
-134.130, 81.777,
-134.414, 81.979,
-134.686, 82.197,
-134.944, 82.433,
-135.187, 82.683,
-135.414, 82.948,
-135.624, 83.227,
-135.817, 83.517,
-135.992, 83.820,
-136.147, 84.132,
-136.283, 84.453,
-136.399, 84.782,
-136.495, 85.118,
-136.569, 85.459,
-136.623, 85.804,
-136.655, 86.151,
-136.666, 86.500,
-136.655, 86.849,
-136.623, 87.196,
-136.569, 87.541,
-136.495, 87.882,
-136.399, 88.218,
-136.283, 88.547,
-136.147, 88.868,
-135.992, 89.180,
-135.817, 89.483,
-135.624, 89.773,
-135.414, 90.052,
-135.190, 90.313,
-134.714, 90.780,
-103.689, 117.800,
-103.414, 118.021,
-103.130, 118.223,
-102.833, 118.407,
-102.525, 118.572,
-102.208, 118.718,
-101.883, 118.844,
-101.551, 118.949,
-101.212, 119.035,
-100.869, 119.099,
-100.523, 119.142,
-100.174, 119.163,
-99.826 , 119.163,
-99.477 , 119.142,
-99.131 , 119.099,
-98.788 , 119.035,
-98.449 , 118.949,
-98.117 , 118.844,
-97.792 , 118.718,
-97.475 , 118.572,
-97.167 , 118.407,
-96.870 , 118.223,
-96.586 , 118.022,
-96.274 , 117.769,
-65.286 , 90.780,
-64.810 , 90.313,
-64.586 , 90.052,
-64.376 , 89.773,
-64.183 , 89.483,
-64.008 , 89.180,
-63.853 , 88.868,
-63.717 , 88.547,
-63.601 , 88.218,
-63.505 , 87.882,
-63.431 , 87.541,
-63.377 , 87.196,
-63.345 , 86.849,
-63.334 , 86.500,
-63.345 , 86.151,
-63.377 , 85.804,
-63.431 , 85.459,
-63.505 , 85.118,
-63.601 , 84.782,
-63.717 , 84.453,
-63.853 , 84.132,
-64.008 , 83.820,
-64.183 , 83.517,
-64.376 , 83.227
-}; 
+volatile int currunt_x = 0; // 현재 좌표 && mm 단위로 봄
+volatile int currunt_y = 0;
 
 double ANGLE(int x){ // 이 내장 사인 코사인들이 라디안을 사용하여 구하기 때문에 라디안으로 리턴함
   return PI * (x / 180.0);
@@ -281,7 +78,7 @@ void reset()
 	currunt_y = 0;
 }
 
-void goXLocation(float x, int speed)
+void goXLocation(int x, int speed)
 {
 	int dir = x_right;
 	if(currunt_x > x) dir = x_left;
@@ -289,18 +86,16 @@ void goXLocation(float x, int speed)
 	goXLocation(x, speed, dir);
 }
 
-void goXLocation(float x, int speed, int dir)
+void goXLocation(int x, int speed, int dir)
 {
 	if(currunt_x == x)
 		return;
 
-	int x_len;
-	x_len = (int)(abs(currunt_x - x) + 0.5);
-	x_move(x_len * ONE_MM, speed, dir);
+	x_move(abs(currunt_x - x) * ONE_MM, speed, dir);
 	currunt_x = x;
 }
 
-void goYLocation(float y, int speed)
+void goYLocation(int y, int speed)
 {
 	int dir = y_down;
 	if(currunt_y > y) dir = y_up;
@@ -308,26 +103,30 @@ void goYLocation(float y, int speed)
 	goYLocation(y, speed, dir);
 }
 
-void goYLocation(float y, int speed, int dir)
+void goYLocation(int y, int speed, int dir)
 {
 	if(currunt_y == y)
 		return;
 
-	int y_len;
-	y_len = (int)(abs(currunt_y - y) + 0.5);
-	y_move(y_len * ONE_MM, speed,  dir);
+	y_move(abs(currunt_y - y) * ONE_MM, speed,  dir);
 	currunt_y = y;
 }
 
-void goXYLocation(float x, float y)
+void goXYLocation(int x, int y)
 {
 	if((currunt_x - x) == 0 || (currunt_y - y) == 0)
 		goXYLocation_line(x,y);
 
 	int xs = (int)((abs(currunt_x - x)/10) + 0.5);
 	int ys = (int)((abs(currunt_y - y)/10) + 0.5);
-	goXLocation(x, 150 * ys);
-	goYLocation(y, 150 * xs);
+
+	Serial.print(currunt_x);
+	Serial.println(currunt_y);
+	Serial.print(x);
+	Serial.println(y);
+
+	goXLocation(x, 100 * ys);
+	goYLocation(y, 100 * xs);
 
 	while(TIMSK1 != 0x00 || TIMSK3 != 0x00);
 }
@@ -335,6 +134,8 @@ void goXYLocation(float x, float y)
 void goXYLocation_line(int x, int y)
 {
 	goXYLocation_line(x, y, 400);
+
+	while(TIMSK1 != 0x00 || TIMSK3 != 0x00);
 }
 
 void goXYLocation_line(int x, int y, int speed)
@@ -356,22 +157,43 @@ void goLenHypo(int len, int x_dir, int y_dir, int degree) // 길이와 뱡항을
 	x_speed = (int)(400 * sin(ANGLE(degree)) + 0.5);
 	y_speed = (int)(400 * cos(ANGLE(degree)) + 0.5);
 
+	if(x_dir == x_right)
+		currunt_x += x_len/100;
+	else
+		currunt_x -= x_len/100;
+
+	if(y_dir == y_down)
+		currunt_y += y_len/100;
+	else
+		currunt_y -= y_len/100;
+
+	//Serial.print(x_len/100);
+	//Serial.println(y_len/100);
+
 	x_move(x_len, x_speed, x_dir);
 	y_move(y_len, y_speed, y_dir);
 
 	while(TIMSK1 != 0x00 || TIMSK3 != 0x00);
 }
 
-void goXYLen(float x, float y)
+void godgree(int len, int x, int y, int degree) // 길이와 뱡항을 넣어 각도를 구해 가는 코드
 {
 	int x_speed, x_len;
 	int y_speed, y_len;
+	len *= ONE_MM;
 
-	x_speed = (int)(400 * (abs(currunt_y - y) + 0.5));
-	y_speed = (int)(400 * (abs(currunt_x - x) + 0.5));
+	x_len = (int)80 * (cos(ANGLE(degree) + 0.5));
+	y_len = (int)80 * (sin(ANGLE(degree) + 0.5));
+	x_speed = (int)(400 * sin(ANGLE(degree)) + 0.5);
+	y_speed = (int)(400 * cos(ANGLE(degree)) + 0.5);
 
-	goXLocation(x, x_speed);
-	goYLocation(y, y_speed);
+	Serial.print(currunt_x);
+	Serial.println(currunt_y);
+
+	goXLocation(x+x_len, x_speed);
+	goYLocation(y+y_len, y_speed);
+
+	while(TIMSK1 != 0x00 || TIMSK3 != 0x00);
 }
 
 void setup()
@@ -394,36 +216,44 @@ void setup()
 	TCCR3C = 0x00;
 	OCR3A = 400;
 	TIMSK3 = 0x00;
-	//reset();
-	// for(int i = 0; i < 200; i++)
-	// {
-	// 	goXYLen(xy_pos[i][0] , xy_pos[i][1]);
-	// 	while(TIMSK1 != 0x00 || TIMSK3 != 0x00);
-	// 	delay(10);
-	// }
-	// delay(1000);
+
+	Serial.begin(9600);
+	reset();
+
+	Serial.print(currunt_x);
+	Serial.println(currunt_y);
+	goXYLocation(50,50);
+
+
+	Serial.print(currunt_x);
+	Serial.println(currunt_y);
+	//delay(1000);
 }
 
-void loop() // g코드를 사용하여 프린팅
+void loop() // 원뿔을 하려 했던것
 {
+	//육각형
 
-	// delay(1000);
-	// goLenHypo(50, x_left, y_down, 30);
-	// y_move(50 * ONE_MM, y_down);
-	// while(TIMSK3 != 0x00);
-	// goLenHypo(50, x_right, y_down, 30);
-	// goLenHypo(50, x_right, y_up, 30);
-	// y_move(50 * ONE_MM, y_up);
-	// while(TIMSK3 != 0x00);
-	// goLenHypo(50, x_left, y_up, 30);
-
-	goXYLocation(10, 50);
-	while(TIMSK1 != 0x00 || TIMSK3 != 0x00);
-	goXYLocation(40, 30);
-	while(TIMSK1 != 0x00 || TIMSK3 != 0x00);
-	goXYLocation(10, 10);
-	while(TIMSK1 != 0x00 || TIMSK3 != 0x00);
+	Serial.print(currunt_x);
+	Serial.println(currunt_y);
 	delay(1000);
+	goXYLocation(80, 50);
+
+	for(int i = 0; i < 90; i += 5)
+	{
+		godgree(50, 50, 50, i);
+		delay(100);
+	}
+
+	goXYLocation(50,50);
+
+	// goXYLocation(10, 50);
+	// while(TIMSK1 != 0x00 || TIMSK3 != 0x00);
+	// goXYLocation(40, 30);
+	// while(TIMSK1 != 0x00 || TIMSK3 != 0x00);
+	// goXYLocation(10, 10);
+	// while(TIMSK1 != 0x00 || TIMSK3 != 0x00);
+	// delay(1000);
 
 	// goXYLocation(currunt_x + 50 * cos(ANGLE(30)), currunt_y);
 	// while(TIMSK1 != 0x00 || TIMSK3 != 0x00);

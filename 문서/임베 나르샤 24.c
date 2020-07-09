@@ -149,10 +149,26 @@ void goLenHypo(int len, int x_dir, int y_dir, int degree) // 길이와 뱡항을
 	x_speed = (int)(400 * sin(ANGLE(degree)) + 0.5);
 	y_speed = (int)(400 * cos(ANGLE(degree)) + 0.5);
 
+	if(x_dir == x_right)
+		currunt_x += x_len/100;
+	else
+		currunt_x -= x_len/100;
+
+	if(y_dir == y_down)
+		currunt_y += y_len/100;
+	else
+		currunt_y -= y_len/100;
+
+	//Serial.print(x_len/100);
+	//Serial.println(y_len/100);
+
 	x_move(x_len, x_speed, x_dir);
 	y_move(y_len, y_speed, y_dir);
 
 	while(TIMSK1 != 0x00 || TIMSK3 != 0x00);
+
+	Serial.print(currunt_x);
+	Serial.println(currunt_y);
 }
 
 
@@ -178,23 +194,39 @@ void setup()
 	OCR3A = 400;
 	TIMSK3 = 0x00;
 
+	Serial.begin(9600);
 	reset();
 
+	Serial.print(currunt_x);
+	Serial.println(currunt_y);
 	goXYLocation(50,50);
+
+
+	Serial.print(currunt_x);
+	Serial.println(currunt_y);
 	//delay(1000);
 }
 
 void loop() // 빗변의 길이, 각도를 주고 알아서 거리를 구해서 가는 함수를 추가함, 소숫점 계산도 넣음
 {
+	//육각형
 
 	delay(1000);
 	goLenHypo(50, x_left, y_down, 30);
+
 	y_move(50 * ONE_MM, y_down);
 	while(TIMSK3 != 0x00);
+	Serial.print(currunt_x);
+	Serial.println(currunt_y);
+
 	goLenHypo(50, x_right, y_down, 30);
 	goLenHypo(50, x_right, y_up, 30);
+
 	y_move(50 * ONE_MM, y_up);
 	while(TIMSK3 != 0x00);
+	Serial.print(currunt_x);
+	Serial.println(currunt_y);
+
 	goLenHypo(50, x_left, y_up, 30);
 
 	// goXYLocation(10, 50);
