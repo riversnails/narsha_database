@@ -61,8 +61,8 @@ void reset()
 {
 	is_x_reset = 1;
 	is_y_reset = 1;
-	x_move(32000, 600, x_left);
-	y_move(32000, 600, y_up);
+	x_move(32000, x_left, 600);
+	y_move(32000, y_up, 600);
 	while(is_x_reset != 0 || is_y_reset != 0); // 끝날때까지 대기
 	currunt_x = 0; // 초기화 했으니 좌표도 초기화
 	currunt_y = 0;
@@ -89,7 +89,7 @@ void setup()
 	OCR3A = 400;
 	TIMSK3 = 0x00;
 
-	
+	reset();
 	//delay(1000);
 }
 

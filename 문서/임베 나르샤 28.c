@@ -57,46 +57,23 @@ void y_move(int y_dis, int DIR, int speed)
 	TIMSK3 = 0x02;
 }
 
+void shift(double len, int x_dir, int y_dir, int speed, int angle) 
+{
+	x_move(len*cos(ANGLE(angle)) * ONE_MM, x_dir, speed * (1 / cos(ANGLE(angle))));
+	y_move(len*sin(ANGLE(angle)) * ONE_MM, y_dir, speed * (1 / sin(ANGLE(angle))));
+
+	while (TIMSK1 != 0X00 || TIMSK3 != 0X00);
+}
+
 void reset()
 {
 	is_x_reset = 1;
 	is_y_reset = 1;
-	x_move(32000, 600, x_left);
-	y_move(32000, 600, y_up);
+	x_move(32000, x_left, 600);
+	y_move(32000, y_up, 600);
 	while(is_x_reset != 0 || is_y_reset != 0); // 끝날때까지 대기
 	currunt_x = 0; // 초기화 했으니 좌표도 초기화
 	currunt_y = 0;
-}
-
-void coordinate_shift(double x, double y, int speed) {
-	//기본 속도 (400)
-	int x_speed = 400;
-	int y_speed = 400;
-	double dis_X = 0;	// X거리
-	double dis_Y = 0;	// Y거리
-	int dir_X = x_right;  // X 방향
-	int dir_Y = y_down;   // Y 방향
-
-	if (currunt_x > x) dir_X = x_left;
-	if (currunt_y > y) dir_Y = y_up;
-
-	dis_X = abs(currunt_x - x);
-	dis_Y = abs(currunt_y - y);
-
-	if (dis_X > dis_Y) {
-		y_speed = (int)(400 * (dis_X / dis_Y));
-	}
-	else {
-		x_speed = (int)(400 * (dis_Y / dis_X));
-	}
-
-	x_move(dis_X * ONE_MM, dir_X, x_speed);
-	y_move(dis_Y * ONE_MM, dir_Y, y_speed);
-
-	currunt_x = x;
-	currunt_y = y;
-
-	while (TIMSK1 != 0X00 || TIMSK3 != 0X00);
 }
 
 void setup()
@@ -120,14 +97,23 @@ void setup()
 	OCR3A = 400;
 	TIMSK3 = 0x00;
 
-	reset();
-	coordinate_shift(50,50, 400);
+	//reset();
 	//delay(1000);
 }
 
-void loop()
+void loop() // 빗변의 속도를 같이했으니 함수화 시키고 응용하는 코드
 {
+	x_move(50*cos(ANGLE(30)) * ONE_MM, x_right, 400);
+	while (TIMSK1 != 0X00 || TIMSK3 != 0X00);
+	shift(50, x_left, y_up, 400, 60);
+	shift(50, x_left, y_down, 400, 60);
 
+	// 30도짜리 직각삼각형
+	// x_move(50*cos(ANGLE(30)) * ONE_MM, x_right, 400);
+	// while (TIMSK1 != 0X00 || TIMSK3 != 0X00);
+	// y_move(50*sin(ANGLE(30)) * ONE_MM, y_down, 400);
+	// while (TIMSK1 != 0X00 || TIMSK3 != 0X00);
+	// shift(50, x_left, y_up, 400, 30);
 }
 
 volatile char x_step_toggle = 0;
