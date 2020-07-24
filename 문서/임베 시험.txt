@@ -102,12 +102,14 @@ enable = enable
 
 초기화 과정
 8bit 4bit
+30    30
+30    30
+30    30
 38    28
 06    06
 0c     .....
 80
 01
-31
 
 clk = 8bit
 data = 8bit
@@ -115,12 +117,12 @@ latch = 마지막에 적용
 OE = 켜지게 함
 reest = 초기화 안되게 처음부터 5V 인가
 
-5V	shift reg <=data, clk
+5V		shift reg <=data, clk
 reset----	   |
-	strage <= latch
-	   |
-	[     ] <= enable
- 	  ㅜ
+			strage <= latch
+			   |
+			[     ] <= enable
+			   ㅜ
 
 
 1초마다 프린트 millis 구조로
