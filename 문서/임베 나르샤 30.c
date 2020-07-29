@@ -590,23 +590,20 @@ void reset()
 //   while (TIMSK1 != 0X00 || TIMSK3 != 0X00);
 // }
 
-void ushift(double x, double y, int speed)
+void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 그리게하는 함수
 {
-  double x_speed = 0;
-  double y_speed = 0;
-  double dis_X = 0; 
+  double dis_X = 0; // 변수들 초기화
   double dis_Y = 0; 
   int x_dir = x_right;
   int y_dir = y_down;
-  double angle = 0;
 
-  dis_X = abs(currunt_x - x);
+  dis_X = abs(currunt_x - x); // 가야할 거리를 음수가 아니게 만들어서 값을 저장해준다
   dis_Y = abs(currunt_y - y);
 
-  if (currunt_x > x) x_dir = x_left;
+  if (currunt_x > x) x_dir = x_left; // 가야할 방향을 맞추게 만들었다
   if (currunt_y > y) y_dir = y_up;
 
-  if(currunt_x - x == 0) 
+  if(currunt_x - x == 0) // 하나의 축(x,y)이 움직이지 않으면 반대축만 움직이게 한다
   {
     y_move(dis_Y * ONE_MM, y_dir, speed);
     currunt_y = y;
@@ -621,18 +618,22 @@ void ushift(double x, double y, int speed)
     return;
   }
 
+  double x_speed = 0; // 뒤에 선언으로 자원을 아낄 수 있겟지?
+  double y_speed = 0;
+  double angle = 0;
 
-  angle = atan(dis_Y/dis_X);
+  angle = atan(dis_Y/dis_X); // 앵글 == 아크탄젠트(길이(y/x))
 
-  x_speed = speed * (1/cos(angle));
+  x_speed = speed * (1/cos(angle)); // 원래 스피드를 구하는 식
   y_speed = speed * (1/sin(angle));
 
   x_move(dis_X * ONE_MM, x_dir, x_speed);
   y_move(dis_Y * ONE_MM, y_dir, y_speed);
 
-  currunt_x = x;
+  currunt_x = x; // 현재 좌표를 저장한다
   currunt_y = y;
-  while (TIMSK1 != 0X00 || TIMSK3 != 0X00);
+
+  while (TIMSK1 != 0X00 || TIMSK3 != 0X00); // 끝나는걸 기다려준다
 }
 
 void setup()
