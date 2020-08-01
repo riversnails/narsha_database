@@ -1,9 +1,9 @@
 #define X_DIR 0x20 // c
 #define X_STEP 0x80 // d
-#define X_STOP 0x04 // c
+#define X_STOP 0x04 // c 2
 #define Y_DIR 0x80 // c
 #define Y_STEP 0x40 // c
-#define Y_STOP 0x08 // c
+#define Y_STOP 0x08 // c 3
 #define XYEENABLE 0x40 // d
 
 #define ONE_MM 80

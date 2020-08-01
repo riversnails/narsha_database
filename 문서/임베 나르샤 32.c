@@ -7,6 +7,12 @@ int head = 0;
 int tail = 0;
 File myFile;
 
+char *start_idx, *end_idx;
+char float_buffer[100];
+char buffer[10000];    // 파일을 읽을 때 사용할 임시 공간
+int totalSize = 0;
+int count = 0;
+
 void setup() {
   // Open serial communications and wait for port to open:
   Serial.begin(9600);
@@ -37,49 +43,25 @@ void setup() {
 }
 void loop() { // 파일 파싱 하는 코드들
   // nothing happens after setup
+  myFile = SD.open("test.txt");
 
   while (myFile.available()) {
     if ((tail + 1) % MAXNUM == head) {
       printf("Queue end!");
+
+
+      +
       continue;
     }
 
-    myFile = SD.open("test.txt");
-    fseek(myFile, totalSize, SEEK_SET);
-    fgets(buffer, sizeof(buffer), myFile);
-    printf("size = %d\n",strlen(buffer));    // hello.txt에서 문자열을 읽음
+    
+    myFile.seek(totalSize);
     totalSize += strlen(buffer) + 1;
-    printf("totalSize = %d\n", totalSize);
-    printf("문자열 = %s\n", buffer);    // Hello, world!: 파일의 내용 출력
-
-    start_idx = strchr(buffer, 'X');
-    if (start_idx != NULL) {
-      start_idx = start_idx + 1;
-      end_idx = strchr(start_idx, ' ');
-      if (end_idx != NULL) {
-        strncpy(float_buffer, start_idx, end_idx - start_idx);
-        float_buffer[end_idx - start_idx] = '\0';
-        sscanf(float_buffer, "%lf", &data_queue[count][0]);
-        printf("string x = %s\n", float_buffer);
-        printf("double x = %lf\n", data_queue[count][0]);
-      }
-    }
-    start_idx = strchr(buffer, 'Y');
-    if (start_idx != NULL) {
-      start_idx = start_idx + 1;
-      end_idx = strchr(start_idx, ' ');
-      if (end_idx != NULL) {
-        strncpy(float_buffer, start_idx, end_idx - start_idx);
-        float_buffer[end_idx - start_idx] = '\0';
-        sscanf(float_buffer, "%lf", &data_queue[count][1]);
-        printf("string y = %s\n", float_buffer);
-        printf("double y = %lf\n", data_queue[count][1]);
-      }
-    }
-
-    fclose(fp);
     count++;
-    Sleep(3000);
+    delay(1000);
   }
 
+  Serial.println(count);
+
+    myFile.close();
 }

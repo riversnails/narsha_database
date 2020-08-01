@@ -93,7 +93,7 @@ void setup()
 	//delay(1000);
 }
 
-void loop()
+void loop() // 빗변의 속도를 같이 하기 위한 코드
 {
 
 	x_move(50*cos(ANGLE(30)) * ONE_MM, x_right, 400);

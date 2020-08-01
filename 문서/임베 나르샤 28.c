@@ -103,10 +103,11 @@ void setup()
 
 void loop() // 빗변의 속도를 같이했으니 함수화 시키고 응용하는 코드
 {
-	x_move(50*cos(ANGLE(30)) * ONE_MM, x_right, 400);
-	while (TIMSK1 != 0X00 || TIMSK3 != 0X00);
-	shift(50, x_left, y_up, 400, 60);
-	shift(50, x_left, y_down, 400, 60);
+	// 정삼각형
+	// x_move(50 * ONE_MM, x_right, 400);
+	// while (TIMSK1 != 0X00 || TIMSK3 != 0X00);
+	// shift(50, x_left, y_down, 400, 60);
+	// shift(50, x_left, y_up, 400, 60);
 
 	// 30도짜리 직각삼각형
 	// x_move(50*cos(ANGLE(30)) * ONE_MM, x_right, 400);
