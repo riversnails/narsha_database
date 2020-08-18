@@ -1,7 +1,7 @@
 #define ECHO 3
 #define TRIGGER 4
 #define BUZZER_PIN 5
-#define BUZZER_DELAY 1275
+#define BUZZER_DELAY 1431
 
 
 void setup()
@@ -37,7 +37,7 @@ void loop()
 
    if(delays == -1) play_on = 0;
 
-   if(c_millis - p_millis2 >= 1000)
+   if(c_millis - p_millis2 >= 100)
    {
       p_millis2 = c_millis;
       checker = 0;
@@ -78,7 +78,7 @@ void loop()
       }
    }
 
-   if(c_millis - p_millis > delays * 2)
+   if(c_millis - p_millis > delays + 20)
    {
       p_millis = c_millis;
 
@@ -91,9 +91,16 @@ void loop()
    {
       if(c_millis - p_millis1 > delays) 
       {
-         play_on = 0;
-         digitalWrite(BUZZER_PIN, LOW);
-         toggle1 = 0;
+         if(delays == 0) 
+         {
+            play_on = 1;
+         }
+         else
+         {
+            play_on = 0;
+            digitalWrite(BUZZER_PIN, LOW);
+            toggle1 = 0;
+         }
       }
    }
    //---------------------------------------------------------------------
@@ -125,9 +132,9 @@ void myISR()
       else if(distance <= 20 && distance > 10) delays = 100;
       else if(distance <= 10) delays = 0;
 
-      Serial.print("distance : ");
-      Serial.println(distance);
-      Serial.print("delay : ");
-      Serial.println(delays);
+      // Serial.print("distance : ");
+      // Serial.println(distance);
+      // Serial.print("delay : ");
+      // Serial.println(delays);
    }
 }
