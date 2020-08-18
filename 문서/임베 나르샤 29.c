@@ -117,13 +117,37 @@ void ushift(double x, double y, int speed)
   int y_dir = y_down;
   double angle = 0;
 
-  if (currunt_x > x) x_dir = x_left;
-  if (currunt_y > y) y_dir = y_up;
-
   dis_X = abs(currunt_x - x);
   dis_Y = abs(currunt_y - y);
 
-  angle = atan(y/x);
+  if (currunt_x > x) x_dir = x_left;
+  if (currunt_y > y) y_dir = y_up;
+
+  if(currunt_x - x == 0) 
+  {
+    y_move(dis_Y * ONE_MM, y_dir, speed);
+    currunt_y = y;
+    Serial.print(y);
+    Serial.print(" ");
+    Serial.print(speed);
+    Serial.println(" ");
+    while (TIMSK3 != 0X00);
+    return;
+  }
+  if(currunt_y - y == 0) 
+  {
+    x_move(dis_X * ONE_MM, x_dir, speed);
+    currunt_x = x;
+    Serial.print(x);
+    Serial.print(" ");
+    Serial.print(speed);
+    Serial.println(" ");
+    while (TIMSK1 != 0X00);
+    return;
+  }
+
+
+  angle = atan(dis_Y/dis_X);
 
   x_speed = speed * (1/cos(angle));
   y_speed = speed * (1/sin(angle));
@@ -133,12 +157,20 @@ void ushift(double x, double y, int speed)
 
   currunt_x = x;
   currunt_y = y;
-
+  Serial.print(x);
+  Serial.print(" ");
+  Serial.print(y);
+  Serial.print(" ");
+  Serial.print(x_speed);
+  Serial.print(" ");
+  Serial.print(y_speed);
+  Serial.println(" ");
   while (TIMSK1 != 0X00 || TIMSK3 != 0X00);
 }
 
 void setup()
 {
+  Serial.begin(9600);
   DDRC |= X_DIR; // 오른쪽
   DDRC |= Y_DIR;
   DDRC |= Y_STEP;
@@ -163,7 +195,7 @@ void setup()
   delay(1000);
 }
 
-void loop()
+void loop() // 좌표를 주어서 그 사이의 거리를 속도를 일정하게 가는 코드
 {
   ushift(80,50,400);
   ushift(80,70,400);
