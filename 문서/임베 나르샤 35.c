@@ -20,7 +20,7 @@ void setup()
 	lcd_set_inst(0x0c);
 
 	lcd_set_inst(0x01);
-
+	delay(10);
 	lcd_cls();
 	delay(1000);
 }

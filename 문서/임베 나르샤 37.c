@@ -25,7 +25,7 @@ void setup()
 	lcd_set_inst(0x0c);
 
 	lcd_set_inst(0x01);
-
+	delay(10);
 	lcd_cls();
 	delay(1000);
 }
@@ -71,7 +71,7 @@ void loop() // lcd 버튼과 lcd 연동
 	for(int i = 0; i < 8; i++)
 	{
 		set_data(0,i+7, num[lcount / 10][i]);
-		set_data(1,i+7, num[10 / lcount][i]);
+		set_data(1,i+7, num[lcount % 10][i]);
 	}
 
 
