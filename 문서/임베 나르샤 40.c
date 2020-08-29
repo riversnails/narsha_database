@@ -732,44 +732,111 @@ void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 �
   // Serial.print(" , y_dir=");
   // Serial.print(y_dir);
   // Serial.println();
-
   while (TIMSK1 != 0X00 || TIMSK3 != 0X00); // 끝나는걸 기다려준다
 }
 
 void setup()
 {
-  Serial.begin(9600);
-  DDRC |= X_DIR; // 오른쪽
-  DDRC |= Y_DIR;
-  DDRC |= Y_STEP;
-  DDRD |= X_STEP | XYEENABLE;
-  DDRC &= ~(X_STOP);
-  DDRC &= ~(Y_STOP);
+	DDRC |= X_DIR; // 오른쪽
+	DDRC |= Y_DIR;
+	DDRC |= Y_STEP;
+	DDRD |= X_STEP | XYEENABLE;
+	DDRC &= ~(X_STOP);
+	DDRC &= ~(Y_STOP);
 
-  TCCR1A = 0x00;
-  TCCR1B = 0x0a;
-  TCCR1C = 0x00;
-  OCR1A = 400;
-  TIMSK1 = 0x00;
+	//---------------------------
+	DDRD |= 0x40;
+	DDRB |= 0x03;
+	PORTB &= ~0x01;
+	DDRD |= 0x10;
+	PORTD |= 0x10;
+	DDRD |= 0x20;
+	PORTD |= 0x20;
+	DDRB |= 0x10;
+	//---------------------------
 
-  TCCR3A = 0x00;
-  TCCR3B = 0x0a;
-  TCCR3C = 0x00;
-  OCR3A = 400;
-  TIMSK3 = 0x00;
+	TCCR1A = 0x00;
+	TCCR1B = 0x0a;
+	TCCR1C = 0x00;
+	OCR1A = 400;
+	TIMSK1 = 0x00;
+
+	//---------------------------
+	TCCR2A = 0x02;
+	TCCR2B = 0x05;
+	TCNT2 = 0x00;
+	OCR2A = 300;
+	TIMSK2 = 0x00;
+	//---------------------------
+
+	TCCR3A = 0x00;
+	TCCR3B = 0x0a;
+	TCCR3C = 0x00;
+	OCR3A = 400;
+	TIMSK3 = 0x00;
 
   reset();
+
+	// Serial.begin(9600);
+
+	int bed_analog_value = analogRead(A6);
+	int end_analog_value = analogRead(A7);
+	PORTD |= 0x20;
+
+	while(end_analog_value > 75)
+	{
+		bed_analog_value = analogRead(A6);
+		end_analog_value = analogRead(A7);
+
+		// Serial.print("bed : ");
+		// Serial.print(bed_analog_value);
+		// Serial.print(" end : ");
+		// Serial.println(end_analog_value);
+
+		if(bed_analog_value <= 860) PORTD &= ~0x10;
+		else PORTD |= 0x10;
+		delay(100);
+	}
+
+	PORTB |= 0x10; // fan
+	PORTD &= ~0x20;
 }
 
 void loop() // 좌표와 속도를 주어서 그 사이의 거리를 속도를 일정하게 가는 코드
 {
-  volatile int i = 0;
-  for (i = 0; i < 911; i++) {
-    ushift(xy_pos[i][0], xy_pos[i][1], speeds[i]);
-    Serial.println(i);
-    //Serial.print(" : x="); // 디버깅
-    delay(1);
-  }
+
+	volatile int i = 0;
+
+	for (i = 0; i < 911; i++) {
+		TIMSK2 = 0x02;
+		int bed_analog_value = analogRead(A6);
+		int end_analog_value = analogRead(A7);
+
+		// Serial.print("bed : ");
+		// Serial.print(bed_analog_value);
+		// Serial.print(" end : ");
+		// Serial.println(end_analog_value);
+
+		if(bed_analog_value <= 920) PORTD &= ~0x10;
+		else PORTD |= 0x10;
+
+		if(end_analog_value < 75) 
+		{
+			PORTD &= ~0x20;
+			PORTB |= 0x10; // fan
+		}
+		else if(end_analog_value > 80)
+		{
+			PORTD |= 0x20;
+			PORTB &= ~0x10; // fan
+			//TIMSK2 = 0x00;
+		}
+
+		ushift(xy_pos[i][0], xy_pos[i][1], speeds[i]);
+		//Serial.println(i);
+		//Serial.print(" : x="); // 디버깅
+	delay(1);
+	}
 }
 
 volatile char x_step_toggle = 0;
@@ -777,6 +844,8 @@ volatile int x_step_count = 0;
 
 volatile char y_step_toggle = 0;
 volatile int y_step_count = 0;
+
+volatile char toggle = 0;
 
 ISR(TIMER1_COMPA_vect)
 {
@@ -811,6 +880,19 @@ ISR(TIMER1_COMPA_vect)
     }
   }
     
+}
+
+ISR(TIMER2_COMPA_vect){
+	if(toggle == 0)
+	{
+		toggle = 1;
+		PORTB |= 0x02;
+	}
+	else
+	{
+		toggle = 0;
+		PORTB &= ~0x02;
+	}
 }
 
 ISR(TIMER3_COMPA_vect)
