@@ -763,9 +763,9 @@ void setup()
 
 	//---------------------------
 	TCCR2A = 0x02;
-	TCCR2B = 0x05;
+	TCCR2B = 0x06;
 	TCNT2 = 0x00;
-	OCR2A = 300;
+	OCR2A = 240;
 	TIMSK2 = 0x00;
 	//---------------------------
 
@@ -817,7 +817,7 @@ void loop() // 좌표와 속도를 주어서 그 사이의 거리를 속도를 �
 		// Serial.print(" end : ");
 		// Serial.println(end_analog_value);
 
-		if(bed_analog_value <= 920) PORTD &= ~0x10;
+		if(bed_analog_value <= 860) PORTD &= ~0x10;
 		else PORTD |= 0x10;
 
 		if(end_analog_value < 75) 
