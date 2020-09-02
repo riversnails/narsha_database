@@ -8,10 +8,11 @@ void setup()
 
 	DDRB |= 0x10;
 
+	PORTB |= 0x10;
 	Serial.begin(9600);
 }
 
-void loop()
+void loop() // 배드, 노즐 온도 태스트
 {
 	int bed_analog_value = analogRead(A6);
 	int end_analog_value = analogRead(A7);
@@ -27,12 +28,10 @@ void loop()
 	if(end_analog_value <= 100) 
 	{
 		PORTD &= ~0x20;
-		PORTB |= 0x10;
 	}
 	else 
 	{
 		PORTD |= 0x20;
-		PORTB &= ~0x10;
 	}
 
 	delay(300);

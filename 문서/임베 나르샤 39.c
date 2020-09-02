@@ -53,7 +53,7 @@ void setup()
 	//TIMSK2 = 0x02;
 }
 
-void loop()
+void loop() // extruder 태스트
 {
 	int bed_analog_value = analogRead(A6);
 	int end_analog_value = analogRead(A7);
