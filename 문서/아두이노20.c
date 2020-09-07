@@ -19,7 +19,7 @@ int note_arr[8] = {NOTE_C4, NOTE_D4, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_A4, NOTE_B4
 
 int school_tang_tang[7] = {G,G,A,A,G,G,E};
 int school_tang_tang_play[7] = {250,250,250,250,250,250,500};
-int school_tang_tang_rythem[7] = {50,50,50,50,50,50,100};
+int school_tang_tang_delay[7] = {75,75,75,75,75,75,75};
 
 unsigned long c_micros = 0;
 unsigned long p_micros = 0;
@@ -35,7 +35,7 @@ int play_on = 1;
 
 void setup() 
 {
-	pinMode(3, OUTPUT);
+	pinMode(5, OUTPUT);
 }
 
 void loop() 
@@ -52,17 +52,17 @@ void loop()
 			if(toggle == 0)
 			{
 				toggle = 1;
-				digitalWrite(3, HIGH);
+				digitalWrite(5, HIGH);
 			}
 			else
 			{
 				toggle = 0;
-				digitalWrite(3, LOW);
+				digitalWrite(5, LOW);
 			}
 		}
 	}
 
-	if(c_millis - p_millis > 325) // 끝날때 다시 시작 || 1
+	if(c_millis - p_millis > school_tang_tang_play[note_index] + school_tang_tang_delay[note_index]) // 끝날때 다시 시작 || 1
 	{
 		p_millis = c_millis;
 
@@ -79,12 +79,10 @@ void loop()
 	
 	if(play_on == 1) // 부저가 울리기 시작할때 같이 시작하기 위해 만듦 || 2
 	{
-		if(c_millis - p_millis1 > 250) // 250을 가변으로 넣을 수 있다
+		if(c_millis - p_millis1 > school_tang_tang_play[note_index]) // 250을 가변으로 넣을 수 있다
 		{
-			p_millis1 = c_millis;
-
 			play_on = 0;
-			digitalWrite(3, LOW);
+			digitalWrite(5, LOW);
 			toggle = 0;
 		}
 	}

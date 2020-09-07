@@ -15,19 +15,19 @@ int main(void)
 
 		for(int j = 0; j < 8; j++)
 		{
-			for (int i = 0; i < 8; i++)
-			{
-				if (num_2[j] & (0x80 >> i)) // msb  즉 상위 비트부터 검사하기 위해 이렇게 함
-				{
-					printf("*");
-				}
-				else
-				{
-					printf("-");
-				}
-			}
+			// for (int i = 0; i < 8; i++) // 이걸 주석처리하여 출력을 없애므로 점점 나오게 만듦
+			// {
+			// 	if (num_2[j] & (0x80 >> i)) // msb  즉 상위 비트부터 검사하기 위해 이렇게 함
+			// 	{
+			// 		printf("*");
+			// 	}
+			// 	else
+			// 	{
+			// 		printf("-");
+			// 	}
+			// }
 
-			printf(" ");
+			// printf(" ");
 
 			for (int i = 0; i < 8; i++) // 3 출력 | 바로 옆에 찍기 위해서 \n을 뒤로 뺌
 			{
