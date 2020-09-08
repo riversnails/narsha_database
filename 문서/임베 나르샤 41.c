@@ -885,16 +885,18 @@ void loop() // z축까지 사용하여 치약짜개 뽑기
 		ushift(xy_pos[i][0], xy_pos[i][1], speeds[i]);
 		//Serial.println(i);
 		//Serial.print(" : x="); // 디버깅
-	delay(1);
+		delay(1);
 	}
 
 	TIMSK2 = 0x00;
+	
 	if(z_toggle != 0) z_move(200, z_up, 600);
 	else if(z_toggle == 10) delay(1000000);
 	else z_move(80, z_up, 600);
+
 	z_toggle++;
 	while(TIMSK1 != 0x00);
-	xy_reset();
+
 }
 
 volatile char x_step_toggle = 0;
