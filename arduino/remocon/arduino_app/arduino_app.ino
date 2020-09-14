@@ -1,6 +1,6 @@
 #include "remocon.h"
 #include "ultrasonic.h"
-#include "exti.h"
+#include "i2c.h"
 
 #define REMOCON_PIN 2
 #define ULTRASONIC_ECHO_PIN 3
@@ -17,6 +17,15 @@ void setup()
   Serial.begin(9600);
   remocon_init(REMOCON_PIN); // arduino pin 2
   ultrasonic_init(ULTRASONIC_ECHO_PIN, ULTRASONIC_TRIGGER_PIN); // arduino pin 3
+
+  i2c_init();
+//  while(1)
+//  {
+//    i2c_byte_write(0x27, 0x08);
+//    delay(1000);
+//    i2c_byte_write(0x27, 0x00);
+//    delay(1000);
+//  }
 }
 
 void loop()
@@ -28,12 +37,14 @@ void loop()
     ultrasonic_trigger();
   }
 
+  // ultrasonic_callback func
   if (ultrasonic_callback(&ultrasonic_dist))
   {
     ultrasonic_callback_flag_clear();
     Serial.println(ultrasonic_dist);
   }
-
+  
+  // remocon_callback func
   if (remocon_callback(&remocon_number))
   {
     int_callback_flag_clear();
