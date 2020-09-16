@@ -794,7 +794,7 @@ void setup()
 	DDRA |= ZENABLE;
 	DDRB |= Z_DIR; 
 	DDRB |= Z_STEP;
-	DDRB &= ~Z_STOP;
+	DDRC &= ~(Z_STOP);
 	//---------------------------
 	DDRD |= 0x40;
 	DDRB |= 0x03;
@@ -889,7 +889,7 @@ void loop() // z축까지 사용하여 치약짜개 뽑기
 	}
 
 	TIMSK2 = 0x00;
-	
+
 	if(z_toggle != 0) z_move(200, z_up, 600);
 	else if(z_toggle == 10) delay(1000000);
 	else z_move(80, z_up, 600);
@@ -897,6 +897,8 @@ void loop() // z축까지 사용하여 치약짜개 뽑기
 	z_toggle++;
 	while(TIMSK1 != 0x00);
 
+	currunt_y = (int)currunt_y;
+	currunt_x = (int)currunt_x;
 }
 
 volatile char x_step_toggle = 0;
