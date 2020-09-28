@@ -1,6 +1,7 @@
 #include "remocon.h"
 #include "ultrasonic.h"
 #include "i2c.h"
+#include "servo.h"
 
 #define REMOCON_PIN 2
 #define ULTRASONIC_ECHO_PIN 3
