@@ -6,50 +6,47 @@
 #define REMOCON_PIN 2
 #define ULTRASONIC_ECHO_PIN 3
 #define ULTRASONIC_TRIGGER_PIN 4
+#define SERVO_PORT 4
 
 float ultrasonic_dist = 0;
 
 char remocon_number = 0;
 unsigned long c_millis = 0;
+unsigned long p_millis = 0;
+unsigned long c_micros = 0;
 unsigned long p_millis_ultra = 0;
+
+int servo_degree = 0; // 0 ~ 180
+int servo_duty = 22; // 22 ~ 72
+int c = 0;
 
 void setup()
 {
   Serial.begin(9600);
-  remocon_init(REMOCON_PIN); // arduino pin 2
-  ultrasonic_init(ULTRASONIC_ECHO_PIN, ULTRASONIC_TRIGGER_PIN); // arduino pin 3
 
-  i2c_init();
-//  while(1)
-//  {
-//    i2c_byte_write(0x27, 0x08);
-//    delay(1000);
-//    i2c_byte_write(0x27, 0x00);
-//    delay(1000);
-//  }
+  servo_init(SERVO_PORT);
 }
 
 void loop()
 {
+  c_micros = micros();
   c_millis = millis();
-  if (c_millis - p_millis_ultra > 1000)
+
+  //  servo_position(servo_position1);
+  //  servo_position1++;
+  //  if(servo_position1 == 180) servo_position1 = 0;
+
+  if (c_millis - p_millis > 20)
   {
-    p_millis_ultra = c_millis;
-    ultrasonic_trigger();
+    p_millis = c_millis;
+
+    //    if (servo_degree++ == 180) servo_degree = 0;
+    //    servo_duty = (int)((700 + (((float)(180 - servo_degree) / 180.0) * 1600)) / 32 + 0.5);
+
+    if (servo_duty++ == 72) servo_duty = 22;
+
   }
 
-  // ultrasonic_callback func
-  if (ultrasonic_callback(&ultrasonic_dist))
-  {
-    ultrasonic_callback_flag_clear();
-    Serial.println(ultrasonic_dist);
-  }
-  
-  // remocon_callback func
-  if (remocon_callback(&remocon_number))
-  {
-    int_callback_flag_clear();
-    Serial.println(remocon_number);
-  }
-
+  // servo_degree : 22 ~ 72
+  servo_position_micros(servo_duty, c_micros);
 }
