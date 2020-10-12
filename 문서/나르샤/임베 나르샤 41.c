@@ -27,14 +27,13 @@ enum{ // 열거형  날자 표현할때 자주 사용 0,1,2,3이런식으로 나
   x_left, x_right, y_up, y_down, z_up, z_down
 };
 
-volatile char is_x_reset = 0;
 volatile int x_distance = 0;
-
-volatile char is_y_reset = 0;
 volatile int y_distance = 0;
-
-volatile char is_z_reset = 0;
 volatile int z_distance = 0;
+
+volatile char x_reset = 0;
+volatile char y_reset = 0;
+volatile char z_reset = 0;
 
 volatile double currunt_x = 0; // 현재 좌표 && mm 단위로 봄
 volatile double currunt_y = 0;
@@ -656,130 +655,139 @@ const float speeds[911] = {
 };
 
 double ANGLE(int x){ // 이 내장 사인 코사인들이 라디안을 사용하여 구하기 때문에 라디안으로 리턴함
-  return PI * (x / 180.0);
+	return PI * (x / 180.0);
 }
 
-void x_move(int x_dis, int DIR, int speed)
+void x_move(double x_dis, int DIR, int speed)
 {
-  //dir
-  if(DIR == x_left) PORTC = X_LEFT;
-  if(DIR == x_right) PORTC = X_RIGHT;
-  // distance
-  x_distance = x_dis;
-  // speed
-  OCR1A = speed;
-  // on
-  xz_changer = 0;
-  TIMSK1 = 0x02;
+	//dir
+	if(DIR == x_left) PORTC = X_LEFT;
+	if(DIR == x_right) PORTC = X_RIGHT;
+	// distance
+	x_distance = x_dis;
+	// speed
+	OCR1A = speed;
+	// on
+	xz_changer = 0;
+	TIMSK1 = 0x02;
 }
 
-void y_move(int y_dis, int DIR, int speed)
+void y_move(double y_dis, int DIR, int speed)
 {
-  // dir
-  if(DIR == y_up) PORTC = Y_UP;
-  if(DIR == y_down) PORTC = Y_DOWN;
-  // distance
-  y_distance = y_dis;
-  // speed
-  OCR3A = speed;
-  // on
-  TIMSK3 = 0x02;
+	// dir
+	if(DIR == y_up) PORTC = Y_UP;
+	if(DIR == y_down) PORTC = Y_DOWN;
+	// distance
+	y_distance = y_dis;
+	// speed
+	OCR3A = speed;
+	// on
+	TIMSK3 = 0x02;
 }
 
-void z_move(int z_dis, int DIR, int speed)
+void z_move(double z_dis, int DIR, int speed)
 {
-  // dir
-  if(DIR == z_up) PORTB = Z_UP;
-  if(DIR == z_down) PORTB = Z_DOWN;
-  // distance
-  z_distance = z_dis;
-  // speed
-  OCR1A = speed;
-  // on
-  xz_changer = 1;
-  TIMSK1 = 0x02;
+	// dir
+	if(DIR == z_up) PORTB = Z_UP;
+	if(DIR == z_down) PORTB = Z_DOWN;
+	// distance
+	z_distance = z_dis;
+	// speed
+	OCR1A = speed;
+	// on
+	xz_changer = 1;
+	TIMSK1 = 0x02;
 }
 
 void reset()
 {
-  is_x_reset = 1;
-  is_y_reset = 1;
-  is_z_reset = 1;
-  z_move(32000, z_down, 600);
-  while(is_z_reset != 0);
-  delay(100);
-  x_move(32000, x_left, 600);
-  y_move(32000, y_up, 600);
-  while(is_x_reset != 0 || is_y_reset != 0); // 끝날때까지 대기
-  currunt_x = 0; // 초기화 했으니 좌표도 초기화
-  currunt_y = 0;
-  currunt_z = 0;
+	z_move(300, z_up, 600);
+	while (TIMSK1 != 0X00);
+	z_move(32000, z_down, 1600);
+	while (TIMSK1 != 0X00);
+	delay(100);
+
+	x_move(300, x_right, 600);
+	y_move(300, y_down, 600);
+	while (TIMSK1 != 0X00 || TIMSK3 != 0X00);
+	x_move(32000, x_left, 1600);
+	y_move(32000, y_up, 1600);
+	while (TIMSK1 != 0X00 || TIMSK3 != 0X00);
+	currunt_x = 0; // 초기화 했으니 좌표도 초기화
+	currunt_y = 0;
+	currunt_z = 0;
+
+	x_reset = 1;
+	y_reset = 1;
+	z_reset = 1; // 현재 상태가 리셋되었다는 것을 알림
 }
 
 void xy_reset()
 {
-  is_x_reset = 1;
-  is_y_reset = 1;
-  delay(100);
-  x_move(32000, x_left, 600);
-  y_move(32000, y_up, 600);
-  while(is_x_reset != 0 || is_y_reset != 0); // 끝날때까지 대기
-  currunt_x = 0; // 초기화 했으니 좌표도 초기화
-  currunt_y = 0;
+	delay(100);
+	x_move(32000, x_left, 1600);
+	y_move(32000, y_up, 1600);
+	while (TIMSK1 != 0X00 || TIMSK3 != 0X00); // 끝날때까지 대기
+	currunt_x = 0; // 초기화 했으니 좌표도 초기화
+	currunt_y = 0;
 }
 
 void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 그리게하는 함수
 {
-  double dis_X = 0; // 변수들 초기화
-  double dis_Y = 0; 
-  int x_dir = x_right;
-  int y_dir = y_down;
+	double dis_X = 0; // 변수들 초기화
+	double dis_Y = 0; 
+	int x_dir = x_right;
+	int y_dir = y_down;
 
-  dis_X = abs(currunt_x - x); // 가야할 거리를 음수가 아니게 만들어서 값을 저장해준다
-  dis_Y = abs(currunt_y - y);
+	dis_X = abs(currunt_x - x); // 가야할 거리를 음수가 아니게 만들어서 값을 저장해준다
+	dis_Y = abs(currunt_y - y);
 
-  if ((double)currunt_x > (double)x) x_dir = x_left; // 가야할 방향을 맞추게 만들었다
-  if ((double)currunt_y > (double)y) y_dir = y_up;
+	if ((double)currunt_x > (double)x) x_dir = x_left; // 가야할 방향을 맞추게 만들었다
+	if ((double)currunt_y > (double)y) y_dir = y_up;
 
-  if(currunt_x - x == 0) // 하나의 축(x,y)이 움직이지 않으면 반대축만 움직이게 한다
-  {
-    y_move((int)(dis_Y * ONE_MM), y_dir, speed);
-    currunt_y = y;
-    while (TIMSK3 != 0X00);
-    return;
-  }
-  if(currunt_y - y == 0) 
-  {
-    x_move((int)(dis_X * ONE_MM), x_dir, speed);
-    currunt_x = x;
-    while (TIMSK1 != 0X00);
-    return;
-  }
+	if(currunt_x - x == 0) // 하나의 축(x,y)이 움직이지 않으면 반대축만 움직이게 한다
+	{
+		y_move((dis_Y * ONE_MM), y_dir, speed);
+		currunt_y = y;
+		while (TIMSK3 != 0X00);
+		if(y_rest == 1) y_reset = 0;
+		return;
+	}
+	if(currunt_y - y == 0) 
+	{
+		x_move((dis_X * ONE_MM), x_dir, speed);
+		currunt_x = x;
+		while (TIMSK1 != 0X00);
+		if(x_rest == 1) x_reset = 0;
+		return;
+	}
 
-  double x_speed = 0; // 뒤에 선언으로 자원을 아낄 수 있겟지?
-  double y_speed = 0;
-  double angle = 0;
+	double x_speed = 0; // 뒤에 선언으로 자원을 아낄 수 있겟지?
+	double y_speed = 0;
+	double angle = 0;
 
-  angle = atan(dis_Y/dis_X); // 앵글 == 아크탄젠트(길이(y/x))
+	angle = atan(dis_Y/dis_X); // 앵글 == 아크탄젠트(길이(y/x))
 
-  x_speed = speed * (1/cos(angle)); // 원래 스피드를 구하는 식
-  y_speed = speed * (1/sin(angle));
+	x_speed = speed * (1/cos(angle)); // 원래 스피드를 구하는 식
+	y_speed = speed * (1/sin(angle));
 
-  x_move((dis_X * ONE_MM), x_dir, x_speed);
-  y_move((dis_Y * ONE_MM), y_dir, y_speed);
+	x_move((dis_X * ONE_MM), x_dir, x_speed);
+	y_move((dis_Y * ONE_MM), y_dir, y_speed);
 
-  currunt_x = x; // 현재 좌표를 저장한다
-  currunt_y = y;
+	currunt_x = x; // 현재 좌표를 저장한다
+	currunt_y = y;
 
-  // Serial.print(x); // 디버깅용 코드
-  // Serial.print(" , y=");
-  // Serial.print(y);
-  // Serial.print(" , x_dir=");
-  // Serial.print(x_dir);
-  // Serial.print(" , y_dir=");
-  // Serial.print(y_dir);
-  // Serial.println();
-  while (TIMSK1 != 0X00 || TIMSK3 != 0X00); // 끝나는걸 기다려준다
+	// Serial.print(x); // 디버깅용 코드
+	// Serial.print(" , y=");
+	// Serial.print(y);
+	// Serial.print(" , x_dir=");
+	// Serial.print(x_dir);
+	// Serial.print(" , y_dir=");
+	// Serial.print(y_dir);
+	// Serial.println();
+	while (TIMSK1 != 0X00 || TIMSK3 != 0X00); // 끝나는걸 기다려준다
+	if(x_rest == 1) x_reset = 0;
+	if(y_rest == 1) y_reset = 0;
 }
 
 void setup()
@@ -800,10 +808,10 @@ void setup()
 	DDRB |= 0x03;
 	PORTB &= ~0x01;
 	DDRD |= 0x10;
-	PORTD |= 0x10;
+	PORTD &= ~0x10; // bed
 	DDRD |= 0x20;
-	PORTD |= 0x20;
-	DDRB |= 0x10;
+	PORTD &= ~0x20; // end
+	DDRB |= 0x10; // fan
 	//---------------------------
 
 	TCCR1A = 0x00;
@@ -832,8 +840,8 @@ void setup()
 
 	int bed_analog_value = analogRead(A6);
 	int end_analog_value = analogRead(A7);
-	PORTD |= 0x20;
-	PORTB |= 0x10;
+	PORTD |= 0x20; // end
+	PORTB |= 0x10; // bed
 
 	while(end_analog_value > 95)
 	{
@@ -853,12 +861,27 @@ void setup()
 	PORTD &= ~0x20;
 }
 
-int z_toggle = 0;
+volatile int z_toggle = 0;
 
 void loop() // z축까지 사용하여 치약짜개 뽑기
 {
 	volatile int i = 0;
 
+	TIMSK2 = 0x00;
+
+	if(z_toggle == 0) 
+	{
+		z_move(80, z_up, 600);
+		while(TIMSK1 != 0x00);
+	}
+	else if(z_toggle == 5)
+	{
+		delay(1000000);
+	}
+
+	z_toggle++;
+
+	
 	for (i = 0; i < 911; i++) {
 		TIMSK2 = 0x02;
 		int bed_analog_value = analogRead(A6);
@@ -887,18 +910,8 @@ void loop() // z축까지 사용하여 치약짜개 뽑기
 		//Serial.print(" : x="); // 디버깅
 		delay(1);
 	}
-
-	TIMSK2 = 0x00;
-
-	if(z_toggle != 0) z_move(200, z_up, 600);
-	else if(z_toggle == 10) delay(1000000);
-	else z_move(80, z_up, 600);
-
-	z_toggle++;
-	while(TIMSK1 != 0x00);
-
-	currunt_y = (int)currunt_y;
-	currunt_x = (int)currunt_x;
+	// currunt_y = (int)currunt_y;
+	// currunt_x = (int)currunt_x;
 }
 
 volatile char x_step_toggle = 0;
@@ -931,19 +944,13 @@ ISR(TIMER1_COMPA_vect)
 
 			if(x_step_count >= x_distance)
 			{
-				is_x_reset = 0;
 				x_step_count = 0;
 				TIMSK1 = 0x00;
 			}
-			if(x_limit_switch && is_x_reset != -1)
+			if(x_limit_switch)
 			{
 				TIMSK1 = 0x00;
 				x_step_count = 0;
-				if(is_x_reset == 1)
-				{
-					is_x_reset = -1;
-					x_move(ONE_CM*5, x_right, 400);
-				}
 			}
 		}
 	}
@@ -963,23 +970,16 @@ ISR(TIMER1_COMPA_vect)
 
 			if(z_step_count >= z_distance)
 			{
-				is_z_reset = 0;
 				z_step_count = 0;
 				TIMSK1 = 0x00;
 			}
-			if(z_limit_switch && is_z_reset != -1)
+			if(z_limit_switch)
 			{
 				TIMSK1 = 0x00;
 				z_step_count = 0;
-				if(is_z_reset == 1)
-				{
-					is_z_reset = -1;
-					z_move(Z_ONE_MM, z_up, 400);
-				}
 			}
 		}
     }
-
 }
 
 ISR(TIMER2_COMPA_vect){
@@ -998,42 +998,32 @@ ISR(TIMER2_COMPA_vect){
 ISR(TIMER3_COMPA_vect)
 {
 
-  if(y_step_toggle == 0)
-  {
-    y_step_toggle = 1;
-    PORTC |= Y_STEP;
-  }
-  else
-  {
-    y_step_toggle = 0;
-    PORTC &= ~(Y_STEP);
-    y_step_count++;
-    char y_limit_switch = PINC & Y_STOP;
+	if(y_step_toggle == 0)
+	{
+		y_step_toggle = 1;
+		PORTC |= Y_STEP;
+	}
+	else
+	{
+		y_step_toggle = 0;
+		PORTC &= ~(Y_STEP);
+		y_step_count++;
+		char y_limit_switch = PINC & Y_STOP;
 
-    if(y_step_count >= y_distance)
-    {
-      is_y_reset = 0;
-      y_step_count = 0;
-      TIMSK3 = 0x00;
-    }
-    if(y_limit_switch && is_y_reset != -1)
-    {
-      TIMSK3 = 0x00;
-      y_step_count = 0;
-      if(is_y_reset == 1)
-      {
-        is_y_reset = -1;
-        y_move(ONE_CM*5, y_down, 400);
-      }
-    }
-  }
+		if(y_step_count >= y_distance)
+		{
+			y_step_count = 0;
+			TIMSK3 = 0x00;
+		}
+		if(y_limit_switch)
+		{
+			TIMSK3 = 0x00;
+			y_step_count = 0;
 
+		}
+	}
 }
 
 //1 step = 0.0125mm
 //80 step = 1mm
-
-// 대충적음
-// 8 4 2 1 | 8 4 2 1  16진수
-// 7 6 5 4 | 3 2 1 0  10진수
-// 0 0 0 0 | 0 0 0 0   2진수
+//1 zsetp = 0.0025mm
