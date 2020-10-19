@@ -24,17 +24,54 @@ char dot_value[10][8] = {
 
 void setup()
 {
+  Serial.begin(9600);
   dotmatrix_init_74595(pin_num_dot_74595);
 }
 
+unsigned long c_micros = 0;
 unsigned long c_millis = 0;
+unsigned long p_millis = 0;
+int count = 0;
 
 void loop()
 {
-  //c_millis = millis();
-  //set_num_millis(asdf, c_millis);
-  //set_num_delay(asdf);
-  //set_line_74595(0, 0x23);
-  //set_num_74595_delay(asdf);
-  set_num_74595_millis(asdf, c_millis);
+  c_micros = micros();
+  c_millis = millis();
+  //  if(c_millis - p_millis > 1000)
+  //  {
+  //    p_millis = c_millis;
+  //    count++;
+  //    if(count == 10) count = 0;
+  //  }
+  //  //set_num_millis(asdf, c_millis);
+  //  //set_num_delay(asdf);
+  //  //set_line_74595(0, 0x23);
+  //  //set_num_74595_delay(asdf);
+  //  set_num_74595_millis(dot_value[count], c_millis);
+  //dot_led_74595_toggle(9);
+  //  if (c_millis - p_millis > 5000)
+  //  {
+  //    p_millis = c_millis;
+  //    led_pwm_value(1, 99);
+  //  }
+
+  char in_num = 0;
+  if (Serial.available())
+  {
+    int in_data = Serial.read();
+    Serial.printf("%c", in_data);
+    //    if(in_data == '1')
+    //    {
+    //      led_pwm_value(1, 99);
+    //    }
+    //    else if(in_data == '2')
+    //    {
+    //      led_pwm_value(2, 99);
+    //    }
+
+    in_num = in_data - 0x30;
+    led_pwm_value(in_num, 99);
+  }
+
+  dot_led_74595_pwm(in_num, c_micros, c_millis);
 }
