@@ -6,5 +6,7 @@
 void uart_init(unsigned int baudrate);
 void uart_tx(char data);
 void uart_rx();
+void uart_tx_string(char *string);
+void printh(char *format, ...);
 
 #endif
