@@ -168,7 +168,6 @@ char col_num;
 
 void dot_led_74595_pwm(char led_num, unsigned long cur_led_micros, unsigned long cur_led_millis)
 {
-
   if (cur_led_micros - pre_led_micros > 100)
   {
     row_num = led_num / 8;
@@ -197,7 +196,11 @@ void dot_led_74595_pwm(char led_num, unsigned long cur_led_micros, unsigned long
     // if (led_pwm_duty == 0) led_pwm_duty = 99;
   }
 
-  digitalWrite(dot_pin[row_num], HIGH);
+  for (int i = 0; i < 8; i++)
+  {
+    digitalWrite(dot_pin[i], LOW);
+    if ( i == row_num) digitalWrite(dot_pin[row_num], HIGH);
+  }
 }
 
 void led_pwm_value(char led_num, char value)
@@ -206,4 +209,57 @@ void led_pwm_value(char led_num, char value)
   col_num = led_num % 8;
 
   led_pwm_duty = value;
+}
+
+void set_num_74595_millis_pwm(char led_num, char *dot_num, unsigned long dot_curr_micros, unsigned long dot_curr_millis)
+{
+  if (dot_curr_micros - pre_led_micros > 100)
+  {
+    row_num = led_num / 8;
+    col_num = led_num % 8;
+    pre_led_micros = dot_curr_micros;
+
+    if (led_pwm_count == 100)
+    {
+      if (dot_row_num == 0)
+      {
+        dot_num[0] |= 0x80;
+        set_74595_value(dot_num[dot_row_num]);
+        digitalWrite(dot_pin[0], HIGH);
+      }
+
+      led_pwm_count = 0;
+    }
+    else if (led_pwm_count == 10)
+    {
+      if (dot_row_num == 0)
+      {
+        dot_num[0] &= ~0x80;
+        set_74595_value(dot_num[dot_row_num]);
+        digitalWrite(dot_pin[0], LOW);
+        //col_value_74595 &= ~(0x01 << col_num);
+      }
+    }
+    led_pwm_count++;
+  }
+  //---------------------------------------------
+  if (dot_curr_millis - pre_dot_millis >= 1)
+  {
+    pre_dot_millis = dot_curr_millis;
+    // all off
+    for (int i = 0; i < 8; i++) digitalWrite(dot_pin[i], LOW);
+    // one column value set
+    set_74595_value(dot_num[dot_row_num]);
+    // one row power on
+    digitalWrite(dot_pin[dot_row_num], HIGH);
+    dot_row_num++;
+    if (dot_row_num == 8) dot_row_num = 0;
+  }
+
+  //  if (cur_led_millis - pre_led_millis > 10)
+  //  {
+  //    pre_led_millis = cur_led_millis;
+  //
+  //    if (led_pwm_duty >= 2) led_pwm_duty--;
+  //  }
 }
