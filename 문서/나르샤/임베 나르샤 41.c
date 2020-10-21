@@ -687,6 +687,8 @@ void y_move(double y_dis, int DIR, int speed)
 
 void z_move(double z_dis, int DIR, int speed)
 {
+	// current z
+	currunt_z = 0.0025 * z_dis;
 	// dir
 	if(DIR == z_up) PORTB = Z_UP;
 	if(DIR == z_down) PORTB = Z_DOWN;
@@ -750,7 +752,7 @@ void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 �
 		y_move((dis_Y * ONE_MM), y_dir, speed);
 		currunt_y = y;
 		while (TIMSK3 != 0X00);
-		if(y_rest == 1) y_reset = 0;
+		if(y_reset == 1) y_reset = 0;
 		return;
 	}
 	if(currunt_y - y == 0) 
@@ -758,11 +760,11 @@ void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 �
 		x_move((dis_X * ONE_MM), x_dir, speed);
 		currunt_x = x;
 		while (TIMSK1 != 0X00);
-		if(x_rest == 1) x_reset = 0;
+		if(x_reset == 1) x_reset = 0;
 		return;
 	}
 
-	double x_speed = 0; // 뒤에 선언으로 자원을 아낄 수 있겟지?
+	double x_speed = 0; 
 	double y_speed = 0;
 	double angle = 0;
 
@@ -786,8 +788,8 @@ void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 �
 	// Serial.print(y_dir);
 	// Serial.println();
 	while (TIMSK1 != 0X00 || TIMSK3 != 0X00); // 끝나는걸 기다려준다
-	if(x_rest == 1) x_reset = 0;
-	if(y_rest == 1) y_reset = 0;
+	if(x_reset == 1) x_reset = 0;
+	if(y_reset == 1) y_reset = 0;
 }
 
 void setup()
@@ -871,12 +873,16 @@ void loop() // z축까지 사용하여 치약짜개 뽑기
 
 	if(z_toggle == 0) 
 	{
-		z_move(80, z_up, 600);
+		z_move(96, z_up, 600);
 		while(TIMSK1 != 0x00);
 	}
 	else if(z_toggle == 5)
 	{
 		delay(1000000);
+	}
+	else if(z_toggle != 0)
+	{
+		z_move(80, z_up, 600);
 	}
 
 	z_toggle++;
@@ -947,7 +953,7 @@ ISR(TIMER1_COMPA_vect)
 				x_step_count = 0;
 				TIMSK1 = 0x00;
 			}
-			if(x_limit_switch)
+			if(x_limit_switch && x_reset == 0)
 			{
 				TIMSK1 = 0x00;
 				x_step_count = 0;
@@ -973,7 +979,7 @@ ISR(TIMER1_COMPA_vect)
 				z_step_count = 0;
 				TIMSK1 = 0x00;
 			}
-			if(z_limit_switch)
+			if(z_limit_switch && z_reset == 0)
 			{
 				TIMSK1 = 0x00;
 				z_step_count = 0;
@@ -1015,7 +1021,7 @@ ISR(TIMER3_COMPA_vect)
 			y_step_count = 0;
 			TIMSK3 = 0x00;
 		}
-		if(y_limit_switch)
+		if(y_limit_switch  && y_reset == 0)
 		{
 			TIMSK3 = 0x00;
 			y_step_count = 0;

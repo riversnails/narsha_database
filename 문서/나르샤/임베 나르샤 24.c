@@ -194,16 +194,16 @@ void setup()
 	OCR3A = 400;
 	TIMSK3 = 0x00;
 
-	Serial.begin(9600);
+	//Serial.begin(9600);
 	reset();
 
-	Serial.print(currunt_x);
-	Serial.println(currunt_y);
+	//Serial.print(currunt_x);
+	//Serial.println(currunt_y);
 	goXYLocation(50,50);
 
 
-	Serial.print(currunt_x);
-	Serial.println(currunt_y);
+	//Serial.print(currunt_x);
+	//Serial.println(currunt_y);
 	//delay(1000);
 }
 

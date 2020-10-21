@@ -112,7 +112,7 @@ void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 �
 		return;
 	}
 
-	double x_speed = 0; // 뒤에 선언으로 자원을 아낄 수 있겟지?
+	double x_speed = 0; 
 	double y_speed = 0;
 	double angle = 0;
 
@@ -155,12 +155,12 @@ void setup()
 	DDRD |= X_STEP | XYEENABLE;
 	DDRC &= ~(X_STOP);
 	DDRC &= ~(Y_STOP);
-	DDRB |= 0x01 | 0x02;
 
 	DDRA |= ZENABLE;
 	DDRB |= Z_DIR; 
 	DDRB |= Z_STEP;
-	DDRB &= ~Z_STOP;
+	DDRB &= ~(Z_STOP);
+	DDRB |= 0x01 | 0x02;
 
 	TCCR1A = 0x00;
 	TCCR1B = 0x0a;
@@ -180,11 +180,11 @@ void setup()
 	OCR3A = 400;
 	TIMSK3 = 0x00;
 
-	//TIMSK2 = 0x02;
+	TIMSK2 = 0x02;
 	//reset();
 }
 
-void loop() // 모든축 태스트
+void loop() // 커스텀 프린터 태스트
 {
 	ushift(10,10,600);
 	ushift(10,100,600);
@@ -272,7 +272,8 @@ ISR(TIMER1_COMPA_vect)
 }
 // zsetp = 0.0025
 
-ISR(TIMER2_COMPA_vect){
+ISR(TIMER2_COMPA_vect)
+{
 	if(toggle == 0)
 	{
 		toggle = 1;
