@@ -4,6 +4,8 @@
 #define Y_DIR 0x80 // c
 #define Y_STEP 0x40 // c
 #define Y_STOP 0x08 // c 3
+#define E_DIR 0x01 // b
+#define E_STEP 0x02 // b
 #define XYEENABLE 0x40 // d
 
 #define Z_DIR 0x04 // b
@@ -40,7 +42,7 @@ volatile double currunt_y = 0;
 volatile double currunt_z = 0;
 
 volatile int xz_changer = 0;
-
+	
 const float xy_pos[911][2] = {
 { 66.268, 82.377, }, { 66.527, 82.217, }, { 66.796, 82.073, }, { 67.072, 81.946, },
 { 67.356, 81.836, }, { 67.647, 81.743, }, { 67.942, 81.669, },
@@ -802,9 +804,10 @@ void setup()
 	DDRC &= ~(Y_STOP);
 
 	DDRA |= ZENABLE;
-	DDRB |= Z_DIR; 
+	DDRB |= Z_DIR;
 	DDRB |= Z_STEP;
 	DDRC &= ~(Z_STOP);
+	DDRB |= E_STEP | E_DIR;
 	//---------------------------
 	DDRD |= 0x40;
 	DDRB |= 0x03;
@@ -864,34 +867,36 @@ void setup()
 }
 
 volatile int z_toggle = 0;
+volatile int i = 0;
+volatile int end_analog_value = 0;
+volatile int bed_analog_value = 0;
 
 void loop() // z축까지 사용하여 치약짜개 뽑기
 {
-	volatile int i = 0;
-
+	
 	TIMSK2 = 0x00;
 
-	if(z_toggle == 0) 
-	{
-		z_move(96, z_up, 600);
-		while(TIMSK1 != 0x00);
-	}
-	else if(z_toggle == 5)
-	{
-		delay(1000000);
-	}
-	else if(z_toggle != 0)
-	{
-		z_move(80, z_up, 600);
-	}
+	// if(z_toggle == 0) 
+	// {
+	// 	z_move(96, z_up, 600);
+	// 	while(TIMSK1 != 0x00);
+	// }
+	// else if(z_toggle == 5)
+	// {
+	// 	delay(1000000);
+	// }
+	// else if(z_toggle != 0)
+	// {
+	// 	z_move(80, z_up, 600);
+	// }
 
-	z_toggle++;
+	// z_toggle++;
 
 	
 	for (i = 0; i < 911; i++) {
 		TIMSK2 = 0x02;
-		int bed_analog_value = analogRead(A6);
-		int end_analog_value = analogRead(A7);
+		bed_analog_value = analogRead(A6);
+		end_analog_value = analogRead(A7);
 
 		// Serial.print("bed : ");
 		// Serial.print(bed_analog_value);
