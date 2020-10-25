@@ -1,29 +1,54 @@
-#define X_DIR 0x20 // c
-#define X_STEP 0x80 // d
-#define X_STOP 0x04 // c 2
-#define Y_DIR 0x80 // c
-#define Y_STEP 0x40 // c
-#define Y_STOP 0x08 // c 3
-#define E_DIR 0x01 // b
-#define E_STEP 0x02 // b
-#define XYEENABLE 0x40 // d
+// #define X_DIR 0x20 // c
+// #define X_STEP 0x80 // d
+// #define X_STOP 0x04 // c 2
 
-#define Z_DIR 0x04 // b
-#define Z_STEP 0x08 // b
-#define Z_STOP 0x10 // c
-#define ZENABLE 0x20 // a
+// #define Y_DIR 0x80 // c
+// #define Y_STEP 0x40 // c
+// #define Y_STOP 0x08 // c 3
+
+// #define E_DIR 0x01 // b
+// #define E_STEP 0x02 // b
+
+// #define XYEENABLE 0x40 // d
+
+// #define Z_DIR 0x04 // b
+// #define Z_STEP 0x08 // b
+// #define Z_STOP 0x10 // c
+// #define ZENABLE 0x20 // a
+
+//-------------------------------------
+#define X_STEP 0x01 // f
+#define X_DIR 0x02 // f
+#define X_ENABLE 0x80 // d  
+
+#define Y_STEP 0x40 // f
+#define Y_DIR 0x80 // f
+#define Y_ENABLE 0x04 // f
+
+#define Z_STEP 0x02 // c
+#define Z_DIR 0x08 // c
+#define Z_ENABLE 0x01 // k
+
+#define E_STEP 0x10 // a
+#define E_DIR 0x40 // a
+#define E_ENABLE 0x02 // a
+
+#define E1_STEP 0x02 // c
+#define E1_DIR 0x08 // c
+#define E1_ENABLE 0x80 // c
+//-------------------------------------
 
 #define ONE_MM 80
 #define ONE_CM 800
 #define Z_ONE_MM 400
 #define Z_ONE_CM 4000
 
-#define X_LEFT PORTC | X_DIR
-#define X_RIGHT PORTC & ~(X_DIR)
-#define Y_UP PORTC & ~(Y_DIR)
-#define Y_DOWN PORTC | Y_DIR
-#define Z_UP PORTB | Z_DIR
-#define Z_DOWN PORTB & ~(Z_DIR)
+#define X_LEFT PORTF | X_DIR
+#define X_RIGHT PORTF & ~(X_DIR)
+#define Y_UP PORTF | Y_DIR
+#define Y_DOWN PORTF & ~(Y_DIR)
+#define Z_UP PORTC | Z_DIR
+#define Z_DOWN PORTC & ~(Z_DIR)
 
 enum{ // 열거형  날자 표현할때 자주 사용 0,1,2,3이런식으로 나옴  define 대용
   x_left, x_right, y_up, y_down, z_up, z_down
@@ -659,8 +684,8 @@ const float speeds[911] = {
 void x_move(double x_dis, int DIR, int speed)
 {
 	//dir
-	if(DIR == x_left) PORTC = X_LEFT;
-	if(DIR == x_right) PORTC = X_RIGHT;
+	if(DIR == x_left) PORTF = X_LEFT;
+	if(DIR == x_right) PORTF = X_RIGHT;
 	// distance
 	x_distance = x_dis;
 	// speed
@@ -673,8 +698,8 @@ void x_move(double x_dis, int DIR, int speed)
 void y_move(int y_dis, int DIR, int speed)
 {
   // dir
-  if(DIR == y_up) PORTC = Y_UP;
-  if(DIR == y_down) PORTC = Y_DOWN;
+  if(DIR == y_up) PORTF = Y_UP;
+  if(DIR == y_down) PORTF = Y_DOWN;
   // distance
   y_distance = y_dis;
   // speed
@@ -686,8 +711,8 @@ void y_move(int y_dis, int DIR, int speed)
 void z_move(int z_dis, int DIR, int speed)
 {
   // dir
-  if(DIR == z_up) PORTB = Z_UP;
-  if(DIR == z_down) PORTB = Z_DOWN;
+  if(DIR == z_up) PORTC = Z_UP;
+  if(DIR == z_down) PORTC = Z_DOWN;
   // distance
   z_distance = z_dis;
   // speed
@@ -772,27 +797,23 @@ void reset()
 
 void setup()
 {
-	DDRC |= X_DIR; // 오른쪽
-	DDRC |= Y_DIR;
-	DDRC |= Y_STEP;
-	DDRD |= X_STEP | XYEENABLE;
-	DDRC &= ~(X_STOP);
-	DDRC &= ~(Y_STOP);
-
-	DDRA |= ZENABLE;
-	DDRB |= Z_DIR;
-	DDRB |= Z_STEP;
-	DDRC &= ~(Z_STOP);
-	DDRB |= E_STEP | E_DIR;
+	DDRF |= X_STEP | X_DIR;
+	DDRD |= X_ENABLE;
+	DDRF |= Y_STEP | Y_DIR | Y_ENABLE;
+	DDRC |= Z_STEP | Z_DIR;
+	DDRK |= Z_ENABLE;
+	DDRA |= E_STEP | E_DIR | E_ENABLE;
+	DDRC |= E1_STEP | E1_DIR | E1_ENABLE;
+	
 	//---------------------------
-	DDRD |= 0x40;
-	DDRB |= 0x03;
-	PORTB &= ~0x01;
-	DDRD |= 0x10;
-	PORTD &= ~0x10; // bed
-	DDRD |= 0x20;
-	PORTD &= ~0x20; // end
-	DDRB |= 0x10; // fan
+	// DDRD |= 0x40;
+	// DDRB |= 0x03;
+	// PORTB &= ~0x01;
+	// DDRD |= 0x10;
+	// PORTD &= ~0x10; // bed
+	// DDRD |= 0x20;
+	// PORTD &= ~0x20; // end
+	// DDRB |= 0x10; // fan
 	//---------------------------
 
 	TCCR1A = 0x00;
@@ -901,12 +922,12 @@ ISR(TIMER1_COMPA_vect)
 		if(x_step_toggle == 0)
 		{
 			x_step_toggle = 1;
-			PORTD |= X_STEP;
+			PORTF |= X_STEP;
 		}
 		else
 		{
 			x_step_toggle = 0;
-			PORTD &= ~(X_STEP);
+			PORTF &= ~(X_STEP);
 			x_step_count++;
 			char x_limit_switch = PINC & X_STOP;
 
@@ -927,12 +948,12 @@ ISR(TIMER1_COMPA_vect)
 		if(z_step_toggle == 0)
 		{
 			z_step_toggle = 1;
-			PORTB |= Z_STEP;
+			PORTC |= Z_STEP;
 		}
 		else
 		{
 			z_step_toggle = 0;
-			PORTB &= ~(Z_STEP);
+			PORTC &= ~(Z_STEP);
 			z_step_count++;
 			char z_limit_switch = PINC & Z_STOP;
 
@@ -954,12 +975,12 @@ ISR(TIMER2_COMPA_vect){
 	if(toggle == 0)
 	{
 		toggle = 1;
-		PORTB |= 0x02;
+		PORTA |= E_STEP;
 	}
 	else
 	{
 		toggle = 0;
-		PORTB &= ~0x02;
+		PORTA &= ~(E_STEP);
 	}
 }
 
@@ -969,12 +990,12 @@ ISR(TIMER3_COMPA_vect)
 	if(y_step_toggle == 0)
 	{
 		y_step_toggle = 1;
-		PORTC |= Y_STEP;
+		PORTF |= Y_STEP;
 	}
 	else
 	{
 		y_step_toggle = 0;
-		PORTC &= ~(Y_STEP);
+		PORTF &= ~(Y_STEP);
 		y_step_count++;
 		char y_limit_switch = PINC & Y_STOP;
 
