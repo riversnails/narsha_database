@@ -28,3 +28,13 @@ C:\Users\강다혁\Desktop\tetris3_keyInput\tetris3_keyInput\tetris3_keyInput\ob
 C:\Users\강다혁\Desktop\tetris3_keyInput\tetris3_keyInput\tetris3_keyInput\obj\Debug\tetris3_keyInput.csproj.CoreCompileInputs.cache
 C:\Users\강다혁\Desktop\tetris3_keyInput\tetris3_keyInput\tetris3_keyInput\obj\Debug\tetris3_keyInput.exe
 C:\Users\강다혁\Desktop\tetris3_keyInput\tetris3_keyInput\tetris3_keyInput\obj\Debug\tetris3_keyInput.pdb
+D:\git\narsha_database\tetris3_keyInput\tetris3_keyInput\bin\Debug\tetris3_keyInput.exe.config
+D:\git\narsha_database\tetris3_keyInput\tetris3_keyInput\bin\Debug\tetris3_keyInput.exe
+D:\git\narsha_database\tetris3_keyInput\tetris3_keyInput\bin\Debug\tetris3_keyInput.pdb
+D:\git\narsha_database\tetris3_keyInput\tetris3_keyInput\obj\Debug\tetris3_keyInput.csprojAssemblyReference.cache
+D:\git\narsha_database\tetris3_keyInput\tetris3_keyInput\obj\Debug\tetris3_keyInput.Form1.resources
+D:\git\narsha_database\tetris3_keyInput\tetris3_keyInput\obj\Debug\tetris3_keyInput.Properties.Resources.resources
+D:\git\narsha_database\tetris3_keyInput\tetris3_keyInput\obj\Debug\tetris3_keyInput.csproj.GenerateResource.cache
+D:\git\narsha_database\tetris3_keyInput\tetris3_keyInput\obj\Debug\tetris3_keyInput.csproj.CoreCompileInputs.cache
+D:\git\narsha_database\tetris3_keyInput\tetris3_keyInput\obj\Debug\tetris3_keyInput.exe
+D:\git\narsha_database\tetris3_keyInput\tetris3_keyInput\obj\Debug\tetris3_keyInput.pdb
