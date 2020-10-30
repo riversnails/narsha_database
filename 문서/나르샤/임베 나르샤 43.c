@@ -702,13 +702,13 @@ void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 �
 	double dis_X = 0; // 변수들 초기화
 	double dis_Y = 0; 
 	int x_dir = x_right;
-	int y_dir = y_down;
+	int y_dir = y_up;
 
 	dis_X = abs(currunt_x - x); // 가야할 거리를 음수가 아니게 만들어서 값을 저장해준다
 	dis_Y = abs(currunt_y - y);
 
 	if ((double)currunt_x > (double)x) x_dir = x_left; // 가야할 방향을 맞추게 만들었다
-	if ((double)currunt_y > (double)y) y_dir = y_up;
+	if ((double)currunt_y > (double)y) y_dir = y_down;
 
 	if(currunt_x - x == 0) // 하나의 축(x,y)이 움직이지 않으면 반대축만 움직이게 한다
 	{

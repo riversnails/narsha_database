@@ -20,13 +20,14 @@
 #define X_STEP 0x01 // f
 #define X_DIR 0x02 // f
 #define X_ENABLE 0x80 // d  
+//#define X_STOP 
 
 #define Y_STEP 0x40 // f
 #define Y_DIR 0x80 // f
 #define Y_ENABLE 0x04 // f
 
-#define Z_STEP 0x02 // c
-#define Z_DIR 0x08 // c
+#define Z_STEP 0x08 // l
+#define Z_DIR 0x02 // l
 #define Z_ENABLE 0x01 // k
 
 #define E_STEP 0x10 // a
@@ -43,12 +44,12 @@
 #define Z_ONE_MM 400
 #define Z_ONE_CM 4000
 
-#define X_LEFT PORTF | X_DIR
-#define X_RIGHT PORTF & ~(X_DIR)
-#define Y_UP PORTF | Y_DIR
-#define Y_DOWN PORTF & ~(Y_DIR)
-#define Z_UP PORTC | Z_DIR
-#define Z_DOWN PORTC & ~(Z_DIR)
+#define X_LEFT PORTF & ~(X_DIR)
+#define X_RIGHT PORTF | X_DIR
+#define Y_UP PORTF & ~(Y_DIR)
+#define Y_DOWN PORTF | Y_DIR
+#define Z_UP PORTL & ~(Z_DIR)
+#define Z_DOWN PORTL | Z_DIR
 
 enum{ // 열거형  날자 표현할때 자주 사용 0,1,2,3이런식으로 나옴  define 대용
   x_left, x_right, y_up, y_down, z_up, z_down
@@ -691,7 +692,6 @@ void x_move(double x_dis, int DIR, int speed)
 	// speed
 	OCR1A = speed;
 	// on
-	xz_changer = 0;
 	TIMSK1 = 0x02;
 }
 
@@ -711,15 +711,14 @@ void y_move(int y_dis, int DIR, int speed)
 void z_move(int z_dis, int DIR, int speed)
 {
   // dir
-  if(DIR == z_up) PORTC = Z_UP;
-  if(DIR == z_down) PORTC = Z_DOWN;
+  if(DIR == z_up) PORTL = Z_UP;
+  if(DIR == z_down) PORTL = Z_DOWN;
   // distance
   z_distance = z_dis;
   // speed
-  OCR1A = speed;
+  OCR4A = speed;
   // on
-  xz_changer = 1;
-  TIMSK1 = 0x02;
+  TIMSK4 = 0x02;
 }
 
 void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 그리게하는 함수
@@ -727,13 +726,13 @@ void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 �
 	double dis_X = 0; // 변수들 초기화
 	double dis_Y = 0; 
 	int x_dir = x_right;
-	int y_dir = y_down;
+	int y_dir = y_up;
 
 	dis_X = abs(currunt_x - x); // 가야할 거리를 음수가 아니게 만들어서 값을 저장해준다
 	dis_Y = abs(currunt_y - y);
 
 	if ((double)currunt_x > (double)x) x_dir = x_left; // 가야할 방향을 맞추게 만들었다
-	if ((double)currunt_y > (double)y) y_dir = y_up;
+	if ((double)currunt_y > (double)y) y_dir = y_down;
 
 	if(currunt_x - x == 0) // 하나의 축(x,y)이 움직이지 않으면 반대축만 움직이게 한다
 	{
@@ -800,7 +799,7 @@ void setup()
 	DDRF |= X_STEP | X_DIR;
 	DDRD |= X_ENABLE;
 	DDRF |= Y_STEP | Y_DIR | Y_ENABLE;
-	DDRC |= Z_STEP | Z_DIR;
+	DDRL |= Z_STEP | Z_DIR;
 	DDRK |= Z_ENABLE;
 	DDRA |= E_STEP | E_DIR | E_ENABLE;
 	DDRC |= E1_STEP | E1_DIR | E1_ENABLE;
@@ -816,52 +815,62 @@ void setup()
 	// DDRB |= 0x10; // fan
 	//---------------------------
 
+	// x
 	TCCR1A = 0x00;
 	TCCR1B = 0x0a;
 	TCCR1C = 0x00;
 	OCR1A = 400;
 	TIMSK1 = 0x00;
 
-	//---------------------------
+	// e
 	TCCR2A = 0x02;
 	TCCR2B = 0x06;
 	TCNT2 = 0x00;
 	OCR2A = 240;
 	TIMSK2 = 0x00;
-	//---------------------------
 
+	// y
 	TCCR3A = 0x00;
 	TCCR3B = 0x0a;
 	TCCR3C = 0x00;
 	OCR3A = 400;
 	TIMSK3 = 0x00;
 
+	// z
+	TCCR4A = 0x00;
+	TCCR4B = 0x0a;
+	TCCR4C = 0x00;
+	OCR4A = 400;
+	TIMSK4 = 0x00;
+
+
 	currunt_y = 0;
 	currunt_x = 0;
+
 	//reset();
 
-	Serial.begin(9600);
-	//int bed_analog_value = analogRead(A6);
-	int end_analog_value = analogRead(A7);
-	PORTD |= 0x20; // end
-	//PORTB |= 0x10; // bed
+	// 온도 올리는 코드
 
-	while(end_analog_value > 95)
-	{
-		//bed_analog_value = analogRead(A6);
-		end_analog_value = analogRead(A7);
+	// Serial.begin(9600);
+	// //int bed_analog_value = analogRead(A6);
+	// int end_analog_value = analogRead(A7);
+	// //PORTD |= 0x20; // end
+	// //PORTB |= 0x10; // bed
 
-		// Serial.print("bed : ");
-		// Serial.print(bed_analog_value);
-		Serial.print(" end : ");
-		Serial.println(end_analog_value);
+	// while(end_analog_value > 95)
+	// {
+	// 	//bed_analog_value = analogRead(A6);
+	// 	end_analog_value = analogRead(A7);
 
-		// if(bed_analog_value <= 860) PORTD &= ~0x10;
-		// else PORTD |= 0x10;
-		delay(100);
-	}
+	// 	// Serial.print("bed : ");
+	// 	// Serial.print(bed_analog_value);
+	// 	Serial.print(" end : ");
+	// 	Serial.println(end_analog_value);
 
-	PORTD &= ~0x20;
+	// 	// if(bed_analog_value <= 860) PORTD &= ~0x10;
+	// 	// else PORTD |= 0x10;
+	// 	delay(100);
+	// }
 }
 
 volatile int i = 0;
@@ -870,31 +879,33 @@ volatile int end_analog_value = 0;
 
 void loop() // 커스텀 프린터 태스트
 {
-	
-	TIMSK2 = 0x00;
+	// x_move(100, x_right, 600);
+	// y_move(100, y_up, 600);
+	// z_move(100, z_up, 600);
+	// TIMSK2 = 0x00;
 
 	for (i = 0; i < 911; i++) {
 		TIMSK2 = 0x02;
 		//bed_analog_value = analogRead(A6);
-		end_analog_value = analogRead(A7);
+		// end_analog_value = analogRead(A7);
 
-		// Serial.print("bed : ");
-		// Serial.print(bed_analog_value);
-		Serial.print(" end : ");
-		Serial.println(end_analog_value);
+		// // Serial.print("bed : ");
+		// // Serial.print(bed_analog_value);
+		// Serial.print(" end : ");
+		// Serial.println(end_analog_value);
 
-		// if(bed_analog_value <= 860) PORTD &= ~0x10;
-		// else PORTD |= 0x10;
+		// // if(bed_analog_value <= 860) PORTD &= ~0x10;
+		// // else PORTD |= 0x10;
 
-		if(end_analog_value < 95) 
-		{
-			PORTD &= ~0x20;
-		}
-		else if(end_analog_value > 80)
-		{
-			PORTD |= 0x20;
-			//TIMSK2 = 0x00;
-		}
+		// if(end_analog_value < 95) 
+		// {
+		// 	PORTD &= ~0x20;
+		// }
+		// else if(end_analog_value > 80)
+		// {
+		// 	PORTD |= 0x20;
+		// 	//TIMSK2 = 0x00;
+		// }
 
 		ushift(xy_pos[i][0], xy_pos[i][1], speeds[i]);
 		//Serial.println(i);
@@ -916,59 +927,29 @@ volatile char toggle = 0;
 
 ISR(TIMER1_COMPA_vect)
 {
-
-  if(xz_changer == 0)
+	if(x_step_toggle == 0)
 	{
-		if(x_step_toggle == 0)
-		{
-			x_step_toggle = 1;
-			PORTF |= X_STEP;
-		}
-		else
-		{
-			x_step_toggle = 0;
-			PORTF &= ~(X_STEP);
-			x_step_count++;
-			char x_limit_switch = PINC & X_STOP;
-
-			if(x_step_count >= x_distance)
-			{
-				x_step_count = 0;
-				TIMSK1 = 0x00;
-			}
-			if(x_limit_switch && x_reset == 0)
-			{
-				TIMSK1 = 0x00;
-				x_step_count = 0;
-			}
-		}
+		x_step_toggle = 1;
+		PORTF |= X_STEP;
 	}
 	else
 	{
-		if(z_step_toggle == 0)
-		{
-			z_step_toggle = 1;
-			PORTC |= Z_STEP;
-		}
-		else
-		{
-			z_step_toggle = 0;
-			PORTC &= ~(Z_STEP);
-			z_step_count++;
-			char z_limit_switch = PINC & Z_STOP;
+		x_step_toggle = 0;
+		PORTF &= ~(X_STEP);
+		x_step_count++;
+		char x_limit_switch = PINC & X_STOP;
 
-			if(z_step_count >= z_distance)
-			{
-				z_step_count = 0;
-				TIMSK1 = 0x00;
-			}
-			if(z_limit_switch && z_reset == 0)
-			{
-				TIMSK1 = 0x00;
-				z_step_count = 0;
-			}
+		if(x_step_count >= x_distance)
+		{
+			x_step_count = 0;
+			TIMSK1 = 0x00;
 		}
-    }
+		if(x_limit_switch && x_reset == 0)
+		{
+			TIMSK1 = 0x00;
+			x_step_count = 0;
+		}
+	}
 }
 
 ISR(TIMER2_COMPA_vect){
@@ -986,7 +967,6 @@ ISR(TIMER2_COMPA_vect){
 
 ISR(TIMER3_COMPA_vect)
 {
-
 	if(y_step_toggle == 0)
 	{
 		y_step_toggle = 1;
@@ -1008,11 +988,36 @@ ISR(TIMER3_COMPA_vect)
 		{
 			TIMSK3 = 0x00;
 			y_step_count = 0;
-
 		}
 	}
 }
 
+ISR(TIMER4_COMPA_vect)
+{
+	if(z_step_toggle == 0)
+	{
+		z_step_toggle = 1;
+		PORTL |= Z_STEP;
+	}
+	else
+	{
+		z_step_toggle = 0;
+		PORTL &= ~(Z_STEP);
+		z_step_count++;
+		char z_limit_switch = PINC & Z_STOP;
+
+		if(z_step_count >= z_distance)
+		{
+			z_step_count = 0;
+			TIMSK4 = 0x00;
+		}
+		if(z_limit_switch && z_reset == 0)
+		{
+			TIMSK4 = 0x00;
+			z_step_count = 0;
+		}
+	}
+}
 //1 step = 0.0125mm
 //80 step = 1mm
 //1 zsetp = 0.0025mm
