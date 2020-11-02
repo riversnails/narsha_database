@@ -1,0 +1,14 @@
+﻿  main.cxx
+d:\git\narsha_database\문서\수업\bgi\main.cxx(100): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdio.h(208): note: 'fopen' 선언을 참조하십시오.
+d:\git\narsha_database\문서\수업\bgi\main.cxx(42): warning C4101: 'toggle' :참조되지 않은 지역 변수입니다.
+d:\git\narsha_database\문서\수업\bgi\main.cxx(29): warning C4101: 'buf1' :참조되지 않은 지역 변수입니다.
+d:\git\narsha_database\문서\수업\bgi\main.cxx(28): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
+d:\git\narsha_database\문서\수업\bgi\main.cxx(44): warning C4101: 'y' :참조되지 않은 지역 변수입니다.
+d:\git\narsha_database\문서\수업\bgi\main.cxx(44): warning C4101: 'x' :참조되지 않은 지역 변수입니다.
+d:\git\narsha_database\문서\수업\bgi\main.cxx(30): warning C4101: 'buf2' :참조되지 않은 지역 변수입니다.
+d:\git\narsha_database\문서\수업\bgi\main.cxx(34): warning C4101: 'ch' :참조되지 않은 지역 변수입니다.
+d:\git\narsha_database\문서\수업\bgi\main.cxx(27): warning C4101: 'size' :참조되지 않은 지역 변수입니다.
+d:\git\narsha_database\문서\수업\bgi\main.cxx(41): warning C4101: 'tmp_rgb' :참조되지 않은 지역 변수입니다.
+d:\git\narsha_database\문서\수업\bgi\main.cxx(39): warning C4101: 'color' :참조되지 않은 지역 변수입니다.
+  bgi.vcxproj -> D:\git\narsha_database\문서\수업\bgi\Debug\bgi.exe

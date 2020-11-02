@@ -1,0 +1,230 @@
+#include "src/etherShield.h"
+
+static uint8_t my_mac[6] = {0x54,0x55,0x58,0x10,0x00,0x24}; 
+static uint8_t everyone_mac[6] = {0xff,0xff,0xff,0xff,0xff,0xff}; 
+static uint8_t myip[4] = {192,168,1,17};
+
+#define BUFFER_SIZE 250
+unsigned char buf[BUFFER_SIZE+1];
+
+
+uint16_t pkt_len;
+
+EtherShield es=EtherShield();
+
+void eth_init()
+{
+    /*initialize enc28j60*/
+  es.ES_enc28j60Init(my_mac);
+  es.ES_enc28j60clkout(2); // change clkout from 6.25MHz to 12.5MHz
+ 
+  delay(10);
+
+  // 0x476 is PHLCON LEDA=links status, LEDB=receive/transmit
+  // enc28j60PhyWrite(PHLCON,0b0000 0100 0111 01 10);
+  es.ES_enc28j60PhyWrite(PHLCON,0x476);
+  delay(100);
+ 
+  //init the ethernet/ip layer:
+  es.ES_init_ip_arp_udp_tcp(my_mac,myip,80);
+}
+
+uint16_t packet_receive()
+{
+  return es.ES_enc28j60PacketReceive(BUFFER_SIZE, buf);
+}
+
+//=================================================================
+
+#define ETH_INDEX_DST_MAC_ADDR  0
+#define ETH_INDEX_SRC_MAC_ADDR  6
+#define ETH_INDEX_TYPE          12
+#define ETH_INDEX_DATA          14
+
+
+#define ARP_PACKET 0x0608  // 08 06
+#define IP_PACKET 0x0008  // 08 00
+
+
+void print_buf_data()
+{
+  Serial.printf("pkt_len = %d\n",pkt_len);
+
+  for(int i=0;i<pkt_len;i++)
+  {
+    if(i%16 == 0) Serial.printf("\n");
+    Serial.printf("%02x ",*(buf+i));
+  }
+}
+
+void print_ethernet_packet()
+{
+    Serial.printf("\n\n=================================================\n");
+    Serial.printf("\n-------------------------------------------------\n");
+    Serial.printf("Destination MAC Address : ");
+    for(int i=0;i<6;i++) Serial.printf("%02x ", *(buf+i));
+
+    Serial.printf("\nSource MAC Address : ");
+    for(int i=0;i<6;i++) Serial.printf("%02x ", *(buf+i + ETH_INDEX_SRC_MAC_ADDR));
+
+    Serial.printf("\nType : ");
+    for(int i=0;i<2;i++) Serial.printf("%02x ", *(buf+i + ETH_INDEX_TYPE));
+}
+
+bool is_everyone_packet()
+{
+  int count = 0;
+  for(int i=0;i<6;i++)
+  { 
+    if(*(buf+i) == everyone_mac[i]) count++;
+  }
+
+  if(count == 6) return true;
+  else return false;
+}
+
+bool is_my_packet()
+{
+  int count = 0;
+  for(int i=0;i<6;i++)
+  { 
+    if(*(buf+i) == my_mac[i]) count++;
+  }
+
+  if(count == 6) return true;
+  else return false;
+}
+
+
+unsigned short which_packet_type()
+{
+  unsigned short packet_type = *(unsigned short *)(buf + ETH_INDEX_TYPE);
+  if(packet_type == ARP_PACKET) Serial.printf("\nARP Packet");
+  else if(packet_type == IP_PACKET) Serial.printf("\nIP Packet");
+  return packet_type;
+}
+
+
+//===================================================================
+
+#define ARP_INDEX_HARDWARE_TYPE       14
+#define ARP_INDEX_PROTOCOL_TYPE       16
+#define ARP_INDEX_HARDWARE_SIZE       18
+#define ARP_INDEX_PROTOCOL_SIZE       19
+#define ARP_INDEX_OPCODE              20
+#define ARP_INDEX_SENDER_MAC_ADDRESS  22
+#define ARP_INDEX_SENDER_IP_ADDRESS   28
+#define ARP_INDEX_TARGET_MAC_ADDRESS  32
+#define ARP_INDEX_TARGET_IP_ADDRESS   38
+
+#define ARP_HARDWARE_TYPE_ETHERNET    0x0100
+#define ARP_PROTOCOL_TYPE_IP          0x0008
+
+#define ARP_OPCODE_REQUEST            1
+#define ARP_OPCODE_REPLY              2
+
+unsigned short arp_hardware_type = 0;
+unsigned short arp_protocol_type = 0;
+int arp_hardware_size = 0;
+int arp_protocol_size = 0;
+int arp_opcode = 0;
+unsigned char arp_sender_mac_addr[6];
+unsigned char arp_sender_ip_addr[4];
+unsigned char arp_target_mac_addr[6];
+unsigned char arp_target_ip_addr[4];
+
+void parsing_arp_header()
+{
+    arp_hardware_type = *(unsigned short *)(buf + ARP_INDEX_HARDWARE_TYPE);
+    arp_protocol_type = *(unsigned short *)(buf + ARP_INDEX_PROTOCOL_TYPE);
+    arp_hardware_size = *(buf + ARP_INDEX_HARDWARE_SIZE);
+    arp_protocol_size = *(buf + ARP_INDEX_PROTOCOL_SIZE);
+    arp_opcode = (*(buf + ARP_INDEX_OPCODE) << 8) + *(buf + 1 + ARP_INDEX_OPCODE);
+    for(int i=0;i<6;i++) 
+    {
+      arp_sender_mac_addr[i] = *(buf + i + ARP_INDEX_SENDER_MAC_ADDRESS);
+      arp_target_mac_addr[i] = *(buf + i + ARP_INDEX_TARGET_MAC_ADDRESS);
+    }
+    for(int i=0;i<4;i++) 
+    {
+      arp_sender_ip_addr[i] = *(buf + i + ARP_INDEX_SENDER_IP_ADDRESS);
+      arp_target_ip_addr[i] = *(buf + i + ARP_INDEX_TARGET_IP_ADDRESS);
+    }
+}
+
+void print_arp_packet()
+{
+    Serial.printf("\n-------------------------------------------------\n");
+    Serial.printf("[ ARP Packet ]\n");
+    Serial.printf("Hardware Type : ");
+    if(arp_hardware_type == ARP_HARDWARE_TYPE_ETHERNET) Serial.printf("Ethernet ( ");
+    else Serial.printf("Others ( ");
+    for(int i=0;i<2;i++) Serial.printf("%02x ", *(buf+i + ARP_INDEX_HARDWARE_TYPE));
+    Serial.printf(")");
+
+    Serial.printf("\nProtocol Type : ");
+    if(arp_protocol_type == ARP_PROTOCOL_TYPE_IP) Serial.printf("IP ( ");
+    else Serial.printf("Others ( ");
+    for(int i=0;i<2;i++) Serial.printf("%02x ", *(buf+i + ARP_INDEX_PROTOCOL_TYPE));
+    Serial.printf(")");
+
+    Serial.printf("\nHardware Size : %d ( %02x )",arp_hardware_size,arp_hardware_size);
+    Serial.printf("\nProtocol Size : %d ( %02x )",arp_protocol_size,arp_protocol_size);
+
+    Serial.printf("\nOpcode : ");
+    if(arp_opcode == ARP_OPCODE_REQUEST) Serial.printf(" Request ( %d , ",arp_opcode);
+    else if(arp_opcode == ARP_OPCODE_REPLY) Serial.printf(" Reply ( %d , ",arp_opcode);
+    for(int i=0;i<2;i++) Serial.printf("%02x ", *(buf+i + ARP_INDEX_OPCODE));
+    Serial.printf(")");
+
+    Serial.printf("\nSender MAC Address : ");
+    for(int i=0;i<5;i++) Serial.printf("%02x:", arp_sender_mac_addr[i]);
+    Serial.printf("%02x", arp_sender_mac_addr[5]);
+
+    Serial.printf("\nSender IP Address  : ");
+    for(int i=0;i<3;i++) Serial.printf("%d.", arp_sender_ip_addr[i]);
+    Serial.printf("%d", arp_sender_ip_addr[3]);  
+
+    Serial.printf("\nTarget MAC Address : ");
+    for(int i=0;i<5;i++) Serial.printf("%02x:", arp_target_mac_addr[i]);
+    Serial.printf("%02x", arp_target_mac_addr[5]);      
+    
+    Serial.printf("\nTarget IP Address  : ");
+    for(int i=0;i<3;i++) Serial.printf("%d.", arp_target_ip_addr[i]);
+    Serial.printf("%d", arp_target_ip_addr[3]);
+}
+
+
+
+//============================================================
+
+void setup(){
+
+  Serial.begin(115200);
+ 
+  eth_init();
+ 
+}
+
+void loop(){
+  unsigned short packet_type;
+
+  pkt_len = packet_receive();
+
+  if(pkt_len!=0){
+      //print_buf_data();
+      if(is_my_packet() == true || is_everyone_packet() == true)
+      {
+        //print_ethernet_packet();
+
+        packet_type = which_packet_type();
+        if(packet_type == ARP_PACKET)
+        {
+          parsing_arp_header();
+          print_arp_packet();
+        }
+      }
+      
+  }  
+  //delay(1);
+}
