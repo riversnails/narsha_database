@@ -2,7 +2,6 @@
 #include "num_2_16bit.h"
 #include "num_3_16bit.h"
 #include "font_2.h"
-//#include "stalin_111_128.h"
 
 #define OLED_CS     4
 #define OLED_RST    3
@@ -37,12 +36,14 @@ void setup()
       put_pixel(i, j, 0x001f);
     }
   }
-  draw_num_30_30(50, 50, 2);
+
+  //font_write(100, 100, 0x001f, '2');
+  string_write(20, 100, 0x001f, "hello world");
 }
 
 void loop()
 {
-  
+
 }
 
 void spi_init()
@@ -192,28 +193,6 @@ void Draw_Bitmap(void)
   }
 }
 
-/*
-  void Draw_Bitmaps(void)
-  {
-  Write_Command(0x15); // Column
-  Write_Data(0x00);
-  Write_Data(111);
-
-  Write_Command(0x75); // Row
-  Write_Data(0x00);
-  Write_Data(127);
-
-  Write_Command(0x5C); // Write Ram
-
-  for (int j = 0; j < 128; j++)  {
-    for (int i = 0; i < 111; i++)  {
-      Write_Data(pgm_read_byte(&stalin_111_128[0x46 + (i * 2 + j * 111 * 2) + 1]));
-      Write_Data(pgm_read_byte(&stalin_111_128[0x46 + (i * 2 + j * 111 * 2)]));
-    }
-  }
-  }
-*/
-
 void put_pixel(char x, char y, unsigned short color)
 {
   char first_byte = (color & 0xff00) >> 8;
@@ -232,50 +211,26 @@ void put_pixel(char x, char y, unsigned short color)
   Write_Data(second_byte);
 }
 
-void draw_num_30_30(char x, char y, char number)
+void font_write(char x, char y, int color, char font)
 {
-  char column_x = 30;
-  char row_y = 30;
-  Write_Command(0x15); // Column
-  Write_Data(x);
-  Write_Data(x + column_x - 1);
-
-  Write_Command(0x75); // Row
-  Write_Data(y);
-  Write_Data(y + row_y - 1);
-
-  Write_Command(0x5C); // Write Ram
-
-  for (int j = 0; j < row_y; j++)  {
-    for (int i = 0; i < column_x; i++)  {
-      if (number == 2)
+  for (int j = 0; j < 16; j++) {
+    for (int i = 0; i < 8; i++)  {
+      if (ascii_8x16[font - 0x20][j] & (0x80 >> i))
       {
-        Write_Data(pgm_read_byte(&num_2_16bit[0x46 + (i * 2 + j * column_x * 2) + 1]));
-        Write_Data(pgm_read_byte(&num_2_16bit[0x46 + (i * 2 + j * column_x * 2)]));
-      }
-      else if (number == 3)
-      { 
-        Write_Data(pgm_read_byte(&num_3_16bit[0x46 + (i * 2 + j * column_x * 2) + 1]));
-        Write_Data(pgm_read_byte(&num_3_16bit[0x46 + (i * 2 + j * column_x * 2)]));
+        put_pixel(x + i, y + j, color);
       }
     }
   }
 }
 
-void font_write(char x, char y, char font)
+void string_write(char x, char y, int color, char *str)
 {
-  char first_byte = (color & 0xff00) >> 8;
-  char second_byte = color & 0x00ff;
-  Write_Command(0x15); // Column
-  Write_Data(x);
-  Write_Data(x);
+  char font;
+  int str_len = strlen(str);
 
-  Write_Command(0x75); // Row
-  Write_Data(y);
-  Write_Data(y);
+  for (int i = 0; i < str_len; i++)
+  {
+    font_write(x + i * 8, y, color, *(str + i));
+  }
 
-  Write_Command(0x5C); // Write Ram
-
-  Write_Data(first_byte);
-  Write_Data(second_byte);
 }
