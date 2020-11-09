@@ -1,3 +1,4 @@
+#include <avr/pgmspace.h>
 // #define X_DIR 0x20 // c
 // #define X_STEP 0x80 // d
 // #define X_STOP 0x04 // c 2
@@ -375,7 +376,7 @@ const float xy_pos[911][2] = {
 { 135.259, 85.704, }, { 135.202, 85.443, }, { 135.149, 85.255, },
 { 132.244, 82.351, },
 };
-const float speeds[911] = {
+const PROGMEM float speeds[911] = {
 667,667,667,667,
 667,667,667,
 667,667,667,
@@ -927,96 +928,96 @@ volatile char toggle = 0;
 
 ISR(TIMER1_COMPA_vect)
 {
-	if(x_step_toggle == 0)
-	{
-		x_step_toggle = 1;
-		PORTF |= X_STEP;
-	}
-	else
-	{
-		x_step_toggle = 0;
-		PORTF &= ~(X_STEP);
-		x_step_count++;
-		char x_limit_switch = PINC & X_STOP;
+  if (x_step_toggle == 0)
+  {
+    x_step_toggle = 1;
+    PORTF |= X_STEP;
+  }
+  else
+  {
+    x_step_toggle = 0;
+    PORTF &= ~(X_STEP);
+    x_step_count++;
+    //char x_limit_switch = PINC & X_STOP;
 
-		if(x_step_count >= x_distance)
-		{
-			x_step_count = 0;
-			TIMSK1 = 0x00;
-		}
-		if(x_limit_switch && x_reset == 0)
-		{
-			TIMSK1 = 0x00;
-			x_step_count = 0;
-		}
-	}
+    if (x_step_count >= x_distance)
+    {
+      x_step_count = 0;
+      TIMSK1 = 0x00;
+    }
+    //    if(x_limit_switch && x_reset == 0)
+    //    {
+    //      TIMSK1 = 0x00;
+    //      x_step_count = 0;
+    //    }
+  }
 }
 
-ISR(TIMER2_COMPA_vect){
-	if(toggle == 0)
-	{
-		toggle = 1;
-		PORTA |= E_STEP;
-	}
-	else
-	{
-		toggle = 0;
-		PORTA &= ~(E_STEP);
-	}
+ISR(TIMER2_COMPA_vect) {
+  if (toggle == 0)
+  {
+    toggle = 1;
+    PORTA |= E_STEP;
+  }
+  else
+  {
+    toggle = 0;
+    PORTA &= ~(E_STEP);
+  }
 }
 
 ISR(TIMER3_COMPA_vect)
 {
-	if(y_step_toggle == 0)
-	{
-		y_step_toggle = 1;
-		PORTF |= Y_STEP;
-	}
-	else
-	{
-		y_step_toggle = 0;
-		PORTF &= ~(Y_STEP);
-		y_step_count++;
-		char y_limit_switch = PINC & Y_STOP;
+  if (y_step_toggle == 0)
+  {
+    y_step_toggle = 1;
+    PORTF |= Y_STEP;
+  }
+  else
+  {
+    y_step_toggle = 0;
+    PORTF &= ~(Y_STEP);
+    y_step_count++;
+    //char y_limit_switch = PINC & Y_STOP;
 
-		if(y_step_count >= y_distance)
-		{
-			y_step_count = 0;
-			TIMSK3 = 0x00;
-		}
-		if(y_limit_switch  && y_reset == 0)
-		{
-			TIMSK3 = 0x00;
-			y_step_count = 0;
-		}
-	}
+    if (y_step_count >= y_distance)
+    {
+      y_step_count = 0;
+      TIMSK3 = 0x00;
+    }
+    //    if(y_limit_switch  && y_reset == 0)
+    //    {
+    //      TIMSK3 = 0x00;
+    //      y_step_count = 0;
+    //    }
+  }
 }
 
 ISR(TIMER4_COMPA_vect)
 {
-	if(z_step_toggle == 0)
-	{
-		z_step_toggle = 1;
-		PORTL |= Z_STEP;
-	}
-	else
-	{
-		z_step_toggle = 0;
-		PORTL &= ~(Z_STEP);
-		z_step_count++;
-		char z_limit_switch = PINC & Z_STOP;
+  if (z_step_toggle == 0)
+  {
+    z_step_toggle = 1;
+    PORTL |= Z_STEP;
+  }
+  else
+  {
+    z_step_toggle = 0;
+    PORTL &= ~(Z_STEP);
+    z_step_count++;
+    //char z_limit_switch = PINC & Z_STOP;
 
-		if(z_step_count >= z_distance)
-		{
-			z_step_count = 0;
-			TIMSK4 = 0x00;
-		}
-		if(z_limit_switch && z_reset == 0)
-		{
-			TIMSK4 = 0x00;
-			z_step_count = 0;
-		}
-	}
+    if (z_step_count >= z_distance)
+    {
+      z_step_count = 0;
+      TIMSK4 = 0x00;
+    }
+    //    if(z_limit_switch && z_reset == 0)
+    //    {
+    //      TIMSK4 = 0x00;
+    //      z_step_count = 0;
+    //    }
+  }
 }
 //1 step = 0.0125mm
 //80 step = 1mm
