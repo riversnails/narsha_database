@@ -243,7 +243,7 @@ void Clear_Screen(void)
   for(int i=0;i<128;i++)  {
     for(int j=0;j<128;j++)  {
       Write_Data(0x00);
-      Write_Data(0x00);
+      Write_Data(0x00); // one pixel == 2byte
     }
   }
 }

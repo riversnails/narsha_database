@@ -30,7 +30,7 @@
 
 
 #define NUM_IMAGE_WIDTH			40
-#define NUM_IMAGE_HEIGHT		48
+#define NUM_IMAGE_HEIGHT			48
 
 #define BITMAP_IMAGE_WIDTH		64
 #define BITMAP_IMAGE_HEIGHT		64

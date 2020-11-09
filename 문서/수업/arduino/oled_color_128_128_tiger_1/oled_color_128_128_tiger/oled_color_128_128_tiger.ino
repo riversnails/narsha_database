@@ -59,6 +59,7 @@ void setup()  {
 	 */
 
 	Draw_Bitmap(0,0);
+
 	
 	while(1);
 	
