@@ -804,7 +804,7 @@ void setup()
 	DDRK |= Z_ENABLE;
 	DDRA |= E_STEP | E_DIR | E_ENABLE;
 	DDRC |= E1_STEP | E1_DIR | E1_ENABLE;
-	
+
 	//---------------------------
 	// DDRD |= 0x40;
 	// DDRB |= 0x03;
@@ -847,7 +847,11 @@ void setup()
 
 	currunt_y = 0;
 	currunt_x = 0;
-
+	//reset();
+	x_move(1000, x_right, 600);
+	y_move(1000, y_up, 600);
+	z_move(1000, z_up, 600);
+	while (TIMSK1 != 0 || TIMSK3 != 0 || TIMSK4 != 0);
 	//reset();
 
 	// 온도 올리는 코드
