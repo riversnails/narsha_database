@@ -40,6 +40,10 @@
 #define E1_ENABLE 0x80 // c
 //-------------------------------------
 
+#define X_MIN 0x20 // e
+#define Y_MIN 0x02 // j
+#define Z_MIN 0x08 // d
+
 #define ONE_MM 80
 #define ONE_CM 800
 #define Z_ONE_MM 400
@@ -789,7 +793,7 @@ void reset()
   while (z_reset != 0);
   delay(100);
   x_move(32000, x_left, 600);
-  y_move(32000, y_up, 600);
+  y_move(32000, y_down, 600);
   while (x_reset != 0 || y_reset != 0); // 끝날때까지 대기
   currunt_x = 0; // 초기화 했으니 좌표도 초기화
   currunt_y = 0;
@@ -805,7 +809,13 @@ void setup()
   DDRA |= E_STEP | E_DIR | E_ENABLE;
   DDRC |= E1_STEP | E1_DIR | E1_ENABLE;
 
-  PORTL |= 0x01;
+  DDRE &= ~(X_MIN);
+  DDRJ &= ~(Y_MIN);
+  DDRD &= ~(Z_MIN);
+
+  PORTE |= X_MIN;
+  PORTJ |= Y_MIN;
+  PORTD |= Z_MIN;
   //---------------------------
   // DDRD |= 0x40;
   // DDRB |= 0x03;
@@ -850,11 +860,21 @@ void setup()
   currunt_y = 0;
   currunt_x = 0;
   //reset();
-  x_move(100, x_right, 600);
-  y_move(100, y_up, 600);
-  z_move(300, z_up, 600);
-  while (TIMSK1 != 0 || TIMSK3 != 0 || TIMSK4 != 0);
+
+  y_move(1000, y_up, 600);
+  while(TIMSK3 != 0);
+  y_move(1000, y_down, 600);
+  while(TIMSK3 != 0);
+  while(1);
+
+  // x_move(100, x_right, 600);
+  // y_move(100, y_up, 600);
+  // z_move(300, z_up, 600);
+  // while (TIMSK1 != 0 || TIMSK3 != 0 || TIMSK4 != 0);
   delay(2000);
+
+  reset();
+  while(1);
 
   Serial.begin(9600);
   pinMode(8, OUTPUT);
@@ -997,18 +1017,19 @@ ISR(TIMER1_COMPA_vect)
     x_step_toggle = 0;
     PORTF &= ~(X_STEP);
     x_step_count++;
-    //char x_limit_switch = PINC & X_STOP;
+    char x_limit_switch = PINE & X_MIN;
 
     if (x_step_count >= x_distance)
     {
       x_step_count = 0;
       TIMSK1 = 0x00;
     }
-    //    if(x_limit_switch && x_reset == 0)
-    //    {
-    //      TIMSK1 = 0x00;
-    //      x_step_count = 0;
-    //    }
+    if(x_limit_switch != 0 && x_reset == 1)
+    {
+      TIMSK1 = 0x00;
+      x_step_count = 0;
+      x_reset = 0;
+    }
   }
 }
 
@@ -1037,18 +1058,19 @@ ISR(TIMER3_COMPA_vect)
     y_step_toggle = 0;
     PORTF &= ~(Y_STEP);
     y_step_count++;
-    //char y_limit_switch = PINC & Y_STOP;
+    char y_limit_switch = PINJ & Y_MIN;
 
     if (y_step_count >= y_distance)
     {
       y_step_count = 0;
       TIMSK3 = 0x00;
     }
-    //    if(y_limit_switch  && y_reset == 0)
-    //    {
-    //      TIMSK3 = 0x00;
-    //      y_step_count = 0;
-    //    }
+    if(y_limit_switch != 0 && y_reset == 1)
+    {
+      TIMSK3 = 0x00;
+      y_step_count = 0;
+      y_reset = 0;
+    }
   }
 }
 
@@ -1064,18 +1086,19 @@ ISR(TIMER4_COMPA_vect)
     z_step_toggle = 0;
     PORTL &= ~(0x08);
     z_step_count++;
-    //char z_limit_switch = PINC & Z_STOP;
+    char z_limit_switch = PIND & Z_MIN;
 
     if (z_step_count >= z_distance)
     {
       z_step_count = 0;
       TIMSK4 = 0x00;
     }
-    //    if(z_limit_switch && z_reset == 0)
-    //    {
-    //      TIMSK4 = 0x00;
-    //      z_step_count = 0;
-    //    }
+    if(z_limit_switch != 0 && z_reset == 1)
+    {
+      TIMSK4 = 0x00;
+      z_step_count = 0;
+      z_reset = 0;
+    }
   }
 }
 //1 step = 0.0125mm
