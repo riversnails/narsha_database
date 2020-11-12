@@ -68,12 +68,6 @@ int delays = 1475;
 
 bool isOne = true;
 
-char menu = '0';
-char moveMenu = '0';
-int c_state = 0;
-int p_state = 0;
-int rotary_cnt = 0;
-
 typedef enum _DIR {
   X_RIGHT,
   X_LEFT,
@@ -129,59 +123,182 @@ void setup() {
 }
 
 void loop() {
-  int state_A = PIND & Encoder_A;
-  int state_B = PIND & Encoder_B;
+  c_millis = millis();
 
-  if (state_A != 0)
-    state_A = 1;
+  rotate_button(c_millis);
+  processMenu(c_millis);
+}
 
-  if (state_B != 0)
-    state_B = 1;
+char menu = '0';
+char moveMenu = '0';
 
+int c_state = 0;
+int p_state = 0;
+int rotary_cnt = 0;
+unsigned long button_p_millis = 0;
+unsigned long processMenu_p_millis = 0;
 
-  if (state_A == 0 && state_B == 1)
+void rotate_button(unsigned long button_c_millis)
+{
+  if(button_c_millis - button_p_millis > 10)
   {
-    p_state = c_state;
-    c_state = 1;
-  }
+    int state_A = PIND & Encoder_A; // read pin
+    int state_B = PIND & Encoder_B;
 
-  else if (state_A == 0 && state_B == 0)
-  {
-    p_state = c_state;
-    c_state = 2;
-  }
+    if (state_A != 0) state_A = 1; // change 0 or 1
+    if (state_B != 0) state_B = 1;
 
-  else if (state_A == 1 && state_B == 0)
-  {
-    p_state = c_state;
-    c_state = 3;
-  }
+    if (state_A == 0 && state_B == 1) c_state = 1; // change now state
+    else if (state_A == 0 && state_B == 0) c_state = 2;
+    else if (state_A == 1 && state_B == 0) c_state = 3;
+    else if (state_A == 1 && state_B == 1) c_state = 4;
 
-  else if (state_A == 1 && state_B == 1)
-  {
-    p_state = c_state;
-    c_state = 4;
-  }
-
-  if (c_state == 3)
-  {
-    if (p_state == 2)
+    if (c_state == 3 && p_state == 2)
     {
       rotary_cnt++;
       Serial.print("right : ");
       Serial.println(rotary_cnt);
     }
-  }
 
-  if (c_state == 1)
-  {
-    if (p_state == 2)
+    if (c_state == 1 && p_state == 2)
     {
       rotary_cnt--;
       Serial.print("left : ");
       Serial.println(rotary_cnt);
     }
+
+    p_state = c_state;
   }
+}
+
+void printMenu(char men) {
+  Serial.write(12); // ffeed == clear table
+  if (menu == '0') {
+    Serial.println("auto home - 1");
+    Serial.println("x move - 2");
+    Serial.println("y move - 3");
+    Serial.println("z move - 4");
+  } 
+  else if (menu == '1') {
+    Serial.println("starting auto home");
+  } 
+  else if (menu == '2') {
+    if (moveMenu == '0') {
+      Serial.println("back - 1");
+      Serial.println("10mm move - 2");
+      Serial.println("1mm move - 3");
+      Serial.println("0.1mm move - 4");
+    } 
+    else if (moveMenu != '1') {
+      Serial.println("back - 1");
+      Serial.println(current_x);
+    }
+  }
+}
+
+void processMenu(unsigned long processMenu_c_millis)
+{
+  if (processMenu_c_millis - processMenu_p_millis > 1000) 
+  {
+    processMenu_p_millis = processMenu_c_millis;
+    printMenu(menu);
+  }
+
+  if (menu == '0') {
+    if (Serial.available()) {
+      menu = Serial.read();
+    }
+  }
+  else if (menu == '1') {
+    if (is_not_reset) {
+      is_x_stop = false;
+      is_x_reset = false;
+      is_y_stop = false;
+      is_y_reset = false;
+      is_z_stop = false;
+      is_z_finish = false;
+      is_z_reset = false;
+      is_not_reset = false;
+    }
+    reset(micros());
+    if (is_z_reset && is_y_reset && is_x_reset) 
+    {
+      menu = '0';
+      is_not_reset = true;
+    }
+  } 
+  else if (menu == '2') {
+    if (moveMenu == '0') {
+      if (Serial.available()) {
+        moveMenu = Serial.read();
+        if (moveMenu == '1') {
+          menu = '0';
+          moveMenu = '0';
+        }
+      }
+  }
+
+  if (moveMenu == '2') {
+    if (Serial.available()) {
+      char dir = Serial.read();
+
+      if (dir == '1') {
+        moveMenu = '0';
+      }
+      if (dir == 'a') {
+        current_x -= 10;
+        x_move(10 * ONE_mm, X_LEFT, 400);
+        if (current_x < 0) {
+          current_x = 0;
+        }
+      } 
+      else if (dir == 'd') {
+        current_x += 10;
+        x_move(10 * ONE_mm, X_RIGHT, 400);
+      }
+    }
+  }
+  if (moveMenu == '3') {
+    if (Serial.available()) {
+      char dir = Serial.read();
+
+      if (dir == '1') {
+        moveMenu = '2';
+      }
+      if (dir == 'a') {
+        current_x -= 1;
+        x_move(1 * ONE_mm, X_LEFT, 400);
+        if (current_x < 0) {
+          current_x = 0;
+        }
+      } 
+      else if (dir == 'd') {
+        current_x += 1;
+        x_move(1 * ONE_mm, X_RIGHT, 400);
+      }
+    }
+  }
+  if (moveMenu == '4') {
+    if (Serial.available()) {
+      char dir = Serial.read();
+
+      if (dir == '1') {
+        moveMenu = '2';
+      }
+      if (dir == 'a') {
+        current_x -= 0.1;
+        x_move(0.1 * ONE_mm, X_LEFT, 400);
+        if (current_x < 0) {
+          current_x = 0;
+        }
+      } 
+      else if (dir == 'd') {
+        current_x += 0.1;
+        x_move(0.1 * ONE_mm, X_RIGHT, 400);
+      }
+    }
+  }
+
 }
 
 /* x location ISR */
@@ -258,28 +375,6 @@ ISR(TIMER3_COMPA_vect) {
           is_z_stop = true;
         }
       }
-    }
-  }
-}
-
-void printMenu(char men) {
-  Serial.write(12);
-  if (menu == '0') {
-    Serial.println("auto home - 1");
-    Serial.println("x move - 2");
-    Serial.println("y move - 3");
-    Serial.println("z move - 4");
-  } else if (menu == '1') {
-    Serial.println("starting auto home");
-  } else if (menu == '2') {
-    if (moveMenu == '0') {
-      Serial.println("back - 1");
-      Serial.println("10mm move - 2");
-      Serial.println("1mm move - 3");
-      Serial.println("0.1mm move - 4");
-    } else if (moveMenu != '1') {
-      Serial.println("back - 1");
-      Serial.println(current_x);
     }
   }
 }

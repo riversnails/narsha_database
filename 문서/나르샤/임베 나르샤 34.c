@@ -29,6 +29,7 @@ void loop() // lcd 버튼 회전및 클릭
 		int a = PIND & encoder_a; // 값 읽어오기
 		int b = PIND & encoder_b;
 		int button = PINC & encoder_button;
+		
 		if(a != 0) a = 1; // 이상한 값이 나올 수 있으니 0이 아니면 1로 변환
 		if(b != 0) b = 1;
 		if(button != 0) button = 1;
