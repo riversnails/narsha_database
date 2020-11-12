@@ -60,19 +60,22 @@ enum { // 열거형  날자 표현할때 자주 사용 0,1,2,3이런식으로 �
   x_left, x_right, y_up, y_down, z_up, z_down
 };
 
+// move value
 volatile char x_reset = 0;
 volatile int x_distance = 0;
-
 volatile char y_reset = 0;
 volatile int y_distance = 0;
-
 volatile char z_reset = 0;
 volatile int z_distance = 0;
-
 volatile double currunt_x = 0; // 현재 좌표 && mm 단위로 봄
 volatile double currunt_y = 0;
 
-volatile int xz_changer = 0;
+// temp value
+volatile int end_analog_value = 0;
+volatile int bed_analog_value = 0;
+volatile int bed_set_temp = 865;
+volatile int end_set_temp = 95;
+
 
 const float PROGMEM xy_pos[911][2] = {
   { 66.268, 82.377, }, { 66.527, 82.217, }, { 66.796, 82.073, }, { 67.072, 81.946, },
@@ -799,7 +802,43 @@ void reset()
   currunt_y = 0;
 }
 
-void setup()
+unsinged long heat_p_millis = 0;
+
+void heat_control(unsigned long heat_c_millis)
+{
+  end_analog_value = analogRead(A13);
+  bed_analog_value = analogRead(A14);
+  
+  if(bed_analog_value < bed_set_temp)
+  {
+    digitalWrite(A5, LOW);
+  }
+  else if(bed_set_temp+5 < bed_analog_value)
+  {
+    digitalWrite(A5, HIGH);
+  }
+
+  if(end_analog_value < end_set_temp)
+  {
+    digitalWrite(10, LOW);
+  }
+  else if(end_set_temp+5 < end_analog_value)
+  {
+    digitalWrite(10, HIGH);
+  }
+    
+  if(heat_c_millis - heat_p_millis > 1000)
+  {
+    heat_p_millis = heat_c_millis;
+    Serial.print(" b:");
+    Serial.print(b);
+    Serial.print(" e:");
+    Serial.print(e);
+    Serial.println(" ");
+  }
+}
+
+void init_pin() // 핀 설정
 {
   DDRF |= X_STEP | X_DIR;
   DDRD |= X_ENABLE;
@@ -816,6 +855,18 @@ void setup()
   PORTE |= X_MIN;
   PORTJ |= Y_MIN;
   PORTD |= Z_MIN;
+
+  pinMode(8, OUTPUT); 
+  pinMode(9, OUTPUT); 
+  pinMode(10, OUTPUT); 
+  pinMode(A13, INPUT); // ther 0
+  pinMode(A14, INPUT); // ther 1
+  pinMode(A5, OUTPUT); // relay pin
+}
+
+void setup()
+{
+  init_pin();
   //---------------------------
   // DDRD |= 0x40;
   // DDRB |= 0x03;
@@ -877,12 +928,7 @@ void setup()
   while(1);
 
   Serial.begin(9600);
-  pinMode(8, OUTPUT);
-  pinMode(9, OUTPUT);
-  pinMode(A13, INPUT); // ther 0
-  pinMode(A14, INPUT); // ther 1
-  pinMode(A5, OUTPUT); // relay pin
-  pinMode(10, OUTPUT); 
+  
 
 //  while(1)
 //  {
@@ -897,84 +943,23 @@ void setup()
 //      delay(100);
 //    }
 //  }
-  
-  int b, e;
-  while(e < 95 && b < 865)
-  {
-    int b = analogRead(A14);
-    int e = analogRead(A13);
-    if(b < 865)
-    {
-      digitalWrite(A5, LOW);
-    }
-    else if(870 < b)
-    {
-      digitalWrite(A5, HIGH);
-    }
-  
-    if(e < 95)
-    {
-      digitalWrite(10, LOW);
-    }
-    else if(100 < e)
-    {
-      digitalWrite(10, HIGH);
-    }
-    Serial.print(" b:");
-    Serial.print(b);
-    Serial.print(" e:");
-    Serial.print(e);
-    Serial.println(" ");
-    delay(500);
-  }
+  while(!(end_analog_value < end_set_temp) || !(bed_analog_value < bed_set_temp)) heat_control(millis());
 
   Serial.println("setup end");
 }
 
-volatile int i = 0;
-volatile int end_analog_value = 0;
-// volatile int bed_analog_value = 0;
 volatile unsigned long c_millis = 0;
-unsigned long p_millis = 0;
-unsigned long p_millis1 = 0;
+volatile unsigned long p_millis = 0;
 volatile unsigned long c_micros = 0;
 volatile unsigned long p_micros = 0;
+volatile int i = 0;
 volatile int count = 0;
-int b, e;
 int atoggle = 0;
+
 void loop() // 커스텀 프린터 태스트
 {
   c_millis = millis();
-  int b = analogRead(A14);
-  int e = analogRead(A13);
-  
-  if(b < 865)
-  {
-    digitalWrite(A5, LOW);
-  }
-  else if(870 < b)
-  {
-    digitalWrite(A5, HIGH);
-  }
-
-  if(e < 95)
-  {
-    digitalWrite(10, LOW);
-  }
-  else if(100 < e)
-  {
-    digitalWrite(10, HIGH);
-  }
-    
-  if(c_millis - p_millis > 1000)
-  {
-    p_millis = c_millis;
-    Serial.print(" b:");
-    Serial.print(b);
-    Serial.print(" e:");
-    Serial.print(e);
-    Serial.println(" ");
-  }
+  heat_control(c_millis);
 
   
 
