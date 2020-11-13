@@ -190,17 +190,17 @@ void move_func(char axis, float move_length, int DIR) // 축, 거리모드, 방�
       if (current_y - move_length < 0) return;
       current_y -= move_length;
     }
+
+    current_y -= 10;
     y_move(move_length * ONE_mm, DIR, 400);
   }
   else if (axis == 'z')
   {
     // if (current_z < 0) return; // z축은 레벨링때문에 막기 꺼둠
+
     if (DIR == z_up) current_z += move_length;
-    else if (DIR == z_down)
-    {
-      //if (current_z - move_length < 0) return;
-      current_z -= move_length;
-    }
+    else if (DIR == z_down) current_z -= move_length;
+
     z_move(move_length * ONE_mm, DIR, 400);
   }
 
@@ -328,6 +328,7 @@ void processMenu(unsigned long processMenu_c_millis)
       }
     }
   }
+
 }
 
 void setup() {

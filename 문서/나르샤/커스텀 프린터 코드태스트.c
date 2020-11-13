@@ -56,7 +56,7 @@
 #define Z_UP PORTL & ~(Z_DIR)
 #define Z_DOWN PORTL | Z_DIR
 
-enum { // 열거형  날자 표현할때 자주 사용 0,1,2,3이런식으로 나옴  define 대용
+enum { 
   x_left, x_right, y_up, y_down, z_up, z_down
 };
 
@@ -67,15 +67,24 @@ volatile char y_reset = 0;
 volatile int y_distance = 0;
 volatile char z_reset = 0;
 volatile int z_distance = 0;
-volatile double currunt_x = 0; // 현재 좌표 && mm 단위로 봄
-volatile double currunt_y = 0;
+volatile double current_x = 0; // 현재 좌표 && mm 단위로 봄
+volatile double current_y = 0;
+volatile double current_z = 0;
 
 // temp value
 volatile int end_analog_value = 0;
 volatile int bed_analog_value = 0;
 volatile int bed_set_temp = 865;
 volatile int end_set_temp = 95;
+volatile unsigned long heat_p_millis = 0;
 
+volatile int c_state = 0;
+volatile int p_state = 0;
+volatile int rotary_cnt = 0;
+volatile unsigned long button_p_millis = 0;
+volatile char menu = '0';
+volatile char moveMenu = '0';
+volatile unsigned long processMenu_p_millis = 0;
 
 const float PROGMEM xy_pos[911][2] = {
   { 66.268, 82.377, }, { 66.527, 82.217, }, { 66.796, 82.073, }, { 67.072, 81.946, },
@@ -736,24 +745,24 @@ void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 �
   int x_dir = x_right;
   int y_dir = y_up;
 
-  dis_X = abs(currunt_x - x); // 가야할 거리를 음수가 아니게 만들어서 값을 저장해준다
-  dis_Y = abs(currunt_y - y);
+  dis_X = abs(current_x - x); // 가야할 거리를 음수가 아니게 만들어서 값을 저장해준다
+  dis_Y = abs(current_y - y);
 
-  if ((double)currunt_x > (double)x) x_dir = x_left; // 가야할 방향을 맞추게 만들었다
-  if ((double)currunt_y > (double)y) y_dir = y_down;
+  if ((double)current_x > (double)x) x_dir = x_left; // 가야할 방향을 맞추게 만들었다
+  if ((double)current_y > (double)y) y_dir = y_down;
 
-  if (currunt_x - x == 0) // 하나의 축(x,y)이 움직이지 않으면 반대축만 움직이게 한다
+  if (current_x - x == 0) // 하나의 축(x,y)이 움직이지 않으면 반대축만 움직이게 한다
   {
     y_move((dis_Y * ONE_MM), y_dir, speed);
-    currunt_y = y;
+    current_y = y;
     while (TIMSK3 != 0X00);
     if (y_reset == 1) y_reset = 0;
     return;
   }
-  if (currunt_y - y == 0)
+  if (current_y - y == 0)
   {
     x_move((dis_X * ONE_MM), x_dir, speed);
-    currunt_x = x;
+    current_x = x;
     while (TIMSK1 != 0X00);
     if (x_reset == 1) x_reset = 0;
     return;
@@ -771,8 +780,8 @@ void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 �
   x_move((dis_X * ONE_MM), x_dir, x_speed);
   y_move((dis_Y * ONE_MM), y_dir, y_speed);
 
-  currunt_x = x; // 현재 좌표를 저장한다
-  currunt_y = y;
+  current_x = x; // 현재 좌표를 저장한다
+  current_y = y;
 
   // Serial.print(x); // 디버깅용 코드
   // Serial.print(" , y=");
@@ -798,11 +807,9 @@ void reset()
   x_move(32000, x_left, 600);
   y_move(32000, y_down, 600);
   while (x_reset != 0 || y_reset != 0); // 끝날때까지 대기
-  currunt_x = 0; // 초기화 했으니 좌표도 초기화
-  currunt_y = 0;
+  current_x = 0; // 초기화 했으니 좌표도 초기화
+  current_y = 0;
 }
-
-unsinged long heat_p_millis = 0;
 
 void heat_control(unsigned long heat_c_millis)
 {
@@ -831,10 +838,215 @@ void heat_control(unsigned long heat_c_millis)
   {
     heat_p_millis = heat_c_millis;
     Serial.print(" b:");
-    Serial.print(b);
+    Serial.print(bed_analog_value);
     Serial.print(" e:");
-    Serial.print(e);
+    Serial.print(end_analog_value);
     Serial.println(" ");
+  }
+}
+
+// void rotate_button(unsigned long button_c_millis)
+// {
+//   if (button_c_millis - button_p_millis > 10)
+//   {
+//     int state_A = PIND & Encoder_A; // read pin
+//     int state_B = PIND & Encoder_B;
+
+//     if (state_A != 0) state_A = 1; // change 0 or 1
+//     if (state_B != 0) state_B = 1;
+
+//     if (state_A == 0 && state_B == 1) c_state = 1; // change now state
+//     else if (state_A == 0 && state_B == 0) c_state = 2;
+//     else if (state_A == 1 && state_B == 0) c_state = 3;
+//     else if (state_A == 1 && state_B == 1) c_state = 4;
+
+//     if (c_state == 3 && p_state == 2)
+//     {
+//       rotary_cnt++;
+//       Serial.print("right : ");
+//       Serial.println(rotary_cnt);
+//     }
+
+//     if (c_state == 1 && p_state == 2)
+//     {
+//       rotary_cnt--;
+//       Serial.print("left : ");
+//       Serial.println(rotary_cnt);
+//     }
+
+//     p_state = c_state;
+//   }
+// }
+
+void move_func(char axis, float move_length, int DIR) // 축, 거리모드, 방향
+{
+//    Serial.print(moveMenu);
+//    Serial.print(" ");
+//    Serial.print(menu);
+//    Serial.print(" ");
+//    Serial.print(axis);
+//    Serial.print(" ");
+//    Serial.print(move_length);
+//    Serial.print(" ");
+//    Serial.print(DIR);
+//    Serial.print(" ");
+//    Serial.print(x_right);
+  printMenu(axis);
+  if (axis == 'x')
+  {
+    if (DIR == x_right) current_x += move_length;
+    else if (DIR == x_left)
+    {
+      if (current_x - move_length < 0) return;
+      current_x -= move_length;
+    }
+    x_move(move_length * ONE_MM, DIR, 400);
+  }
+  else if (axis == 'y')
+  {
+    if (DIR == y_up) current_y += move_length;
+    else if (DIR == y_down)
+    {
+      if (current_y - move_length < 0) return;
+      current_y -= move_length;
+    }
+    y_move(move_length * ONE_MM, DIR, 400);
+  }
+  else if (axis == 'z')
+  {
+    // if (current_z < 0) return; // z축은 레벨링때문에 막기 꺼둠
+    if (DIR == z_up) current_z += move_length;
+    else if (DIR == z_down)
+    {
+      //if (current_z - move_length < 0) return;
+      current_z -= move_length;
+    }
+    z_move(move_length * ONE_MM, DIR, 400);
+  }
+
+}
+
+void printMenu(char move_axis) {
+  Serial.write(12); // ffeed == clear table
+  if (menu == '0') {
+    Serial.println("auto home - 1");
+    Serial.println("x move - 2");
+    Serial.println("y move - 3");
+    Serial.println("z move - 4");
+  }
+  else if (menu == '1') {
+    Serial.println("starting auto home");
+  }
+  else if (menu == '2' || menu == '3' || menu == '4') {
+    if (moveMenu == '0') {
+      Serial.println("back - 1");
+      Serial.println("10mm move - 2");
+      Serial.println("1mm move - 3");
+      Serial.println("0.1mm move - 4");
+    }
+    else if (moveMenu != '1') {
+      Serial.println("back - 1");
+      Serial.print(move_axis);
+      Serial.print(" : ");
+      if (menu == '2') Serial.println(current_x);
+      else if (menu == '3') Serial.println(current_y);
+      else if (menu == '4') Serial.println(current_z);
+    }
+  }
+}
+
+void processMenu(unsigned long processMenu_c_millis)
+{
+  if (processMenu_c_millis - processMenu_p_millis > 500)
+  {
+    processMenu_p_millis = processMenu_c_millis;
+    printMenu(menu + 70);
+  }
+
+  if (menu == '0') { // input menu
+    if (Serial.available()) {
+      menu = Serial.read();
+    }
+  }
+  else if (menu == '1') {
+    if (z_reset != 0 && y_reset != 0 && x_reset != 0)
+    {
+      Serial.write(12);
+      Serial.println("do auto home... waiting");
+      reset();
+    }
+    if (z_reset && y_reset && x_reset) {
+      menu = '0';
+    }
+  }
+  else if (menu == '2' || menu == '3' || menu == '4') { // loop moveMenu
+    if (moveMenu == '0') { // out check
+      if (Serial.available()) {
+        moveMenu = Serial.read();
+
+        if (moveMenu == '1') {
+          menu = '0';
+          moveMenu = '0';
+        }
+      }
+    }
+    else if (moveMenu == '2') {
+      if (Serial.available()) {
+        char dir = Serial.read();
+        
+        if (dir == '1') {
+          moveMenu = '0';
+        }
+        else if (dir == 'a') {
+          if (menu == '2') move_func('x', 10, x_left);
+          else if (menu == '3') move_func('y', 10, y_up);
+          else if (menu == '4') move_func('z', 10, z_down);
+        }
+        else if (dir == 'd') {
+          if (menu == '2') move_func('x', 10, x_right);
+          else if (menu == '3') move_func('y', 10, y_down);
+          else if (menu == '4') move_func('z', 10, z_up);
+        }
+      }
+    }
+    else if (moveMenu == '3') {
+      if (Serial.available()) {
+        char dir = Serial.read();
+        
+        if (dir == '1') {
+          moveMenu = '2';
+        }
+        else if (dir == 'a') {
+          if (menu == '2') move_func('x', 1, x_left);
+          else if (menu == '3') move_func('y', 1, y_up);
+          else if (menu == '4') move_func('z', 10, z_down);
+        }
+        else if (dir == 'd') {
+          if (menu == '2') move_func('x', 1, x_right);
+          else if (menu == '3') move_func('y', 1, y_down);
+          else if (menu == '4') move_func('z', 1, z_up);
+        }
+      }
+    }
+    else if (moveMenu == '4') {
+      if (Serial.available()) {
+        char dir = Serial.read();
+        
+        if (dir == '1') {
+          moveMenu = '2';
+        }
+        else if (dir == 'a') {
+          if (menu == '2') move_func('x', 0.1, x_left);
+          else if (menu == '3') move_func('y', 0.1, y_up);
+          else if (menu == '4') move_func('z', 0.1, z_down);
+        }
+        else if (dir == 'd') {
+          if (menu == '2') move_func('x', 0.1, x_right);
+          else if (menu == '3') move_func('y', 0.1, y_down);
+          else if (menu == '4') move_func('z', 0.1, z_up);
+        }
+      }
+    }
   }
 }
 
@@ -908,8 +1120,8 @@ void setup()
 
  // z_distance = 5000;
   //TIMSK4 = 0x02;
-  currunt_y = 0;
-  currunt_x = 0;
+  current_y = 0;
+  current_x = 0;
   //reset();
 
   y_move(1000, y_up, 600);

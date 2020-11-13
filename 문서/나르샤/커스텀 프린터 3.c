@@ -56,7 +56,7 @@
 #define Z_UP PORTL & ~(Z_DIR)
 #define Z_DOWN PORTL | Z_DIR
 
-enum { // 열거형  날자 표현할때 자주 사용 0,1,2,3이런식으로 나옴  define 대용
+enum { 
   x_left, x_right, y_up, y_down, z_up, z_down
 };
 
@@ -67,8 +67,9 @@ volatile char y_reset = 0;
 volatile int y_distance = 0;
 volatile char z_reset = 0;
 volatile int z_distance = 0;
-volatile double currunt_x = 0; // 현재 좌표 && mm 단위로 봄
-volatile double currunt_y = 0;
+volatile double current_x = 0; // 현재 좌표 && mm 단위로 봄
+volatile double current_y = 0;
+volatile double current_z = 0;
 
 // temp value
 volatile int end_analog_value = 0;
@@ -736,24 +737,24 @@ void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 �
   int x_dir = x_right;
   int y_dir = y_up;
 
-  dis_X = abs(currunt_x - x); // 가야할 거리를 음수가 아니게 만들어서 값을 저장해준다
-  dis_Y = abs(currunt_y - y);
+  dis_X = abs(current_x - x); // 가야할 거리를 음수가 아니게 만들어서 값을 저장해준다
+  dis_Y = abs(current_y - y);
 
-  if ((double)currunt_x > (double)x) x_dir = x_left; // 가야할 방향을 맞추게 만들었다
-  if ((double)currunt_y > (double)y) y_dir = y_down;
+  if ((double)current_x > (double)x) x_dir = x_left; // 가야할 방향을 맞추게 만들었다
+  if ((double)current_y > (double)y) y_dir = y_down;
 
-  if (currunt_x - x == 0) // 하나의 축(x,y)이 움직이지 않으면 반대축만 움직이게 한다
+  if (current_x - x == 0) // 하나의 축(x,y)이 움직이지 않으면 반대축만 움직이게 한다
   {
     y_move((dis_Y * ONE_MM), y_dir, speed);
-    currunt_y = y;
+    current_y = y;
     while (TIMSK3 != 0X00);
     if (y_reset == 1) y_reset = 0;
     return;
   }
-  if (currunt_y - y == 0)
+  if (current_y - y == 0)
   {
     x_move((dis_X * ONE_MM), x_dir, speed);
-    currunt_x = x;
+    current_x = x;
     while (TIMSK1 != 0X00);
     if (x_reset == 1) x_reset = 0;
     return;
@@ -771,8 +772,8 @@ void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 �
   x_move((dis_X * ONE_MM), x_dir, x_speed);
   y_move((dis_Y * ONE_MM), y_dir, y_speed);
 
-  currunt_x = x; // 현재 좌표를 저장한다
-  currunt_y = y;
+  current_x = x; // 현재 좌표를 저장한다
+  current_y = y;
 
   // Serial.print(x); // 디버깅용 코드
   // Serial.print(" , y=");
@@ -798,8 +799,8 @@ void reset()
   x_move(32000, x_left, 600);
   y_move(32000, y_down, 600);
   while (x_reset != 0 || y_reset != 0); // 끝날때까지 대기
-  currunt_x = 0; // 초기화 했으니 좌표도 초기화
-  currunt_y = 0;
+  current_x = 0; // 초기화 했으니 좌표도 초기화
+  current_y = 0;
 }
 
 unsinged long heat_p_millis = 0;
@@ -908,8 +909,8 @@ void setup()
 
  // z_distance = 5000;
   //TIMSK4 = 0x02;
-  currunt_y = 0;
-  currunt_x = 0;
+  current_y = 0;
+  current_x = 0;
   //reset();
 
   y_move(1000, y_up, 600);
