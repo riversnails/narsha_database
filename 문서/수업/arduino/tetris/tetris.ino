@@ -19,14 +19,59 @@
 #define OLED_SCK    52
 #define OLED_DATA   51
 
-int x = 0;
+int x = 3;
 int y = 0;
+char overlapped = 0;
+char rotate = 0;
+char background[22][12] = { {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+  {1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1},
+  {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+};
 
-char block_L[4][4] = {
-  {0, 0, 0, 0},
-  {0, 1, 0, 0},
-  {0, 1, 0, 0},
-  {0, 1, 1, 0}
+char block_L[4][4][4] = {
+  {
+    {0, 0, 0, 0},
+    {0, 1, 0, 0},
+    {0, 1, 0, 0},
+    {0, 1, 1, 0}
+  },
+  {
+    {0, 0, 0, 0},
+    {0, 1, 1, 1},
+    {0, 1, 0, 0},
+    {0, 0, 0, 0}
+  },
+  {
+    {0, 0, 0, 0},
+    {0, 1, 1, 0},
+    {0, 0, 1, 0},
+    {0, 0, 1, 0}
+  },
+  {
+    {0, 0, 0, 0},
+    {0, 0, 0, 1},
+    {0, 1, 1, 1},
+    {0, 0, 0, 0}
+  }
 };
 
 char pixel_offset_x = 1;
@@ -34,7 +79,7 @@ char pixel_offset_y = 1;
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   //pinMode(10, OUTPUT); // uno
   pinMode(53, OUTPUT); // mega
 
@@ -49,25 +94,10 @@ void setup()
   spi_init();
   oled_1351_init();
   Clear_Screen(0xffff);
-  //Draw_Bitmap();
 
-  /*
-    for (int j = 0; j < 10; j++)  {
-      for (int i = 0; i < 128; i++)  {
-        put_pixel(i, j, 0x001f);
-      }
-    }*/
-  //font_write(100, 100, 0x001f, '2');
-  //string_write(20, 100, 0x001f, "hello world");
-
-  for (int i = 0; i < 21; i++)
-  {
-    draw_line_hori(0, 60, i * 6);
-  }
-  for (int i = 0; i < 11; i++)
-  {
-    draw_line_vert(0, 121, i * 6);
-  }
+  draw_grid();
+  print_background();
+  redraw_background();
   make_block(x, y);
 }
 
@@ -78,10 +108,35 @@ void loop()
 {
   if (count == 20)
   {
+    //print_background();
+    overlapped = overlap_check(x, y + 1);
+    if (overlapped == 0)
+    {
+      delete_block(x, y);
+      y++;
+      make_block(x, y);
+    }
+    else
+    {
+      //Serial.printf("number of rect : %d", line_check(20));
+      insert_block(x, y);
+      
+      if (line_check(20))
+      {
+        for (int j = 19; j >= 1; j--) {
+          for (int i = 0; i < 10; i++) {
+            background[j + 1][i + 1] = background[j][i + 1];
+          }
+        }
+        print_background();
+        redraw_background();
+      }
+
+      x = 3;
+      y = 0;
+      rotate = 0;
+    }
     count = 0;
-    delete_block(x, y);
-    y++;
-    make_block(x, y);
   }
 
   if (Serial.available())
@@ -89,32 +144,155 @@ void loop()
     key = Serial.read();
     if (key == 'a')
     {
-      delete_block(x, y);
-      x--;
-      make_block(x, y);
+      overlapped = overlap_check(x - 1, y);
+      if (overlapped == 0)
+      {
+        delete_block(x, y);
+        x--;
+        make_block(x, y);
+      }
     }
     if (key == 'd')
     {
-      delete_block(x, y);
-      x++;
-      make_block(x, y);
+      overlapped = overlap_check(x + 1, y);
+      if (overlapped == 0)
+      {
+        delete_block(x, y);
+        x++;
+        make_block(x, y);
+      }
     }
     if (key == 's')
     {
-      delete_block(x, y);
-      y++;
-      make_block(x, y);
+      overlapped = overlap_check(x, y + 1);
+      if (overlapped == 0) {
+        delete_block(x, y);
+        y++;
+        make_block(x, y);
+      }
     }
     if (key == 'w')
+    { overlapped = overlap_check(x, y - 1);
+      if (overlapped == 0) {
+        delete_block(x, y);
+        y--;
+        make_block(x, y);
+      }
+    }
+    if (key == 'r')
     {
-      delete_block(x, y);
-      y--;
-      make_block(x, y);
+      overlapped = overlap_check_rotate(x, y, rotate);
+      if (overlapped == 0) {
+        delete_block(x, y);
+        rotate++;
+        if (rotate == 4) rotate = 0;
+        make_block(x, y);
+      }
     }
   }
 
   count++;
   delay(50);
+}
+
+void draw_grid()
+{
+  for (int i = 0; i < 21; i++)
+  {
+    draw_line_hori(0, 60, i * 6);
+  }
+  for (int i = 0; i < 11; i++)
+  {
+    draw_line_vert(0, 121, i * 6);
+  }
+}
+
+void redraw_background()
+{
+  for (int j = 0; j < 20; j++) {
+    for (int i = 0; i < 10; i++) {
+      if (background[j+1][i+1] == 1)
+      {
+        make_rect(pixel_offset_x + i * 6, pixel_offset_y + j * 6, RED);
+      }
+      else
+      {
+        make_rect(pixel_offset_x + i * 6, pixel_offset_y + j * 6, WHITE);
+      }
+    }
+  }
+}
+
+void print_background()
+{
+  for (int j = 0; j < 22; j++) {
+    for (int i = 0; i < 12; i++) {
+      Serial.printf("%d ", background[j][i]);
+    }
+    Serial.printf("\n");
+  }
+  Serial.printf("\n");
+}
+
+char line_check(char line_num)
+{
+  char line_full = 0;
+  char count = 0;
+  for (int i = 0; i < 10; i++) {
+    if (background[line_num][i + 1] == 1)
+    {
+      count++;
+    }
+  }
+  if (count == 10)
+  {
+    line_full = 1;
+  }
+  return line_full;
+}
+
+char insert_block(char x, char y)
+{
+  for (int j = 0; j < 4; j++) {
+    for (int i = 0; i < 4; i++) {
+      if (block_L[rotate][j][i] == 1)
+      {
+        background[j + y][i + x] = 1;
+      }
+    }
+  }
+}
+
+char overlap_check_rotate(char x, char y, char over_rotate)
+{
+  char tmp = over_rotate;
+  tmp++;
+  if (tmp == 4) tmp = 0;
+  char overlap_count = 0;
+  for (int j = 0; j < 4; j++) {
+    for (int i = 0; i < 4; i++) {
+      if (block_L[tmp][j][i] == 1 && background[j + y][i + x] == 1)
+      {
+        overlap_count++;
+      }
+    }
+  }
+
+  return overlap_count;
+}
+
+char overlap_check(char x, char y)
+{
+  char overlap_count = 0;
+  for (int j = 0; j < 4; j++) {
+    for (int i = 0; i < 4; i++) {
+      if (block_L[rotate][j][i] == 1 && background[j + y][i + x] == 1)
+      {
+        overlap_count++;
+      }
+    }
+  }
+  return overlap_count;
 }
 
 unsigned short color_value(char r, char g, char b)
@@ -145,11 +323,11 @@ void draw_line_vert(int y_start, int y_end, int x)
   }
 }
 
-void make_rect(char x, char y, unsigned short color)
+void make_rect(char xx, char yy, unsigned short color)
 {
   for (int j = 0; j < 5; j++) {
     for (int i = 0; i < 5; i++) {
-      put_pixel(x + i, y + j, color);
+      put_pixel(xx + i, yy + j, color);
     }
   }
 }
@@ -158,7 +336,7 @@ void make_block(char x, char y)
 {
   for (int j = 0; j < 4; j++) {
     for (int i = 0; i < 4; i++) {
-      if (block_L[j][i] == 1) make_rect(pixel_offset_x + (x + i) * 6, pixel_offset_y + (y + j) * 6, RED);
+      if (block_L[rotate][j][i] == 1) make_rect(pixel_offset_x + (x + i - 1) * 6, pixel_offset_y + (y + j - 1) * 6, RED);
     }
   }
 }
@@ -167,7 +345,7 @@ void delete_block(char x, char y)
 {
   for (int j = 0; j < 4; j++) {
     for (int i = 0; i < 4; i++) {
-      if (block_L[j][i] == 1) make_rect(pixel_offset_x + (x + i) * 6, pixel_offset_x + (y + j) * 6, WHITE);
+      if (block_L[rotate][j][i] == 1) make_rect(pixel_offset_x + (x + i - 1) * 6, pixel_offset_x + (y + j - 1) * 6, WHITE);
     }
   }
 }
