@@ -120,17 +120,21 @@ void loop()
     {
       //Serial.printf("number of rect : %d", line_check(20));
       insert_block(x, y);
-      
-      if (line_check(20))
+
+      for (int k = 20; k > 1; k--)
       {
-        for (int j = 19; j >= 1; j--) {
-          for (int i = 0; i < 10; i++) {
-            background[j + 1][i + 1] = background[j][i + 1];
+        if (line_check(k))
+        {
+          for (int j = k-1; j >= 1; j--) {
+            for (int i = 0; i < 10; i++) {
+              background[j + 1][i + 1] = background[j][i + 1];
+            }
           }
+          k++;
         }
-        print_background();
-        redraw_background();
       }
+      print_background();
+      redraw_background();
 
       x = 3;
       y = 0;
@@ -211,7 +215,7 @@ void redraw_background()
 {
   for (int j = 0; j < 20; j++) {
     for (int i = 0; i < 10; i++) {
-      if (background[j+1][i+1] == 1)
+      if (background[j + 1][i + 1] == 1)
       {
         make_rect(pixel_offset_x + i * 6, pixel_offset_y + j * 6, RED);
       }
