@@ -33,7 +33,7 @@
 
 #define E_STEP 0x10 // a
 #define E_DIR 0x40 // a
-#define E_ENABLE 0x02 // a
+#define E_ENABLE 0x04 // a
 
 #define E1_STEP 0x02 // c
 #define E1_DIR 0x08 // c
@@ -730,18 +730,18 @@ void z_move(int z_dis, int DIR, int speed)
   TIMSK4 = 0x02;
 }
 
-void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 그리게하는 함수
+void ushift(float x, float y, int speed) // 대각선을 속도를 맞춰서 그리게하는 함수
 {
-  double dis_X = 0; // 변수들 초기화
-  double dis_Y = 0;
+  float dis_X = 0; // 변수들 초기화
+  float dis_Y = 0;
   int x_dir = x_right;
   int y_dir = y_up;
 
   dis_X = abs(current_x - x); // 가야할 거리를 음수가 아니게 만들어서 값을 저장해준다
   dis_Y = abs(current_y - y);
 
-  if ((double)current_x > (double)x) x_dir = x_left; // 가야할 방향을 맞추게 만들었다
-  if ((double)current_y > (double)y) y_dir = y_down;
+  if ((float)current_x > (float)x) x_dir = x_left; // 가야할 방향을 맞추게 만들었다
+  if ((float)current_y > (float)y) y_dir = y_down;
 
   if (current_x - x == 0) // 하나의 축(x,y)이 움직이지 않으면 반대축만 움직이게 한다
   {
@@ -760,9 +760,9 @@ void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 �
     return;
   }
 
-  double x_speed = 0;
-  double y_speed = 0;
-  double angle = 0;
+  float x_speed = 0;
+  float y_speed = 0;
+  float angle = 0;
 
   angle = atan(dis_Y / dis_X); // 앵글 == 아크탄젠트(길이(y/x))
 
@@ -803,7 +803,7 @@ void reset()
   current_y = 0;
 }
 
-unsinged long heat_p_millis = 0;
+unsigned long heat_p_millis = 0;
 
 void heat_control(unsigned long heat_c_millis)
 {
@@ -832,9 +832,9 @@ void heat_control(unsigned long heat_c_millis)
   {
     heat_p_millis = heat_c_millis;
     Serial.print(" b:");
-    Serial.print(b);
+    Serial.print(bed_analog_value);
     Serial.print(" e:");
-    Serial.print(e);
+    Serial.print(end_analog_value);
     Serial.println(" ");
   }
 }
@@ -856,6 +856,7 @@ void init_pin() // 핀 설정
   PORTE |= X_MIN;
   PORTJ |= Y_MIN;
   PORTD |= Z_MIN;
+  PORTA |= E_DIR;  
 
   pinMode(8, OUTPUT); 
   pinMode(9, OUTPUT); 
@@ -913,20 +914,7 @@ void setup()
   current_x = 0;
   //reset();
 
-  y_move(1000, y_up, 600);
-  while(TIMSK3 != 0);
-  y_move(1000, y_down, 600);
-  while(TIMSK3 != 0);
-  while(1);
-
-  // x_move(100, x_right, 600);
-  // y_move(100, y_up, 600);
-  // z_move(300, z_up, 600);
-  // while (TIMSK1 != 0 || TIMSK3 != 0 || TIMSK4 != 0);
-  delay(2000);
-
   reset();
-  while(1);
 
   Serial.begin(9600);
   
@@ -944,7 +932,14 @@ void setup()
 //      delay(100);
 //    }
 //  }
-  while(!(end_analog_value < end_set_temp) || !(bed_analog_value < bed_set_temp)) heat_control(millis());
+  while (1)
+  {
+    heat_control(millis());
+    if(end_analog_value <= end_set_temp+3 && bed_analog_value <= bed_set_temp+3)
+    {
+      break;
+    }
+  }
 
   Serial.println("setup end");
 }
@@ -964,7 +959,7 @@ void loop() // 커스텀 프린터 태스트
 
   
 
-  if(TIMSK1 == 0X00 || TIMSK3 == 0X00)
+  if(TIMSK1 == 0X00 && TIMSK3 == 0X00)
   {
     atoggle = 1;
     
@@ -989,7 +984,7 @@ volatile int y_step_count = 0;
 volatile char z_step_toggle = 0;
 volatile int z_step_count = 0;
 
-volatile char toggle = 0;
+volatile char e_step_toggle = 0;
 
 ISR(TIMER1_COMPA_vect)
 {
@@ -1020,14 +1015,14 @@ ISR(TIMER1_COMPA_vect)
 }
 
 ISR(TIMER2_COMPA_vect) {
-  if (toggle == 0)
+  if (e_step_toggle == 0)
   {
-    toggle = 1;
+    e_step_toggle = 1;
     PORTA |= E_STEP;
   }
   else
   {
-    toggle = 0;
+    e_step_toggle = 0;
     PORTA &= ~(E_STEP);
   }
 }

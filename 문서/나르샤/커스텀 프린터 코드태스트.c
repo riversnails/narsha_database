@@ -892,38 +892,40 @@ void move_func(char axis, float move_length, int DIR) // 축, 거리모드, 방�
 //    Serial.print(" ");
 //    Serial.print(x_right);
   printMenu(axis);
-  if (axis == 'x')
+  if(TIMSK1 == 0x00 && TIMSK3 == 0x00 && TIMSK4 == 0x00)
   {
-    if (DIR == x_right) current_x += move_length;
-    else if (DIR == x_left)
+    if (axis == 'x')
     {
-      if (current_x - move_length < 0) return;
-      current_x -= move_length;
+      if (DIR == x_right) current_x += move_length;
+      else if (DIR == x_left)
+      {
+        if (current_x - move_length < 0) return;
+        current_x -= move_length;
+      }
+      x_move(move_length * ONE_MM, DIR, 400);
     }
-    x_move(move_length * ONE_MM, DIR, 400);
-  }
-  else if (axis == 'y')
-  {
-    if (DIR == y_up) current_y += move_length;
-    else if (DIR == y_down)
+    else if (axis == 'y')
     {
-      if (current_y - move_length < 0) return;
-      current_y -= move_length;
+      if (DIR == y_up) current_y += move_length;
+      else if (DIR == y_down)
+      {
+        if (current_y - move_length < 0) return;
+        current_y -= move_length;
+      }
+      y_move(move_length * ONE_MM, DIR, 400);
     }
-    y_move(move_length * ONE_MM, DIR, 400);
-  }
-  else if (axis == 'z')
-  {
-    // if (current_z < 0) return; // z축은 레벨링때문에 막기 꺼둠
-    if (DIR == z_up) current_z += move_length;
-    else if (DIR == z_down)
+    else if (axis == 'z')
     {
-      //if (current_z - move_length < 0) return;
-      current_z -= move_length;
+      // if (current_z < 0) return; // z축은 레벨링때문에 막기 꺼둠
+      if (DIR == z_up) current_z += move_length;
+      else if (DIR == z_down)
+      {
+        //if (current_z - move_length < 0) return;
+        current_z -= move_length;
+      }
+      z_move(move_length * ONE_MM, DIR, 400);
     }
-    z_move(move_length * ONE_MM, DIR, 400);
   }
-
 }
 
 void printMenu(char move_axis) {
@@ -1123,6 +1125,11 @@ void setup()
   current_y = 0;
   current_x = 0;
   //reset();
+
+  while(1)
+  {
+    processMenu(millis());
+  }
 
   y_move(1000, y_up, 600);
   while(TIMSK3 != 0);
