@@ -1,5 +1,6 @@
 #include <avr/pgmspace.h>
-#include "parsing.h"
+//#include "parsing.h"
+#include "test.h"
 // #define X_DIR 0x20 // c
 // #define X_STEP 0x80 // d
 // #define X_STOP 0x04 // c 2
@@ -57,7 +58,7 @@
 #define Z_UP PORTL & ~(Z_DIR)
 #define Z_DOWN PORTL | Z_DIR
 
-enum { 
+enum {
   x_left, x_right, y_up, y_down, z_up, z_down
 };
 
@@ -503,26 +504,26 @@ void heat_control(unsigned long heat_c_millis)
 {
   end_analog_value = analogRead(A13);
   bed_analog_value = analogRead(A14);
-  
-  if(bed_analog_value < bed_set_temp)
+
+  if (bed_analog_value < bed_set_temp)
   {
     digitalWrite(A5, LOW);
   }
-  else if(bed_set_temp+5 < bed_analog_value)
+  else if (bed_set_temp + 5 < bed_analog_value)
   {
     digitalWrite(A5, HIGH);
   }
 
-  if(end_analog_value < end_set_temp)
+  if (end_analog_value < end_set_temp)
   {
     digitalWrite(10, LOW);
   }
-  else if(end_set_temp+5 < end_analog_value)
+  else if (end_set_temp + 5 < end_analog_value)
   {
     digitalWrite(10, HIGH);
   }
-    
-  if(heat_c_millis - heat_p_millis > 1000)
+
+  if (heat_c_millis - heat_p_millis > 1000)
   {
     heat_p_millis = heat_c_millis;
     Serial.print(" b:");
@@ -550,11 +551,11 @@ void init_pin() // 핀 설정
   PORTE |= X_MIN;
   PORTJ |= Y_MIN;
   PORTD |= Z_MIN;
-  PORTA |= E_DIR;  
+  PORTA |= E_DIR;
 
-  pinMode(8, OUTPUT); 
-  pinMode(9, OUTPUT); 
-  pinMode(10, OUTPUT); 
+  pinMode(8, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(10, OUTPUT);
   pinMode(A13, INPUT); // ther 0
   pinMode(A14, INPUT); // ther 1
   pinMode(A5, OUTPUT); // relay pin
@@ -602,39 +603,164 @@ void setup()
   OCR4A = 400;
   TIMSK4 = 0x00;
 
- // z_distance = 5000;
+  // z_distance = 5000;
   //TIMSK4 = 0x02;
   current_y = 0;
   current_x = 0;
+
   //reset();
-
-  reset();
-
+  //const float *xy_pos[5] = {*xy_pos1, *xy_pos2, *xy_pos3, *xy_pos4, *xy_pos5};
   Serial.begin(115200);
-  int i = 0;
-  while(1)
+  const float *xy_pos[13] = {*xy_pos1, *xy_pos2, *xy_pos3, *xy_pos4, *xy_pos5, *xy_pos6, *xy_pos7, *xy_pos14, , *xy_pos15};
+  delay(10);
+  volatile int i = 0, toggle = 0, cnt = 0;
+  while (1)
   {
-    ushift(pgm_read_float_near(&xy_pos1[i][0]), pgm_read_float_near(&xy_pos1[i][1]), 600);
+    Serial.print(i);
+    Serial.print(" ");
+    if (toggle == 0)
+    {
+      Serial.print(pgm_read_float_near(&xy_pos1[i][0]));
+      Serial.print(" ");
+      Serial.println(pgm_read_float_near(&xy_pos1[i][1]));
+    } else if (toggle == 1)
+    {
+      Serial.print(pgm_read_float_near(&xy_pos2[i][0]));
+      Serial.print(" ");
+      Serial.println(pgm_read_float_near(&xy_pos2[i][1]));
+    } else if (toggle == 2)
+    {
+      Serial.print(pgm_read_float_near(&xy_pos3[i][0]));
+      Serial.print(" ");
+      Serial.println(pgm_read_float_near(&xy_pos3[i][1]));
+    } else if (toggle == 3)
+    {
+      Serial.print(pgm_read_float_near(&xy_pos4[i][0]));
+      Serial.print(" ");
+      Serial.println(pgm_read_float_near(&xy_pos4[i][1]));
+    }else if (toggle == 4)
+    {
+      Serial.print(pgm_read_float_near(&xy_pos5[i][0]));
+      Serial.print(" ");
+      Serial.println(pgm_read_float_near(&xy_pos5[i][1]));
+    } else if (toggle == 5) // |:
+    {
+      Serial.print(pgm_read_float_near(&xy_pos6[i][0]));
+      Serial.print(" ");
+      Serial.println(pgm_read_float_near(&xy_pos6[i][1]));
+    } else if (toggle == 6) 
+    {
+      Serial.print(pgm_read_float_near(&xy_pos7[i][0]));
+      Serial.print(" ");
+      Serial.println(pgm_read_float_near(&xy_pos7[i][1]));
+    } else if (toggle == 7)
+    {
+      Serial.print(pgm_read_float_near(&xy_pos6[i][0]));
+      Serial.print(" ");
+      Serial.println(pgm_read_float_near(&xy_pos6[i][1]));
+    } else if (toggle == 8)
+    {
+      Serial.print(pgm_read_float_near(&xy_pos7[i][0]));
+      Serial.print(" ");
+      Serial.println(pgm_read_float_near(&xy_pos7[i][1]));
+    }else if (toggle == 9)
+    {
+      Serial.print(pgm_read_float_near(&xy_pos6[i][0]));
+      Serial.print(" ");
+      Serial.println(pgm_read_float_near(&xy_pos6[i][1]));
+    }else if (toggle == 10)
+    {
+      Serial.print(pgm_read_float_near(&xy_pos6[i][0]));
+      Serial.print(" ");
+      Serial.println(pgm_read_float_near(&xy_pos6[i][1]));
+    }else if (toggle == 11)
+    {
+      Serial.print(pgm_read_float_near(&xy_pos6[i][0]));
+      Serial.print(" ");
+      Serial.println(pgm_read_float_near(&xy_pos6[i][1]));
+    }else if (toggle == 12)
+    {
+      Serial.print(pgm_read_float_near(&xy_pos7[i][0]));
+      Serial.print(" ");
+      Serial.println(pgm_read_float_near(&xy_pos7[i][1]));
+    }
+
     i++;
+
+    if (i == len_cnt[toggle])
+    {
+      i = 0;
+      toggle++;
+      cnt++;
+      Serial.println();
+      Serial.println(toggle);
+      Serial.println();
+    }
+    delay(50);
   }
 
-//  while(1)
-//  {
-//    for(int i = 0; i < 911; i++)
-//    {
-//      Serial.print(" x:");
-//      Serial.print(pgm_read_float_near(&xy_pos[i][0]));
-//      Serial.print(" y:");
-//      Serial.print(pgm_read_float_near(&xy_pos[i][0]));
-//      Serial.print(" speed:");
-//      Serial.println(pgm_read_word_near(&speeds[i]));
-//      delay(100);
-//    }
-//  }
+
+  //  int i = 0, toggle = 0;
+  //  while (1)
+  //  {
+  //    Serial.print(toggle);
+  //    Serial.print(" ");
+  //    Serial.print(i);
+  //    Serial.print(" ");
+  //    if (toggle == 0)
+  //    {
+  //      Serial.print(pgm_read_float_near((xy_pos[0] + i) ));
+  //      Serial.print(" ");
+  //      Serial.println(pgm_read_float_near((xy_pos[0] + 1 + i) ));
+  //    } else if (toggle == 1)
+  //    {
+  //      Serial.print(pgm_read_float_near((xy_pos[1] + i) ));
+  //      Serial.print(" ");
+  //      Serial.println(pgm_read_float_near((xy_pos[1] + 1 + i) ));
+  //    } //else if (toggle == 2)
+  ////    {
+  ////      Serial.print(pgm_read_float_near((xy_pos[2] + i) ));
+  ////      Serial.print(" ");
+  ////      Serial.println(pgm_read_float_near((xy_pos[2] + 1 + i) ));
+  ////    } else if (toggle == 3)
+  ////    {
+  ////      Serial.print(pgm_read_float_near((xy_pos[3] + i) ));
+  ////      Serial.print(" ");
+  ////      Serial.println(pgm_read_float_near((xy_pos[3] + 1 + i) ));
+  ////    } else if (toggle == 4)
+  ////    {
+  ////      Serial.print(pgm_read_float_near((xy_pos[4] + i) ));
+  ////      Serial.print(" ");
+  ////      Serial.println(pgm_read_float_near((xy_pos[4] + 1 + i) ));
+  ////    }
+  //
+  //    i += 2;
+  //    if (i == 7998)
+  //    {
+  //      i = 0;
+  //      toggle++;
+  //    }
+  //    delay(100);
+  //  }
+
+
+  //  while(1)
+  //  {
+  //    for(int i = 0; i < 911; i++)
+  //    {
+  //      Serial.print(" x:");
+  //      Serial.print(pgm_read_float_near(&xy_pos[i][0]));
+  //      Serial.print(" y:");
+  //      Serial.print(pgm_read_float_near(&xy_pos[i][0]));
+  //      Serial.print(" speed:");
+  //      Serial.println(pgm_read_word_near(&speeds[i]));
+  //      delay(100);
+  //    }
+  //  }
   while (1)
   {
     heat_control(millis());
-    if(end_analog_value <= end_set_temp+3 && bed_analog_value <= bed_set_temp+3)
+    if (end_analog_value <= end_set_temp + 3 && bed_analog_value <= bed_set_temp + 3)
     {
       break;
     }
@@ -656,20 +782,20 @@ void loop() // 커스텀 프린터 태스트
   c_millis = millis();
   heat_control(c_millis);
 
-  
 
-  if(TIMSK1 == 0X00 && TIMSK3 == 0X00)
+
+  if (TIMSK1 == 0X00 && TIMSK3 == 0X00)
   {
     atoggle = 1;
-    
+
   }
 
-  if(atoggle == 1)
+  if (atoggle == 1)
   {
     atoggle = 0;
     //Serial.printf(" %lf, %lf, %lf",xy_pos[i][0], xy_pos[i][1], speeds[i]);
     //ushift(pgm_read_float_near(&xy_pos[i][0]), pgm_read_float_near(&xy_pos[i][1]), pgm_read_word_near(&speeds[i]));
-    if(i == 911) i = 0;
+    if (i == 911) i = 0;
   }
 }
 
@@ -703,7 +829,7 @@ ISR(TIMER1_COMPA_vect)
       x_step_count = 0;
       TIMSK1 = 0x00;
     }
-    if(x_limit_switch != 0 && x_reset == 1)
+    if (x_limit_switch != 0 && x_reset == 1)
     {
       TIMSK1 = 0x00;
       x_step_count = 0;
@@ -744,7 +870,7 @@ ISR(TIMER3_COMPA_vect)
       y_step_count = 0;
       TIMSK3 = 0x00;
     }
-    if(y_limit_switch != 0 && y_reset == 1)
+    if (y_limit_switch != 0 && y_reset == 1)
     {
       TIMSK3 = 0x00;
       y_step_count = 0;
@@ -772,7 +898,7 @@ ISR(TIMER4_COMPA_vect)
       z_step_count = 0;
       TIMSK4 = 0x00;
     }
-    if(z_limit_switch != 0 && z_reset == 1)
+    if (z_limit_switch != 0 && z_reset == 1)
     {
       TIMSK4 = 0x00;
       z_step_count = 0;
