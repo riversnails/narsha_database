@@ -43,6 +43,12 @@ volatile double currunt_y = 0;
 
 volatile int xz_changer = 0;
 
+// temp value
+volatile int end_analog_value = 0;
+volatile int bed_analog_value = 0;
+volatile int bed_set_temp = 865;
+volatile int end_set_temp = 95;
+
 const float xy_pos[911][2] = {
 { 66.268, 82.377, }, { 66.527, 82.217, }, { 66.796, 82.073, }, { 67.072, 81.946, },
 { 67.356, 81.836, }, { 67.647, 81.743, }, { 67.942, 81.669, },
@@ -697,6 +703,42 @@ void z_move(int z_dis, int DIR, int speed)
   TIMSK1 = 0x02;
 }
 
+unsigned long heat_p_millis = 0;
+
+void heat_control(unsigned long heat_c_millis)
+{
+  end_analog_value = analogRead(A7);
+  bed_analog_value = analogRead(A6);
+  
+  if(bed_analog_value < bed_set_temp)
+  {
+	PORTB &= ~0x10; // bed
+  }
+  else if(bed_set_temp+5 < bed_analog_value)
+  {
+	PORTB |= 0x10; // bed
+  }
+
+  if(end_analog_value < end_set_temp)
+  {
+	PORTB &= !0x10; // bed
+  }
+  else if(end_set_temp+5 < end_analog_value)
+  {
+	PORTB |= 0x10; // bed
+  }
+    
+  if(heat_c_millis - heat_p_millis > 1000)
+  {
+    heat_p_millis = heat_c_millis;
+    Serial.print(" b:");
+    Serial.print(bed_analog_value);
+    Serial.print(" e:");
+    Serial.print(end_analog_value);
+    Serial.println(" ");
+  }
+}
+
 void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 그리게하는 함수
 {
 	double dis_X = 0; // 변수들 초기화
@@ -714,7 +756,6 @@ void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 �
 	{
 		y_move((dis_Y * ONE_MM), y_dir, speed);
 		currunt_y = y;
-		while (TIMSK3 != 0X00);
 		if(y_reset == 1) y_reset = 0;
 		return;
 	}
@@ -722,7 +763,6 @@ void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 �
 	{
 		x_move((dis_X * ONE_MM), x_dir, speed);
 		currunt_x = x;
-		while (TIMSK1 != 0X00);
 		if(x_reset == 1) x_reset = 0;
 		return;
 	}
@@ -750,7 +790,7 @@ void ushift(double x, double y, int speed) // 대각선을 속도를 맞춰서 �
 	// Serial.print(" , y_dir=");
 	// Serial.print(y_dir);
 	// Serial.println();
-	while (TIMSK1 != 0X00 || TIMSK3 != 0X00); // 끝나는걸 기다려준다
+	// while (TIMSK1 != 0X00 || TIMSK3 != 0X00); // 끝나는걸 기다려준다
 	if(x_reset == 1) x_reset = 0;
 	if(y_reset == 1) y_reset = 0;
 }
@@ -827,7 +867,7 @@ void setup()
 
 	while(end_analog_value > 95)
 	{
-		//bed_analog_value = analogRead(A6);
+		//bed_analog_value = analogRead(A7);
 		end_analog_value = analogRead(A7);
 
 		// Serial.print("bed : ");
@@ -849,37 +889,23 @@ volatile int end_analog_value = 0;
 
 void loop() // 커스텀 프린터 태스트
 {
-	
+	heat_control(millis());
 	TIMSK2 = 0x00;
 
-	for (i = 0; i < 911; i++) {
-		TIMSK2 = 0x02;
-		//bed_analog_value = analogRead(A6);
-		end_analog_value = analogRead(A7);
+	if(TIMSK1 == 0X00 && TIMSK3 == 0X00)
+  {
+    atoggle = 1;
+    
+  }
 
-		// Serial.print("bed : ");
-		// Serial.print(bed_analog_value);
-		Serial.print(" end : ");
-		Serial.println(end_analog_value);
-
-		// if(bed_analog_value <= 860) PORTD &= ~0x10;
-		// else PORTD |= 0x10;
-
-		if(end_analog_value < 95) 
-		{
-			PORTD &= ~0x20;
-		}
-		else if(end_analog_value > 80)
-		{
-			PORTD |= 0x20;
-			//TIMSK2 = 0x00;
-		}
-
-		ushift(xy_pos[i][0], xy_pos[i][1], speeds[i]);
-		//Serial.println(i);
-		//Serial.print(" : x="); // 디버깅
-		delay(1);
-	}
+  if(atoggle == 1)
+  {
+    atoggle = 0;
+    //Serial.printf(" %lf, %lf, %lf",xy_pos[i][0], xy_pos[i][1], speeds[i]);
+    ushift(pgm_read_float_near(&xy_pos[i][0]), pgm_read_float_near(&xy_pos[i][1]), pgm_read_word_near(&speeds[i]));
+    i++;
+    if(i == 911) i = 0;
+  }
 }
 
 volatile char x_step_toggle = 0;

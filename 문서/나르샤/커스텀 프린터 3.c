@@ -747,7 +747,7 @@ void ushift(float x, float y, int speed) // 대각선을 속도를 맞춰서 그
   {
     y_move((dis_Y * ONE_MM), y_dir, speed);
     current_y = y;
-    while (TIMSK3 != 0X00);
+    //while (TIMSK3 != 0X00);
     if (y_reset == 1) y_reset = 0;
     return;
   }
@@ -755,7 +755,7 @@ void ushift(float x, float y, int speed) // 대각선을 속도를 맞춰서 그
   {
     x_move((dis_X * ONE_MM), x_dir, speed);
     current_x = x;
-    while (TIMSK1 != 0X00);
+    //while (TIMSK1 != 0X00);
     if (x_reset == 1) x_reset = 0;
     return;
   }

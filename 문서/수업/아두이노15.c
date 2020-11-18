@@ -91,7 +91,7 @@ void loop() // 도트 메트릭스 사용
 		{
 			shift_count = 0;
 			dot_num++;
-			if (dot_num == 9) dot_num = 0;
+			if (dot_num == 10) dot_num = 0;
 		}
 	}
 }
