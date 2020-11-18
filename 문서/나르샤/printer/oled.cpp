@@ -58,7 +58,7 @@ void init_oled_first() {
 
   clear_screen(BLACK);
 
-  draw_bitmap();
+  //draw_bitmap();
 }
 
 int oled_end_analog_value = 23;
@@ -67,7 +67,7 @@ unsigned long p_oled_millis = 0;
 
 void oled_on(double x, double y, double z, int e, int b, unsigned long c_oled_millis)
 {
-  if (c_oled_millis - p_oled_millis > 1500)
+  if (c_oled_millis - p_oled_millis > 1000)
   {
     p_oled_millis = c_oled_millis;
 

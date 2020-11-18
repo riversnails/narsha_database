@@ -59,6 +59,10 @@
 #define Z_UP PORTL & ~(Z_DIR)
 #define Z_DOWN PORTL | Z_DIR
 
+#define VRx A11
+#define VRy A12
+#define SW 32
+
 enum {
   x_left, x_right, y_up, y_down, z_up, z_down
 };
@@ -77,316 +81,10 @@ volatile double current_z = 0;
 // temp value
 volatile int end_analog_value = 0;
 volatile int bed_analog_value = 0;
-volatile int bed_set_temp = 865;
-volatile int end_set_temp = 95;
+volatile int bed_set_temp = 865; // 865
+volatile int end_set_temp = 95; // 95
 
-const PROGMEM int speeds[911] = {
-  667, 667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 156,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  156, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  156, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  156, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 667, 667,
-  667, 156, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 1000,
-  1000, 1000, 156,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  156, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 156, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625, 625, 625,
-  625,
-};
-
+//----------------------------------------------------------- move control
 void x_move(double x_dis, int DIR, int speed)
 {
   //dir
@@ -498,7 +196,8 @@ void reset()
   current_x = 0; // 초기화 했으니 좌표도 초기화
   current_y = 0;
 }
-
+//----------------------------------------------------------- move control
+//----------------------------------------------------------- heat control
 unsigned long heat_p_millis = 0;
 
 void heat_control(unsigned long heat_c_millis)
@@ -527,13 +226,72 @@ void heat_control(unsigned long heat_c_millis)
   if (heat_c_millis - heat_p_millis > 1000)
   {
     heat_p_millis = heat_c_millis;
-    Serial.print(" b:");
-    Serial.print(bed_analog_value);
-    Serial.print(" e:");
-    Serial.print(end_analog_value);
-    Serial.println(" ");
+    //    Serial.print(" b:");
+    //    Serial.print(bed_analog_value);
+    //    Serial.print(" e:");
+    //    Serial.print(end_analog_value);
+    //    Serial.println(" ");
   }
 }
+//----------------------------------------------------------- heat control
+//----------------------------------------------------------- print control
+volatile int count = 0;
+volatile int move_toggle = 0;
+volatile const float *xy_pos[13] = {*xy_pos1, *xy_pos2, *xy_pos3, *xy_pos4, *xy_pos5, *xy_pos6, *xy_pos7, *xy_pos14, *xy_pos15};//, };
+volatile int array_[23] = {0, 1, 2, 3, 4, 5, 6, 5, 6, 5, 5, 5, 6, 7, 8, 7, 8, 7, 8};
+volatile int i = 0, j = 0, len_toggle = 0, cnt = 0, ch = 0, shift_x = 0, shift_y = 0;
+volatile float previous_z = 0;
+
+void print_control(unsigned long pcontrol_c_millis)
+{
+  end_analog_value = analogRead(A13);
+  bed_analog_value = analogRead(A14);
+  heat_control(pcontrol_c_millis);
+  //oled_on(0, 0, 0, end_analog_value, bed_analog_value, pcontrol_c_millis);
+
+  TIMSK2 = 0x02;
+
+  if (TIMSK1 == 0X00 && TIMSK3 == 0X00)
+  {
+    move_toggle = 1;
+
+  }
+
+  if (move_toggle == 1)
+  {
+    move_toggle = 0;
+    j = i * 2;
+    if (pgm_read_float_near((xy_pos[ch] + j)) < 0)
+    {
+      current_z = pgm_read_float_near((xy_pos[ch] + j + 1));
+
+      z_move((current_z - previous_z)*Z_ONE_MM, z_down, 600);
+      while (TIMSK4 != 0x00);
+      previous_z = current_z;
+    }
+    else
+    {
+      shift_x = pgm_read_float_near((xy_pos[ch] + j));
+      shift_y = pgm_read_float_near((xy_pos[ch] + j + 1));
+      if (!(shift_x <= 0) && !(shift_y <= 0)) ushift(shift_x, shift_y, 600);
+    }
+
+    i++;
+    if (i == 25)
+    {
+      continue;
+    }
+    else if (i == len_cnt[len_toggle])
+    {
+      i = 0;
+      len_toggle++;
+      ch = array_[len_toggle];
+      //Serial.println(len_toggle);
+    }
+  }
+}
+//----------------------------------------------------------- print control
+//----------------------------------------------------------- putty control
 
 void init_pin() // 핀 설정
 {
@@ -560,6 +318,9 @@ void init_pin() // 핀 설정
   pinMode(A13, INPUT); // ther 0
   pinMode(A14, INPUT); // ther 1
   pinMode(A5, OUTPUT); // relay pin
+
+  //---------------------- menu pins
+
 }
 
 void setup()
@@ -611,28 +372,18 @@ void setup()
 
   Serial.begin(115200);
 
-  init_oled_first();
+  //init_oled_first();
 
-  unsigned long p_millis = 0;
-  
-  //  while(1)
-  //  {
-  //    for(int i = 0; i < 911; i++)
-  //    {
-  //      Serial.print(" x:");
-  //      Serial.print(pgm_read_float_near(&xy_pos[i][0]));
-  //      Serial.print(" y:");
-  //      Serial.print(pgm_read_float_near(&xy_pos[i][0]));
-  //      Serial.print(" speed:");
-  //      Serial.println(pgm_read_word_near(&speeds[i]));
-  //      delay(100);
-  //    }
-  //  }
   reset();
 
   while (1)
   {
+    end_analog_value = analogRead(A13);
+    bed_analog_value = analogRead(A14);
     heat_control(millis());
+    Serial.print(end_analog_value);
+    Serial.println(bed_analog_value);
+    //oled_on(current_x, current_y, current_z, end_analog_value, bed_analog_value, millis());
     if (end_analog_value <= end_set_temp + 3 && bed_analog_value <= bed_set_temp + 3)
     {
       break;
@@ -648,40 +399,35 @@ volatile unsigned long c_millis = 0;
 volatile unsigned long p_millis = 0;
 volatile unsigned long c_micros = 0;
 volatile unsigned long p_micros = 0;
-volatile int count = 0;
-int atoggle = 0;
-const float *xy_pos[13] = {*xy_pos1, *xy_pos2, *xy_pos3, *xy_pos4, *xy_pos5, *xy_pos6, *xy_pos7, *xy_pos14, *xy_pos15};//, };
-int array_[23] = {0, 1, 2, 3, 4, 5, 6, 5, 6, 5, 5, 5, 6, 7, 8, 7, 8, 7, 8};
-volatile int i = 0, j = 0, toggle = 0, cnt = 0, ch = 0;
-float c_z = 0;
 
 void loop() // 커스텀 프린터 태스트
 {
   c_millis = millis();
+  
   end_analog_value = analogRead(A13);
   bed_analog_value = analogRead(A14);
   heat_control(c_millis);
-  oled_on(current_x, current_y, current_z, end_analog_value, bed_analog_value, c_millis);
+  //oled_on(0, 0, 0, end_analog_value, bed_analog_value, pcontrol_c_millis);
 
   TIMSK2 = 0x02;
 
   if (TIMSK1 == 0X00 && TIMSK3 == 0X00)
   {
-    atoggle = 1;
+    move_toggle = 1;
 
   }
 
-  if (atoggle == 1)
+  if (move_toggle == 1)
   {
-    atoggle = 0;
+    move_toggle = 0;
     j = i * 2;
     if (pgm_read_float_near((xy_pos[ch] + j)) < 0)
     {
       current_z = pgm_read_float_near((xy_pos[ch] + j + 1));
 
-      z_move((current_z - c_z)*Z_ONE_MM, z_down, 600);
+      z_move((current_z - previous_z)*Z_ONE_MM, z_down, 600);
       while (TIMSK4 != 0x00);
-      c_z = current_z;
+      previous_z = current_z;
     }
     else
     {
@@ -689,16 +435,21 @@ void loop() // 커스텀 프린터 태스트
     }
 
     i++;
-    if (i == len_cnt[toggle])
+    if (i == 25)
+    {
+      menu = 0;
+    }
+    else if (i == len_cnt[len_toggle])
     {
       i = 0;
-      toggle++;
-      ch = array_[toggle];
-      cnt++;
-      Serial.println(toggle);
+      len_toggle++;
+      ch = array_[len_toggle];
+      //Serial.println(len_toggle);
     }
   }
 }
+
+//---------------------------------------------------------------------------
 
 //const float *xy_pos[13] = {*xy_pos1, *xy_pos2, *xy_pos3, *xy_pos4, *xy_pos5, *xy_pos6, *xy_pos7, *xy_pos14, *xy_pos15};//, };
 //  int array_[23] = {0,1,2,3,4,5,6,5,6,5,5,5,6,7,8,7,8,7,8};

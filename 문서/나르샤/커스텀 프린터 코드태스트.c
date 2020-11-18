@@ -28,7 +28,7 @@
 #define Y_ENABLE 0x04 // f
 
 #define Z_STEP 0x08 // l
-#define Z_DIR 0x01 // l
+#define Z_DIR 0x02 // l
 #define Z_ENABLE 0x01 // k
 
 #define E_STEP 0x10 // a
@@ -44,8 +44,8 @@
 #define Y_MIN 0x02 // j
 #define Z_MIN 0x08 // d
 
-#define ONE_MM 80
-#define ONE_CM 800
+#define ONE_MM 100
+#define ONE_CM 1000
 #define Z_ONE_MM 400
 #define Z_ONE_CM 4000
 
@@ -1130,7 +1130,7 @@ void setup()
   {
     processMenu(millis());
   }
-
+  
   y_move(1000, y_up, 600);
   while(TIMSK3 != 0);
   y_move(1000, y_down, 600);
