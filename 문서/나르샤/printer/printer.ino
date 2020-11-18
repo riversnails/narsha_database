@@ -1,6 +1,7 @@
 #include <avr/pgmspace.h>
 //#include "parsing.h"
 #include "test.h"
+#include "oled.h"
 // #define X_DIR 0x20 // c
 // #define X_STEP 0x80 // d
 // #define X_STOP 0x04 // c 2
@@ -30,7 +31,7 @@
 #define Y_ENABLE 0x04 // f
 
 #define Z_STEP 0x08 // l
-#define Z_DIR 0x01 // l
+#define Z_DIR 0x02 // l
 #define Z_ENABLE 0x01 // k
 
 #define E_STEP 0x10 // a
@@ -46,8 +47,8 @@
 #define Y_MIN 0x02 // j
 #define Z_MIN 0x08 // d
 
-#define ONE_MM 80
-#define ONE_CM 800
+#define ONE_MM 100
+#define ONE_CM 1000
 #define Z_ONE_MM 400
 #define Z_ONE_CM 4000
 
@@ -488,7 +489,7 @@ void reset()
   x_reset = 1;
   y_reset = 1;
   z_reset = 1;
-  z_move(32000, z_down, 600);
+  z_move(32000, z_up, 600);
   while (z_reset != 0);
   delay(100);
   x_move(32000, x_left, 600);
@@ -586,7 +587,7 @@ void setup()
   TCCR2A = 0x02;
   TCCR2B = 0x06;
   TCNT2 = 0x00;
-  OCR2A = 240;
+  OCR2A = 200;
   TIMSK2 = 0x00;
 
   // y
@@ -608,142 +609,12 @@ void setup()
   current_y = 0;
   current_x = 0;
 
-  //reset();
-  //const float *xy_pos[5] = {*xy_pos1, *xy_pos2, *xy_pos3, *xy_pos4, *xy_pos5};
   Serial.begin(115200);
-  const float *xy_pos[13] = {*xy_pos1, *xy_pos2, *xy_pos3, *xy_pos4, *xy_pos5, *xy_pos6, *xy_pos7, *xy_pos14, , *xy_pos15};
-  delay(10);
-  volatile int i = 0, toggle = 0, cnt = 0;
-  while (1)
-  {
-    Serial.print(i);
-    Serial.print(" ");
-    if (toggle == 0)
-    {
-      Serial.print(pgm_read_float_near(&xy_pos1[i][0]));
-      Serial.print(" ");
-      Serial.println(pgm_read_float_near(&xy_pos1[i][1]));
-    } else if (toggle == 1)
-    {
-      Serial.print(pgm_read_float_near(&xy_pos2[i][0]));
-      Serial.print(" ");
-      Serial.println(pgm_read_float_near(&xy_pos2[i][1]));
-    } else if (toggle == 2)
-    {
-      Serial.print(pgm_read_float_near(&xy_pos3[i][0]));
-      Serial.print(" ");
-      Serial.println(pgm_read_float_near(&xy_pos3[i][1]));
-    } else if (toggle == 3)
-    {
-      Serial.print(pgm_read_float_near(&xy_pos4[i][0]));
-      Serial.print(" ");
-      Serial.println(pgm_read_float_near(&xy_pos4[i][1]));
-    }else if (toggle == 4)
-    {
-      Serial.print(pgm_read_float_near(&xy_pos5[i][0]));
-      Serial.print(" ");
-      Serial.println(pgm_read_float_near(&xy_pos5[i][1]));
-    } else if (toggle == 5) // |:
-    {
-      Serial.print(pgm_read_float_near(&xy_pos6[i][0]));
-      Serial.print(" ");
-      Serial.println(pgm_read_float_near(&xy_pos6[i][1]));
-    } else if (toggle == 6) 
-    {
-      Serial.print(pgm_read_float_near(&xy_pos7[i][0]));
-      Serial.print(" ");
-      Serial.println(pgm_read_float_near(&xy_pos7[i][1]));
-    } else if (toggle == 7)
-    {
-      Serial.print(pgm_read_float_near(&xy_pos6[i][0]));
-      Serial.print(" ");
-      Serial.println(pgm_read_float_near(&xy_pos6[i][1]));
-    } else if (toggle == 8)
-    {
-      Serial.print(pgm_read_float_near(&xy_pos7[i][0]));
-      Serial.print(" ");
-      Serial.println(pgm_read_float_near(&xy_pos7[i][1]));
-    }else if (toggle == 9)
-    {
-      Serial.print(pgm_read_float_near(&xy_pos6[i][0]));
-      Serial.print(" ");
-      Serial.println(pgm_read_float_near(&xy_pos6[i][1]));
-    }else if (toggle == 10)
-    {
-      Serial.print(pgm_read_float_near(&xy_pos6[i][0]));
-      Serial.print(" ");
-      Serial.println(pgm_read_float_near(&xy_pos6[i][1]));
-    }else if (toggle == 11)
-    {
-      Serial.print(pgm_read_float_near(&xy_pos6[i][0]));
-      Serial.print(" ");
-      Serial.println(pgm_read_float_near(&xy_pos6[i][1]));
-    }else if (toggle == 12)
-    {
-      Serial.print(pgm_read_float_near(&xy_pos7[i][0]));
-      Serial.print(" ");
-      Serial.println(pgm_read_float_near(&xy_pos7[i][1]));
-    }
 
-    i++;
+  init_oled_first();
 
-    if (i == len_cnt[toggle])
-    {
-      i = 0;
-      toggle++;
-      cnt++;
-      Serial.println();
-      Serial.println(toggle);
-      Serial.println();
-    }
-    delay(50);
-  }
-
-
-  //  int i = 0, toggle = 0;
-  //  while (1)
-  //  {
-  //    Serial.print(toggle);
-  //    Serial.print(" ");
-  //    Serial.print(i);
-  //    Serial.print(" ");
-  //    if (toggle == 0)
-  //    {
-  //      Serial.print(pgm_read_float_near((xy_pos[0] + i) ));
-  //      Serial.print(" ");
-  //      Serial.println(pgm_read_float_near((xy_pos[0] + 1 + i) ));
-  //    } else if (toggle == 1)
-  //    {
-  //      Serial.print(pgm_read_float_near((xy_pos[1] + i) ));
-  //      Serial.print(" ");
-  //      Serial.println(pgm_read_float_near((xy_pos[1] + 1 + i) ));
-  //    } //else if (toggle == 2)
-  ////    {
-  ////      Serial.print(pgm_read_float_near((xy_pos[2] + i) ));
-  ////      Serial.print(" ");
-  ////      Serial.println(pgm_read_float_near((xy_pos[2] + 1 + i) ));
-  ////    } else if (toggle == 3)
-  ////    {
-  ////      Serial.print(pgm_read_float_near((xy_pos[3] + i) ));
-  ////      Serial.print(" ");
-  ////      Serial.println(pgm_read_float_near((xy_pos[3] + 1 + i) ));
-  ////    } else if (toggle == 4)
-  ////    {
-  ////      Serial.print(pgm_read_float_near((xy_pos[4] + i) ));
-  ////      Serial.print(" ");
-  ////      Serial.println(pgm_read_float_near((xy_pos[4] + 1 + i) ));
-  ////    }
-  //
-  //    i += 2;
-  //    if (i == 7998)
-  //    {
-  //      i = 0;
-  //      toggle++;
-  //    }
-  //    delay(100);
-  //  }
-
-
+  unsigned long p_millis = 0;
+  
   //  while(1)
   //  {
   //    for(int i = 0; i < 911; i++)
@@ -757,6 +628,8 @@ void setup()
   //      delay(100);
   //    }
   //  }
+  reset();
+
   while (1)
   {
     heat_control(millis());
@@ -765,7 +638,9 @@ void setup()
       break;
     }
   }
-
+  TIMSK2 = 0x02;
+  ushift(200, 10, 600);
+  while (TIMSK1 != 0X00 || TIMSK3 != 0X00);
   Serial.println("setup end");
 }
 
@@ -773,16 +648,22 @@ volatile unsigned long c_millis = 0;
 volatile unsigned long p_millis = 0;
 volatile unsigned long c_micros = 0;
 volatile unsigned long p_micros = 0;
-volatile int i = 0;
 volatile int count = 0;
 int atoggle = 0;
+const float *xy_pos[13] = {*xy_pos1, *xy_pos2, *xy_pos3, *xy_pos4, *xy_pos5, *xy_pos6, *xy_pos7, *xy_pos14, *xy_pos15};//, };
+int array_[23] = {0, 1, 2, 3, 4, 5, 6, 5, 6, 5, 5, 5, 6, 7, 8, 7, 8, 7, 8};
+volatile int i = 0, j = 0, toggle = 0, cnt = 0, ch = 0;
+float c_z = 0;
 
 void loop() // 커스텀 프린터 태스트
 {
   c_millis = millis();
+  end_analog_value = analogRead(A13);
+  bed_analog_value = analogRead(A14);
   heat_control(c_millis);
+  oled_on(current_x, current_y, current_z, end_analog_value, bed_analog_value, c_millis);
 
-
+  TIMSK2 = 0x02;
 
   if (TIMSK1 == 0X00 && TIMSK3 == 0X00)
   {
@@ -793,11 +674,58 @@ void loop() // 커스텀 프린터 태스트
   if (atoggle == 1)
   {
     atoggle = 0;
-    //Serial.printf(" %lf, %lf, %lf",xy_pos[i][0], xy_pos[i][1], speeds[i]);
-    //ushift(pgm_read_float_near(&xy_pos[i][0]), pgm_read_float_near(&xy_pos[i][1]), pgm_read_word_near(&speeds[i]));
-    if (i == 911) i = 0;
+    j = i * 2;
+    if (pgm_read_float_near((xy_pos[ch] + j)) < 0)
+    {
+      current_z = pgm_read_float_near((xy_pos[ch] + j + 1));
+
+      z_move((current_z - c_z)*Z_ONE_MM, z_down, 600);
+      while (TIMSK4 != 0x00);
+      c_z = current_z;
+    }
+    else
+    {
+      ushift(pgm_read_float_near((xy_pos[ch] + j)), pgm_read_float_near((xy_pos[ch] + j + 1)), 600);
+    }
+
+    i++;
+    if (i == len_cnt[toggle])
+    {
+      i = 0;
+      toggle++;
+      ch = array_[toggle];
+      cnt++;
+      Serial.println(toggle);
+    }
   }
 }
+
+//const float *xy_pos[13] = {*xy_pos1, *xy_pos2, *xy_pos3, *xy_pos4, *xy_pos5, *xy_pos6, *xy_pos7, *xy_pos14, *xy_pos15};//, };
+//  int array_[23] = {0,1,2,3,4,5,6,5,6,5,5,5,6,7,8,7,8,7,8};
+//  delay(10);
+//  volatile int i = 0, j = 0, toggle = 0, cnt = 0, ch = 0;
+//  while (1)
+//  {
+//    Serial.print(i);
+//    Serial.print(" ");
+//    Serial.print(pgm_read_float_near((xy_pos[ch] + j)));
+//    Serial.print(" ");
+//    Serial.println(pgm_read_float_near((xy_pos[ch] + j + 1)));
+//    i++;
+//    if (i == len_cnt[toggle])
+//    {
+//      i = 0;
+//      toggle++;
+//      ch = array_[toggle];
+//      cnt++;
+//      Serial.println();
+//      Serial.println(toggle);
+//      Serial.println();
+//    }
+//    j = i*2;
+//    delay(50);
+//  }
+
 
 volatile char x_step_toggle = 0;
 volatile int x_step_count = 0;

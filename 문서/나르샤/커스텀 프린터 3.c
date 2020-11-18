@@ -28,7 +28,7 @@
 #define Y_ENABLE 0x04 // f
 
 #define Z_STEP 0x08 // l
-#define Z_DIR 0x01 // l
+#define Z_DIR 0x02 // l
 #define Z_ENABLE 0x01 // k
 
 #define E_STEP 0x10 // a
@@ -44,8 +44,8 @@
 #define Y_MIN 0x02 // j
 #define Z_MIN 0x08 // d
 
-#define ONE_MM 80
-#define ONE_CM 800
+#define ONE_MM 100
+#define ONE_CM 1000
 #define Z_ONE_MM 400
 #define Z_ONE_CM 4000
 
@@ -793,7 +793,7 @@ void reset()
   x_reset = 1;
   y_reset = 1;
   z_reset = 1;
-  z_move(32000, z_down, 600);
+  z_move(32000, z_up, 600);
   while (z_reset != 0);
   delay(100);
   x_move(32000, x_left, 600);
@@ -1082,6 +1082,7 @@ ISR(TIMER4_COMPA_vect)
     }
   }
 }
-//1 step = 0.0125mm
+//1 step = 0.0125mm 20개 기준
+//1 step = 0.01mm 16개 기준
 //80 step = 1mm
 //1 zsetp = 0.0025mm
