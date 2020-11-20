@@ -80,7 +80,7 @@ int B = 860;
 
 void i2c_init()
 {
-  lcd.init();
+  lcd.begin();
   lcd.backlight();
 
   lcd.print("Nozzle: ");

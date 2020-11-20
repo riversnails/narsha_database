@@ -192,7 +192,19 @@ void reset()
   z_reset = 1;
   z_move(32000, z_up, 600);
   while (z_reset != 0);
-  delay(100);
+  x_move(32000, x_left, 600);
+  y_move(32000, y_down, 600);
+  while (x_reset != 0 || y_reset != 0); // 끝날때까지 대기
+  current_x = 0; // 초기화 했으니 좌표도 초기화
+  current_y = 0;
+  current_z = 0;
+}
+
+void xy_reset()
+{
+  TIMSK2 = 0x00;
+  x_reset = 1;
+  y_reset = 1;
   x_move(32000, x_left, 600);
   y_move(32000, y_down, 600);
   while (x_reset != 0 || y_reset != 0); // 끝날때까지 대기
@@ -209,7 +221,7 @@ void heat_control(unsigned long heat_c_millis)
   {
     digitalWrite(A5, LOW);
   }
-  else if (bed_set_temp + 5 < bed_analog_value)
+  else if (bed_set_temp + 2 < bed_analog_value)
   {
     digitalWrite(A5, HIGH);
   }
@@ -218,7 +230,7 @@ void heat_control(unsigned long heat_c_millis)
   {
     digitalWrite(10, LOW);
   }
-  else if (end_set_temp + 5 < end_analog_value)
+  else if (end_set_temp + 2 < end_analog_value)
   {
     digitalWrite(10, HIGH);
   }
@@ -236,17 +248,17 @@ void heat_control(unsigned long heat_c_millis)
 
 void move_func(char axis, float move_length, int DIR) // 축, 거리모드, 방향
 {
-  //    Serial.print(moveMenu);
-  //    Serial.print(" ");
-  //    Serial.print(menu);
-  //    Serial.print(" ");
-  //    Serial.print(axis);
-  //    Serial.print(" ");
-  //    Serial.print(move_length);
-  //    Serial.print(" ");
-  //    Serial.print(DIR);
-  //    Serial.print(" ");
-  //    Serial.print(x_right);
+  //      Serial.print(moveMenu);
+  //      Serial.print(" ");
+  //      Serial.print(menu);
+  //      Serial.print(" ");
+  //      Serial.print(axis);
+  //      Serial.print(" ");
+  //      Serial.print(move_length);
+  //      Serial.print(" ");
+  //      Serial.print(DIR);
+  //      Serial.print(" ");
+  //      Serial.print(x_right);
   printMenu(axis);
   if (TIMSK1 == 0x00 && TIMSK3 == 0x00 && TIMSK4 == 0x00)
   {
@@ -320,7 +332,7 @@ void printMenu(char move_axis) {
 
 void processMenu(unsigned long processMenu_c_millis)
 {
-  if (processMenu_c_millis - processMenu_p_millis > 50)
+  if (processMenu_c_millis - processMenu_p_millis > 100)
   {
     processMenu_p_millis = processMenu_c_millis;
     printMenu(menu + 70);
@@ -364,12 +376,12 @@ void processMenu(unsigned long processMenu_c_millis)
         }
         else if (dir == 'a') {
           if (menu == '2') move_func('x', 10, x_left);
-          else if (menu == '3') move_func('y', 10, y_up);
+          else if (menu == '3') move_func('y', 10, y_down);
           else if (menu == '4') move_func('z', 10, z_down);
         }
         else if (dir == 'd') {
           if (menu == '2') move_func('x', 10, x_right);
-          else if (menu == '3') move_func('y', 10, y_down);
+          else if (menu == '3') move_func('y', 10, y_up);
           else if (menu == '4') move_func('z', 10, z_up);
         }
       }
@@ -383,12 +395,12 @@ void processMenu(unsigned long processMenu_c_millis)
         }
         else if (dir == 'a') {
           if (menu == '2') move_func('x', 1, x_left);
-          else if (menu == '3') move_func('y', 1, y_up);
+          else if (menu == '3') move_func('y', 1, y_down);
           else if (menu == '4') move_func('z', 10, z_down);
         }
         else if (dir == 'd') {
           if (menu == '2') move_func('x', 1, x_right);
-          else if (menu == '3') move_func('y', 1, y_down);
+          else if (menu == '3') move_func('y', 1, y_up);
           else if (menu == '4') move_func('z', 1, z_up);
         }
       }
@@ -402,12 +414,12 @@ void processMenu(unsigned long processMenu_c_millis)
         }
         else if (dir == 'a') {
           if (menu == '2') move_func('x', 0.1, x_left);
-          else if (menu == '3') move_func('y', 0.1, y_up);
+          else if (menu == '3') move_func('y', 0.1, y_down);
           else if (menu == '4') move_func('z', 0.1, z_down);
         }
         else if (dir == 'd') {
           if (menu == '2') move_func('x', 0.1, x_right);
-          else if (menu == '3') move_func('y', 0.1, y_down);
+          else if (menu == '3') move_func('y', 0.1, y_up);
           else if (menu == '4') move_func('z', 0.1, z_up);
         }
       }
@@ -536,8 +548,8 @@ volatile unsigned long c_micros = 0;
 volatile unsigned long p_micros = 0;
 volatile int count = 0;
 volatile int move_toggle = 0;
-volatile const float *xy_pos[13] = {*xy_pos1, *xy_pos2, *xy_pos3, *xy_pos4, *xy_pos5, *xy_pos6, *xy_pos7, *xy_pos14, *xy_pos15};//, };
-volatile int array_[23] = {0, 1, 2, 3, 4, 5, 6, 5, 6, 5, 5, 5, 6, 7, 8, 7, 8, 7, 8};
+volatile const float *xy_pos[9] = {*xy_pos1, *xy_pos2, *xy_pos3, *xy_pos4, *xy_pos5, *xy_pos6, *xy_pos7, *xy_pos14, *xy_pos15};// *xy_pos22, *xy_pos23, *xy_pos24};//, };
+volatile int array_[24] = {0, 1, 2, 3, 4, 5, 6, 5, 6, 5, 5, 5, 6, 7, 8, 7, 8, 7, 8, 7, 8, 7, 8, 1};
 volatile int i = 0, j = 0, len_toggle = 0, cnt = 0, ch = 0, first = 0;
 volatile float previous_z = 0, shift_x = 0, shift_y = 0;
 
@@ -553,14 +565,20 @@ void loop() // 커스텀 프린터 태스트
     {
       while (1)
       {
+        c_millis = millis();
         end_analog_value = analogRead(A13);
         bed_analog_value = analogRead(A14);
-        heat_control(millis());
-        Serial.print("end:");
-        Serial.print(end_analog_value);
-        Serial.print("bed");
-        Serial.println(bed_analog_value);
-        i2c_write(end_analog_value, bed_analog_value, millis());
+        heat_control(c_millis);
+        if (c_millis - p_millis > 500)
+        {
+          p_millis = c_millis;
+          Serial.write(12);
+          Serial.print("end:");
+          Serial.print(end_analog_value);
+          Serial.print(" bed:");
+          Serial.println(bed_analog_value);
+        }
+        i2c_write(end_analog_value, bed_analog_value, c_millis);
         //oled_on(current_x, current_y, current_z, end_analog_value, bed_analog_value, millis());
         if (end_analog_value <= end_set_temp + 3 && bed_analog_value <= bed_set_temp + 3)
         {
@@ -592,11 +610,22 @@ void loop() // 커스텀 프린터 태스트
       j = i * 2;
       if (pgm_read_float_near((xy_pos[ch] + j)) < 0)
       {
-        current_z = pgm_read_float_near((xy_pos[ch] + j + 1));
+        if (5 <= ch && ch < 22) {
+          current_z = previous_z + 0.2;
+          OCR2A = 240;
+        }
+        else if (23 <= ch)
+        {
+          current_z = previous_z + 0.2;
+          OCR2A = 190;
+        }
+        else current_z = pgm_read_float_near((xy_pos[ch] + j + 1));
 
         z_move((current_z - previous_z)*Z_ONE_MM, z_down, 600);
         while (TIMSK4 != 0x00);
         previous_z = current_z;
+        xy_reset();
+
       }
       else
       {
@@ -606,16 +635,25 @@ void loop() // 커스텀 프린터 태스트
       }
 
       i++;
-      if (len_toggle == 25)
+      if (len_toggle == 24)
       {
+        ushift(0, 0, 600);
         menu = '0';
+        i = 0;
+        ch = 0;
+        len_toggle = 0;
+        digitalWrite(A5, LOW);
+        digitalWrite(10, LOW);
+        TIMSK2 = 0x00;
       }
       else if (i == len_cnt[len_toggle])
       {
         i = 0;
         len_toggle++;
         ch = array_[len_toggle];
-        //Serial.println(len_toggle);
+        Serial.println(len_toggle);
+        Serial.println(ch);
+
       }
     }
   }
