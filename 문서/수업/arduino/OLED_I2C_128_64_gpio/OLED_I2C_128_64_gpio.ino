@@ -33,6 +33,8 @@ char oled_area_command_value[SIZE_COMMAND_VALUE] = {0x22,0x00,63,0x21,0x00,127};
 
 char oled_buffer[SIZE_BUFFER];
 
+char mouse_pointer_arry[8] = {0xc0, 0xA0, 0x90, 0x88, 0x84, 0xBE, 0xC0, 0x80};
+
 void setup()
 {
   Serial.begin(115200);
@@ -57,22 +59,73 @@ void setup()
 }
 
 char page_num = 0;
+char pos_x = 0, pos_y = 0;
+char ch = 0;
 
 void loop()
 {
-//  page_num = 7;
-//  oled_buffer[page_num*128 + 0] = 0x80;
-//  delay(1000);
-//
-//  oled_display();
-//  delay(1000);  
-  for(int j = 0; j < 64; j++)
+  ch = 0;
+  if(Serial.available())
   {
-    for(int i = 0; i < 128; i++)
+    ch = Serial.read();
+    if(ch == 'a')
     {
-      put_pixel(i, j, WHITE);
+      mouse_pointer(pos_x, pos_y, BLACK);
+      pos_x--;
+      if(pos_x < 0) pos_x = 0;
+    }
+    else if(ch == 'd')
+    {
+      mouse_pointer(pos_x, pos_y, BLACK);
+      pos_x++;
+      if(pos_x > 120) pos_x = 120;
+    }
+    else if(ch == 'w')
+    {
+      mouse_pointer(pos_x, pos_y, BLACK);
+      pos_y--;
+      if(pos_y < 0) pos_y = 0;
+    }
+    else if(ch == 's')
+    {
+      mouse_pointer(pos_x, pos_y, BLACK);
+      pos_y++;
+      if(pos_x > 56) pos_x = 56;
     }
   }
+  
+  mouse_pointer(pos_x, pos_y, WHITE);
+}
+
+void mouse_pointer(char x, char y, char color)
+{
+  for(int j = 0; j < 8; j++)
+  {
+    for(int i = 0; i < 8; i++)
+    {
+      if(mouse_pointer_arry[j] & (0x80 >> i))
+      {
+        put_pixel(x + i, y + j, color);
+      }
+    }
+  }
+
+//  int pos = 0;
+//  char value = 0;
+//
+//
+//  for(int i = 0; i < 8; i++)
+//  {
+//    page_num = 7 - (y/8);
+//    pos = page_num*128 + x;
+//  
+//    if(color == WHITE)  
+//      oled_buffer[pos] |= (0x80 >> (y%8)); 
+//    else if(color == BLACK) 
+//      oled_buffer[pos] &= ~(0x80 >> (y%8));
+//  }
+  
+  oled_display();
 }
 
 void put_pixel(char x, char y, int color)
@@ -90,7 +143,7 @@ void put_pixel(char x, char y, int color)
   
   //oled_buffer[pos] = oled_buffer[pos] | (0x01 << (y%8)); // 현재의 페이지의 8bit 를 비교하여 계산 후 넣어준다
   
-  oled_display();
+  //oled_display();
 }
 
 void oled_clear()
