@@ -69,3 +69,9 @@ void i2c_byte_write(char addr, char data)
   i2c_ack();
   i2c_stop();
 }
+
+void lcd_init()
+{
+  i2c_init();
+  i2c_byte_write(I2CADDR, 30);
+}

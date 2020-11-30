@@ -1,6 +1,8 @@
 #ifndef I2CLCD_H
 #define I2CLCD_H
 
+#define I2CADDR 0x27
+
 #include "Arduino.h"
 
 void i2c_init();

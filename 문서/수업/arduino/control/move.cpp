@@ -4,8 +4,9 @@
 char move_c_location = 0;
 char joy_toggle = 0;
 
-char move_print()
+char move_print(char loc, char arr[][2])
 {
+  move_c_location = loc;
   if (Serial.available()) {
     char dir = Serial.read();
     if (dir == ' ')
@@ -13,6 +14,7 @@ char move_print()
       make_rect(arr[move_c_location][0], arr[move_c_location][1], WHITE);
       move_c_location++;
       if (move_c_location == 6) move_c_location = 0;
+      make_rect(arr[move_c_location][0], arr[move_c_location][1], BLUE);
     }
   }
 
@@ -23,7 +25,8 @@ char move_print()
       make_rect(arr[move_c_location][0], arr[move_c_location][1], WHITE);
       joy_toggle = 1;
       move_c_location--;
-      if (move_c_location == -1) c_location = 5;
+      if (move_c_location == -1) move_c_location = 5;
+      make_rect(arr[move_c_location][0], arr[move_c_location][1], BLUE);
     }
 
   }
@@ -35,6 +38,7 @@ char move_print()
       joy_toggle = 1;
       move_c_location++;
       if (move_c_location == 6) move_c_location = 0;
+      make_rect(arr[move_c_location][0], arr[move_c_location][1], BLUE);
     }
   }
   else

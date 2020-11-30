@@ -146,7 +146,7 @@ void Draw_Bitmap(void)
 
   for (int j = 0; j < 128; j++)  {
     for (int i = 0; i < 128; i++)  {
-      if(j < 64)
+      if (j < 64)
       {
         Write_Data(pgm_read_byte(&main1[0x46 + (i * 2 + j * 128 * 2) + 1]));
         Write_Data(pgm_read_byte(&main1[0x46 + (i * 2 + j * 128 * 2)]));

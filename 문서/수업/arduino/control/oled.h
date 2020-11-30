@@ -1,9 +1,9 @@
 #ifndef OLED_H
 #define OLED_H
 
-#define OLED_CS     4
-#define OLED_RST    3
-#define OLED_DC     5
+#define OLED_CS     5
+#define OLED_RST    4
+#define OLED_DC     6
 #define OLED_SCK    52
 #define OLED_DATA   51
 

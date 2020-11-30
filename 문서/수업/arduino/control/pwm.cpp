@@ -20,6 +20,7 @@ void pwm_start()
 void pwm_stop()
 {
   pwm_count = 0;
+  pwm_duty = 1;
   TIMSK2 = 0x00;
 }
 

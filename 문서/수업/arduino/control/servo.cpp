@@ -20,6 +20,7 @@ void servo_start()
 void servo_stop()
 {
   servo_count = 0;
+  servo_duty = 1;
   TIMSK1 = 0x00;
 }
 
