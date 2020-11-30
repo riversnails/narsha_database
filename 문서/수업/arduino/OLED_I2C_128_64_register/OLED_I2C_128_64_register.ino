@@ -1,3 +1,4 @@
+#include <Wire.h>
 #define SCL 19
 #define SDA  18
 
@@ -37,6 +38,7 @@ char mouse_pointer_arry[8] = {0xc0, 0xA0, 0x90, 0x88, 0x84, 0xBE, 0xC0, 0x80};
 
 void setup()
 {
+  Wire.begin();
   Serial.begin(115200);
 
   for(int i=0;i<SIZE_BUFFER;i++)
@@ -44,7 +46,7 @@ void setup()
     oled_buffer[i] = 0x0f;
   }
   
-  i2c_init();
+  //i2c_init();
   oled_128_64_init(oled_init_value);
 
   oled_clear();
@@ -146,21 +148,6 @@ void mouse_pointer(char x, char y, char color)
       }
     }
   }
-
-//  int pos = 0;
-//  char value = 0;
-//
-//
-//  for(int i = 0; i < 8; i++)
-//  {
-//    page_num = 7 - (y/8);
-//    pos = page_num*128 + x;
-//  
-//    if(color == WHITE)  
-//      oled_buffer[pos] |= (0x80 >> (y%8)); 
-//    else if(color == BLACK) 
-//      oled_buffer[pos] &= ~(0x80 >> (y%8));
-//  }
   
   oled_display();
 }
@@ -205,63 +192,45 @@ void oled_128_64_init(char *init_value)
 
 void oled_128_64_i2c_command(char command)
 {
-  i2c_start();
-  i2c_8bit(oled_i2c_ADDR << 1);
-  i2c_ack();
-  //i2c_8bit(0x00);
-  i2c_8bit(0x80);  
-  i2c_ack();
-  i2c_8bit(command);
-  i2c_ack();  
-  i2c_stop();
+  Wire.beginTransmission(oled_i2c_ADDR);
+  Wire.write(0x80);
+  Wire.write(command);
+  Wire.endTransmission();
 }
 
 void oled_128_64_i2c_command_multi(char *command, int array_count)
 {
-  i2c_start();
-  i2c_8bit(oled_i2c_ADDR << 1);
-  i2c_ack();
-  i2c_8bit(0x00);
-  i2c_ack();
-
+  Wire.beginTransmission(oled_i2c_ADDR);
+  Wire.write(0x00);
+  
   for(int i=0;i<array_count;i++)
   {
-    i2c_8bit(*(command+i));
-    i2c_ack();      
+    Wire.write(*(command+i));    
   }
- 
-  i2c_stop();
+  
+  Wire.endTransmission();
 }
 
 void oled_128_64_i2c_data(char data)
 {
-  i2c_start();
-  i2c_8bit(oled_i2c_ADDR << 1);
-  i2c_ack();
-  //i2c_8bit(0x40);
-  i2c_8bit(0xC0);  
-  i2c_ack();
-  i2c_8bit(data);
-  i2c_ack();  
-  i2c_stop();
+  Wire.beginTransmission(oled_i2c_ADDR);
+  Wire.write(0xC0);
+  Wire.write(data);
+  Wire.endTransmission();
 }
 
 
 void oled_128_64_i2c_data_multi(char *data)
 {
-  i2c_start();
-  i2c_8bit(oled_i2c_ADDR << 1);
-  i2c_ack();
-  i2c_8bit(0x40);
-  i2c_ack();
-
+  Wire.beginTransmission(oled_i2c_ADDR);
+  Wire.write(0x40);
+  
   for(int i=0;i<SIZE_BUFFER;i++)
   {
-    i2c_8bit(*(data+i));
-    i2c_ack();      
-  }  
- 
-  i2c_stop();
+    Wire.write(*(data+i));    
+  }
+  
+  Wire.endTransmission();
 }
 //=====================================
 

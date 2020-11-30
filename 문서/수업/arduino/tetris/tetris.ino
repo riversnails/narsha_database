@@ -598,5 +598,4 @@ void string_write(char x, char y, int color, char *str)
   for (int i = 0; i < str_len; i++) {
     font_write(x + i * 8, y, color, *(str + i));
   }
-
 }
