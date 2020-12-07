@@ -179,6 +179,24 @@ void put_pixel(char x, char y, unsigned short color)
   Write_Data(second_byte);
 }
 
+void put_pixel_two(char x, char y, char color1, char color2)
+{
+  char first_byte = color1;
+  char second_byte = color2;
+  Write_Command(0x15); // Column
+  Write_Data(x);
+  Write_Data(x);
+
+  Write_Command(0x75); // Row
+  Write_Data(y);
+  Write_Data(y);
+
+  Write_Command(0x5C); // Write Ram
+
+  Write_Data(first_byte);
+  Write_Data(second_byte);
+}
+
 void make_rect(char xx, char yy, unsigned short color)
 {
   for (int j = 0; j < 10; j++) {

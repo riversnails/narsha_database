@@ -197,11 +197,11 @@ void loop()
     {
       if (select_toggle == 1)
       {
-        if (r_p_d != r_d) font_write(40, 70, WHITE, r_p_d);
-        font_write(40, 70, BLACK, r_d);
+        if (r_p_d != r_d) font_write(50, 70, WHITE, r_p_d);
+        font_write(50, 70, BLACK, r_d);
         r_p_d = r_d;
       }
-      else if (select_toggle == 0) font_write(40, 70, WHITE, r_d);
+      else if (select_toggle == 0) font_write(50, 70, WHITE, r_d);
     }
     if (j == 20) j = 2;
     if (i == 20) i = 1;
@@ -215,6 +215,6 @@ void stop_all()
   pwm_stop();
   string_write(37, 70, WHITE, buff);
   font_write(95, 105, WHITE, p_d);
-  font_write(40, 70, WHITE, r_p_d);
+  font_write(50, 70, WHITE, r_p_d);
   lcd_data_set(0x00);
 }
