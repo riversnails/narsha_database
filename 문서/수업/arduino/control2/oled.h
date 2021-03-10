@@ -22,7 +22,7 @@ void Write_Command(char command);
 void Write_Data(char data);
 void oled_1351_init(void);
 void Clear_Screen(unsigned short color);
-void Draw_Bitmap(void);
+void Draw_Bitmap(int ch);
 void put_pixel(char x, char y, unsigned short color);
 void put_pixel_two(char x, char y, char color1, char color2);
 void make_rect(char xx, char yy, unsigned short color);

@@ -7,5 +7,6 @@
 
 void remocon_init();
 char c_remocon();
+void set_remocon(char len);
 
 #endif

@@ -133,7 +133,7 @@ void Clear_Screen(unsigned short color)
   }
 }
 
-void Draw_Bitmap(void)
+void Draw_Bitmap(int ch)
 {
   Write_Command(0x15); // Column
   Write_Data(0x00);
@@ -145,19 +145,37 @@ void Draw_Bitmap(void)
 
   Write_Command(0x5C); // Write Ram
 
-  for (int j = 0; j < 128; j++)  {
-    for (int i = 0; i < 128; i++)  {
-      if (j < 64)
-      {
-        Write_Data(pgm_read_byte(&main1[0x46 + (i * 2 + j * 128 * 2) + 1]));
-        Write_Data(pgm_read_byte(&main1[0x46 + (i * 2 + j * 128 * 2)]));
-      }
-      else
-      {
-        Write_Data(pgm_read_byte(&main2[0x46 + (i * 2 + (j - 64) * 128 * 2) + 1]));
-        Write_Data(pgm_read_byte(&main2[0x46 + (i * 2 + (j - 64) * 128 * 2)]));
+  if (ch == 0)
+  {
+    for (int j = 0; j < 128; j++)  {
+      for (int i = 0; i < 128; i++)  {
+        if (j < 64)
+        {
+          Write_Data(pgm_read_byte(&main1[0x46 + (i * 2 + j * 128 * 2) + 1]));
+          Write_Data(pgm_read_byte(&main1[0x46 + (i * 2 + j * 128 * 2)]));
+        }
+        else
+        {
+          Write_Data(pgm_read_byte(&main2[0x46 + (i * 2 + (j - 64) * 128 * 2) + 1]));
+          Write_Data(pgm_read_byte(&main2[0x46 + (i * 2 + (j - 64) * 128 * 2)]));
+        }
       }
     }
+  }
+  else if(ch == 1)
+  {
+    for (int j = 0; j < 128; j++)  {
+      for (int i = 0; i < 128; i++)  {
+        if (j <= 32) put_pixel(i, j, RED);
+        else if(j <= 64) put_pixel(i, j, BLUE);
+        else if(j <= 96) put_pixel(i, j, GREEN);
+        else if(j <= 128) put_pixel(i, j, YELLOW);
+      }
+    }
+    string_write(20, 10, BLACK, "variable");
+    string_write(20, 40, BLACK, "left");
+    string_write(20, 70, BLACK, "left");
+    string_write(20, 100, BLACK, "back");
   }
 }
 

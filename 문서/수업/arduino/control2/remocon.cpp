@@ -7,7 +7,7 @@ char rem_bit[32];
 char remocon_num = 0x00;
 int remocon_finish_flag = 0;
 
-char remocon_number[10][8] = {
+char remocon_number[21][8] = {
   {0, 1, 1, 0, 1, 0, 0, 0}, // 0
   {0, 0, 1, 1, 0, 0, 0, 0}, // 1
   {0, 0, 0, 1, 1, 0, 0, 0}, // 2
@@ -17,7 +17,19 @@ char remocon_number[10][8] = {
   {0, 1, 0, 1, 1, 0, 1, 0}, // 6
   {0, 1, 0, 0, 0, 0, 1, 0}, // 7
   {0, 1, 0, 0, 1, 0, 1, 0}, // 8
-  {0, 1, 0, 1, 0, 0, 1, 0} // 9
+  {0, 1, 0, 1, 0, 0, 1, 0}, // 9
+  {1, 0, 0, 1, 1, 0, 0, 0}, // 100+
+  {1, 0, 1, 1, 0, 0, 0, 0}, // 200+
+  {1, 1, 1, 0, 0, 0, 0, 0}, // -
+  {1, 0, 1, 0, 1, 0, 0, 0}, // +
+  {1, 0, 0, 1, 0, 0, 0, 0}, // EQ
+  {0, 0, 1, 0, 0, 0, 1, 0}, // PREV
+  {0, 0, 0, 0, 0, 0, 1, 0}, // NEXT
+  {1, 1, 0, 0, 0, 0, 1, 0}, // PLAY/PAUSE
+  {1, 0, 1, 0, 0, 0, 1, 0}, // CH-
+  {0, 1, 1, 0, 0, 0, 1, 0}, // CH
+  {1, 1, 1, 0, 0, 0, 1, 0} // CH+
+
 };
 
 void remocon_init()
@@ -30,6 +42,11 @@ void remocon_init()
 char c_remocon()
 {
   return remocon_num;
+}
+
+void set_remocon(char len)
+{
+  remocon_num = len;
 }
 
 void remoconISR()
@@ -53,7 +70,7 @@ void remoconISR()
   rem_int_count++;
   if (rem_int_count == 34)
   {
-    Serial.println();
+    //Serial.println();
     rem_int_count = 0;
 
     for (int i = 0; i < 32; i++)
@@ -69,14 +86,14 @@ void remoconISR()
     }
 
 
-    for (int i = 0; i < 32; i++)
-    {
-      Serial.print(int(rem_bit[i]));
-    }
-    Serial.println();
+//    for (int i = 0; i < 32; i++)
+//    {
+//      Serial.print(int(rem_bit[i]));
+//    }
+//    Serial.println();
 
     remocon_num = 0x00;
-    for (int j = 0; j < 10; j++)
+    for (int j = 0; j < 21; j++)
     {
       int count = 0;
       for (int i = 0; i < 8; i++)
@@ -85,10 +102,22 @@ void remoconISR()
 
       }
       if (count == 8) {
-        remocon_num = j + 0x30;
+        if(j == 15) // prev
+        {
+          remocon_num = 'p';
+        }
+        else if(j == 16)// next
+        {
+          remocon_num = 'n';
+        }
+        else if(j == 17)
+        {
+          remocon_num = 'l';
+        }
+        else remocon_num = j + 0x30;
         remocon_finish_flag = 1;
-        Serial.print("Data : ");
-        Serial.println(remocon_num);
+//        Serial.print("Data : ");
+//        Serial.println(remocon_num);
         break;
       }
     }
