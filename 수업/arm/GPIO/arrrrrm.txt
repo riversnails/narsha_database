@@ -1,0 +1,34 @@
+stm32f103rbt6
+
+다운하면 플레쉬 코어가 끌고가져감
+sram 변수저장 20k byte
+
+dma diract memory access 
+cpu 상관없이 실행
+여러가지 작업 가능
+
+1바이트 = 8비트 
+32비트 구현가능 4g바이트
+
+idr = pin
+odr = port
+in,out = crh, crl
+
+gpioa 에서 핀을 output50, pushpull 설정
+logic analyzer에서 porta.0  bit로 변경
+
+
+odr 에서 0을 주면 outputcontrol에서 반대로 주고 p-mos, n-mos가 걸려서  5v, gnd로 바꿔줌 == push-pull
+
+input mode 에서 2v 내외 = 1 대충 반정도
+
+sumit trigger를 이용하여 꺼버리면 아날로그로 사용가능
+
+페리페럴은 rcc = reset colck control 이 버스사이에 있음 클럭이없으면 작동안함 rcc가 클럭을 줌 페리페럴안에 브릿지1,2가있다.
+
+내부버스망도 마스터, 슬레이브가 있다. 클럭들은 aPB가 마스터? 거기에 클럭을 공급하는게 APB2ENR
+
+volatile 레지스터에 바로보내거나 매모리에 바로보내거나 내가할껀데 꼽냐>?거나
+
+한번에 다 안되니까 h랑 l로 놔눔
+

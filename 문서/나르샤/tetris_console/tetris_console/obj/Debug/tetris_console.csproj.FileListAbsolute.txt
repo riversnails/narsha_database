@@ -1,7 +1,0 @@
-C:\Users\강다혁\source\repos\tetris_console\tetris_console\bin\Debug\tetris_console.exe.config
-C:\Users\강다혁\source\repos\tetris_console\tetris_console\bin\Debug\tetris_console.exe
-C:\Users\강다혁\source\repos\tetris_console\tetris_console\bin\Debug\tetris_console.pdb
-C:\Users\강다혁\source\repos\tetris_console\tetris_console\obj\Debug\tetris_console.csprojAssemblyReference.cache
-C:\Users\강다혁\source\repos\tetris_console\tetris_console\obj\Debug\tetris_console.csproj.CoreCompileInputs.cache
-C:\Users\강다혁\source\repos\tetris_console\tetris_console\obj\Debug\tetris_console.exe
-C:\Users\강다혁\source\repos\tetris_console\tetris_console\obj\Debug\tetris_console.pdb
