@@ -1,0 +1,8 @@
+--cpu Cortex-M3
+".\output\stm32_init.o"
+".\output\stm32f10x.o"
+".\output\systick.o"
+--strict --scatter ".\Output\Systick.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Output\Systick.map" -o .\Output\Systick.axf

@@ -1,0 +1,22 @@
+[Signal 1]
+DispName=PORTA
+PlotType=1
+Color=255
+ValHex=0
+MinDec=0
+MinVal=0.
+MaxDec=0
+MaxVal=65535.
+Mask=1
+Offset=0
+[Signal 2]
+DispName=PORTB
+PlotType=1
+Color=32768
+ValHex=0
+MinDec=0
+MinVal=0.
+MaxDec=0
+MaxVal=65535.
+Mask=64
+Offset=6

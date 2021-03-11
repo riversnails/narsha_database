@@ -1,0 +1,51 @@
+1. RTOS 에 사용되는 tick timer 이다.
+
+2. 다른 timer 처럼 분주비가 여러 가지가 아니라 
+   1분주/8분주 2 가지 분주비가 존재한다.
+
+3. 분주 되어 나온 주파수가 곧 인터럽트 주파수이다
+   -> 즉, 72분주를 하게되면 72MHz/72 -> 1MHz -> 인터럽트 주파수
+
+
+
+// 10 micros()
+
+//////////////////////////////////
+
+
+volatile unsigned long count=0;
+
+unsigned long micros_10us()
+{
+	
+	return count;
+}
+
+void SysTick_Handler(void)
+ {
+	count++;
+ }
+
+void main(){
+
+	unsigned long c_micro=0;
+		unsigned long p_micro=0;
+
+  for(;;) {
+		
+		c_micro = micros_10us();
+		
+		if(c_micro - p_micro > 100){
+				p_micro = c_micro;
+	
+				ledLight1 = ~ledLight1;
+				if( ledLight1 )
+						GPIOB->ODR &= ~LED1;                           // switch on LED
+				else
+						GPIOB->ODR |=  LED1; 	
+		
+		}
+		
+  	}
+
+}

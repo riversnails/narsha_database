@@ -1,0 +1,12 @@
+
+Exactly as you would on other platforms.
+
+Open the file for append
+
+The f_open() function has a FA_OPEN_APPEND flag, which makes subsequent f_write() functions to append data at the end of the file.
+
+Move the file pointer to the end of the file
+
+If the file can't be opened in append mode (e.g. when existing data must be accessed first), then you can set the file pointer to the length of the file.
+
+f_lseek(fp, f_size(fp));

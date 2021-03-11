@@ -1,0 +1,264 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+G:\data\edu\data_edu\RTC\RTC_lib\Keil\RTC_lib.uvproj
+Project File Date:  02/27/2015
+
+<h2>Output:</h2>
+Rebuild target 'RTC_lib'
+compiling main.c...
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(23): error:  #256: invalid redeclaration of type name "s32" (declared at line 470 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(27): error:  #256: invalid redeclaration of type name "sc32" (declared at line 474 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(31): error:  #256: invalid redeclaration of type name "vs32" (declared at line 478 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(35): error:  #256: invalid redeclaration of type name "vsc32" (declared at line 482 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(39): error:  #256: invalid redeclaration of type name "u32" (declared at line 486 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(43): error:  #256: invalid redeclaration of type name "uc32" (declared at line 490 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(47): error:  #256: invalid redeclaration of type name "vu32" (declared at line 494 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(51): error:  #256: invalid redeclaration of type name "vuc32" (declared at line 498 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "RESET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "SET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "FlagStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "ITStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "DISABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "ENABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #256: invalid redeclaration of type name "FunctionalState" (declared at line 504 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "ERROR" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "SUCCESS" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #256: invalid redeclaration of type name "ErrorStatus" (declared at line 507 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_conf.h(147): warning:  #47-D: incompatible redefinition of macro "HSE_Value" (declared at line 511 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+..\App\main.c(24): error:  #5: cannot open source input file "stm32_eval.h": No such file or directory
+compiling main_rtc_calendar_7segment.c...
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(23): error:  #256: invalid redeclaration of type name "s32" (declared at line 470 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(27): error:  #256: invalid redeclaration of type name "sc32" (declared at line 474 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(31): error:  #256: invalid redeclaration of type name "vs32" (declared at line 478 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(35): error:  #256: invalid redeclaration of type name "vsc32" (declared at line 482 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(39): error:  #256: invalid redeclaration of type name "u32" (declared at line 486 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(43): error:  #256: invalid redeclaration of type name "uc32" (declared at line 490 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(47): error:  #256: invalid redeclaration of type name "vu32" (declared at line 494 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(51): error:  #256: invalid redeclaration of type name "vuc32" (declared at line 498 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "RESET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "SET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "FlagStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "ITStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "DISABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "ENABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #256: invalid redeclaration of type name "FunctionalState" (declared at line 504 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "ERROR" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "SUCCESS" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #256: invalid redeclaration of type name "ErrorStatus" (declared at line 507 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_conf.h(147): warning:  #47-D: incompatible redefinition of macro "HSE_Value" (declared at line 511 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+..\App\main_rtc_calendar_7segment.c(24): error:  #5: cannot open source input file "stm32_eval.h": No such file or directory
+compiling stm32f10x_it.c...
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(23): error:  #256: invalid redeclaration of type name "s32" (declared at line 470 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(27): error:  #256: invalid redeclaration of type name "sc32" (declared at line 474 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(31): error:  #256: invalid redeclaration of type name "vs32" (declared at line 478 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(35): error:  #256: invalid redeclaration of type name "vsc32" (declared at line 482 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(39): error:  #256: invalid redeclaration of type name "u32" (declared at line 486 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(43): error:  #256: invalid redeclaration of type name "uc32" (declared at line 490 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(47): error:  #256: invalid redeclaration of type name "vu32" (declared at line 494 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(51): error:  #256: invalid redeclaration of type name "vuc32" (declared at line 498 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "RESET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "SET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "FlagStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "ITStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "DISABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "ENABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #256: invalid redeclaration of type name "FunctionalState" (declared at line 504 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "ERROR" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "SUCCESS" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #256: invalid redeclaration of type name "ErrorStatus" (declared at line 507 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_conf.h(147): warning:  #47-D: incompatible redefinition of macro "HSE_Value" (declared at line 511 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+..\App\stm32f10x_it.c(26): error:  #5: cannot open source input file "stm32_eval.h": No such file or directory
+compiling system_stm32f10x.c...
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(23): error:  #256: invalid redeclaration of type name "s32" (declared at line 470 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(27): error:  #256: invalid redeclaration of type name "sc32" (declared at line 474 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(31): error:  #256: invalid redeclaration of type name "vs32" (declared at line 478 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(35): error:  #256: invalid redeclaration of type name "vsc32" (declared at line 482 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(39): error:  #256: invalid redeclaration of type name "u32" (declared at line 486 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(43): error:  #256: invalid redeclaration of type name "uc32" (declared at line 490 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(47): error:  #256: invalid redeclaration of type name "vu32" (declared at line 494 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(51): error:  #256: invalid redeclaration of type name "vuc32" (declared at line 498 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "RESET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "SET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "FlagStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "ITStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "DISABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "ENABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #256: invalid redeclaration of type name "FunctionalState" (declared at line 504 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "ERROR" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "SUCCESS" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #256: invalid redeclaration of type name "ErrorStatus" (declared at line 507 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_conf.h(147): warning:  #47-D: incompatible redefinition of macro "HSE_Value" (declared at line 511 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+Target not created
+Build target 'RTC_lib'
+compiling main.c...
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(23): error:  #256: invalid redeclaration of type name "s32" (declared at line 470 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(27): error:  #256: invalid redeclaration of type name "sc32" (declared at line 474 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(31): error:  #256: invalid redeclaration of type name "vs32" (declared at line 478 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(35): error:  #256: invalid redeclaration of type name "vsc32" (declared at line 482 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(39): error:  #256: invalid redeclaration of type name "u32" (declared at line 486 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(43): error:  #256: invalid redeclaration of type name "uc32" (declared at line 490 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(47): error:  #256: invalid redeclaration of type name "vu32" (declared at line 494 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(51): error:  #256: invalid redeclaration of type name "vuc32" (declared at line 498 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "RESET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "SET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "FlagStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "ITStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "DISABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "ENABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #256: invalid redeclaration of type name "FunctionalState" (declared at line 504 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "ERROR" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "SUCCESS" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #256: invalid redeclaration of type name "ErrorStatus" (declared at line 507 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_conf.h(147): warning:  #47-D: incompatible redefinition of macro "HSE_Value" (declared at line 511 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+..\App\main.c(24): error:  #5: cannot open source input file "stm32_eval.h": No such file or directory
+compiling main_rtc_calendar_7segment.c...
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(23): error:  #256: invalid redeclaration of type name "s32" (declared at line 470 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(27): error:  #256: invalid redeclaration of type name "sc32" (declared at line 474 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(31): error:  #256: invalid redeclaration of type name "vs32" (declared at line 478 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(35): error:  #256: invalid redeclaration of type name "vsc32" (declared at line 482 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(39): error:  #256: invalid redeclaration of type name "u32" (declared at line 486 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(43): error:  #256: invalid redeclaration of type name "uc32" (declared at line 490 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(47): error:  #256: invalid redeclaration of type name "vu32" (declared at line 494 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(51): error:  #256: invalid redeclaration of type name "vuc32" (declared at line 498 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "RESET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "SET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "FlagStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "ITStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "DISABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "ENABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #256: invalid redeclaration of type name "FunctionalState" (declared at line 504 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "ERROR" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "SUCCESS" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #256: invalid redeclaration of type name "ErrorStatus" (declared at line 507 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_conf.h(147): warning:  #47-D: incompatible redefinition of macro "HSE_Value" (declared at line 511 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+..\App\main_rtc_calendar_7segment.c(24): error:  #5: cannot open source input file "stm32_eval.h": No such file or directory
+compiling stm32f10x_it.c...
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(23): error:  #256: invalid redeclaration of type name "s32" (declared at line 470 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(27): error:  #256: invalid redeclaration of type name "sc32" (declared at line 474 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(31): error:  #256: invalid redeclaration of type name "vs32" (declared at line 478 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(35): error:  #256: invalid redeclaration of type name "vsc32" (declared at line 482 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(39): error:  #256: invalid redeclaration of type name "u32" (declared at line 486 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(43): error:  #256: invalid redeclaration of type name "uc32" (declared at line 490 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(47): error:  #256: invalid redeclaration of type name "vu32" (declared at line 494 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(51): error:  #256: invalid redeclaration of type name "vuc32" (declared at line 498 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "RESET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "SET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "FlagStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "ITStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "DISABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "ENABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #256: invalid redeclaration of type name "FunctionalState" (declared at line 504 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "ERROR" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "SUCCESS" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #256: invalid redeclaration of type name "ErrorStatus" (declared at line 507 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_conf.h(147): warning:  #47-D: incompatible redefinition of macro "HSE_Value" (declared at line 511 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+..\App\stm32f10x_it.c(26): error:  #5: cannot open source input file "stm32_eval.h": No such file or directory
+compiling system_stm32f10x.c...
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(23): error:  #256: invalid redeclaration of type name "s32" (declared at line 470 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(27): error:  #256: invalid redeclaration of type name "sc32" (declared at line 474 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(31): error:  #256: invalid redeclaration of type name "vs32" (declared at line 478 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(35): error:  #256: invalid redeclaration of type name "vsc32" (declared at line 482 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(39): error:  #256: invalid redeclaration of type name "u32" (declared at line 486 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(43): error:  #256: invalid redeclaration of type name "uc32" (declared at line 490 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(47): error:  #256: invalid redeclaration of type name "vu32" (declared at line 494 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(51): error:  #256: invalid redeclaration of type name "vuc32" (declared at line 498 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "RESET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "SET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "FlagStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "ITStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "DISABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "ENABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #256: invalid redeclaration of type name "FunctionalState" (declared at line 504 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "ERROR" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "SUCCESS" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #256: invalid redeclaration of type name "ErrorStatus" (declared at line 507 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_conf.h(147): warning:  #47-D: incompatible redefinition of macro "HSE_Value" (declared at line 511 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+Target not created
+Rebuild target 'RTC_lib'
+compiling main.c...
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(23): error:  #256: invalid redeclaration of type name "s32" (declared at line 470 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(27): error:  #256: invalid redeclaration of type name "sc32" (declared at line 474 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(31): error:  #256: invalid redeclaration of type name "vs32" (declared at line 478 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(35): error:  #256: invalid redeclaration of type name "vsc32" (declared at line 482 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(39): error:  #256: invalid redeclaration of type name "u32" (declared at line 486 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(43): error:  #256: invalid redeclaration of type name "uc32" (declared at line 490 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(47): error:  #256: invalid redeclaration of type name "vu32" (declared at line 494 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(51): error:  #256: invalid redeclaration of type name "vuc32" (declared at line 498 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "RESET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "SET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "FlagStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "ITStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "DISABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "ENABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #256: invalid redeclaration of type name "FunctionalState" (declared at line 504 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "ERROR" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "SUCCESS" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #256: invalid redeclaration of type name "ErrorStatus" (declared at line 507 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_conf.h(147): warning:  #47-D: incompatible redefinition of macro "HSE_Value" (declared at line 511 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+..\Header\Utilities_STM32_EVAL\stm32_eval.h(155): error:  #5: cannot open source input file "stm3210b_eval/stm3210b_eval.h": No such file or directory
+compiling main_rtc_calendar_7segment.c...
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(23): error:  #256: invalid redeclaration of type name "s32" (declared at line 470 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(27): error:  #256: invalid redeclaration of type name "sc32" (declared at line 474 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(31): error:  #256: invalid redeclaration of type name "vs32" (declared at line 478 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(35): error:  #256: invalid redeclaration of type name "vsc32" (declared at line 482 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(39): error:  #256: invalid redeclaration of type name "u32" (declared at line 486 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(43): error:  #256: invalid redeclaration of type name "uc32" (declared at line 490 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(47): error:  #256: invalid redeclaration of type name "vu32" (declared at line 494 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(51): error:  #256: invalid redeclaration of type name "vuc32" (declared at line 498 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "RESET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "SET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "FlagStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "ITStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "DISABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "ENABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #256: invalid redeclaration of type name "FunctionalState" (declared at line 504 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "ERROR" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "SUCCESS" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #256: invalid redeclaration of type name "ErrorStatus" (declared at line 507 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_conf.h(147): warning:  #47-D: incompatible redefinition of macro "HSE_Value" (declared at line 511 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+..\Header\Utilities_STM32_EVAL\stm32_eval.h(155): error:  #5: cannot open source input file "stm3210b_eval/stm3210b_eval.h": No such file or directory
+compiling stm32f10x_it.c...
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(23): error:  #256: invalid redeclaration of type name "s32" (declared at line 470 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(27): error:  #256: invalid redeclaration of type name "sc32" (declared at line 474 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(31): error:  #256: invalid redeclaration of type name "vs32" (declared at line 478 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(35): error:  #256: invalid redeclaration of type name "vsc32" (declared at line 482 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(39): error:  #256: invalid redeclaration of type name "u32" (declared at line 486 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(43): error:  #256: invalid redeclaration of type name "uc32" (declared at line 490 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(47): error:  #256: invalid redeclaration of type name "vu32" (declared at line 494 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(51): error:  #256: invalid redeclaration of type name "vuc32" (declared at line 498 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "RESET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "SET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "FlagStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "ITStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "DISABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "ENABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #256: invalid redeclaration of type name "FunctionalState" (declared at line 504 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "ERROR" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "SUCCESS" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #256: invalid redeclaration of type name "ErrorStatus" (declared at line 507 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_conf.h(147): warning:  #47-D: incompatible redefinition of macro "HSE_Value" (declared at line 511 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+..\Header\Utilities_STM32_EVAL\stm32_eval.h(155): error:  #5: cannot open source input file "stm3210b_eval/stm3210b_eval.h": No such file or directory
+compiling system_stm32f10x.c...
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(23): error:  #256: invalid redeclaration of type name "s32" (declared at line 470 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(27): error:  #256: invalid redeclaration of type name "sc32" (declared at line 474 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(31): error:  #256: invalid redeclaration of type name "vs32" (declared at line 478 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(35): error:  #256: invalid redeclaration of type name "vsc32" (declared at line 482 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(39): error:  #256: invalid redeclaration of type name "u32" (declared at line 486 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(43): error:  #256: invalid redeclaration of type name "uc32" (declared at line 490 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(47): error:  #256: invalid redeclaration of type name "vu32" (declared at line 494 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(51): error:  #256: invalid redeclaration of type name "vuc32" (declared at line 498 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "RESET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #101: "SET" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "FlagStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(57): error:  #256: invalid redeclaration of type name "ITStatus" (declared at line 502 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "DISABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #101: "ENABLE" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(59): error:  #256: invalid redeclaration of type name "FunctionalState" (declared at line 504 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "ERROR" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #101: "SUCCESS" has already been declared in the current scope
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_type.h(62): error:  #256: invalid redeclaration of type name "ErrorStatus" (declared at line 507 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x_conf.h(147): warning:  #47-D: incompatible redefinition of macro "HSE_Value" (declared at line 511 of "C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h")
+Target not created

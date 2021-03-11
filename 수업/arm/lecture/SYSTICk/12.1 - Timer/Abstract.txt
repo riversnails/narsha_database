@@ -1,0 +1,13 @@
+'LCD_BMP'是芯片STM32F103RBT6的一个例子
+使用智林'Z32R'开发板演示如何在真彩液晶上显示位图。
+
+例子:
+ - 时钟配置:
+   - XTAL    =           12.00 MHz
+   - SYSCLK  =           72.00 MHz
+   - HCLK    = SYSCLK  = 72.00 MHz
+   - PCLK1   = HCLK/2  = 36.00 MHz
+   - PCLK2   = HCLK    = 72.00 MHz
+   - ADCLK   = PCLK2/6 = 12.00 MHz
+   - SYSTICK = HCLK/8  =  9.00 MHz
+ - 在真彩液晶上显示位图

@@ -1,0 +1,21 @@
+*** Creating Trace Output File '.\Out\RTC.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '".\out\stm32f10x.o"'
+### List of Objects: adding '".\out\stm32_init.o"'
+### List of Objects: adding '".\out\rtc.o"'
+### ADS-LD Command completed:
+--cpu Cortex-M3 ".\out\stm32f10x.o" ".\out\stm32_init.o" ".\out\rtc.o" --strict --scatter ".\Out\RTC.sct" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\Out\List\RTC.map" -o ".\Out\RTC.axf"### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: '.\Out\RTC.axf'
+### ADS-LD Command File: '.\Out\RTC.lnp'
+### Checking for dirty Components...
+### Creating CmdFile '.\Out\RTC.lnp', Handle=0x000003D4
+### Writing '.lnp' file
+### ADS-LD Command file '.\Out\RTC.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

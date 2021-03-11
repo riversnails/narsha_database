@@ -1,0 +1,738 @@
+g4p_controls/GAbstractControl.html" title="class in g4p_controls">GAbstractControl</a></h3>
+<code><a href="../g4p_controls/GAbstractControl.html#tag">tag</a>, <a href="../g4p_controls/GAbstractControl.html#tagNo">tagNo</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="fields_inherited_from_class_processing.core.PConstants">
+<!--   -->
+</a>
+<h3>Fields inherited from interface&nbsp;processing.core.PConstants</h3>
+<code>ADD, ALPHA, ALT, AMBIENT, ARC, ARGB, ARROW, BACKSPACE, BASELINE, BEVEL, BEZIER_VERTEX, BLEND, BLUR, BOTTOM, BOX, BREAK, BURN, CENTER, CHATTER, CHORD, CLAMP, CLOSE, CODED, COMPLAINT, CONTROL, CORNER, CORNERS, CROSS, CURVE_VERTEX, CUSTOM, DARKEST, DEG_TO_RAD, DELETE, DIAMETER, DIFFERENCE, DILATE, DIRECTIONAL, DISABLE_ASYNC_SAVEFRAME, DISABLE_BUFFER_READING, DISABLE_DEPTH_MASK, DISABLE_DEPTH_SORT, DISABLE_DEPTH_TEST, DISABLE_KEY_REPEAT, DISABLE_NATIVE_FONTS, DISABLE_OPENGL_ERRORS, DISABLE_OPTIMIZED_STROKE, DISABLE_STROKE_PERSPECTIVE, DISABLE_STROKE_PURE, DISABLE_TEXTURE_MIPMAPS, DODGE, DOWN, DXF, ELLIPSE, ENABLE_ASYNC_SAVEFRAME, ENABLE_BUFFER_READING, ENABLE_DEPTH_MASK, ENABLE_DEPTH_SORT, ENABLE_DEPTH_TEST, ENABLE_KEY_REPEAT, ENABLE_NATIVE_FONTS, ENABLE_OPENGL_ERRORS, ENABLE_OPTIMIZED_STROKE, ENABLE_STROKE_PERSPECTIVE, ENABLE_STROKE_PURE, ENABLE_TEXTURE_MIPMAPS, ENTER, EPSILON, ERODE, ESC, EXCLUSION, FX2D, GIF, GRAY, GROUP, HALF_PI, HAND, HARD_LIGHT, HINT_COUNT, HSB, IMAGE, INVERT, JAVA2D, JPEG, LANDSCAPE, LEFT, LIGHTEST, LINE, LINE_LOOP, LINE_STRIP, LINES, LINUX, MACOSX, MAX_FLOAT, MAX_INT, MIN_FLOAT, MIN_INT, MITER, MODEL, MODELVIEW, MOVE, MULTIPLY, NORMAL, OPAQUE, OPEN, OPENGL, ORTHOGRAPHIC, OTHER, OVERLAY, P2D, P3D, PATH, PDF, PERSPECTIVE, PI, PIE, platformNames, POINT, POINTS, POLYGON, PORTRAIT, POSTERIZE, PROBLEM, PROJECT, PROJECTION, QUAD, QUAD_BEZIER_VERTEX, QUAD_STRIP, QUADRATIC_VERTEX, QUADS, QUARTER_PI, RAD_TO_DEG, RADIUS, RECT, REPEAT, REPLACE, RETURN, RGB, RIGHT, ROUND, SCREEN, SHAPE, SHIFT, SOFT_LIGHT, SPAN, SPHERE, SPOT, SQUARE, SUBTRACT, SVG, TAB, TARGA, TAU, TEXT, THIRD_PI, THRESHOLD, TIFF, TOP, TRIANGLE, TRIANGLE_FAN, TRIANGLE_STRIP, TRIANGLES, TWO_PI, UP, VERTEX, WAIT, WHITESPACE, WINDOWS, X, Y, Z</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="fields_inherited_from_class_g4p_controls.GConstants">
+<!--   -->
+</a>
+<h3>Fields inherited from interface&nbsp;g4p_controls.<a href="../g4p_controls/GConstants.html" title="interface in g4p_controls">GConstants</a></h3>
+<code><a href="../g4p_controls/GConstants.html#ALPHA_BLOCK">ALPHA_BLOCK</a>, <a href="../g4p_controls/GConstants.html#ALPHA_PICK">ALPHA_PICK</a>, <a href="../g4p_controls/GConstants.html#BACKGROUND">BACKGROUND</a>, <a href="../g4p_controls/GConstants.html#BLUE_SCHEME">BLUE_SCHEME</a>, <a href="../g4p_controls/GConstants.html#CANCEL">CANCEL</a>, <a href="../g4p_controls/GConstants.html#CLOSE_WINDOW">CLOSE_WINDOW</a>, <a href="../g4p_controls/GConstants.html#CLOSED">CLOSED</a>, <a href="../g4p_controls/GConstants.html#CTRL_ANGULAR">CTRL_ANGULAR</a>, <a href="../g4p_controls/GConstants.html#CTRL_HORIZONTAL">CTRL_HORIZONTAL</a>, <a href="../g4p_controls/GConstants.html#CTRL_VERTICAL">CTRL_VERTICAL</a>, <a href="../g4p_controls/GConstants.html#CYAN_SCHEME">CYAN_SCHEME</a>, <a href="../g4p_controls/GConstants.html#DECIMAL">DECIMAL</a>, <a href="../g4p_controls/GConstants.html#END">END</a>, <a href="../g4p_controls/GConstants.html#ERROR">ERROR</a>, <a href="../g4p_controls/GConstants.html#EXIT_APP">EXIT_APP</a>, <a href="../g4p_controls/GConstants.html#EXPONENT">EXPONENT</a>, <a href="../g4p_controls/GConstants.html#FAMILY">FAMILY</a>, <a href="../g4p_controls/GConstants.html#FOREGROUND">FOREGROUND</a>, <a href="../g4p_controls/GConstants.html#GOLD_SCHEME">GOLD_SCHEME</a>, <a href="../g4p_controls/GConstants.html#GREEN_SCHEME">GREEN_SCHEME</a>, <a href="../g4p_controls/GConstants.html#HOME">HOME</a>, <a href="../g4p_controls/GConstants.html#INFO">INFO</a>, <a href="../g4p_controls/GConstants.html#INTEGER">INTEGER</a>, <a href="../g4p_controls/GConstants.html#KEEP_OPEN">KEEP_OPEN</a>, <a href="../g4p_controls/GConstants.html#NO">NO</a>, <a href="../g4p_controls/GConstants.html#OK">OK</a>, <a href="../g4p_controls/GConstants.html#OK_CANCEL">OK_CANCEL</a>, <a href="../g4p_controls/GConstants.html#ORANGE_SCHEME">ORANGE_SCHEME</a>, <a href="../g4p_controls/GConstants.html#ORIENT_LEFT">ORIENT_LEFT</a>, <a href="../g4p_controls/GConstants.html#ORIENT_RIGHT">ORIENT_RIGHT</a>, <a href="../g4p_controls/GConstants.html#ORIENT_TRACK">ORIENT_TRACK</a>, <a href="../g4p_controls/GConstants.html#PLAIN">PLAIN</a>, <a href="../g4p_controls/GConstants.html#POSTURE">POSTURE</a>, <a href="../g4p_controls/GConstants.html#POSTURE_OBLIQUE">POSTURE_OBLIQUE</a>, <a href="../g4p_controls/GConstants.html#POSTURE_REGULAR">POSTURE_REGULAR</a>, <a href="../g4p_controls/GConstants.html#PURPLE_SCHEME">PURPLE_SCHEME</a>, <a href="../g4p_controls/GConstants.html#QUERY">QUERY</a>, <a href="../g4p_controls/GConstants.html#RED_SCHEME">RED_SCHEME</a>, <a href="../g4p_controls/GConstants.html#SCHEME_10">SCHEME_10</a>, <a href="../g4p_controls/GConstants.html#SCHEME_11">SCHEME_11</a>, <a href="../g4p_controls/GConstants.html#SCHEME_12">SCHEME_12</a>, <a href="../g4p_controls/GConstants.html#SCHEME_13">SCHEME_13</a>, <a href="../g4p_controls/GConstants.html#SCHEME_14">SCHEME_14</a>, <a href="../g4p_controls/GConstants.html#SCHEME_15">SCHEME_15</a>, <a href="../g4p_controls/GConstants.html#SCHEME_8">SCHEME_8</a>, <a href="../g4p_controls/GConstants.html#SCHEME_9">SCHEME_9</a>, <a href="../g4p_controls/GConstants.html#SCROLLBARS_AUTOHIDE">SCROLLBARS_AUTOHIDE</a>, <a href="../g4p_controls/GConstants.html#SCROLLBARS_BOTH">SCROLLBARS_BOTH</a>, <a href="../g4p_controls/GConstants.html#SCROLLBARS_HORIZONTAL_ONLY">SCROLLBARS_HORIZONTAL_ONLY</a>, <a href="../g4p_controls/GConstants.html#SCROLLBARS_NONE">SCROLLBARS_NONE</a>, <a href="../g4p_controls/GConstants.html#SCROLLBARS_VERTICAL_ONLY">SCROLLBARS_VERTICAL_ONLY</a>, <a href="../g4p_controls/GConstants.html#SIZE">SIZE</a>, <a href="../g4p_controls/GConstants.html#STRIKETHROUGH">STRIKETHROUGH</a>, <a href="../g4p_controls/GConstants.html#STRIKETHROUGH_OFF">STRIKETHROUGH_OFF</a>, <a href="../g4p_controls/GConstants.html#STRIKETHROUGH_ON">STRIKETHROUGH_ON</a>, <a href="../g4p_controls/GConstants.html#SUPERSCRIPT">SUPERSCRIPT</a>, <a href="../g4p_controls/GConstants.html#SUPERSCRIPT_OFF">SUPERSCRIPT_OFF</a>, <a href="../g4p_controls/GConstants.html#SUPERSCRIPT_SUB">SUPERSCRIPT_SUB</a>, <a href="../g4p_controls/GConstants.html#SUPERSCRIPT_SUPER">SUPERSCRIPT_SUPER</a>, <a href="../g4p_controls/GConstants.html#USER_COL_SCHEME">USER_COL_SCHEME</a>, <a href="../g4p_controls/GConstants.html#WARNING">WARNING</a>, <a href="../g4p_controls/GConstants.html#WEIGHT">WEIGHT</a>, <a href="../g4p_controls/GConstants.html#WEIGHT_BOLD">WEIGHT_BOLD</a>, <a href="../g4p_controls/GConstants.html#WEIGHT_DEMIBOLD">WEIGHT_DEMIBOLD</a>, <a href="../g4p_controls/GConstants.html#WEIGHT_DEMILIGHT">WEIGHT_DEMILIGHT</a>, <a href="../g4p_controls/GConstants.html#WEIGHT_EXTRA_LIGHT">WEIGHT_EXTRA_LIGHT</a>, <a href="../g4p_controls/GConstants.html#WEIGHT_EXTRABOLD">WEIGHT_EXTRABOLD</a>, <a href="../g4p_controls/GConstants.html#WEIGHT_HEAVY">WEIGHT_HEAVY</a>, <a href="../g4p_controls/GConstants.html#WEIGHT_LIGHT">WEIGHT_LIGHT</a>, <a href="../g4p_controls/GConstants.html#WEIGHT_MEDIUM">WEIGHT_MEDIUM</a>, <a href="../g4p_controls/GConstants.html#WEIGHT_REGULAR">WEIGHT_REGULAR</a>, <a href="../g4p_controls/GConstants.html#WEIGHT_SEMIBOLD">WEIGHT_SEMIBOLD</a>, <a href="../g4p_controls/GConstants.html#WEIGHT_ULTRABOLD">WEIGHT_ULTRABOLD</a>, <a href="../g4p_controls/GConstants.html#WIDTH">WIDTH</a>, <a href="../g4p_controls/GConstants.html#WIDTH_CONDENSED">WIDTH_CONDENSED</a>, <a href="../g4p_controls/GConstants.html#WIDTH_EXTENDED">WIDTH_EXTENDED</a>, <a href="../g4p_controls/GConstants.html#WIDTH_REGULAR">WIDTH_REGULAR</a>, <a href="../g4p_controls/GConstants.html#WIDTH_SEMI_CONDENSED">WIDTH_SEMI_CONDENSED</a>, <a href="../g4p_controls/GConstants.html#WIDTH_SEMI_EXTENDED">WIDTH_SEMI_EXTENDED</a>, <a href="../g4p_controls/GConstants.html#X4">X4</a>, <a href="../g4p_controls/GConstants.html#X8">X8</a>, <a href="../g4p_controls/GConstants.html#YELLOW_SCHEME">YELLOW_SCHEME</a>, <a href="../g4p_controls/GConstants.html#YES">YES</a>, <a href="../g4p_controls/GConstants.html#YES_NO">YES_NO</a>, <a href="../g4p_controls/GConstants.html#YES_NO_CANCEL">YES_NO_CANCEL</a></code></li>
+</ul>
+</li>
+</ul>
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="constructor_summary">
+<!--   -->
+</a>
+<h3>Constructor Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colOne" scope="col">Constructor and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><strong><a href="../g4p_controls/GSketchPad.html#GSketchPad(processing.core.PApplet, float, float, float, float)">GSketchPad</a></strong>(processing.core.PApplet&nbsp;theApplet,
+          float&nbsp;p0,
+          float&nbsp;p1,
+          float&nbsp;p2,
+          float&nbsp;p3)</code>&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
+<!-- ========== METHOD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../g4p_controls/GSketchPad.html#draw()">draw</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../g4p_controls/GSketchPad.html#setGraphic(processing.core.PGraphics)">setGraphic</a></strong>(processing.core.PGraphics&nbsp;pg)</code>&nbsp;</td>
+</tr>
+</table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_g4p_controls.GAbstractControl">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;g4p_controls.<a href="../g4p_controls/GAbstractControl.html" title="class in g4p_controls">GAbstractControl</a></h3>
+<code><a href="../g4p_controls/GAbstractControl.html#addControl(g4p_controls.GAbstractControl)">addControl</a>, <a href="../g4p_controls/GAbstractControl.html#addControl(g4p_controls.GAbstractControl, float, float)">addControl</a>, <a href="../g4p_controls/GAbstractControl.html#addControl(g4p_controls.GAbstractControl, float, float, float)">addControl</a>, <a href="../g4p_controls/GAbstractControl.html#addControls(g4p_controls.GAbstractControl...)">addControls</a>, <a href="../g4p_controls/GAbstractControl.html#addEventHandler(java.lang.Object, java.lang.String)">addEventHandler</a>, <a href="../g4p_controls/GAbstractControl.html#dispose()">dispose</a>, <a href="../g4p_controls/GAbstractControl.html#forceBufferUpdate()">forceBufferUpdate</a>, <a href="../g4p_controls/GAbstractControl.html#getCursorOver()">getCursorOver</a>, <a href="../g4p_controls/GAbstractControl.html#getCX()">getCX</a>, <a href="../g4p_controls/GAbstractControl.html#getCY()">getCY</a>, <a href="../g4p_controls/GAbstractControl.html#getHeight()">getHeight</a>, <a href="../g4p_controls/GAbstractControl.html#getLocalColorScheme()">getLocalColorScheme</a>, <a href="../g4p_controls/GAbstractControl.html#getPApplet()">getPApplet</a>, <a href="../g4p_controls/GAbstractControl.html#getParent()">getParent</a>, <a href="../g4p_controls/GAbstractControl.html#getSnapshot()">getSnapshot</a>, <a href="../g4p_controls/GAbstractControl.html#getWidth()">getWidth</a>, <a href="../g4p_controls/GAbstractControl.html#getX()">getX</a>, <a href="../g4p_controls/GAbstractControl.html#getY()">getY</a>, <a href="../g4p_controls/GAbstractControl.html#hasFocus()">hasFocus</a>, <a href="../g4p_controls/GAbstractControl.html#isDragging()">isDragging</a>, <a href="../g4p_controls/GAbstractControl.html#isEnabled()">isEnabled</a>, <a href="../g4p_controls/GAbstractControl.html#isOpaque()">isOpaque</a>, <a href="../g4p_controls/GAbstractControl.html#isOver(float, float)">isOver</a>, <a href="../g4p_controls/GAbstractControl.html#isVisible()">isVisible</a>, <a href="../g4p_controls/GAbstractControl.html#keyEvent(processing.event.KeyEvent)">keyEvent</a>, <a href="../g4p_controls/GAbstractControl.html#markForDisposal()">markForDisposal</a>, <a href="../g4p_controls/GAbstractControl.html#mouseEvent(processing.event.MouseEvent)">mouseEvent</a>, <a href="../g4p_controls/GAbstractControl.html#moveTo(float, float)">moveTo</a>, <a href="../g4p_controls/GAbstractControl.html#moveTo(float, float, g4p_controls.GControlMode)">moveTo</a>, <a href="../g4p_controls/GAbstractControl.html#post()">post</a>, <a href="../g4p_controls/GAbstractControl.html#pre()">pre</a>, <a href="../g4p_controls/GAbstractControl.html#saveSnapshot()">saveSnapshot</a>, <a href="../g4p_controls/GAbstractControl.html#saveSnapshot(java.lang.String)">saveSnapshot</a>, <a href="../g4p_controls/GAbstractControl.html#setAlpha(int)">setAlpha</a>, <a href="../g4p_controls/GAbstractControl.html#setAlpha(int, boolean)">setAlpha</a>, <a href="../g4p_controls/GAbstractControl.html#setCursorOver(int)">setCursorOver</a>, <a href="../g4p_controls/GAbstractControl.html#setEnabled(boolean)">setEnabled</a>, <a href="../g4p_controls/GAbstractControl.html#setFocus(boolean)">setFocus</a>, <a href="../g4p_controls/GAbstractControl.html#setLocalColor(int, int)">setLocalColor</a>, <a href="../g4p_controls/GAbstractControl.html#setLocalColorScheme(int)">setLocalColorScheme</a>, <a href="../g4p_controls/GAbstractControl.html#setLocalColorScheme(int, boolean)">setLocalColorScheme</a>, <a href="../g4p_controls/GAbstractControl.html#setOpaque(boolean)">setOpaque</a>, <a href="../g4p_controls/GAbstractControl.html#setRotation(float)">setRotation</a>, <a href="../g4p_controls/GAbstractControl.html#setRotation(float, g4p_controls.GControlMode)">setRotation</a>, <a href="../g4p_controls/GAbstractControl.html#setVisible(boolean)">setVisible</a>, <a href="../g4p_controls/GAbstractControl.html#toString()">toString</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field_detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a name="SLIDER_STYLES">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>SLIDER_STYLES</h4>
+<pre>public static final&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> SLIDER_STYLES</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.SLIDER_STYLES">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="DEFAULT_SLIDER_STYLE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>DEFAULT_SLIDER_STYLE</h4>
+<pre>public static final&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> DEFAULT_SLIDER_STYLE</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.DEFAULT_SLIDER_STYLE">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="DRAW_METHOD">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>DRAW_METHOD</h4>
+<pre>public static final&nbsp;int DRAW_METHOD</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.DRAW_METHOD">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="MOUSE_METHOD">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>MOUSE_METHOD</h4>
+<pre>public static final&nbsp;int MOUSE_METHOD</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.MOUSE_METHOD">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="PRE_METHOD">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>PRE_METHOD</h4>
+<pre>public static final&nbsp;int PRE_METHOD</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.PRE_METHOD">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="KEY_METHOD">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>KEY_METHOD</h4>
+<pre>public static final&nbsp;int KEY_METHOD</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.KEY_METHOD">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="POST_METHOD">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>POST_METHOD</h4>
+<pre>public static final&nbsp;int POST_METHOD</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.POST_METHOD">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="ALL_METHOD">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ALL_METHOD</h4>
+<pre>public static final&nbsp;int ALL_METHOD</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.ALL_METHOD">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="GROUP_CONTROL_METHOD">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>GROUP_CONTROL_METHOD</h4>
+<pre>public static final&nbsp;int GROUP_CONTROL_METHOD</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.GROUP_CONTROL_METHOD">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="MISSING">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>MISSING</h4>
+<pre>public static final&nbsp;int MISSING</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.MISSING">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="NONEXISTANT">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>NONEXISTANT</h4>
+<pre>public static final&nbsp;int NONEXISTANT</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.NONEXISTANT">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="INVALID_TYPE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>INVALID_TYPE</h4>
+<pre>public static final&nbsp;int INVALID_TYPE</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.INVALID_TYPE">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="INVALID_PAPPLET">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>INVALID_PAPPLET</h4>
+<pre>public static final&nbsp;int INVALID_PAPPLET</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.INVALID_PAPPLET">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="EXCP_IN_HANDLER">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>EXCP_IN_HANDLER</h4>
+<pre>public static final&nbsp;int EXCP_IN_HANDLER</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.EXCP_IN_HANDLER">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="OFF_CONTROL">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>OFF_CONTROL</h4>
+<pre>public static final&nbsp;int OFF_CONTROL</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.OFF_CONTROL">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="OVER_CONTROL">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>OVER_CONTROL</h4>
+<pre>public static final&nbsp;int OVER_CONTROL</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.OVER_CONTROL">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="PRESS_CONTROL">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>PRESS_CONTROL</h4>
+<pre>public static final&nbsp;int PRESS_CONTROL</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.PRESS_CONTROL">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="DRAG_CONTROL">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>DRAG_CONTROL</h4>
+<pre>public static final&nbsp;int DRAG_CONTROL</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.DRAG_CONTROL">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="TINT_FOR_ALPHA">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>TINT_FOR_ALPHA</h4>
+<pre>public static final&nbsp;int TINT_FOR_ALPHA</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.TINT_FOR_ALPHA">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="I_NONE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>I_NONE</h4>
+<pre>public static final&nbsp;int I_NONE</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.I_NONE">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="I_TL">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>I_TL</h4>
+<pre>public static final&nbsp;int I_TL</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.I_TL">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="I_TR">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>I_TR</h4>
+<pre>public static final&nbsp;int I_TR</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.I_TR">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="I_CL">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>I_CL</h4>
+<pre>public static final&nbsp;int I_CL</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.I_CL">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="I_CR">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>I_CR</h4>
+<pre>public static final&nbsp;int I_CR</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.I_CR">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="I_INSIDE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>I_INSIDE</h4>
+<pre>public static final&nbsp;int I_INSIDE</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.I_INSIDE">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="I_COVERED">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>I_COVERED</h4>
+<pre>public static final&nbsp;int I_COVERED</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.I_COVERED">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="I_MODES">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>I_MODES</h4>
+<pre>public static final&nbsp;int I_MODES</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.I_MODES">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="MERGE_RUNS">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>MERGE_RUNS</h4>
+<pre>public static final&nbsp;int MERGE_RUNS</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.MERGE_RUNS">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="CLIP_RUN">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CLIP_RUN</h4>
+<pre>public static final&nbsp;int CLIP_RUN</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.CLIP_RUN">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="COMBI_MODES">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>COMBI_MODES</h4>
+<pre>public static final&nbsp;int COMBI_MODES</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.COMBI_MODES">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="grid">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>grid</h4>
+<pre>public static final&nbsp;int[][] grid</pre>
+</li>
+</ul>
+<a name="pen_1_0">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>pen_1_0</h4>
+<pre>public static final&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/awt/BasicStroke.html?is-external=true" title="class or interface in java.awt">BasicStroke</a> pen_1_0</pre>
+</li>
+</ul>
+<a name="pen_2_0">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>pen_2_0</h4>
+<pre>public static final&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/awt/BasicStroke.html?is-external=true" title="class or interface in java.awt">BasicStroke</a> pen_2_0</pre>
+</li>
+</ul>
+<a name="pen_3_0">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>pen_3_0</h4>
+<pre>public static final&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/awt/BasicStroke.html?is-external=true" title="class or interface in java.awt">BasicStroke</a> pen_3_0</pre>
+</li>
+</ul>
+<a name="pen_4_0">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>pen_4_0</h4>
+<pre>public static final&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/awt/BasicStroke.html?is-external=true" title="class or interface in java.awt">BasicStroke</a> pen_4_0</pre>
+</li>
+</ul>
+<a name="TPAD2">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>TPAD2</h4>
+<pre>public static final&nbsp;int TPAD2</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.TPAD2">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="TPAD6">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>TPAD6</h4>
+<pre>public static final&nbsp;int TPAD6</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.TPAD6">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="TPAD4">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>TPAD4</h4>
+<pre>public static final&nbsp;int TPAD4</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.TPAD4">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="TPAD8">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>TPAD8</h4>
+<pre>public static final&nbsp;int TPAD8</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.TPAD8">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="SCROLLBAR_VERTICAL">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>SCROLLBAR_VERTICAL</h4>
+<pre>public static final&nbsp;int SCROLLBAR_VERTICAL</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.SCROLLBAR_VERTICAL">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="SCROLLBAR_HORIZONTAL">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>SCROLLBAR_HORIZONTAL</h4>
+<pre>public static final&nbsp;int SCROLLBAR_HORIZONTAL</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.SCROLLBAR_HORIZONTAL">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="HORZ_SCROLL_RATE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>HORZ_SCROLL_RATE</h4>
+<pre>public static final&nbsp;float HORZ_SCROLL_RATE</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.HORZ_SCROLL_RATE">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="VERT_SCROLL_RATE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>VERT_SCROLL_RATE</h4>
+<pre>public static final&nbsp;float VERT_SCROLL_RATE</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.VERT_SCROLL_RATE">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="EOL">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>EOL</h4>
+<pre>public static final&nbsp;char EOL</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.EOL">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="Z_STICKY">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Z_STICKY</h4>
+<pre>public static final&nbsp;int Z_STICKY</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.Z_STICKY">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="Z_SLIPPY">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Z_SLIPPY</h4>
+<pre>public static final&nbsp;int Z_SLIPPY</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.Z_SLIPPY">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="Z_SLIPPY_EXPANDS">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Z_SLIPPY_EXPANDS</h4>
+<pre>public static final&nbsp;int Z_SLIPPY_EXPANDS</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.Z_SLIPPY_EXPANDS">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+<a name="Z_PANEL">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>Z_PANEL</h4>
+<pre>public static final&nbsp;int Z_PANEL</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../constant-values.html#g4p_controls.GSketchPad.Z_PANEL">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="constructor_detail">
+<!--   -->
+</a>
+<h3>Constructor Detail</h3>
+<a name="GSketchPad(processing.core.PApplet, float, float, float, float)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>GSketchPad</h4>
+<pre>public&nbsp;GSketchPad(processing.core.PApplet&nbsp;theApplet,
+          float&nbsp;p0,
+          float&nbsp;p1,
+          float&nbsp;p2,
+          float&nbsp;p3)</pre>
+</li>
+</ul>
+</li>
+</ul>
+<!-- ============ METHOD DETAIL ========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="setGraphic(processing.core.PGraphics)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setGraphic</h4>
+<pre>public&nbsp;void&nbsp;setGraphic(processing.core.PGraphics&nbsp;pg)</pre>
+</li>
+</ul>
+<a name="draw()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>draw</h4>
+<pre>public&nbsp;void&nbsp;draw()</pre>
+<dl>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../g4p_controls/GAbstractControl.html#draw()">draw</a></code>&nbsp;in class&nbsp;<code><a href="../g4p_controls/GAbstractControl.html" title="class in g4p_controls">GAbstractControl</a></code></dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<!-- ========= END OF CLASS DATA ========= -->
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../g4p_controls/package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../index-all.html">Index</a></li>
+<li><a href="../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../g4p_controls/GPassword.html" title="class in g4p_controls"><span class="strong">Prev Class</span></a></li>
+<li><a href="../g4p_controls/GSlider.html" title="class in g4p_controls"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../index.html?g4p_controls/GSketchPad.html" target="_top">Frames</a></li>
+<li><a href="GSketchPad.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li><a href="#nested_classes_inherited_from_class_g4p_controls.GAbstractControl">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+<p class="legalCopy"><small>Processing library G4P by Peter Lager. (c) 2015</small></p>
+</body>
+</html>
+                                                                ÷Ø%Jo_ÊåŸûçã‘1%›><ì€Löâ+­Ø7“ í{iH³©Ÿñ=ßP½¸È\Op/m‡ë'Ğ$ÌòSèó,ŒÆ	¯ZN5îßH¬~@³ñ—°Ñ!ÜÍ‹_£%IåÊ¦Ä|kÏÀîº¸;›”‡¿AnÉ°ÛN™°ôkSS7¼_Ÿì™:±Û‘I’qk¤|'Ï›N£jˆ·q*ı¶å0é¯WZrx­=òœ(Ì4òÃ)l‹Wâ;]Š¥¥&ª?åÛÅmI¤ëB©òì±ß&nuÃëkb\J5ŒÜ}è„wö5¨eé@¦„XCeŠã†­pó“<»ˆUİ|z¹…ÑCåPã);¼sö„®OÚ/4JNÖbÖ¦H%…`“ 9“}Ÿ¾-ŸÂú2{ÿ¶òÉ½\ˆwYòŠ7¯ˆI‡<6ÿØ-^G!›)L!ÕÔ A{vçv¯råG1jZªs
+GgÛq r™M'ay/}VgZKÌÜÄÒ3·}6'†ü^LêÍªŠ¢u?8­ Ïş£P¥„¾DáêyW£°şn¼ãç)ëù<]‹<IÙË?d‘&DŒ`w·y€D¼©€À¬“KJÅ#ÓeÅ&?jŠÏÆã°ˆFz-v›¯D´(Ç²M!''ùÆ?LüÇ¥Î§[¾i.÷B7»Iî+´*\zà	úï±éÊë-ã…èPS„6fÇF€Ëyy	øm8Zk¡x½%(EŞMƒ4ï`  »„»‰ûC*´Ê€åvø+`Æ/9zöZãëº¢£şI¤×ÂÊµ“Œôİ‰Â–Ğ9Ø/q‹gHå>¹ù­ë§P®%¾vÓP¯×áe?¨ÚX\2ê7¨–µ\óå0O2ó—2$f%®eñTj“û²ör(¹òÚ/7u¾*]ºÑ~f"}ÚøÙ@å5Í•E­†¾_ìUk`WÔƒ! eEº}Ñ¸¯˜‚«Ğå%¹¤›>b¤gÌ$,=¥`®¤ÆAecŒß›¥2ĞH2æ,pıÄGÆö¿ú©ƒ8Òò†r¸¦»ƒg¶ûºòÃ7äI‰ÈÔBfªªÀ•kH	“á±÷CÈt¡ŞË/ê÷(µDSd~	BlõÂé}Jà—
+3…	²Uèñ
+kp([ìÏ¬õ™¢Òì€tis·İ’ca…œç‘J":Mıô„µ5ĞÜ¢&qØÖsò°'7ÊTùğ“ĞÓğğ¥¬u2J	§×R¨Á,_pß¬XE¿OEKîûÀ“Pet[Ö*^ÌWø+Zºs¨üÎ—@&Ó–¼™‡ìœd™¢Ãœ qAÌğ.¶ÿçw_CG¡ÛÂ³-KiÉáz½vô)ÉéîÌÂ˜åY(ÎíINDX( 	 T“           (      è            l ÑT Ñ        	<     p Z     ÷;     O®T‹’ÇÑ ÚT3Ñ$RvĞ°eÑO®T‹’ÇÑ       ;÷              G I M A G E ~ 1 . H T M       
+<     p Z     ÷;     æÈZ‹’ÇÑ ÚT3Ñ5yvĞ°eÑæÈZ‹’ÇÑ                   G I M A G E ~ 2 . H T M       <     h V     ÷;     L(é‹’ÇÑ ÚT3ÑE vĞ°eÑL(é‹’ÇÑ      ì             
+G K n o b . h t m l   <     h X     ÷;     L(é‹’ÇÑ ÚT3ÑE vĞ°eÑL(é‹’ÇÑ      ì             G K N O B ~ 1 . H T M <     h X    ÷;     vçë‹’ÇÑ ÚT3ÑVÇvĞ°eÑvçë‹’ÇÑ à      nØ              G L a b e l . h t m l <     p Z     ÷;     vçë‹’ÇÑ ÚT3ÑVÇvĞ°eÑvçë‹’ÇÑ à      nØ              G L A B E L ~ 1 . H T M       <     ˆ r     ÷;      ¦î‹’ÇÑ ÚT3ÑgîvĞ°eÑ ¦î‹’ÇÑ       ğò              G L i n e a r T r a c k C o n t r o l . h t m l       <     p Z     ÷;      ¦î‹’ÇÑ ÚT3ÑgîvĞ°eÑ ¦î‹’ÇÑ       ğò              G L I N E A ~ 1 . H T M       <     p Z     ÷;     ò‹’ÇÑ ÚT3ÑwwĞ°eÑò‹’ÇÑ à     ÀÙ              G O p t i o n . h t m l       <     p Z     ÷;     ò‹’ÇÑ ÚT3ÑwwĞ°eÑò‹’ÇÑ à      ÀÙ              G O P T I O ~ 1 . H T M       <     h X     ÷;     sô‹’ÇÑ ÚT3Ñˆ<wĞ°eÑsô‹’ÇÑ       3             G P a n e l . h t m l <     p Z     ÷;     sô‹’ÇÑ ÚT3Ñˆ<wĞ°eÑsô‹’ÇÑ       3             G P A N E L ~ 1 . H T M       <     p ^     ÷;     ¥×ü‹’ÇÑ ÚT3Ñ©ŠwĞ°eÑ¥×ü‹’ÇÑ       Qù              G P a s s w o r d . h t m l   <     p Z     ÷;     ¥×ü‹’ÇÑ ÚT3Ñ©ŠwĞ°eÑ¥×ü‹’ÇÑ       Qù              G P A S S W ~ 1 . H T M       <     p `     ÷;     ÃŸ‘Œ’ÇÑ ÚT3Ñ¹±wĞ°eÑÃŸ‘Œ’ÇÑ Ğ      ÀË              G S k e t c h P a d . h t m l <     p Z     ÷;     ÃŸ‘Œ’ÇÑ ÚT3Ñ¹±wĞ°eÑÃŸ‘Œ’ÇÑ Ğ      ÀË              G S K E T C ~ 1 . H T M       <     p Z     ÷;     Ô”Œ’ÇÑ ÚT3ÑÊØwĞ°eÑÔ”Œ’ÇÑ à      uÚ              G S l i d e r . h t m l                     ÷;     œV˜Œ’ÇÑ ÚT3ÑÛÿwĞ°eÑœV˜Œ’ÇÑ       ü             G S  i d e r 2 D . h t m l   <     p Z     ÷;     Ô”Œ’ÇÑ ÚT3ÑÊØwĞ°eÑÔ”Œ’ÇÑ à      uÚ              G S L I D E ~ 1 . H T M       <     p Z     ÷;     œV˜Œ’ÇÑ ÚT3ÑÛÿwĞ°eÑœV˜Œ’ÇÑ       ü             G S L I D E ~ 2 . H T M       <     h X     ÷;     \uœŒ’ÇÑ ÚT3Ñë&xĞ°eÑ\uœŒ’ÇÑ à      ™İ              G S t i c k . h t m l <     p Z     ÷;     \uœŒ’ÇÑ ÚT3Ñë&xĞ°eÑ\uœŒ’ÇÑ à      ™İ              G S T I C K ~ 1 . H T M       <     x b     ÷;     ÈĞŸŒ’ÇÑ ÚT3ÑüMxĞ°e ÈĞŸŒ’ÇÑ @      2              G T a b M a n a g e r . h t m l       <     p Z     ÷;     ÈĞŸŒ’ÇÑ ÚT3ÑüMxĞ°eÑÈĞŸŒ’ÇÑ @      2              G T A B M A ~ 1 . H T M       <     p `     ÷;     ó¢Œ’ÇÑ ÚT3ÑuxĞ°eÑó¢Œ’ÇÑ à      MØ              G T e x t A l i g n . h t m l <     p ^     ÷;     €9¦Œ’ÇÑ ÚT3ÑœxĞ°eÑ€9¦Œ’ÇÑ `     kR             G T e x t A r e a . h t m l   <     p Z     ÷;     ó¢Œ’ÇÑ ÚT3ÑuxĞ°eÑó¢Œ’ÇÑ à      MØ              G T E X T A ~ 1 . H  M       <     p Z     ÷;     €9¦Œ’ÇÑ ÚT3ÑœxĞ°eÑ€9¦Œ’ÇÑ `     kR             G T E X T A ~ 2 . H T M       <     p ^     ÷;     ı»©Œ’ÇÑ ÚT3Ñ>êxĞ°eÑı»©Œ’ÇÑ       õ              G T e x t B a s e . h t m l   <     p Z     ÷;     ı»©Œ’ÇÑ ÚT3Ñ>êxĞ°eÑı»©Œ’ÇÑ       õ              G T E X T B ~ 1 . H T M       <     p `     ÷;     ({¬Œ’ÇÑ ÚT3ÑOyĞ°eÑ({¬Œ’ÇÑ       ”ş              G T e x t F i e l d . h t m l <     p Z     ÷;     ({¬Œ’ÇÑ ÚT3ÑOyĞ°eÑ({¬Œ’Ç        ”ş              G T E X T F ~ 1 . H T M       <     € p     ÷;     ”Ÿ’ÇÑ ÚT3Ñ_8yĞ°eÑ”Ÿ’ÇÑ       Şğ              G T e x t I c o n A l i g n B a s e . h t m l <     p Z     ÷;     ”Ÿ’ÇÑ ÚT3Ñ_8yĞ°eÑ”Ÿ’ÇÑ       Şğ              G T E X T I ~ 1 . H T M       <     h X     ÷;     ""’ÇÑ""’ÇÑ""’ÇÑ""’ÇÑ À                      G T i m e r . h t m l                                                                                                              INDX( 	 ¸           (   °  è               Ñm         <     p Z     ÷;     Ô”Œ’ÇÑ ÚT3ÑÊØwĞ°eÑÔ”Œ’ÇÑ à      uÚ              G S L I D E ~ 1 . H T M       <     p Z     ÷;     œV˜Œ’ÇÑ ÚT3ÑÛÿwĞ°eÑœV˜Œ’ÇÑ       ü             G S L I D E ~ 2 . H T M       <     h X     ÷;     \uœŒ’ÇÑ ÚT3Ñë&xĞ°eÑ\uœŒ’ÇÑ à      ™İ              G S t i c k . h t m l <     p Z     ÷;     \uœŒ’ÇÑ ÚT3Ñë&xĞ°eÑ\uœŒ’ÇÑ à      ™İ              G S T I C K ~ 1 . H T M       <     x b     ÷;     ÈĞŸŒ’ÇÑ ÚT3ÑüMxĞ°eÑÈĞŸŒ’ÇÑ @      2              G T a b M a n a g e r . h t m l       <     p Z     ÷;     ÈĞŸŒ’ÇÑ ÚT3ÑüMxĞ°eÑÈĞŸŒ’ÇÑ @      2              G T A B M A ~ 1 . H T M       <     p `     ÷;     ó¢Œ’ÇÑ ÚT3ÑuxĞ°eÑó¢Œ’ÇÑ à      MØ              G T e x t A l i g n . h t m l <     p ^     ÷;     €9¦Œ’ÇÑ ÚT3ÑœxĞ°eÑ€9¦Œ’ÇÑ `     kR             G T e x t A r e a . h t m l   <     p Z     ÷;     ó¢Œ’ÇÑ ÚT3ÑuxĞ°eÑó¢Œ’ÇÑ à     MØ              G T E X T A ~ 1 . H T M       <     p Z     ÷;     €9¦Œ’ÇÑ ÚT3ÑœxĞ°eÑ€9¦Œ’ÇÑ `     kR             G T E X T A ~ 2 . H T M       <     p ^     ÷;     ı»©Œ’ÇÑ ÚT3Ñ>êxĞ°eÑı»©Œ’ÇÑ       õ              G T e x t B a s e . h t m l   <     p Z     ÷;     ı»©Œ’ÇÑ ÚT3Ñ>êxĞ°eÑı»©Œ’ÇÑ       õ              G T E X T B ~ 1 . H T M       <     p `     ÷;     ({¬Œ’ÇÑ ÚT3ÑOyĞ°eÑ({¬Œ’ÇÑ       ”ş              G T e x t F i e l d . h t m l <     p Z    ÷;     ({¬Œ’ÇÑ ÚT3ÑOyĞ°eÑ({¬Œ’ÇÑ       ”ş              G T E X T F ~ 1 . H T M       <     € p     ÷;     ”Ÿ’ÇÑ ÚT3Ñ_8yĞ°eÑ”Ÿ’ÇÑ       Şğ              G T e x t I c o n A l i g n B a s e . h t m l <     p Z     ÷;     ”Ÿ’ÇÑ ÚT3Ñ_8yĞ°eÑ”Ÿ’ÇÑ       Şğ              G T E X T I ~ 1 . H T M       <     h X     ÷;     ""’ÇÑ ÚT3Ñp_yĞ°eÑ""’ÇÑ À      ¶              G T i m e r . h t m l               ÷;     ""’ÇÑ ÚT3Ñp_yĞ°eÑ""’ÇÑ À      ¶             G T I M E R ~ 1 . H T M       <     x h     ÷;     ñ&’ÇÑ ÚT3Ñ€†yĞ°eÑñ&’ÇÑ ğ      ®á              G T o g g l e C o n t r o l . h t m l <     x d     ÷;     8*’ÇÑ ÚT3Ñ‘­yĞ°eÑ8*’ÇÑ 0      ),              G T o g g l e G r o u p . h t m l     <     p Z     ÷;     ñ&’ÇÑ ÚT3Ñ€†yĞ°eÑñ&’ÇÑ ğ      ®á              G T O G G L ~ 1 . H T M       <     p Z     ÷;     8*’ÇÑ ÚT3Ñ‘­yĞ°eÑ8*’ÇÑ 0      ),              G T O G G L ~ 2 . H T M       <     x f     ÷;     ˆ©,’ÇÑ ÚT3Ñ¡ÔyĞ°eÑˆ©,’ÇÑ 0     ¤&             G V a l u e C o n t r o l . h t m l   <     € j     ÷;     S0’ÇÑ ÚT3ÑÃ"zĞ°eÑS0’ÇÑ Ğ      İË              G V a l u e C o n t r o l 2 D . h t m l      <     p Z     ÷;     ˆ©,’ÇÑ ÚT3Ñ¡ÔyĞ°eÑˆ©,’ÇÑ 0     ¤&             G V A L U E ~ 1 . H T M       <     p Z     ÷;     S0’ÇÑ ÚT3ÑÃ"zĞ°eÑS0’ÇÑ Ğ      İË              G V A L U E ~ 2 . H T M        <     p \     ÷;     ´#4’ÇÑ ÚT3ÑÃ"zĞ°e ´#4’ÇÑ 0      V'              G W i n D a t a . h t m l      <     p Z     ÷;     ´#4’ÇÑ ÚT3ÑÃ"zĞ°eÑ´#4’ÇÑ 0      V'              G W I N D A ~ 1 . H T M       !<     p Z     ÷;     Î»6’ÇÑ JMÛT3ÑäpzĞ°eÑÎ»6’ÇÑ @     [;             G W i n d o w . h t m l       "<     p `     ÷;     Ÿ»Ã’ÇÑ JMÛT3Ñô—zĞ°eÑŸ»Ã’ÇÑ ğ      /è              G W i n d o w A W T . h t m l #<     x b     ÷;     Ù¡Æ’ÇÑ JMÛT3Ñ¿zĞ°eÑÙ¡Æ’ÇÑ À      k½              G W i n d o w I m p l . h t  l      $<     x b     ÷;     %¯É’ÇÑ%¯É’ÇÑ%¯É’ÇÑ%¯É’ÇÑ ğ                      G W i n d o w N E W T . h t m l      !<     p Z     ÷;     Î»6’ÇÑ JMÛT3ÑäpzĞ°eÑÎ»6’ÇÑ @     [;             G W I N D O ~ 1 . H T M       "<     p Z     ÷;     Ÿ»Ã’ÇÑ JMÛT3Ñô—zĞ°eÑŸ»Ã’ÇÑ ğ      /è              G W I N D O ~ 2 . H T M       #<     p Z     ÷;     Ù¡Æ’ÇÑ JMÛT3Ñ¿zĞ°eÑÙ¡Æ’ÇÑ À      k½              G W I N D O ~ 3 . H T M                                                    ûÑn–%i˜Ñ¨+$§ÖVõËTo=˜nuL@¡³¢ØB‚~€\étãg=¤ÃZÇödë™¯­0|»²eŸVPÀè“CD¦’C-5+ĞiĞâ#÷ŠĞÍ<{ÒUzZ«µ>´w!ˆ³g4Ó@ñß¦Ap·Å¤÷|_ÿİæĞHyGJw¬!—àı4^àŒÅ¬Üš+]D§œî¼'´G§r
+×t$TV
+YzöÄPíšê9[ï˜¢&°æIË¶™†N¤’  ğîzï¢¦«>eü‰Õ|ºÈ|³óËìÊÏpÉK©ß€ÖMĞ.fyfùlİ¡ˆòİÌÿÎô©ĞYk%´`&gélø1^pêğÖçà²»xiÎÒË3/Ed² –f¥Öb"áã´‘To£·¦·¦KÈóØ¡W…Ã=¦DEVØö¹@m”HHŞÂPÑŠËdşs™fTZ4Sbœ˜¬	‚:zW ®~a¥+êr¾È—™vš+¤:´!5—óq³Ğ´o|€Ü[.Mì1ÿÔ‚09 û¬+².,â—ëQuq6ô¨Ä?ó¸e	$hh«ü5C¸ÒÎ2ëúm°¬emÕn›q~'Ä ûéÙƒ‚kî‰’0n0Ÿ!Y‡ÙT*%|´•Ã½½õI§=¤‚âÏØKŸµÂÖW_ï™w˜Qï:àZhÅäè1×ÒL~¼®âm7®k
+@ö¾qº¦ÿ˜ì¼=:õ$ë%…ŠWãv&kÜ_nÃ{TóUŒóÁÛ¡ÚTæÊœ<E±»fkÊ?ºÂG(‰Ã|ûâZ¢÷S7Âz
+4Z=I–Ïşô+ŒÉT’qšVÎj÷²·„:¦(l_Ñ:Mã^¶V¾bİĞïÔ©MB!êÄóç^(’ú”ÛÍ¹‚Pç?Õús£»RİbêXÏIæ8Svã&ü¾A1	.B§^²JÃº]yvEÜ{hÌm@íæ-Ô4z$J\ŸÿêY!rc%¥Yê"ú“Âæ¢ü.ºû‰Mz™pAQa	ŠƒEîšºlĞ&»10ÏõG»€Nspp%»`Q¯/XŒúufí›Å`!yéÊ²ÉÍĞéŒ«"àÉ“ôÅ*=¹÷r©ÓùnóK½½Ê]İ¦«™`Xçoß1ãÎ½–&=»ØGK2m3íø³¥¾¢»Œon¿0ÚÆÔõ½°OVÈCfBäù¸KE2Eárøà•¬¿I”ƒ¼ç·½t…–8oıî,ÌWš×˜~k°Á^ÜKÎTmWÁgX×6Ì%à@0T^/ªº°Âp€&–qšNgŸËp*7¡ıc«¼ûªDÅÁÔº<n?ßgx˜—à2–ÀÅğªbU¼bô8£›xlÅÙ¡|
+•Ï)YAoÇ"Áª+’ÓR¯0wêà”œtíOqâ£ÜŠY­q¨®¢O8–¡ÿÅõ?ƒ¬¿pé¿Ekÿ¥028™üC£ùÀ\&$ÌŒò&nb¶[¼…­ƒ”ñ4°pö “üÀNF}Ø:ÿm÷>ØşWªv [‹¿ˆ€‰™“ã_”ó_Fó×?Eí&ÿà(]ÂÿZÏô_FûÕj "%ú—é¯"ÌÿEÁ²ª„”¨œı7ƒ¨:!##ãßJ'g)[S»ü‹5ÿ¶û«—£…½³ã™å²ú_U¸şWU˜ÿËPM?LDùŸ]Q~@W3‹wxP
+}´0ù ¨¸ØÛ[›Øü·Œÿ£(–ÿşûPşy•7°1ùß[â‡™9²03H9X[	ÙšY›22ıõ3!'ËxË™‰““AÄÀş?bòÙ™X„\ÍşÕgÿ°‹œû¿/¬¬ÿtªş/#ëGÆò³1~@Eµÿğü›—š‰™ùù„ìÌ,%ÿÍ:ıQûM˜ÿZóµàÿ¿‹mX8ÿŸ^×ü/Äÿ¿]×Ìñ?æø{]ó£:ê<(¸ƒ£79”4{€2º†™ÕÀÜ&ç²ùÌ±Œ(2+eÚ'¦¢ü©®şğ3=
+À*ˆ‹£T×"}ß‘JfEÓÇ½"@"
+Š(IøÿÍîã|ö#²aUÊÚ›nÖ*Tí±rC	;y×¼×i$ÇšûõÇ;ÃÆŞß»¥eÅ±ğ	óÏnÅ¥e»®×5¯sŸ‹ß¾›ïï¾¾ï¯÷ë>÷«Mk°TI3¹Ã)àœ’ŞÈèMbœ™}´qıÆ²¢¦ƒQxåUU.Gª22£‡ïWÃÙ¬ìì¾/—ƒ”¸¥]oOÇLm\?z9›KKCŸˆ³}Ÿ,œœ®‡ã)¢ñùÂÆ[,IMc	é·[[¹wB~ğps?==ÑëµsV‹°§ïVeff–ªÂà¡¨sqÒë‡üA[këÓóóãÃÆáqõw;;;//8~ßNuxÃ¤1¤ĞT]¢m³qÂ¥šššÒÒÒÇÇÇ-„ºººl¿·Ç‹{îLò¥ÈİYÁ=°ú¥ÕU>ffeJÔ½½=k<ßªüü|>>¾ ó>YãÆ‹7·×ıp?¸!DºëqŸä#â ½ëG†Î‡­Q†.ï‹ßêú>ıÙ/ŞÛ‘4êÀ‹*ÜÀWA ZÂeˆXúœåşşş¹¹¹D‚ÚÙ¥¥¥L7 ~??TŠÏ^ËQ_–½€ }0ÓÛIİ99ù$~×ÍÁŠ§PÀğ}ãX_éôÁÑÌ3'  :Œ×„7A‰Gæ•îô¼¥ÖÕ×ß!ĞûÒõşæuÓ^]m8Mv"-"®&Š/‚‹t¶°t½?aô*Â`¶­£ãõï}Í/×”.ïp9F'Ô¹7(®ôVr2–j•0•˜%‹```°³¶æõº;IÆûğ¤0Öëşl“•qb<³×¨š¤šArØĞ¯«›.+%+k@2‡Õøåïz{>7k¬Òmcgeu¾;ÑÌœ£l>P¬0$µUVFÊ€çÿ½è[Àçéf^ßÏD(Iì9ÎÏí)0¦µ+LÃu<‰c';KKb’wè®>…›»—G§ ‚KpQõvH‰V¬’êŠE4Ò0œßßí]¬mmQÖ4cLbYğ—#îŒœgçç¿íÓĞÒˆrñN‘¸×öï;råÑ# ‹ÈàúvJ!LDìn€9}FûìØÌlğØú3ijJ	5|æB‘miÀèÏø¸iİâÇ,B:ÚeêÓƒşÆGL¡Í»ˆëŸ|!ƒDîøv9Hğò8£ °É*¹Xı)E¯Ân÷ÇI¸—9ßMuÄ½x÷PJÿ˜QtœäŞµG_ø6P†<N8Ÿİ¡Îú~Ïô}áSÍ¥:íYOOÏÇ”´²:>S©³½»s¥íÛÚ"îür[Koæ´~aãã
+IÃ 3lÈáş‡tÆ¨HS3<ÕìáuvVU_½T¥øWj[}-şõ)êN‹;t½kaS6¿J5Ò ZR?}(äŸÉÁÖ?¿²E•© ‘š¸Ü>Å÷VtJ°Ï/.rñówÖ×ß¬º­·xA÷òó|~îá'¶Lš$òÔÓÕuùö¼ÕË<øı˜â)I›û¥¡ŒL¸›È3ñq\réïßBÌÒíÓÇ?¿yìtyİÅŞiÕoß9OTéi›»î‡ß’’“)((f?&æT"f[±¢…FùU,£!‘b…f›1'Uqc5/3ó4¬­†,ÒW½ GŠŒğá6ÇúıÕ˜Wúauxúİ½±ôãããt¸p<ZÚí$>Úóá˜ğ%Òµ…u?¬§…‡IM
+LIÍgff cÕR´¶ì©œœœñy»›4~ö»Ç‡–ÈyS~vĞ‚O•”ä½ùq
+˜=¹;].°ÀÃÃ£PÈZqC7õĞ×ÕÅ{ƒH›ØWWS“Îr øi¥”®#^A²…|ÿË·O°œ(]Ä÷ñªPL²}¾JŸ ›ÛiïOÑà*ò¸G[”n·uœ¼%4¹~ ÃöXßë#–l
+z_ÓÇ‘İİ|sJ­	.ºyãKêŸ“““×çûÕï»Û\EˆîªYÍßØÂçû ªƒ4lj4¼.6?–ijKCÃ¼ººkBPÂØ`eõÊÜ×ğVîï‹ê?É5¹mşşşªÔ€³qT¥Ñ¾İ ø¸|íõİÇlâ“7ã€…è:³	ü>­‡R’¯ı•Nx\·wwwÓÓ(o¼±á’/×Pô:ÍHë[$ş¶¶Q½œœ±)Xpm FÎØçë_5©©©‡ççƒ‘%¸Â¼ÔZ@3uRêÖ¤ŠíàğŠ³*"å+X}ìûÑZZ[:”ôßÕuÚä‹7xBÙ¿6„…SWWWTw<‘‹±Aëëú+kk¶§°Ã£ä b,œ:¬ÆÅúĞ]ŸGoşLùíŸKÌ˜=¿¬Ï4ÂçÃÓwtè%Í¹Ô‰ÓyÂà‚wÓaaacµ2–q²ï‡Œ™Ùƒ‰‰¢  áÕy8MèjRìñ¼Ù9Rì=Z:}Ô!ë¿Í.„sa‚9Q"à2y=j?v	cä?Û¹d:êUz§‡‡––µa¶Ä(0•Ìá
+rr•@àSs-Í"|0<Ci .¤•­íÙñ±H!û%¾¬J-¼†aîe‰®®î°ôÿKÀU£ËÕÃ“J¬cr1bïàı›Ãppğy î5‚Ks¥Ä4ßsÛ#ëo›Õc
+›dzİV—cĞÀ€xÊÍÏSÇNã\\\ÙBe/¼HôwÉÒ¦ÆÆ¨¨(zzz`UÕÇÖ'qÓ«ÿHö#2ù.K2à©Æj$ŸY:Ã÷ğÚ.`Èn­=t#Ögk>Ó¹ïŞ™cx3ë¬A—¥û[t4YúØÒY·”YÛDÍç5×íímí["@üªâ—ÔÑæÇ¾¥åV…ıÊöÌ¼·ğüülfjZ‰ù”á~¶¸¼œn}F…@’tæqjåêÊ®÷#c¾~ÏKãpùp2xÆPş±ó†c0 ô @‡gÄ‰NÕ<¢[8­?…
+~v[—0_î¥Íƒ;À:?$Ò¸¯ù¼<8hü
+¿7·Çv«,¨Jº”’?í›áËnT•„õ×Lçt°:â;şF!ÿ±Ä'Ğô‰Åñ×ª:à¿Ï2ósÏ $3èG)ğˆÆÑ˜¼Bõ%õõÓt)Ï®C=“looCËÿøÕ+‰	NÃJÒ3¶Ú¦Î·ûÃlĞ¨#õ¸›]|µ@‚b7ó«W¬/y‰ÖDJ»QìãÇP6…Îd5´*?¼åÚ×„ó%›!1Îê[!xŸb®Úwir^RèÄ¹ëB~d·»“ÅÍMƒtêâÊJºòÂ$õmÑ2=vä…ãàİoæ¡ó0[6ªzh:ÚÚuÏeJh¨!_HrAP¶AÍ J…§ƒ†ëR­a ”®L¿X 3âJ F_£İ^¸³Ô‡ãMÙRUU¥£@§Ê<Ğ -‚L³˜å¡á¸¶&3²†[“•Ÿµ«\‡ëJ&àu'+.Q`|©›¡@¾]^±ÓÕMq¾¦›¢ÀNfµÖÉşHP¥«1 ëj€•½šVñaïñ_sñ°?{ø†‡}_›e¬é°›%ü^èz#£Ê|G«E›|üç	'——Ní,yøúc(©|é))PçeQ”U©mMKE²s•@“sdSèÆ”.ô³!|Š_e|&ÔÈdû¸[7U
+kcªÅúšwÚì	Ôºš[Õşõõppp¨áışÁm
+
+
+‰gXTû®oôëô°¾ß>v¼tA™5nŒÔ©ö#ÀÕY±#V‰@-¡wD]Ø0›çÂâêª.%ê‰ÜÃeŸİçÊ¹Í‹Ÿeß†>7ÆYòÖ
+âÒã<=<<œ.7mƒXÛ¡ÌÍK°Ş.ÏZøæ­<=Óè¾[YÑ¼%€­¶Óõ˜:FnsªI>ÃW%w"õÖ¡0ÈŞ8gx§Kõ­õY€'™c<İšD&÷Ù½QdXÇ¡!è"İ9 ìf™Øn¦—ØeØg'£4Ä¦–+ı‚%ØÖÙ„vyƒ2ñÎŒf!ûĞ($<Nk t…;$Zîåqøêál$Ú!Š7F‘%ªƒwi½/ytwèpK8,¡vÑº%LUidõ iXmtÃØ3Ğ¤vãPù‰5Şö•7¿	^]ğô­» øYEËÖÚ÷$u²*‡‡hİİB PSkĞÃÑî¾øÁ¹?€ğ©4ƒªÈ¦ƒ¿’T|OXYŒ÷$Ğßñ¿ã°[[YX€šá{»a”÷¼=ø±~4ĞuÿÒ«âjÇ¿¨&##C¬¶xDÁ~-_|ıøòwÙ98zCÃ/~v5Ù®öh-å s"£È¯j'Á‹…ÑPF$ñ"N•u|ÑíuÅ‹u<";ÉÃµeœü
+S£¾Ÿ“z±;µFP#´[°¦¬õ{9Èîû½Ê7à©n¯œœ\+, ¯æÈ¿£ôSf‚÷¾ +3³á^ò{_S »Ğ²ş£±Â{ã)˜JeÙÿÇÜ[Eu]¢¸»»»S¸Ó¸Ó¸îî.»Ó¸4îîĞ¸»»»;6·¾—û0ÿ˜¸ÿDL>TÕKFæÙ{¯µ×:çTfXäa7¼/êß»;¶¬¨#jäpËJœmC8+œÃ(8‰ÌëGŸŸ¾³u'»²…äÊ¨“Iúyí .åŸ¸#1¤»Ö.éõ†‡“Øá‡ƒ‹;:2R[Tş9Èããæòùñ&ŸÎR@ôób)ü%¦iİ—¤KKßÛvVn3©a¬®¶VIYÙÔZWW÷*¶§
+‡¼F<|Æ`8Ø¨1x5ŸKBŞ@ı72q­Áó|^fy€…Ès'ñ~×&Î9zBâõ'f¸¹nò3Î8H::Ş~òc}Èÿ†^>Ù8·BËÎÎÎ‰™ŒAœv-¨x¥a0…”ÄI[bÒû50Ğ8,{I`jËŞ&Ò@ëÉÜ¦%ëÂ‡… ıÛ™U½?s?GV$‰ÿ~×€¾0‰ü^îc<Â
+æx/Íq«}_'#Â<û¨ÁÙÓ÷ø&u§ 5Ô|G%÷Y´5eÄõs§èº&gÕ¡#‹ÑÂè4ÿ¹¸»›F¦+ìóg³ÁËØ»N'ö¨´”†Ñ°®º:´#ÏOé›N’jÂÔˆ¾Rzz›cccà‹£Lı“Æ;mµ¢ÂÀñ-¼¼^×\¾óõuQ$—¬ÌÌŠJJEŞ½zr8¿û·—Ó|}|˜,Lh×næÙä»fiá¶Wn7ùf ]LM)1¦O'''“†ág¼,p~ef[4ü%cü+vâpŞİÀÀıáè}C±{ètK×eOAs½px±ÀÏœVA2½ûë7ÍF\²ùÁrÌ»û}www‚=,ßáFé7~!³KªÎ‘Ÿ‘7»§qác@Y‡hDÖÕµPdAó›éµd=»¾Ö(¤E	ş½^$'ìŸÕŒÒ‘ü”^Àÿ'üNĞË¤¸a1ÃÆ—Ì¾£ Ó+?-|µ‡Å¡ı=¤•(‚„ä”Œ8®é©yÄ†:888lrÿùïïñÀÉ¬€ ÿûÏ®ØWY·'ãIî>Ú‚ÎÎN¦™Cåz<SMSéMTm 5P§â¿ô:W¨ucIï\<<Ù£}¿),>ÀÎI°öÉ%U[AŞYÆô¸=YC™ª/¼§Gxj$ÉsÉ¦T™ÆÇğ…ØÙûİ¿õTÄçÉ@½@Æ‹—´krJ™IuâQùßît§¦boQe¸´¹¼eO»¯©F‹¼e¿u3‡Á'Õ¡E-İ4Ö™dÀ§v Q¶M²AB£´¬,jdÈFÙ"pNq¬&ß,f<#$Qí¸'aÃ bê±™HÂÕŠUé•,ıÅß’àFEµ d=>VV4 Ö±‹"¡Û;Ä‘ñ!·±‘|y÷Íä–Ó”{âıÂdĞËÎ¢»ó"£§../			³=Éú’Ósy!ƒ>";±mpqÒøbCŞàH[Q@W‹qEh×V‡Œ)—Á"6ÉVÑÕ›8âÉ@8e?şd6Á…†}DÆ«tÔÎQS¼Øç‡:zùµÏó±s¤Õ1zz©®-ÀY>1¬;`Õ“øæo"·I§–Rş¿§p¹¸ş;çÉş¼ šçœ)ZëÈc"“Å€ó Õ’EÒŒ ¯‘é‚õ †‘=“"£á"«ßÛ:}aÔ’O»IY®N×„Q¹4Ü/Ô•µ~¼…À‚l›×İ^ÿÿúÇkoØ~é"RèØA‹õğ(é¸IĞwª4pŒ(m*¬}öc´Hª–èğ‘ÒÒÒŸ…©j´hóŸmrÌáğˆ$õù­åšÕË–\fä®! [kkdMØ(¿"H‰½¡7¸3o‡¤İÃO~WÖëş™={¹é^ƒ©–rx+GşÖÄ¢ŞüGgKD(ïé?D“Ş´¦FãBÊBŸd6Üv¦XkÜ6ôë)áß*Ú’ßga‹ı/¨à Ì_‹•µÌÚK,§Z\}ğ»x6;iğŸî7ÖÌİ®€;Ã$7u(@Mı”ŸãzI
+¤z|ñÂC¸zâÄOK£€!g½¯j§_^²Â¡ÏDá3üì˜õb²!#Gv»»†ng¸K{*„Wçì™Cm]g×.Æõ)r½£ ¹í{—iàm˜w-Û~•Î_ã~¬W—¦A‹Évû5àúÈYrDİ,–‡;1¨l”·ÔæH$gÚ]Ÿe“ÚÕ¥Ì)¨‹ª0ï–ò°²ê°-üSÔĞ‹Õtr°ıÊ¹E0äÆçÓûuöOÌ•‰2z!K?b_‚&İ»G@—ÛúÂĞ•Ov¦[ÙÂõüõ©?Ye‘¬$½<ò±5$¡ÈòïÕÖ¶ô–½ uê6ôàøLíq{n›¤v	¼ÓOA¡µà†-ğ9huãê’U¸óOq°»fzOìñÔi[âOoG9¦ÆÃD½ziëqÍ­¶"m¼İ+¦<uœM­Î‡¡³ío)KL{2x4ï Olcd6ZÚ<>°çN†¼$l¯u|Íßşó¤SeÉx zf%àÇ:ğŒÇŒ¾\¦Yu†êNü³Xw½~ËüsÀP†óo;¾ÂIórZşù¶}éEƒ:Ó-À"k¯ˆôMõœ>wöÔ Ğ²êé›ÄŠPzd‰Ë›ßF)4YÈï©ÚC'f¨‡ë ÿú$Hø!wâğqYÙRhˆyKİ)M4¸3OˆuÛK{Ê•İûOè‚t¤à-†¸—XÕ±Òã¢;Wœ)² àŠ5ÄÆü“+Üñnä¤¨îo*°–’Õ“?£ê;ğ	h€œ£äß»BÒ0 ïy=ßzQq-6…Ñ–°xè	Ç}Õufİ1D&òñõw"V…­«MÆ®4ŒS*Ñ†Iî7l¹˜ïŒ<¨ÖÍbÓ•%5pA£êşMÂWìõä.]vL©8Sª…‹í~DŞà¶™´‘^
+gxÎ$ûvO–_£¢“§4`ŞmX¯v…KÆïö“ô¿iÑŞ{E‰$<:µè«ĞòÄ2W[İ%ÀÎÏUì)5
+bc+éàüŞÉïšL6’	B1yvàÂ ÕHÈß6ÑÔ4ûç›°S:kı6’‡¸:”‹xÉş‹ùÙ hæ&˜œĞÁ‚~¸\š9ë`hKw6¢‚ÃôTœOœğHsïïãŠßãèxÙeŸª™î^^Şº	%ÔdÌ`„Ô„n	÷+aŠíw·fÜ!¾>í(²¡íUî_K&vÎíÅÔêß-<?FWğ'®ıIY%xŸ(9½Ã¡¸‹šŞÃlÄ9øD9èÉ-
+ãFyDQÒ³Òcåiÿ“Ö¸Õé$›é”Õ(Ó 5)§¿,.Í‡pCé¼ü¦ÖëÏ'2ê¥”PUÛ1T°*-,s0¥öYvp"ÙíMìƒe6¹ÔXW›»j%£‚fxû\³Ş““˜‹¯	±ƒàäZ•NPOË/ù‚UéÉğ@ÁĞe,?Òº4ZÀ}®ì|ôãRÿ£ğ»‹0Dev Õsr=:B£\†É‰˜´#¡pnè£fùn–Ô;(%|Ôø.îS­á†‡H”íß³}:#~Ü3ó*VİÒğ¨-‡VKÇhÙ ä_µ¿§MQ*3Ê°2œ•Ze¢›_¡’­5›é’­i!@×ª6 ¤$VéG¶‹õX^4µÏİ°¡4»F)SYyV°oX±5ˆµ®Xÿj[¾_Ñd^ëRÄ®ùgºÓw§ÂÌõïãkh¼•‚VfÅÚ¤‚À;b^CÕ‘ñKÜúà*³Ñ
+Å'kŒ‘y¸\a	º¨äAB®¨ä»ò¡¨@üŠùŸEÙ4Ç‘­Ë8ÏŸ°>»ØâÕ ¶Îô£ıİ?muÂ^£d§›,pÔqÛ)y{Uİˆ˜§;Ğ„o?²O—¡ƒÚ{í«Ø	µ]Õ±,ÊÂÍ[$Æxk¤*Ë	sÙYÖ57\%ˆM
+L
+×ek‘×m Qÿ‚ËJ4×´šnüƒ-©h¨6Ca…ˆŒÑ¸¦íBÖÊ§g"NÊ¨¤c“î¹ÿ•`¾¤ÌÑû©+¡vuk‰è`¾ñ°~bŞ+Z^h¶ ¹UFå|ßJ /Fê‹h¸ODåB'kÚè£b™Çõ*¸ÿ‡ƒƒ*šFÛtUf_)ŒÓx²sÎüĞ–ò aÉÒ¤÷“×^1wéŞYb‘ûµàDÎï½ê|1`îì8>²EXe3u°±×<)¬y ×UjìËC”Ú™‚ÆJ!A¨_.«„eÉ£êëâÇ2E… “~ÃwÏXì°FóÔz \xßˆ—gØvä1ˆİŠd0`ı,nGÉÜ¡Ë‹H›o1ö+UÏ]Á…‡:GrĞD€^Õ˜³Ò
+…‡1gHşÃ˜a³{ENÒ“R\\NĞpÃî¹R'W¤•í—¦Ç¶hğªYçeU×ëÂØú±±¢3y‡Ü?'Ÿ«yûµæÀ°²ŠÚEtTù¨Ä§DÅ}¼ˆÆøT•8öD[½ï«¡Û¹››ØD‰¥É÷œóßrÑòğeƒHræxRãköÕ6Q¶ˆ(Vójãİyd+Í,dİ°|¾™wì@×¥¢ôî©mf$ÍÏÍ-Ï*N güÀItu}c‚CjëPçÚ;/ëÈEËˆÎ©_ğÑË³ƒ8M6®Í_Õä×%û¹d;5e¦‡ÇŒÒ<^a‰mùØch–xûÜÇ¾õ©$t€mÍJ@l„š’¤Î /Ğ²u'İ:$W¤ë¸Å‡CFÆÏˆ,jdm´Ìºp6Í?¾mÒûfuâ’É{PÑ’hÛ«d3·»¨¼ú7†òÆç¶+pÊşÀ‡:ÏéŒãÎ£¹½níd:–LúõÆçÒÉ=¿”¯±e?®ìY¿Ë…+ïyİ™QB´‰´5¥w3sò¼a$›óÇÍ…ùëpFÆâmdFnËÒƒdzÌVuDÉ±ğ¡Óç,éÚ|§İ•Ëuë‘Üy3şÜvı_r§g×ŒùK"‡|	C)ãÒn%’÷ Ì³dşğëßZ§f‚.û¹„WåEé…pù\VHÏ×›­&nI®-Z0zÚ‡¶Pw$oYıPLqK.¸È²O£$|ıù¸r²_ĞïR”_)æèº‹Pë5>/}ßÀ(Ğ®] ,ÃÕZÑÜ~ÿ¦hÚ¯k]äc4p£«¯§“Ãş\e2qˆî¥s_Rå¸fÖì¿1ğÏqÊRùÅ½ßõâïY²Ÿƒz‹§çE¼f‰˜îY’zİõw[ÎÜëÊT—SÒ“¸fMØïcæÉYşñQ
+µ¢³Ç-	h#PFéåR±ß)}Ü¹*ÀòpI~à™ŠøSxN"È9dÔÜeü¿ZÖàrıŞÿâş=wŸƒã¿w­œç±VÎÇÆÇû_×ÊÕ¥ÛÂ}ºyh”œûĞa¡°’EG’ÅG6a a¡©‰Ä©¸š¾MöZæz>ó).nsNlß¢²„r¨/¯ß’Tz\¿ïÃFî;ñ¡üßğµ+ €gòŒ!Š¦’,ln«›@,++ê4ÆÒîöyúb"¨¢ÄsFpÜùìEÿtdù3Ée»rö&5UB’¹PïÆ0©²†æbp½Ñ"òïÏâlXÛ#	´³‘"ùw ­İZ½ñb©b/Ô^/!ÃÑËåjİ)„Ğ¯Kµ1iU&Û“ ëšBõ´¢Nòño‚dè½æ“iYYYÄWLğ[íşŸkôÚÄHµ!Í‡F?ìÑ0ğ÷®}Ÿ¯Ö{üĞ„„E¹Ëîö}y İxìH¾´ö¨|µâŠüz=LˆíûÏmkIK{8ãb…Q*, /›ÇqtÈkŒr±À³­¬•ƒƒƒ•U ïf«½øZëGòÈ¯D«˜ı«§§'ÁÓ¥
+5bbbË&^×“©óÅ²·ã(LZ+ÂÕ9u&¿âûó¦\¼Q¯Âtë0ˆ
+ä¾Ö‚B’×NÈZb²§EâYDûısdäsõİİİee§aˆ¸¬]ê‚0003¿DPıÉ°Z‘lıÆa¬!Çb¬lm/A6ˆ¨Ëûñ$—Éa·Çÿr¥¦   J«îA+RV-Éõõ7Ù:#{Òs«U$—4kKss¾èD wcKKê}"0„µ/&Áú,Ì´ƒì-ˆ•7 ƒ0ôãáxÒóv4bRÒêTíÇûƒ ¸¶ü{ïp='B0d‹Ë•åkµ#ıõÚøóçO‡ràşËËÍvÈ“Wr¬ù·XÄûPÆÀÍ r®,Ÿë.3:‘|Ëïôg77>Îgsä¯p?‹4ˆ&!’Ğß¾¥CÆOõzİLgó|Ñc8‚Föt±¼X¦¼ÿÊ¨•(•£±À‰ßàÜî´œ/v‘ÎjØãûr“ òùúzHŠ.ì÷ÚçèõytD%ÕÔÔ„i‰GL#‰l:§ÆL½?l:7¯Ä™Aß‡ª¦¦–@*ròrFDd¾ÑmªCfşù8+‚9@&R~ßĞÀE2şõñöø…%òõy#*{t=G¸¦3d*Úöş·ñH¤ÁuP¢c›'j{ICöø½=xâ|L=şøúç9}sqÛŞOŸd\ÁE YÃÕåµP ñ]­ÖëëSH<´3;#£ï¥”2•t$£T¢Š7‘¢8t8š`:“H*!)ñZ&#ŠOGßc„5“Ã§¦¥õ2ÉÚ‹%#e¢ğ³<H)Iøñ´jhØğ/Zä‘0`v°>´dL0¹.BËk+™´¥´4Ü¨¾­×óßÛã)'±Ød¯Yÿ,k§€€€ `,O°r°å@7	wÀ¬9>;ÎV¼¡äŞ^¯¨T@ˆ¸Üd*ĞQØ)l”Ù’Õ©şŸÇíÎ´ÌéİáG2RŒujúÙX™ò¯;Ñ»SV`»h±ÂZä³<ôä†’’&|‡ÊWÕŸÙdøôl¹ »Íıƒ—†ŒÀô,;!úäÛ×b—[½ jÓí
+z€”3»&ÜdÇC¬ˆÄŠÂêÃópCñXJ¤9GæPìÙiOOÏß—[eeåAi‰cı¤Àğ5¿&P º}Zjj¢b+e‘tQÆ”¥\ÕĞoÇÇeIv66¢‘­ëi¤a”^Ë½
+Êi¦LÆ$.;cĞ‹Xép(ÌÌ	ËÍoãM£ĞJ-¨›š~Ò.{PäÖÖ²˜¶íêƒ	ÑclØÙÁ1ïUö¹v ádª.Ö jäÃºÈƒ`³Ÿ`‹Ü[Ö:)œ‰ìœ1nàØn Ò÷ş›!k[0ùïj½é·çm€çÍİş T6ÒO¤îÇ†	#ˆÛ˜ò»‚”
+	ˆm3å	ùÆñAà¾ÿı»Oi'&sƒï ‚ 
+	A­–¥¥¥«+‡ÃÅóõf’ê$S\IhşoMûCƒÄX<Ã£ÿÀ8ºñÊY³}NÙÛÍÍOğÉ=ıÈ·òb&š >ÓF!¡„ÜîtûÅüT@˜@”Ÿ»:}€±ÔƒMÇzyº¹‘Éƒ¨hè71ÇÇëñëÔ¾åKC÷—ì×%a™	êÉğI…| Öü{Z5§-z{ã4±%ˆ›I5Â}G™ÂxÈï¦¦äªËÊ"T•’ª–ac`“0ñ"öåK-À!ÒŸŸ9,gÜ<=Mq’\á¸xy½º©œ(†&à² Eûò‹]äLYKğy"I¡Ôx”²ÒN5ğ¡|9á"”
+F¥¤¤º¼
+O¨0MG’èõfçîá™Gß´á ñ3àáĞRÙ¸&MAÌ©ØQÚ®=88ØË±õ¹×Ù¥	ÔÌp§{åwÆë×„j/( gŒRék$Kd%Ç¼ç¯ÿÛ,ı&¯İùr»»¸ô6e²Fù.£LÎÄ½§›4ß‘äÿçêşB´&Nñ
+|è¢¢"¯ïiYØ&4Lß)Î‡ƒhãú8RnÁSRR"I»ÄU°^Ç_kÇö£ÉŠ$F$
+M±7ìlläªšÇe—rüBëu3Í‡æLÿÈûÛ¦	İ’hñ› F®IdÀ)¢aÿ‹èz5ûò# +cƒ=<<Ô¶‰"=!¤½U™5i»~RÃğïÒõf(š;¬mPÊEüßºîŒ¨F%ûQueD'x½ò>Ÿ)_£‡ÜvMâ„3,*J{÷G¨õµ[Î’ ¿™4!DÊedµ0}^Um}ò”Äsd
+©p.`£‘©nĞ}eßÅh.ÊÏ××wxH«ÎÀÿã•}\B¾]LîB9Cå’?%A²Úÿj=C©«9!,]Ñ©™‚rTK‚ŞÉlÈ¨&™u“h™^‰*çT¦VhìÙÜöËÚ®0­½½¿XöÜM1M˜v¥ºÔ
+÷Ñ{$*nÉ©Mırrs‰		)'Âkjj†æ_¹yÏ4$“¨µˆLÌˆˆˆ$ŒØ¤üî{¥à;* Å‚0Ğ©Ó˜LÆ­VæVlğ•°¿™€º€´4,Ëq,*\Ğn—7%Mx
+÷  Aœâèîa›à–ˆhĞã•’,ıĞı6+™cr>LªF•iè„œtGàı¯@ŒO…üæS ºÑŸÁ¹9´©æÈì¬¼vYñše›	ÜÉÄÈ¦ yY5kU€Ò5qî°ƒÍNcâ2Ï“Â!;:ÁenN–“·ØYY+çò/¯­E®V"!˜»šx‡ÃJë$;¨o5˜ÎI¿å[é†’‹Ş÷0€Õ5y¥oB])×A2½šˆr8eGDD¨|†6ƒ÷Ğ–èˆy"ò£{ÉÑF‹­¤øN˜÷€Ì¼ØÆ”‘pÀÇëp.á#»J­ıH¸®şÈÅ¹Tg‘ìêZœQêpp„öPªPæ,!’z^—Ób2™ÛN^7ì˜17£BÌÂA(„Ş   ÿè§Ş" ^0û6ˆ¤G2wLtÌ¹ÛQ.vÉ—‡Ä»Ìq
+#Şò5[rR…¡`­ kÊ4Çalgè$×cè¨p:Î‘úº:eF‰f§·Ìr>ü)º—Êv´{2HhñGÌLÚI‰Âv¼}Pó×ïöI¥5¢‡/g…@C¢ö  Ô«’Ø%gc3K7ŒA¥–:ÕÂ²‰Ê6µµ½| ÿHİŞj3ğºñJÀ{Şl©T^üK‹­Lõ¯º¸„ºy‘ŞoX£>mnié—ğ6Ô¾Ã 8@Hê„NmN§qÔUÖÈx)**ÚÛ3û ƒ Å9]²Æ¥ƒ˜¶6›ÓT”ÅuF£†İiÄI.®¥…kZ•J“I:=Ü‚¦Êr™^Şô!¦Æ÷Èê/í27'\P¢ÆÁPw7œs©8N"}Pcñ£Æ$XõOPJÇsÂì…PPMOOË¥‰ß›ä¡áÑ]ñšÁ§éÎÔÀ}äw|A×'Ätou¸nÅ£«&HfxK¾JJ¢>D›º5›×
+ÄÌĞ'¥*9¦
+£ãHß®àßÂ%BˆTĞOÙäÆ8lÀcÄå­hâ§ŠòÏJ·ä§ğ‘ûŒ9#RÆÍÿP yBn8¤´VÌ^6äe¥nÉ4ª?‚¾«jbØ÷ÅÅbÆGï© q&Ş…”ÜûÙ.×hX

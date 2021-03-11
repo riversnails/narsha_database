@@ -1,0 +1,22 @@
+*** Creating Trace Output File '.\Output\Timer.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '".\output\stm32f10x.o"'
+### List of Objects: adding '".\output\stm32_init.o"'
+### List of Objects: adding '".\output\tft018.o"'
+### List of Objects: adding '".\output\timer.o"'
+### ADS-LD Command completed:
+--cpu Cortex-M3 ".\output\stm32f10x.o" ".\output\stm32_init.o" ".\output\tft018.o" ".\output\timer.o" --strict --scatter ".\Output\Timer.sct" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\Output\Timer.map" -o ".\Output\Timer.axf"### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: '.\Output\Timer.axf'
+### ADS-LD Command File: '.\Output\Timer.lnp'
+### Checking for dirty Components...
+### Creating CmdFile '.\Output\Timer.lnp', Handle=0x0000037C
+### Writing '.lnp' file
+### ADS-LD Command file '.\Output\Timer.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

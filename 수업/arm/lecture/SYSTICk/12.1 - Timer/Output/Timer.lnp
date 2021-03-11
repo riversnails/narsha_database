@@ -1,0 +1,9 @@
+--cpu Cortex-M3
+".\output\stm32f10x.o"
+".\output\stm32_init.o"
+".\output\tft018.o"
+".\output\timer.o"
+--strict --scatter ".\Output\Timer.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Output\Timer.map" -o .\Output\Timer.axf

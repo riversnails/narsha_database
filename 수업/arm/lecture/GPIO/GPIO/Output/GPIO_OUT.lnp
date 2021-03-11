@@ -1,0 +1,8 @@
+--cpu Cortex-M3
+".\output\gpio_out.o"
+".\output\stm32_init.o"
+".\output\stm32f10x.o"
+--library_type=microlib --strict --scatter ".\Output\GPIO_OUT.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Output\GPIO_OUT.map" -o .\Output\GPIO_OUT.axf

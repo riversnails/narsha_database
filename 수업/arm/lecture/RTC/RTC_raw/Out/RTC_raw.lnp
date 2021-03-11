@@ -1,0 +1,10 @@
+--cpu Cortex-M3
+".\out\stm32_init.o"
+".\out\stm32f10x.o"
+".\out\retarget.o"
+".\out\rtc_raw.o"
+"C:\Keil\ARM\RV31\LIB\ST\STM32F10xR.LIB"
+--strict --scatter ".\Out\RTC_raw.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Out\List\RTC_raw.map" -o .\Out\RTC_raw.axf

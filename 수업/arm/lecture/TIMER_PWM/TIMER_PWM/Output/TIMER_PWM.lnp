@@ -1,0 +1,8 @@
+--cpu Cortex-M3
+".\output\stm32f10x.o"
+".\output\stm32_init.o"
+".\output\timer_pwm.o"
+--strict --scatter ".\Output\TIMER_PWM.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Output\TIMER_PWM.map" -o .\Output\TIMER_PWM.axf

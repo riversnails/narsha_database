@@ -1,0 +1,4 @@
+--cpu Cortex-M3 ".\output\stm32f10x.o" ".\output\stm32_init.o" ".\output\tft018.o" ".\output\iwdg.o" --strict --scatter ".\Output\IWDG.sct" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\Output\IWDG.map" -o ".\Output\IWDG.axf"

@@ -1,0 +1,47 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: •ÏVision V5.14.0.0
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: a a, a, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.14.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.05 update 1 (build 106)
+Assembler:       Armasm.exe V5.05 update 1 (build 106)
+Linker/Locator:  ArmLink.exe V5.05 update 1 (build 106)
+Library Manager: ArmAr.exe V5.05 update 1 (build 106)
+Hex Converter:   FromElf.exe V5.05 update 1 (build 106)
+CPU DLL:         SARMCM3.DLL V5.14.0.0
+Dialog DLL:      DARMSTM.DLL V1.65.0.0
+Target DLL:      Segger\JL2CM3.dll V2.99.13.0
+Dialog DLL:      TARMSTM.DLL V1.64.0.0
+ 
+<h2>Project:</h2>
+C:\data\edu\ARM_IOT\lecture\UART\UART\uart.uvproj
+Project File Date:  06/05/2015
+
+<h2>Output:</h2>
+Build target 'uart'
+compiling uart.c...
+Application\uart.c(284): warning:  #111-D: statement is unreachable
+        a=5;
+Application\uart.c(346): warning:  #128-D: loop is not reachable
+                for(;;) {
+Application\uart.c(247): warning:  #177-D: variable "s" was declared but never referenced
+        char s[20];
+Application\uart.c(252): warning:  #550-D: variable "aaa" was set but never used
+        char *aaa;
+Application\uart.c(256): warning:  #177-D: variable "c" was declared but never referenced
+        int c[3] = {1,2,3};
+Application\uart.c: 5 warnings, 0 errors
+linking...
+Program Size: Code=3288 RO-data=312 RW-data=32 ZI-data=608  
+FromELF: creating hex file...
+".\Output\uart.axf" - 0 Error(s), 5 Warning(s).
+</pre>
+</body>
+</html>

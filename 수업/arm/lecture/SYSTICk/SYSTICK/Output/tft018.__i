@@ -1,0 +1,1 @@
+-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I.\Initialisation -I.\Drivers -I C:\Keil\ARM\RV31\Inc -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F10x -o ".\Output\tft018.o" --omf_browse ".\Output\tft018.crf" --depend ".\Output\tft018.d" "Drivers\TFT018.c"

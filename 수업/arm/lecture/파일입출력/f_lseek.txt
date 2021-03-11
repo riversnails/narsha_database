@@ -1,0 +1,51 @@
+/* Open file */
+    fp = malloc(sizeof (FIL));
+    res = f_open(fp, "file.dat", FA_READ|FA_WRITE);
+    if (res) ...
+
+    /* Move to offset of 5000 from top of the file */
+    res = f_lseek(fp, 5000);
+
+    /* Move to end of the file to append data */
+    res = f_lseek(fp, f_size(fp));
+
+    /* Forward 3000 bytes */
+    res = f_lseek(fp, f_tell(fp) + 3000);
+
+    /* Rewind 2000 bytes (take care on wraparound) */
+    res = f_lseek(fp, f_tell(fp) - 2000);
+
+//=========================================
+
+/* Cluster pre-allocation (to prevent buffer overrun on streaming write) */
+
+    res = f_open(fp, recfile, FA_CREATE_NEW | FA_WRITE);   /* Create a file */
+
+    res = f_lseek(fp, PRE_SIZE);             /* Expand file size (cluster pre-allocation) */
+    if (res || f_tell(fp) != PRE_SIZE) ...   /* Check if the file has been expanded successfly */
+
+    res = f_lseek(fp, OFS_DATA);             /* Record data stream with free from cluster allocation delay */
+    ...                                      /* Write operation should be aligned to sector boundary to optimize the write throughput */
+
+    res = f_truncate(fp);                    /* Truncate unused area */
+    res = f_lseek(fp, OFS_HEADER);           /* Set file header */
+    ...
+
+    res = f_close(fp);
+
+//==================================================
+
+/* Using fast seek mode */
+
+    DWORD clmt[SZ_TBL];                    /* Cluster link map table buffer */
+
+    res = f_open(fp, fname, FA_READ | FA_WRITE);   /* Open a file */
+
+    res = f_lseek(fp, ofs1);               /* This is normal seek (cltbl is nulled on file open) */
+
+    fp->cltbl = clmt;                      /* Enable fast seek mode (cltbl != NULL) */
+    clmt[0] = SZ_TBL;                      /* Set table size */
+    res = f_lseek(fp, CREATE_LINKMAP);     /* Create CLMT */
+    ...
+
+    res = f_lseek(fp, ofs2);               /* This is fast seek */

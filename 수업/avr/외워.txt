@@ -1,0 +1,39 @@
+gpio
+general purpus input output 일반적인 입출력
+
+아닌거  alternate func
+아날로그 adc  uari  spz  timer
+
+flash 	전원이 나가도 저장
+sram 	static ram
+register   메모리 맵
+
+메모리 번지
+
+char* 0x05 = 5;
+PORTB = 5;
+
+
+//---------------------------------------
+pinMode, digitalWrite, digitalRead
+DDRB,	 PORTB, 		PINB
+//---------------------------------------
+External interrutp
+
+EICRA : any logical, rising, falling
+EIMSK : int 1, int 0
+//---------------------------------------
+Timer2
+
+TCCR2A : WGM21, WGM20 -> 000 : normal, 010 : CTC, 011 : fastPWM
+TCCR2B : WGM22, CS2, CS1, CS0 -> 8분주(0.5마이크로) : 010
+TCNT2
+OCR2A
+TIMSK2 : cmpB, cmpA, ovf
+
+//---------------------------------------
+ADC
+
+ADCMUX : AREF, AVCC, 
+ADCSRA : ADC enable ,
+, ADC : 

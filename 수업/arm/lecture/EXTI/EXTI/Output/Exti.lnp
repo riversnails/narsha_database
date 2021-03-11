@@ -1,0 +1,8 @@
+--cpu Cortex-M3
+".\output\stm32f10x.o"
+".\output\stm32_init.o"
+".\output\exti.o"
+--library_type=microlib --strict --scatter ".\Output\Exti.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Output\Exti.map" -o .\Output\Exti.axf

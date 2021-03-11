@@ -1,0 +1,29 @@
+=======================================================================
+
+char buf[100];
+int integer = 123;
+char character = 'c';
+
+------------------------------------------------------------------------
+
+sprintf(buf, "integer : (decimal) %d (octal) %o \n", integer, integer);
+UART1_SendStringData(buf);
+
+-----------------------------------------------------------------------
+
+ sprintf(buf,"character : %c \n", character);
+UART1_SendStringData(buf);
+=======================================================================
+
+
+////////////////////////////////////////////////////////////
+void UART1_SendStringData(char *ptr_str_data)
+{
+	while(*ptr_str_data != '\0')
+	{
+		USART_SendData(USART1, *ptr_str_data);
+		while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET)	;
+			ptr_str_data++;
+	}
+}
+////////////////////////////////////////////////////////////

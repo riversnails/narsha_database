@@ -1,0 +1,1 @@
+-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I.\Initialisation -I.\Drivers -I C:\Keil\ARM\RV31\Inc -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F10x -o ".\Output\iwdg.o" --omf_browse ".\Output\iwdg.crf" --depend ".\Output\iwdg.d" "Application\IWDG.c"

@@ -1,0 +1,10 @@
+--cpu Cortex-M3
+".\output\stm32_init.o"
+".\output\stm32f10x.o"
+".\output\adc.o"
+".\output\retarget.o"
+".\LIB\STM32F10xR.LIB"
+--strict --scatter ".\Output\adc.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Output\adc.map" -o .\Output\adc.axf

@@ -1,0 +1,201 @@
+#include <stdio.h>
+#include <stm32f10x_lib.h> // STM32F10x Library Definitions
+#include "STM32_Init.h" // STM32 Initialization
+
+int ledLight = 0;
+int ledLight1 = 0;
+int Alarm = 0;
+int count=0;
+unsigned int i=0, j=0, k=0;
+
+#define __WFI __wfi
+
+#define PWR_CR_PDDS ((unsigned short)0x0002) /*!< Power Down Deepsleep */
+#define PWR_CR_CWUF ((unsigned short)0x0004) /*!< Clear Wakeup Flag */
+#define SCB_SCR_SLEEPDEEP ((unsigned char)0x04) /*!< Sleep deep bit */
+
+void PWR_EnterSTANDBYMode(void)
+{
+/* Clear Wake-up flag */
+PWR->CR |= PWR_CR_CWUF;
+/* Select STANDBY mode */
+PWR->CR |= PWR_CR_PDDS;
+/* Set SLEEPDEEP bit of Cortex System Control Register */
+SCB->SCR |= SCB_SCR_SLEEPDEEP;
+/* This option is used to ensure that store operations are completed */
+#if defined ( __CC_ARM )
+__force_stores();
+#endif
+/* Request Wait For Interrupt */
+__WFI();
+}
+
+
+void Delay(vu32 nCount) {
+for(; nCount != 0; nCount--);
+}
+
+void delay_us (unsigned int nCount)
+{
+for(; nCount != 0; nCount--)
+{
+}
+}
+
+void Delay_ms(unsigned int count_ms){
+for(; count_ms != 0; count_ms--) delay_us(15000);
+}
+
+void gpioC_High(char pin_num)
+{
+GPIOC->BSRR=0x01 << pin_num;
+}
+
+void gpioC_Low(char pin_num)
+{
+GPIOC->BRR=0x01 << pin_num;
+}
+
+/*----------------------------------------------------------*\
+| HARDWARE DEFINE |
+\*----------------------------------------------------------*/
+#define LED ( 1 << 5 ) // PB5: LED D2
+//#define LED ( 1 << 6 ) // PB5: LED D2
+/*----------------------------------------------------------*\
+| EXTI0 Interrupt Handler |
+\*----------------------------------------------------------*/
+void EXTI0_IRQHandler(void)
+{
+if (EXTI->PR & (1<<0)) { // EXTI0 interrupt pending?
+for(i=0; i<250; i++)
+{
+GPIOB->BSRR=0x01; // switch on LED
+Delay_ms(1);
+GPIOB->BRR=0x01; 
+Delay_ms(1);
+}
+EXTI->PR = (1<<0); // clear pending interrupt
+}
+}
+
+/*----------------------------------------------------------*\
+| EXTI1 Interrupt Handler |
+\*----------------------------------------------------------*/
+void EXTI1_IRQHandler(void)
+{
+if (EXTI->PR & (1<<1)) { // EXTI1 interrupt pending?
+
+for(j=0; j<250; j++)
+{
+GPIOB->BSRR=0x02; // switch on LED
+Delay_ms(1);
+GPIOB->BRR=0x02; 
+Delay_ms(1);
+}
+
+EXTI->PR = (1<<1); // clear pending interrupt
+}
+
+
+}
+
+void EXTI2_IRQHandler(void)
+{
+if (EXTI->PR & (1<<2)) { // EXTI1 interrupt pending?
+for(k=0; k<250; k++)
+{
+GPIOB->BSRR=0x04; // switch on LED
+Delay_ms(1);
+GPIOB->BRR=0x04; 
+Delay_ms(1);
+}
+
+EXTI->PR = (1<<2); // clear pending interrupt
+}
+
+
+}
+
+
+
+/*----------------------------------------------------------*\
+| EXTI15..10 Interrupt Handler |
+\*----------------------------------------------------------*/
+void EXTI9_5_IRQHandler(void)
+{
+if (EXTI->PR & (1<<6)) { // EXTI0 interrupt pending?
+if ((ledLight ^=1) == 0) 
+GPIOB->ODR &= ~LED; // switch on LED
+else
+GPIOB->ODR |= LED; // switch off LED
+Delay_ms(100);
+EXTI->PR = (1<<6); // clear pending interrupt
+}
+}
+
+
+/*----------------------------------------------------------*\
+| EXTI15..10 Interrupt Handler |
+\*----------------------------------------------------------*/
+void EXTI15_10_IRQHandler(void)
+{
+if (EXTI->PR & (1<<13)) { // EXTI0 interrupt pending?
+if ((ledLight ^=1) == 0) 
+GPIOB->ODR &= ~LED; // switch on LED
+else
+GPIOB->ODR |= LED; // switch off LED
+
+EXTI->PR = (1<<13); // clear pending interrupt
+}
+}
+
+
+/*----------------------------------------------------------*\
+| MIAN ENTRY |
+\*----------------------------------------------------------*/
+int main (void) {
+stm32_Init (); // STM32 setup
+RCC -> APB2ENR |= 0x01<<2;
+RCC -> APB2ENR |= 0x01<<4;
+
+GPIOA->CRL&=0xFFFFF000;
+GPIOA->CRL|=0x00000444;
+GPIOB->CRL&=0xFF0FF000;
+GPIOB->CRL|=0x00300333;
+GPIOC->CRH|=0x00300003;
+
+// Interrupt Group Priority
+//SCB->AIRCR |=0x05FA0300; 
+// => SCB->AIRCR = AIRCR_VECTKEY_MASK | NVIC_PriorityGroup; 
+
+//NVIC->IPR[1] |=0x00;
+
+// Interrupt enable
+NVIC->ISER[0]=0x01<<7;
+NVIC->ISER[0]=0x01<<8;
+
+//Port enable
+//RCC->APB2ENR |= 0x00;
+
+// Port Select
+AFIO->EXTICR[1]=0x00;
+
+// External Interrupt
+EXTI->IMR |= 0x07;
+//EXTI->RTSR |= 0x06;
+EXTI->FTSR |= 0x06;
+
+
+while(1) {
+GPIOB->ODR &= ~LED; // switch on LED
+Delay_ms(10);
+GPIOB->ODR |= LED; // switch off LED
+
+Delay_ms(10);
+}
+}
+
+
+/*----------------------------------------------------------*\
+| END OF FILE |
+\*----------------------------------------------------------*/

@@ -1,0 +1,42 @@
+### uVision2 Project, (C) Keil Software
+### Do not modify !
+
+ cExt (*.c)
+ aExt (*.s*; *.src; *.a*)
+ oExt (*.obj)
+ lExt (*.lib)
+ tExt (*.txt; *.h; *.inc)
+ pExt (*.plm)
+ CppX (*.cpp)
+ DaveTm { 0,0,0,0,0,0,0,0 }
+
+Target (Z32R), 0x0004 // Tools: 'ARM-ADS'
+GRPOPT 1,(Initialisation),1,0,0
+GRPOPT 2,(Drivers),1,0,0
+GRPOPT 3,(Application),1,0,0
+
+OPTFFF 1,1,2,0,0,0,0,0,<.\Initialisation\STM32F10x.s><STM32F10x.s> 
+OPTFFF 1,2,1,0,0,0,0,0,<.\Initialisation\STM32_Init.c><STM32_Init.c> 
+OPTFFF 2,3,1,0,0,0,0,0,<.\Drivers\TFT018.c><TFT018.c> 
+OPTFFF 3,4,1,1375731714,0,47,47,0,<.\Application\Exti.c><Exti.c> { 44,0,0,0,2,0,0,0,3,0,0,0,255,255,255,255,255,255,255,255,252,255,255,255,226,255,255,255,154,0,0,0,203,0,0,0,217,3,0,0,127,2,0,0 }
+
+
+TARGOPT 1, (Z32R)
+ ADSCLK=8000000
+  OPTTT 1,1,1,0
+  OPTHX 1,65535,0,0,0
+  OPTLX 79,66,8,<.\Output\>
+  OPTOX 16
+  OPTLT 1,1,1,0,1,1,0,1,0,0,0,0
+  OPTXL 1,1,1,1,1,1,1,0,0
+  OPTFL 1,0,1
+  OPTAX 255
+  OPTDL (SARMCM3.DLL)()(DARMSTM.DLL)(-pSTM32F103RB)(SARMCM3.DLL)()(TARMSTM.DLL)(-pSTM32F103RB)
+  OPTDBG 49150,8,()()()()()()()()()() (Segger\JLTAgdi.dll)()()()
+  OPTKEY 0,(JLTAgdi)(-O1070 -J1 -Y4000 -Z1 -FO15 -FD20000000 -FC800 -FN1 -FF0STM32F10x_128 -FS08000000 -FL020000)
+  OPTKEY 0,(UL2CM3)(-U -O14 -S0 -C0 -N00("ARM Cortex-M3") -D00(1BA00477) -L00(4) -FO15 -FD20000000 -FC800 -FN1 -FF0STM32F10x_128 -FS08000000 -FL020000)
+  OPTDF 0x2
+  OPTLE <>
+  OPTLC <>
+EndOpt
+

@@ -1,0 +1,14 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+G:\data\edu\data_edu\SYSTICk\SYSTICK\Systick.uvproj
+Project File Date:  12/05/2014
+
+<h2>Output:</h2>
+Build target 'Z32R'
+compiling STM32_Init.c...
+compiling TFT018.c...
+TFT018.c: Error:  #5: cannot open source input file "Drivers\TFT018.c": No such file or directory
+Target not created

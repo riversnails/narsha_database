@@ -1,0 +1,78 @@
+/*********************Main****************************************/
+	if(currentmicros-pmicros2>210){
+			 pmicros2=currentmicros;
+		
+
+		if(DIGIT==0){
+			SPI1->DR=fnd[fc1];
+			fndon1=1;
+		}
+		else if(DIGIT==1){
+		         SPI1->DR=fnd[fc2];
+		fndon2=1;
+		}
+
+			DIGIT++;
+			if(DIGIT==2){
+			DIGIT=0;
+			}
+
+			SPI1->CR2|=0x0080;
+		  }
+/*******************************************************************/
+
+void SPI1_IRQHandler(void)
+ {  
+	 if((SPI1->SR&0x0002)!=0){
+		 
+		  SPI1->CR2&=~0x0080; //clear flag
+     
+		 	 SPI_isrcount++;
+			
+		 if(SPI_isrcount==1){
+
+			 SPI1->DR=col[dotc1]; //col
+	
+				 dotc1++;
+				if(dotc1==8){
+				dotc1=0;
+			        }			 
+								
+                 SPI1->CR2|=0x0080;
+		
+		 }
+/**********************************************************************/				 
+		else if(SPI_isrcount==2){
+			
+	      SPI1->DR=row[dotc3][dotc2];
+				
+			dotc2++;
+		  if(dotc2==8){
+		  dotc2=0;
+		  }			
+
+		 SPI1->CR2|=0x0080;
+		}
+/***********************************************************************/		 
+		else if(SPI_isrcount==3){
+			
+			  SPI_isrcount=0;
+			 
+			GPIOA->BSRR=0x00000010;
+			GPIOA->BRR=0x00000010;	   //latch
+			
+				if(fndon1==1){
+					fndon1=0;
+				GPIOB->BSRR=0x00000800;
+				GPIOB->BRR=0x0400;     //fnd on
+				}
+				 if(fndon2==1){
+					 fndon2=0;
+			           GPIOB->BSRR=0x00000400;
+				   GPIOB->BRR=0x00000800;    //fnd on
+			         }
+		 }
+
+			  SPI1->CR2&=~0x0080;
+	 }
+ }

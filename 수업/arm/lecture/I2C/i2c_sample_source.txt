@@ -1,0 +1,1513 @@
+
+#include <stdio.h>
+
+#include <stm32f10x_lib.h>    // STM32F10x Library Definitions
+#include "STM32_Init.h"       // STM32 Initialization
+
+//////////////////////////////////////////////////////////////////////////
+
+ 
+#define int8_t		signed char
+#define uint8_t		unsigned char
+#define int16_t		short
+#define uint16_t		unsigned short
+#define int32_t		long
+#define uint32_t		unsigned long
+#define int64_t		long long
+#define uint64_t		unsigned long long
+#define __IO		volatile
+
+#define  SW_I2C_WAIT_TIME  100
+
+#define  I2C_READ       0x01
+#define  READ_CMD       1
+#define  WRITE_CMD      0
+
+
+void TIMER_Wait_us(__IO uint32_t nCount)
+{
+    for (; nCount != 0;nCount--);
+}
+
+/* internal static functions */
+
+// SDA High
+void sda_high(void)
+{
+	GPIOB->ODR |= (1<<7);
+	//(*(volatile unsigned int *)0x40010C0C) |= (1 << 7);
+}
+
+// SDA low
+void sda_low(void)
+{
+	GPIOB->ODR &= ~(1<<7);
+	//(*(volatile unsigned int *)0x40010C0C) &= ~(1 << 7);
+}
+
+// SCL High
+void scl_high(void)
+{
+	GPIOB->ODR |= (1<<6);
+	//(*(volatile unsigned int *)0x40010C0C) |= (1 << 6);
+}
+
+// SCL low
+void scl_low(void)
+{
+	GPIOB->ODR &= ~(1<<6);
+	//(*(volatile unsigned int *)0x40010C0C) &= ~(1 << 6);
+}
+
+void sda_out(uint8_t out)
+{
+    if (out)
+    {
+        sda_high();
+    }
+    else
+    {
+        sda_low();
+    }
+}
+
+void sda_in_mode(void)
+{
+	GPIOB->CRL &= ~(0xF<<28);
+	GPIOB->CRL |= (0x4<<28);
+	//(*(volatile unsigned int *)0x40010C00) &= ~(0xF << 28);
+	//(*(volatile unsigned int *)0x40010C00) |= (0x4 << 28);
+}
+
+void sda_out_mode(void)
+{
+	GPIOB->CRL &= ~(0xF<<28);
+	GPIOB->CRL |= (0x7<<28);
+	//(*(volatile unsigned int *)0x40010C00) &= ~(0xF << 28);
+	//(*(volatile unsigned int *)0x40010C00) |= (0x7 << 28);
+}
+
+void i2c_clk_data_out(void)
+{
+    scl_high();
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+    scl_low();
+}
+
+void i2c_port_initial(void)
+{
+    sda_high();
+    scl_high();
+}
+
+void i2c_start_condition(void)
+{
+    sda_high();
+    scl_high();
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+    sda_low();
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+    scl_low();
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME << 1);
+}
+
+void i2c_stop_condition(void)
+{
+    sda_low();
+    scl_high();
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+    sda_high();
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+}
+
+uint8_t i2c_check_ack(void)
+{
+    uint8_t         ack;
+    int             i;
+    unsigned int    temp;
+
+    sda_in_mode();
+
+    scl_high();
+
+    ack = 0;
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+
+    for (i = 10; i > 0; i--)
+    {
+       // temp = ~( ((*(volatile unsigned int *)0x40010C0C) & (0x80)) >> 7);
+        temp = ~( (GPIOB->ODR & (0x80)) >> 7);
+        if (temp)
+        {
+            ack = 1;
+            break;
+        }
+    }
+    scl_low();
+    sda_out_mode();
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+    return ack;
+}
+
+void i2c_check_not_ack(void)
+{
+    sda_in_mode();
+    i2c_clk_data_out();
+    sda_out_mode();
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+}
+
+void i2c_slave_address(uint8_t IICID, uint8_t readwrite)
+{
+    int             x;
+
+    if (readwrite)
+    {
+        IICID |= I2C_READ;
+    }
+    else
+    {
+        IICID &= ~I2C_READ;
+    }
+
+    scl_low();
+
+    for (x = 7; x >= 0; x--)
+    {
+        sda_out(IICID & (1 << x));
+        i2c_clk_data_out();
+        TIMER_Wait_us(SW_I2C_WAIT_TIME);
+    }
+}
+
+void i2c_register_address(uint8_t addr)
+{
+    int  x;
+
+    scl_low();
+
+    for (x = 7; x >= 0; x--)
+    {
+        sda_out(addr & (1 << x));
+        i2c_clk_data_out();
+        TIMER_Wait_us(SW_I2C_WAIT_TIME);
+    }
+}
+
+void i2c_send_ack(void)
+{
+    sda_out_mode();
+    sda_low();
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+    scl_high();
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME << 1);
+
+    sda_low();
+    TIMER_Wait_us(SW_I2C_WAIT_TIME << 1);
+
+    scl_low();
+
+    sda_out_mode();
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+}
+
+void i2c_send_nack(void)
+{
+    sda_out_mode();
+    sda_low();
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+    scl_high();
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME << 1);
+
+    sda_high();
+    TIMER_Wait_us(SW_I2C_WAIT_TIME << 1);
+
+    scl_low();
+
+    sda_out_mode();
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+}
+
+/* external functions */
+
+uint8_t SW_I2C_ReadVal_SDA(void)
+{
+    return ( ( (GPIOB->IDR& (0x80)) >> 7)) ;
+}
+
+void SW_I2C_Write_Data(uint8_t data)
+{
+    int  x;
+
+    scl_low();
+
+    for (x = 7; x >= 0; x--)
+    {
+        sda_out(data & (1 << x));
+        i2c_clk_data_out();
+        TIMER_Wait_us(SW_I2C_WAIT_TIME);
+    }
+}
+
+uint8_t SW_I2C_Read_Data(void)
+{
+    int      x;
+    uint8_t  readdata = 0;
+
+    sda_in_mode();
+
+    for (x = 0; x < 8; x++)
+    {
+				 scl_high();
+				TIMER_Wait_us(SW_I2C_WAIT_TIME);
+				 scl_low();
+
+				if(x>0)
+				{
+						 readdata = (readdata << 1);
+				}
+				if (SW_I2C_ReadVal_SDA())
+				readdata |= 0x01;
+			
+			 TIMER_Wait_us(SW_I2C_WAIT_TIME);
+				//scl_low();
+
+				TIMER_Wait_us(SW_I2C_WAIT_TIME);
+    }
+
+    sda_out_mode();
+    return readdata;
+}
+
+uint8_t SW_I2C_WriteControl_8Bit
+                (uint8_t IICID, uint8_t regaddr, uint8_t data)
+{
+    uint8_t   returnack = 1;
+
+    i2c_start_condition();
+
+    i2c_slave_address(IICID, WRITE_CMD);
+    if (!i2c_check_ack())
+    {
+        returnack = 0;
+    }
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+
+    i2c_register_address(regaddr);
+    if (!i2c_check_ack())
+    {
+        returnack = 0;
+    }
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+
+    SW_I2C_Write_Data(data);
+    if (!i2c_check_ack())
+    {
+        returnack = 0;
+    }
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+
+    i2c_stop_condition();
+
+    return returnack;
+}
+
+uint8_t SW_I2C_WriteControl_16Bit
+                (uint8_t IICID, uint8_t regaddr, uint16_t data)
+{
+    uint8_t   returnack = 1;
+
+    i2c_start_condition();
+
+    i2c_slave_address(IICID, WRITE_CMD);
+    if (!i2c_check_ack())
+    {
+        returnack = 0;
+    }
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+
+    i2c_register_address(regaddr);
+    if (!i2c_check_ack())
+    {
+        returnack = 0;
+    }
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+
+    SW_I2C_Write_Data((data >> 8) & 0xFF);
+    if (!i2c_check_ack())
+    {
+        returnack = 0;
+    }
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+
+    SW_I2C_Write_Data(data & 0xFF);
+    if (!i2c_check_ack())
+    {
+        returnack = 0;
+    }
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+
+    i2c_stop_condition();
+
+    return returnack;
+}
+
+uint8_t SW_I2C_ReadControl_8Bit(uint8_t IICID, uint8_t regaddr)
+{
+    uint8_t  readdata = 0;
+
+   i2c_port_initial();
+
+    i2c_start_condition();
+
+    i2c_slave_address(IICID, WRITE_CMD);
+    i2c_check_ack();
+
+    i2c_register_address(regaddr);
+    i2c_check_ack();
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+
+    i2c_start_condition();
+
+    i2c_slave_address(IICID, READ_CMD);
+    i2c_check_ack();
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+
+    readdata = SW_I2C_Read_Data();
+
+	i2c_send_nack();
+    //i2c_check_not_ack();
+
+    i2c_stop_condition();
+
+    return readdata;
+}
+
+uint16_t SW_I2C_ReadControl_16Bit(uint8_t IICID, uint8_t regaddr)
+{
+    uint16_t  readdata = 0;
+
+    i2c_port_initial();
+
+    i2c_start_condition();
+
+    i2c_slave_address(IICID, WRITE_CMD);
+    i2c_check_ack();
+
+    i2c_register_address(regaddr);
+    i2c_check_ack();
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+
+    i2c_start_condition();
+
+    i2c_slave_address(IICID, READ_CMD);
+    i2c_check_ack();
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+
+    readdata = SW_I2C_Read_Data();
+    i2c_send_ack();
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+
+    readdata = ((readdata << 8) | SW_I2C_Read_Data());
+
+    i2c_check_not_ack();
+
+    i2c_stop_condition();
+
+    return readdata;
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////
+ 
+ /*----------------------------------------------------------*\
+ | HARDWARE DEFINE                                          |
+\*----------------------------------------------------------*/
+#define LED             ( 1 << 5 )              // PB5: LED D2
+/*----------------------------------------------------------*\
+ | SOFTWARE DATA                                            |
+\*----------------------------------------------------------*/
+
+void Master_Configuration(void);
+void Slave_Configuration(void);
+void I2C_Test(void);
+char i2c_en=0;
+
+
+#define I2C_Speed    100000
+#define I2C_OwnAddr  0xA0
+
+I2C_InitTypeDef i = {
+	I2C_Mode_I2C,
+	I2C_DutyCycle_2,
+	I2C_OwnAddr,
+	I2C_Ack_Enable,
+	I2C_AcknowledgedAddress_7bit,
+	I2C_Speed
+	};
+/*----------------------------------------------------------*\
+ | I2C Initialisation                                       |
+\*----------------------------------------------------------*/
+void I2C_Initialisation( void ) {
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
+//  RCC->APB2ENR |= (1<<0);                      /* enable periperal clock for AFIO      */
+  /* Enable I2C1 clocks */
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1, ENABLE);
+  I2C_DeInit(I2C1);
+  I2C_Init(I2C1, &i);
+
+  I2C_Cmd (I2C1, ENABLE);
+  }
+u32 waitForEvent(u32 event) {
+  int i;
+  for(i = 2000000; i > 0; i--) {
+    u32 s = I2C1->SR1;
+	//if (s & (I2C_FLAG_TIMEOUT | I2C_FLAG_PECERR | I2C_FLAG_OVR | I2C_FLAG_AF | I2C_FLAG_ARLO | I2C_FLAG_BERR | I2C_FLAG_STOPF));
+    if (s & event){
+
+/*
+	if(event == I2C_FLAG_SB) printf("waiting for I2C_FLAG_SB(0x20000001), and return flag is %08x..\n\r",s);
+	else if(event == I2C_FLAG_ADDR) printf("waiting for I2C_FLAG_ADDR(0xA0000002), and return flag is %08x..\n\r",s);
+	else if(event == I2C_FLAG_BTF) printf("waiting for I2C_FLAG_BTF(0x60000004), and return flag is %08x..\n\r",s);
+	else if(event == I2C_FLAG_TXE) printf("waiting for I2C_FLAG_TXE(0x00000080), and return flag is %08x..\n\r",s);
+	else if(event == I2C_FLAG_RXNE) printf("waiting for I2C_FLAG_RXNE(0x00000040), and return flag is %08x..\n\r",s);
+*/
+	return s;
+    }
+  	}
+  return 0;
+  }
+void sendStart(void) {
+	I2C_GenerateSTART(I2C1, ENABLE);							// send start when bus becomes available
+	waitForEvent(I2C_FLAG_SB);
+	I2C1->DR = I2C_OwnAddr;										// send slave address for transmission
+	waitForEvent(I2C_FLAG_ADDR);
+	I2C1->SR2;												// clear event
+  }
+void sendData(u8 data){
+  //waitForEvent(I2C_FLAG_TXE);
+  waitForEvent(I2C_FLAG_BTF);
+  I2C1->DR = data;											// send byte
+  }
+void sendStop(void) {
+  waitForEvent(I2C_FLAG_TXE);
+  I2C_GenerateSTOP(I2C1, ENABLE);							// send stop after current byte
+  }
+u8 receiveByte(void) {
+  I2C_GenerateSTART(I2C1, ENABLE);							// send start when bus becomes available
+  waitForEvent(I2C_FLAG_SB);
+  I2C_AcknowledgeConfig(I2C1, DISABLE);					// only one byte will be read
+  I2C1->DR = I2C_OwnAddr | 0x01;								// send slave address for reception
+  waitForEvent(I2C_FLAG_ADDR);
+  I2C1->SR2;												// clear event
+
+  waitForEvent(I2C_FLAG_RXNE);
+  I2C_GenerateSTOP(I2C1, ENABLE);							// send stop after current byte
+  return I2C1->DR;											// receive byte
+  }
+/*----------------------------------------------------------*\
+ | I2C Write Byte                                           |
+\*----------------------------------------------------------*/
+void WriteByte(u16 addr, u8 data) {
+  /* Enable I2C1 acknowledgement if it is already disabled by other function */
+  //I2C_AcknowledgeConfig(I2C1, ENABLE);
+  //I2C_AcknowledgeConfig(I2C1, DISABLE);					// only one byte will be read
+
+  sendStart();
+  sendData( addr & 0xFF );
+  //I2C_AcknowledgeConfig(I2C1, DISABLE);					// only one byte will be read
+  sendData( data );
+  waitForEvent(I2C_FLAG_BTF);
+  sendStop();
+  }
+/*----------------------------------------------------------*\
+ | I2C Read Byte                                            |
+\*----------------------------------------------------------*/
+u8 ReadByte(u16 addr) {
+  /* Enable I2C1 acknowledgement if it is already disabled by other function */
+  //I2C_AcknowledgeConfig(I2C1, ENABLE);
+
+  sendStart();
+  sendData( addr & 0xFF );
+  //sendStart();
+  //sendStop();
+  return receiveByte();
+  }
+
+/*----------------------------------------------------------*\
+ | SendChar                                                 |
+ | Write character to Serial Port.                          |
+\*----------------------------------------------------------*/
+int SendChar (int ch)  {
+
+		while (!(USART1->SR & USART_FLAG_TXE));
+  USART1->DR = (ch & 0x1FF);
+
+  return (ch);
+}
+/*----------------------------------------------------------*\
+ | GetKey                                                   |
+ | Read character to Serial Port.                           |
+\*----------------------------------------------------------*/
+int GetKey (void)  {
+
+  while (!(USART1->SR & USART_FLAG_RXNE));
+
+  return ((int)(USART1->DR & 0x1FF));
+}
+
+
+void USART1_IRQHandler (void) {
+  volatile unsigned int IIR;
+  char receive_char;
+
+    IIR = USART1->SR;
+    if (IIR & USART_FLAG_RXNE) {                  // read interrupt
+      USART1->SR &= ~USART_FLAG_RXNE;	          // clear interrupt
+	receive_char =  (USART1->DR & 0x1FF);
+	printf("received data is %c..\n\r",receive_char);
+
+	// for i2c enable
+	i2c_en = 1;
+
+    }
+
+/*
+    if (IIR & USART_FLAG_TXE) {
+      USART1->SR &= ~USART_FLAG_TXE;	          // clear interrupt
+	//USART1->DR = '5';
+	printf("sent data is %c..\n\r",USART1->DR);
+    }
+*/
+}
+
+void EXTI0_IRQHandler(void)
+{
+  if (EXTI->PR & (1<<0)) {                        
+	printf("in exti0 irq handler...\r\n");
+    EXTI->PR |= (1<<0);                           // clear pending interrupt
+  }
+}
+
+void EXTI1_IRQHandler(void)
+{
+  if (EXTI->PR & (1<<1)) {                        
+	printf("in exti0 irq handler...\r\n");
+	PWR_EnterSTANDBYMode();
+
+    EXTI->PR |= (1<<1);                           // clear pending interrupt
+  }
+}
+
+
+void Delay(vu32 nCount) {
+  for(; nCount != 0; nCount--);
+  }
+
+
+
+
+
+#if 1
+
+#define uint8_t unsigned char 
+#define uint16_t unsigned short
+#define uint32_t unsigned int
+
+//#define ClockSpeed   400000
+#define ClockSpeed   100000
+//#define SLAVE_ADDRESS   0x70
+//#define SLAVE_ADDRESS   0x50
+#define SLAVE_ADDRESS   0xA0
+
+#define SYSCLK_FREQ_72MHz  72000000
+const uint32_t SystemFrequency         = SYSCLK_FREQ_72MHz;      /*!< System Clock Frequency (Core Clock) */
+
+
+#define BufferSize   6
+
+uint8_t Rx_Idx = 0;
+uint8_t Master_Buffer_Tx[BufferSize] = {0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F};
+uint8_t Master_Buffer_Rx[BufferSize];
+uint8_t Slave_Buffer_Rx[BufferSize];
+
+#define  I2C_EVENT_SLAVE_BYTE_RECEIVED_NO_BUSY   ((uint32_t)0x00000040)  /* RXNE */
+#define  I2C_EVENT_SLAVE_BYTE_RECEIVED_STOPF     ((uint32_t)0x00000050)  /* STOPF, RxNE */
+
+
+#define sEE_FLAG_TIMEOUT         ((uint32_t)0x1000)
+#define sEE_LONG_TIMEOUT         ((uint32_t)(10 * sEE_FLAG_TIMEOUT))
+
+uint16_t  sEEAddress = 0;   
+uint32_t  sEETimeout = sEE_LONG_TIMEOUT;   
+uint16_t* sEEDataReadPointer;   
+uint8_t*  sEEDataWritePointer;  
+uint8_t   sEEDataNum;
+
+
+#define sEE_M24C08  /* Support the device: M24C08. */  // by joshua
+
+#define sEE_OK                    0
+#define sEE_FAIL                  1   
+
+#define  I2C_CR1_STOP                        ((uint16_t)0x0200)            /*!< Stop Generation */
+
+
+
+void I2C1_EV_IRQHandler(void)
+{
+	unsigned int event;
+
+#if 0
+	
+	event = I2C_GetLastEvent(I2C1);
+	//printf("event = %08x..\n\r",event);
+#else
+    switch (I2C_GetLastEvent(I2C1))
+    {
+        /* Slave Receiver ------------------------------------------------------*/
+    case I2C_EVENT_MASTER_MODE_SELECT:
+        printf("I2C_EVENT_MASTER_MODE_SELECT\n\r");
+        break;
+    case I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED:
+        printf("I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED\n\r");
+        break;
+    case I2C_EVENT_MASTER_BYTE_TRANSMITTED:
+        printf("I2C_EVENT_MASTER_BYTE_TRANSMITTED\n\r");
+        break;
+
+    case I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED:
+        printf("I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED\n\r");
+        break;
+    case I2C_EVENT_MASTER_BYTE_RECEIVED:
+        printf("I2C_EVENT_SLAVE_BYTE_RECEIVED\n\r");
+        Master_Buffer_Rx[Rx_Idx++] = I2C_ReceiveData(I2C1);
+        break;
+
+    case I2C_EVENT_MASTER_STOP:
+        printf("I2C_EVENT_MASTER_STOP\n\r");
+        break;
+
+
+    default:
+        break;
+    }
+#endif
+}
+
+void I2C1_ER_IRQHandler(void)
+{
+    if (I2C_GetFlagStatus(I2C1, I2C_FLAG_AF))
+    {
+        I2C_ClearFlag(I2C1, I2C_FLAG_AF);
+    }
+
+    if (I2C_GetFlagStatus(I2C1, I2C_FLAG_BERR))
+    {
+        I2C_ClearFlag(I2C1, I2C_FLAG_BERR);
+    }
+
+    if (I2C_GetFlagStatus(I2C1, I2C_FLAG_OVR))
+    {
+        I2C_ClearFlag(I2C1, I2C_FLAG_OVR);
+    }
+
+    if (I2C_GetFlagStatus(I2C1, I2C_FLAG_ARLO))
+    {
+        I2C_ClearFlag(I2C1,I2C_FLAG_ARLO);
+    }
+}
+
+void I2C2_EV_IRQHandler(void)
+{
+    switch (I2C_GetLastEvent(I2C2))
+    {
+        /* Slave Receiver ------------------------------------------------------*/
+	case I2C_EVENT_SLAVE_RECEIVER_ADDRESS_MATCHED:
+        printf("I2C_EVENT_SLAVE_RECEIVER_ADDRESS_MATCHED\n\r");
+        break;
+		
+	case I2C_EVENT_SLAVE_TRANSMITTER_ADDRESS_MATCHED:
+        printf("I2C_EVENT_SLAVE_TRANSMITTER_ADDRESS_MATCHED\n\r");
+	I2C_SendData(I2C2, 0x33);
+        printf("I2C_SEND DATA[0x%02x]\n\r",0x33);
+
+        break;
+
+    case I2C_EVENT_SLAVE_BYTE_RECEIVED:
+        Slave_Buffer_Rx[Rx_Idx++] = I2C_ReceiveData(I2C2);
+        printf("I2C_EVENT_SLAVE_BYTE_RECEIVED[0x%02x]\n\r",Slave_Buffer_Rx[Rx_Idx-1]);
+        break;
+
+        /* Case of data not yet read and STOP is generated on the bus */
+    case I2C_EVENT_SLAVE_BYTE_RECEIVED_NO_BUSY:
+        Slave_Buffer_Rx[Rx_Idx++] = I2C_ReceiveData(I2C2);
+         printf("I2C_EVENT_SLAVE_BYTE_RECEIVED_NO_BUSY[0x%02x]\n\r",Slave_Buffer_Rx[Rx_Idx-1]);
+       break;
+
+        /* Case of data not yet read and STOPF flag is set */
+    case I2C_EVENT_SLAVE_BYTE_RECEIVED_STOPF:
+        Slave_Buffer_Rx[Rx_Idx++] = I2C_ReceiveData(I2C2);
+         printf("I2C_EVENT_SLAVE_BYTE_RECEIVED_STOPF[0x%02x]\n\r",Slave_Buffer_Rx[Rx_Idx-1]);
+        I2C_Cmd(I2C2, ENABLE);
+        break;
+
+    case I2C_EVENT_SLAVE_STOP_DETECTED:
+        printf("I2C_EVENT_SLAVE_STOP_DETECTED\n\r");
+        /* Clear I2C2 STOPF flag: read of I2C_SR1 followed by a write on I2C_CR1 */
+        I2C_Cmd(I2C2, ENABLE);
+        break;
+
+    default:
+        break;
+    }
+}
+
+void I2C2_ER_IRQHandler(void)
+{
+    if (I2C_GetFlagStatus(I2C2, I2C_FLAG_AF))
+    {
+        I2C_ClearFlag(I2C2, I2C_FLAG_AF);
+    }
+
+    if (I2C_GetFlagStatus(I2C2, I2C_FLAG_BERR))
+    {
+        I2C_ClearFlag(I2C2, I2C_FLAG_BERR);
+    }
+
+    if (I2C_GetFlagStatus(I2C2, I2C_FLAG_OVR))
+    {
+        I2C_ClearFlag(I2C2, I2C_FLAG_OVR);
+    }
+
+    if (I2C_GetFlagStatus(I2C2, I2C_FLAG_ARLO))
+    {
+        I2C_ClearFlag(I2C2,I2C_FLAG_ARLO);
+    }
+}
+
+
+
+
+/**
+  * @brief  Configures I2C1
+  * @param  None
+  * @retval : None
+  */
+void Master_Configuration(void)
+{
+    I2C_InitTypeDef  I2C_InitStructure;
+
+    I2C_DeInit(I2C1);
+    /* I2C1 Init */
+    I2C_InitStructure.I2C_Mode = I2C_Mode_I2C;
+    I2C_InitStructure.I2C_DutyCycle = I2C_DutyCycle_2;
+    I2C_InitStructure.I2C_OwnAddress1 = 0x30;
+    I2C_InitStructure.I2C_Ack = I2C_Ack_Enable;
+    I2C_InitStructure.I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit;
+    I2C_InitStructure.I2C_ClockSpeed = ClockSpeed;
+    I2C_Init(I2C1, &I2C_InitStructure);
+    I2C_ITConfig(I2C1, I2C_IT_ERR, ENABLE);
+    I2C_ITConfig(I2C1,  I2C_IT_EVT , ENABLE);
+}
+
+/**
+  * @brief  Configures I2C2.
+  * @param  None
+  * @retval : None
+  */
+void Slave_Configuration(void)
+{
+    I2C_InitTypeDef  I2C_InitStructure;
+
+    I2C_DeInit(I2C2);
+    I2C_InitStructure.I2C_Mode = I2C_Mode_I2C;
+    I2C_InitStructure.I2C_DutyCycle = I2C_DutyCycle_2;
+    I2C_InitStructure.I2C_OwnAddress1 = SLAVE_ADDRESS;
+    I2C_InitStructure.I2C_Ack = I2C_Ack_Enable;
+    I2C_InitStructure.I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit;
+	I2C_InitStructure.I2C_ClockSpeed = ClockSpeed;
+    /* I2C2 Init */
+    I2C_Init(I2C2, &I2C_InitStructure);
+    I2C_ITConfig(I2C2, I2C_IT_ERR, ENABLE);
+    I2C_ITConfig(I2C2, I2C_IT_EVT | I2C_IT_BUF, ENABLE);
+}
+
+
+void I2C_Check_Busy_Flag(I2C_TypeDef* I2Cx)
+{
+//    while (I2C_GetFlagStatus(I2Cx, I2C_FLAG_BUSY));
+}
+
+ErrorStatus I2C_Master_EepromWrite
+        (I2C_TypeDef* I2Cx, uint8_t Address, uint8_t mem_address,
+         uint8_t* pBuffer,  uint16_t NumByteToWrite)
+{
+    ErrorStatus i2c_tx_eve_sts = ERROR;
+    volatile uint32_t i2c_tx_eve_timeout = SystemFrequency;
+
+    /* Send START condition */
+    I2C_GenerateSTART(I2Cx, ENABLE);
+    printf("I2C_GenerateSTART()\n\r");
+    /* Test on EV5 and clear it */
+    while (!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_MODE_SELECT));
+    /* Send slave address for write */
+    I2C_Send7bitAddress(I2Cx, Address, I2C_Direction_Transmitter);
+    printf("I2C_Send Device Address(0x%02x)...\n\r",Address);
+
+    /* Test on EV6 and clear it */
+
+    i2c_tx_eve_timeout = SystemFrequency >> 7;
+    while(1)
+    {
+        i2c_tx_eve_sts
+            = I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED);
+        if(SUCCESS == i2c_tx_eve_sts)
+        {
+            break;
+        }
+
+        i2c_tx_eve_timeout --;
+        if(0 == i2c_tx_eve_timeout)
+        {
+            return ERROR;
+        }
+    }
+
+
+    I2C_SendData(I2Cx, mem_address);
+    printf(" Send EEPROM Memory address[0x%02x]\n\r",mem_address);
+
+
+    I2C_SendData(I2Cx, *pBuffer);
+    printf(" Send EEPROM data[0x%02x]\n\r",*pBuffer);
+    pBuffer++;
+    NumByteToWrite--;
+
+
+
+    /* While there is data to be written */
+    while (NumByteToWrite--)
+    {
+        //while ((I2C_GetLastEvent(I2Cx) & 0x08) != 0x08);  /* Poll on TxE */
+        /* Send the current byte */
+        I2C_SendData(I2Cx, *pBuffer);
+   	printf(" Send EEPROM data[0x%02x]\n\r",*pBuffer);
+
+        /* Point to the next byte to be written */
+        pBuffer++;
+
+		
+    }
+
+    printf("before I2C_EVENT_MASTER_BYTE_TRANSMITTED\n\r");
+    /* Test on EV8_2 and clear it, BTF = TxE = 1, DR and shift registers are
+     empty */
+    while (!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED));
+    printf("after I2C_EVENT_MASTER_BYTE_TRANSMITTED\n\r");
+    /* Send STOP condition */
+    I2C_GenerateSTOP(I2Cx, ENABLE);
+
+    return SUCCESS;
+}
+
+
+
+ErrorStatus I2C_Master_BufferWrite
+        (I2C_TypeDef* I2Cx, uint8_t Address,
+         uint8_t* pBuffer,  uint16_t NumByteToWrite)
+{
+    ErrorStatus i2c_tx_eve_sts = ERROR;
+    volatile uint32_t i2c_tx_eve_timeout = SystemFrequency;
+
+    /* Send START condition */
+    I2C_GenerateSTART(I2Cx, ENABLE);
+    /* Test on EV5 and clear it */
+    while (!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_MODE_SELECT));
+    /* Send slave address for write */
+    I2C_Send7bitAddress(I2Cx, Address, I2C_Direction_Transmitter);
+    printf("I2C_Send7bitAddress()\n\r");
+
+    /* Test on EV6 and clear it */
+
+    i2c_tx_eve_timeout = SystemFrequency >> 7;
+    while(1)
+    {
+        i2c_tx_eve_sts
+            = I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED);
+        if(SUCCESS == i2c_tx_eve_sts)
+        {
+            break;
+        }
+
+        i2c_tx_eve_timeout --;
+        if(0 == i2c_tx_eve_timeout)
+        {
+            return ERROR;
+        }
+    }
+
+
+    printf("before I2C_SendData()\n\r");
+    I2C_SendData(I2Cx, *pBuffer);
+    printf("after I2C_SendData()\n\r");
+    pBuffer++;
+    NumByteToWrite--;
+
+
+
+    /* While there is data to be written */
+    while (NumByteToWrite--)
+    {
+//        while ((I2C_GetLastEvent(I2Cx) & 0x08) != 0x08);  /* Poll on TxE */
+        /* Send the current byte */
+        I2C_SendData(I2Cx, *pBuffer);
+        /* Point to the next byte to be written */
+        pBuffer++;
+    }
+
+    printf("before I2C_EVENT_MASTER_BYTE_TRANSMITTED\n\r");
+    /* Test on EV8_2 and clear it, BTF = TxE = 1, DR and shift registers are
+     empty */
+    while (!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED));
+    printf("after I2C_EVENT_MASTER_BYTE_TRANSMITTED\n\r");
+    /* Send STOP condition */
+    I2C_GenerateSTOP(I2Cx, ENABLE);
+
+    return SUCCESS;
+}
+
+
+uint32_t sEE_TIMEOUT_UserCallback(void)
+{
+  /* Block communication and all processes */
+  while (1)
+  {   
+  }
+}
+
+
+uint32_t ReadBuffer(I2C_TypeDef* I2Cx, uint8_t* pBuffer, uint16_t DeviceAddr, uint16_t ReadAddr, uint16_t* NumByteToRead)
+{  
+  /* Set the pointer to the Number of data to be read. This pointer will be used 
+      by the DMA Transfer Completer interrupt Handler in order to reset the 
+      variable to 0. User should check on this variable in order to know if the 
+      DMA transfer has been complete or not. */
+  sEEDataReadPointer = NumByteToRead;
+  
+  /*!< While the bus is busy */
+  sEETimeout = sEE_LONG_TIMEOUT;
+  while(I2C_GetFlagStatus(I2Cx, I2C_FLAG_BUSY))
+  {
+    if((sEETimeout--) == 0) return sEE_TIMEOUT_UserCallback();
+  }
+
+  
+  /*!< Send STRAT condition a second time */  
+  I2C_GenerateSTART(I2Cx, ENABLE);
+    printf("I2C_Generate START()\n\r");
+  
+  /*!< Test on EV5 and clear it (cleared by reading SR1 then writing to DR) */
+  sEETimeout = sEE_FLAG_TIMEOUT;
+  while(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_MODE_SELECT))
+  {
+    if((sEETimeout--) == 0) return sEE_TIMEOUT_UserCallback();
+  } 
+
+    /*!< Disable Acknowledgement */
+    I2C_AcknowledgeConfig(I2Cx, DISABLE);   
+    printf("I2C Disable ACK\n\r");
+
+  
+  /*!< Send EEPROM address for read */
+  I2C_Send7bitAddress(I2Cx, DeviceAddr, I2C_Direction_Receiver);  
+    printf("I2C_Send Device Address(0x%02x)...\n\r",DeviceAddr);
+  
+  /* If number of data to be read is 1, then DMA couldn't be used */
+  /* One Byte Master Reception procedure (POLLING) ---------------------------*/
+
+  //if ((uint16_t)(*NumByteToRead) < 2)
+  {
+
+#if 1
+
+	/* Wait on ADDR flag to be set (ADDR is still not cleared at this level */
+    sEETimeout = sEE_FLAG_TIMEOUT;
+    while(I2C_GetFlagStatus(I2Cx, I2C_FLAG_ADDR) == RESET)
+    {
+      if((sEETimeout--) == 0) return sEE_TIMEOUT_UserCallback();
+    }     
+#endif
+
+    /* Clear ADDR register by reading SR1 then SR2 register (SR1 has already been read) */
+//    (void)I2Cx->SR1;
+//    (void)I2Cx->SR2;
+
+#if 0
+    /* Wait for the byte to be received */
+    sEETimeout = sEE_FLAG_TIMEOUT;
+    while(I2C_GetFlagStatus(I2Cx, I2C_FLAG_RXNE) == RESET)
+    {
+      if((sEETimeout--) == 0) return sEE_TIMEOUT_UserCallback();
+    }
+#endif
+
+    /*!< Send STOP Condition */
+    I2C_GenerateSTOP(I2Cx, ENABLE);
+    printf("I2C I2C_GenerateSTOP\n\r");
+
+    I2C_AcknowledgeConfig(I2Cx, ENABLE);   
+    printf("I2C Enable ACK\n\r");
+    
+    /*!< Read the byte received from the EEPROM */
+    *pBuffer = I2C_ReceiveData(I2Cx);
+    
+    /*!< Decrement the read bytes counter */
+    (uint16_t)(*NumByteToRead)--;        
+    
+    /* Wait to make sure that STOP control bit has been cleared */
+    sEETimeout = sEE_FLAG_TIMEOUT;
+    while(I2Cx->CR1 & I2C_CR1_STOP)
+    {
+      if((sEETimeout--) == 0) return sEE_TIMEOUT_UserCallback();
+    }  
+    
+    /*!< Re-Enable Acknowledgement to be ready for another reception */
+    I2C_AcknowledgeConfig(I2Cx, ENABLE);    
+  }
+  
+  /* If all operations OK, return sEE_OK (0) */
+  return sEE_OK;
+}
+
+
+
+
+
+uint32_t sEE_ReadBuffer(I2C_TypeDef* I2Cx, uint8_t* pBuffer, uint16_t DeviceAddr, uint16_t ReadAddr, uint16_t* NumByteToRead)
+{  
+  /* Set the pointer to the Number of data to be read. This pointer will be used 
+      by the DMA Transfer Completer interrupt Handler in order to reset the 
+      variable to 0. User should check on this variable in order to know if the 
+      DMA transfer has been complete or not. */
+  sEEDataReadPointer = NumByteToRead;
+  
+  /*!< While the bus is busy */
+  sEETimeout = sEE_LONG_TIMEOUT;
+  while(I2C_GetFlagStatus(I2Cx, I2C_FLAG_BUSY))
+  {
+    if((sEETimeout--) == 0) return sEE_TIMEOUT_UserCallback();
+  }
+  
+  /*!< Send START condition */
+  I2C_GenerateSTART(I2Cx, ENABLE);
+    printf("I2C_GenerateSTART()\n\r");
+  
+  /*!< Test on EV5 and clear it (cleared by reading SR1 then writing to DR) */
+  sEETimeout = sEE_FLAG_TIMEOUT;
+  while(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_MODE_SELECT))
+  {
+    if((sEETimeout--) == 0) return sEE_TIMEOUT_UserCallback();
+  }
+  
+  /*!< Send EEPROM address for write */
+  I2C_Send7bitAddress(I2Cx, DeviceAddr, I2C_Direction_Transmitter);
+    printf("I2C_Send Device Address(0x%02x)...\n\r",DeviceAddr);
+
+  /*!< Test on EV6 and clear it */
+  sEETimeout = sEE_FLAG_TIMEOUT;
+  while(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED))
+  {
+    if((sEETimeout--) == 0) return sEE_TIMEOUT_UserCallback();
+  } 
+
+#ifdef sEE_M24C08  
+  
+  /*!< Send the EEPROM's internal address to read from: Only one byte address */
+  I2C_SendData(I2Cx, ReadAddr);  
+    printf(" Send EEPROM Memory address[0x%02x]\n\r",ReadAddr);
+
+#elif defined (sEE_M24C64_32)
+
+  /*!< Send the EEPROM's internal address to read from: MSB of the address first */
+  I2C_SendData(I2Cx, (uint8_t)((ReadAddr & 0xFF00) >> 8));    
+
+  /*!< Test on EV8 and clear it */
+  sEETimeout = sEE_FLAG_TIMEOUT;
+  while(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTING))
+  {
+    if((sEETimeout--) == 0) return sEE_TIMEOUT_UserCallback();
+  }
+
+  /*!< Send the EEPROM's internal address to read from: LSB of the address */
+  I2C_SendData(I2Cx, (uint8_t)(ReadAddr & 0x00FF));    
+  
+#endif /*!< sEE_M24C08 */
+
+  /*!< Test on EV8 and clear it */
+  sEETimeout = sEE_FLAG_TIMEOUT;
+  while(I2C_GetFlagStatus(I2Cx, I2C_FLAG_BTF) == RESET)
+  {
+    if((sEETimeout--) == 0) return sEE_TIMEOUT_UserCallback();
+  }
+  
+  /*!< Send STRAT condition a second time */  
+  I2C_GenerateSTART(I2Cx, ENABLE);
+    printf("I2C_Generate ReSTART()\n\r");
+  
+  /*!< Test on EV5 and clear it (cleared by reading SR1 then writing to DR) */
+  sEETimeout = sEE_FLAG_TIMEOUT;
+  while(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_MODE_SELECT))
+  {
+    if((sEETimeout--) == 0) return sEE_TIMEOUT_UserCallback();
+  } 
+  
+  /*!< Send EEPROM address for read */
+  I2C_Send7bitAddress(I2Cx, DeviceAddr, I2C_Direction_Receiver);  
+    printf("I2C_Send Device Address(0x%02x)...\n\r",DeviceAddr);
+  
+  /* If number of data to be read is 1, then DMA couldn't be used */
+  /* One Byte Master Reception procedure (POLLING) ---------------------------*/
+  if ((uint16_t)(*NumByteToRead) < 2)
+  {
+    /* Wait on ADDR flag to be set (ADDR is still not cleared at this level */
+    sEETimeout = sEE_FLAG_TIMEOUT;
+    while(I2C_GetFlagStatus(I2Cx, I2C_FLAG_ADDR) == RESET)
+    {
+      if((sEETimeout--) == 0) return sEE_TIMEOUT_UserCallback();
+    }     
+
+    /*!< Disable Acknowledgement */
+    I2C_AcknowledgeConfig(I2Cx, DISABLE);   
+    printf("I2C Disable ACK\n\r");
+    
+    /* Clear ADDR register by reading SR1 then SR2 register (SR1 has already been read) */
+    (void)I2Cx->SR2;
+
+    /* Wait for the byte to be received */
+    sEETimeout = sEE_FLAG_TIMEOUT;
+    while(I2C_GetFlagStatus(I2Cx, I2C_FLAG_RXNE) == RESET)
+    {
+      if((sEETimeout--) == 0) return sEE_TIMEOUT_UserCallback();
+    }
+
+    /*!< Send STOP Condition */
+    I2C_GenerateSTOP(I2Cx, ENABLE);
+    printf("I2C I2C_GenerateSTOP\n\r");
+
+    
+    /*!< Read the byte received from the EEPROM */
+    *pBuffer = I2C_ReceiveData(I2Cx);
+    
+    /*!< Decrement the read bytes counter */
+    (uint16_t)(*NumByteToRead)--;        
+    
+    /* Wait to make sure that STOP control bit has been cleared */
+    sEETimeout = sEE_FLAG_TIMEOUT;
+    while(I2Cx->CR1 & I2C_CR1_STOP)
+    {
+      if((sEETimeout--) == 0) return sEE_TIMEOUT_UserCallback();
+    }  
+    
+    /*!< Re-Enable Acknowledgement to be ready for another reception */
+    I2C_AcknowledgeConfig(I2Cx, ENABLE);    
+  }
+  
+  /* If all operations OK, return sEE_OK (0) */
+  return sEE_OK;
+}
+
+
+
+
+void I2C_Test(void)
+{
+    ErrorStatus  errSts;
+    int i;
+
+    Rx_Idx = 0;
+
+#if 0
+    for(i = 0; i < BufferSize; i ++)
+    {
+        Slave_Buffer_Rx[i] = 0;
+        printf("(Before) Slave_Buffer_Rx[%d]: 0x%0X\n\r", i , Slave_Buffer_Rx[i]);
+    }
+#endif
+
+
+#if 0
+    for(i = 0; i < BufferSize; i ++)
+    {
+        I2C_Check_Busy_Flag(I2C1);
+        errSts = I2C_Master_BufferWrite(I2C1, SLAVE_ADDRESS,
+                                        &(Master_Buffer_Tx[i]), 1);
+        if(ERROR == errSts)
+        {
+            printf("[ERROR] I2C_Master_BufferWrite() error\n\r");
+        }
+    }
+#else
+        I2C_Check_Busy_Flag(I2C1);
+        errSts = I2C_Master_EepromWrite(I2C1, SLAVE_ADDRESS,0x00,
+                                        Master_Buffer_Tx, 6);
+        if(ERROR == errSts)
+        {
+            printf("[ERROR] I2C_Master_BufferWrite() error\n\r");
+        }
+
+#endif
+    printf("I2C_Master_BufferWrite() done\n\r");
+
+
+#if 0
+    Delay(100);
+    for(i = 0; i < BufferSize; i ++)
+    {
+        printf("(After) Slave_Buffer_Rx[%d]: 0x%0X\n\r", i , Slave_Buffer_Rx[i]);
+    }
+#endif
+
+}
+
+
+
+#endif
+
+
+
+
+
+
+/*----------------------------------------------------------*\
+ | MIAN ENTRY                                               |
+\*----------------------------------------------------------*/
+int main (void)
+{
+  char s[20];
+	int i;
+	uint8_t   returnack = 1;
+	uint8_t  readdata = 0;
+	uint8_t adr[10] = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x10 };
+	uint8_t data[10] = { 0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xC8, 0xC9, 0x10};
+	uint8_t result;
+	
+	stm32_Init ();                                // STM32 setup
+
+	//I2C_Initialisation();
+
+#if 1
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C2, ENABLE);
+	
+
+	GPIOB->CRL &= ~(0xFF<<24);
+	GPIOB->CRL |= (0xFF<<24);
+	GPIOB->ODR |= (0xC<<4);
+//while(1)
+{
+
+	//if(i2c_en)
+	{
+		i2c_en = 0;
+
+		Master_Configuration();
+		//Slave_Configuration();
+		while(1);
+
+#if 1
+
+					SW_I2C_WriteControl_8Bit(0xA0, adr[9], data[9]);
+					result = SW_I2C_ReadControl_8Bit(0xA1, adr[9]);
+					printf("Read Data : 0x%02x\r\n", result);
+#endif
+		
+		
+#if 0
+		for( i = 0; i <10 ; i++)
+		{
+			printf("Write 8 bit %d \r\n", i+1);
+			SW_I2C_WriteControl_8Bit(0xA0, adr[i], data[i]);
+			printf("Address : 0x%02x\r\n", adr[i]);
+			printf("\r\n");
+		}
+
+		
+		for( i = 0; i <10 ; i++)
+		{
+			printf("Read 8 bit %d \r\n", i+1);
+			result = SW_I2C_ReadControl_8Bit(0xA1, adr[i]);
+			printf("Read Data : 0x%02x\r\n", result);
+			printf("\r\n");
+		}
+
+
+#endif
+		
+		
+#if 0
+//SW_I2C_WriteControl_8Bit (uint8_t IICID, uint8_t regaddr, uint8_t data)
+		  i2c_start_condition();
+
+    i2c_slave_address(0xA0, WRITE_CMD);
+    if (!i2c_check_ack())
+    {
+        returnack = 0;
+    }
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+
+    i2c_register_address(0x00);
+    if (!i2c_check_ack())
+    {
+        returnack = 0;
+    }
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+
+    SW_I2C_Write_Data(0xAA);
+    if (!i2c_check_ack())
+    {
+        returnack = 0;
+    }
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+
+    i2c_stop_condition();
+
+
+#endif		
+
+	
+//I2C_SW
+#if 0
+		//SW_I2C_ReadControl_8Bit (0xA1, 0x00, 0x12)
+
+		printf("SW_I2C_WriteControl_8Bit___________________Start\r\n");
+		SW_I2C_WriteControl_8Bit(0xA0, 0x10, 0X77);
+		printf("SW_I2C_WriteControl_8Bit___________________Done\r\n");
+
+		printf("SW_I2C_ReadControl_8Bit___________________Start\r\n");
+     i2c_port_initial();
+		
+    i2c_start_condition();
+
+    i2c_slave_address(0xA0, WRITE_CMD);
+    i2c_check_ack();
+
+    i2c_register_address(0x10);
+    i2c_check_ack();
+	
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+
+    i2c_start_condition();
+
+    i2c_slave_address(0xA1, READ_CMD);
+    i2c_check_ack();
+
+
+    TIMER_Wait_us(SW_I2C_WAIT_TIME);
+		printf("11111\r\n");
+    readdata = SW_I2C_Read_Data();
+		i2c_send_nack();
+    //i2c_check_not_ack();
+		printf("Read Data : 0x%02x\r\n", readdata);
+
+    i2c_stop_condition();
+		printf("SW_I2C_ReadControl_8Bit___________________Done\r\n");
+		while(1);		
+#endif
+		
+		
+		while(1);
+		
+		I2C_Test();
+		//WriteByte(0x20,0x55);
+
+#if 1 	
+{
+		volatile uint16_t NumDataRead = 0;
+		uint8_t Rx1_Buffer[50];
+		uint8_t status_read;
+		
+		
+		NumDataRead=1;
+		  
+		  /* Read from I2C EEPROM from sEE_READ_ADDRESS1 */
+		  //status_read = ReadBuffer(I2C1, Rx1_Buffer, 0xA0, 0x01, (uint16_t *)(&NumDataRead)); 
+		  status_read = sEE_ReadBuffer(I2C1, Rx1_Buffer, 0xA0, 0x01, (uint16_t *)(&NumDataRead)); 
+
+		printf("read_data = 0x%02x...\n",Rx1_Buffer[0]);
+
+	}
+#endif
+		
+	}
+}
+
+	while(1);
+
+#endif
+
+
+
+	for(;;) {
+/*
+		for(i=100;i<110;i++)
+			WriteByte(i, i+2);
+
+		for(i=100;i<110;i++)
+			printf("[%d]read byte is %d...\n\r",i,ReadByte(i));
+  */
+		//	printf("before write : Read:0x%02X\n\r", ReadByte(0x00) ); 
+		//	WriteByte(0x00, 0x55);
+		//	printf("after write : Read:0x%02X\n\r", ReadByte(0x00) ); 
+	}
+  
+  }
+/*******************************************************************************
+* Function Name  : assert_failed
+* Description    : Reports the name of the source file and the source line number
+*                  where the assert error has occurred.
+* Input          : - file: pointer to the source file name
+*                  - line: assert error line source number
+* Output         : None
+* Return         : None
+*******************************************************************************/
+void assert_failed(u8* file, u32 line)
+{ 
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+
+  /* Infinite loop */
+  while (1)
+  {
+  }
+}
+/*----------------------------------------------------------*\
+ | END OF FILE                                              |
+\*----------------------------------------------------------*/
