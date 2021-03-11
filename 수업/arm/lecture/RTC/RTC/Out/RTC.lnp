@@ -1,0 +1,8 @@
+--cpu Cortex-M3
+".\out\stm32f10x.o"
+".\out\stm32_init.o"
+".\out\rtc.o"
+--strict --scatter ".\Out\RTC.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Out\List\RTC.map" -o .\Out\RTC.axf
