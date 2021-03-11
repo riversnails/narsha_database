@@ -1,0 +1,41 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¥ìVision V5.14.0.0
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: °­ ´ÙÇõ, ., LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.14.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.05 update 1 (build 106)
+Assembler:       Armasm.exe V5.05 update 1 (build 106)
+Linker/Locator:  ArmLink.exe V5.05 update 1 (build 106)
+Library Manager: ArmAr.exe V5.05 update 1 (build 106)
+Hex Converter:   FromElf.exe V5.05 update 1 (build 106)
+CPU DLL:         SARMCM3.DLL V5.14.0.0
+Dialog DLL:      DARMSTM.DLL V1.65.0.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.14.0_KEIL
+Dialog DLL:      TARMSTM.DLL V1.64.0.0
+ 
+<h2>Project:</h2>
+D:\git\narsha_database\¹®¼­\¼ö¾÷\arm\GPIO\GPIO\GPIO.uvproj
+Project File Date:  03/01/2020
+
+<h2>Output:</h2>
+Build target 'GPIO'
+compiling GPIO_OUT.c...
+source\GPIO_OUT.c(498): warning:  #111-D: statement is unreachable
+        SysTick->LOAD = 720;
+source\GPIO_OUT.c(723): warning:  #111-D: statement is unreachable
+        *(volatile unsigned int *)0x40021018 |= 0x08;
+source\GPIO_OUT.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=1056 RO-data=268 RW-data=112 ZI-data=512  
+FromELF: creating hex file...
+".\Output\GPIO_OUT.axf" - 0 Error(s), 2 Warning(s).
+</pre>
+</body>
+</html>
