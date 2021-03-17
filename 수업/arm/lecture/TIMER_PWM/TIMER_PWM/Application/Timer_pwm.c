@@ -152,23 +152,40 @@ unsigned short value_74595=0x0000;
 
 
 
-int timer2_toggle = 0;
-
+volatile int timer2_toggle = 0;
+volatile int servo_count = 0;
+int servo_diff = 44;
 
 void TIM2_IRQHandler (void) {
 
 	 if ((TIM2->SR & 0x0001) != 0) { 
 		 
 		 if(timer2_toggle == 0) {
-			 GPIOA->ODR |= 0x02;
+			 //GPIOA->ODR |= 0x02;
 			 timer2_toggle = 1;
 		 }
 		 else {
-			 GPIOA->ODR &= ~0x02;
+			 //GPIOA->ODR &= ~0x02;
 			 timer2_toggle = 0;
 		 }
+		servo_count++;
 		 
 		 TIM2->SR &= ~(1<<0); // clear UIF flag
+	 }
+	 
+}
+
+
+void TIM3_IRQHandler (void) {
+
+	 if ((TIM3->SR & 0x0001) != 0) { 
+		 
+		 if(servo_diff >= 143) {
+			 servo_diff = 44;
+		 }
+		 servo_diff++;
+		 
+		 TIM3->SR &= ~(1<<0); // clear UIF flag
 	 }
 	 
 }
@@ -350,13 +367,29 @@ int main (void) {
 	RCC->APB1ENR |= 0x01;
 	TIM2->CR1 = 0x01;
 	TIM2->DIER = 0x01;
-	TIM2->PSC = 7100;
-	TIM2->ARR = 9999;
+	TIM2->PSC = 71;
+	TIM2->ARR = 15;
+	
+	//TIMER3
+	RCC->APB1ENR |= 0x01 << 1;
+	TIM3->CR1 = 0x01;
+	TIM3->DIER = 0x01;
+	TIM3->PSC = 710;
+	TIM3->ARR = 1000;
 	
 	//NVIC
 	NVIC->ISER[0] |= (0x01 << 28); // timer2 UIE
+	NVIC->ISER[0] |= (0x01 << 29); // timer3 UIE
 	
-	while(1);
+	while(1){
+		if(servo_count >= servo_diff) {
+			GPIOA->ODR &= ~0x02;
+		}
+		if(servo_count >= 1250) {
+			GPIOA->ODR |= 0x02;
+			servo_count = 0;
+		}
+	}
 	
 		NVIC->ICER[0] |= (0x01 << 25);  // timer1 update interrupt clear
 		RCC->APB2ENR &= ~(0x01 << 11);  // timer 1 clock disable

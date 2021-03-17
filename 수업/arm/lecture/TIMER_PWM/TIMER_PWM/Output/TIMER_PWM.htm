@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Output\TIMER_PWM.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Output\TIMER_PWM.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Wed Mar 17 15:42:15 2021
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Wed Mar 17 16:02:31 2021
 <BR><P>
 <H3>Maximum Stack Usage =          8 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -75,7 +75,7 @@ Function Pointers
  <LI><a href="#[27]">TIM1_TRG_COM_IRQHandler</a> from stm32f10x.o(.text) referenced from stm32f10x.o(RESET)
  <LI><a href="#[26]">TIM1_UP_IRQHandler</a> from timer_pwm.o(.text) referenced from stm32f10x.o(RESET)
  <LI><a href="#[29]">TIM2_IRQHandler</a> from timer_pwm.o(.text) referenced from stm32f10x.o(RESET)
- <LI><a href="#[2a]">TIM3_IRQHandler</a> from stm32f10x.o(.text) referenced from stm32f10x.o(RESET)
+ <LI><a href="#[2a]">TIM3_IRQHandler</a> from timer_pwm.o(.text) referenced from stm32f10x.o(RESET)
  <LI><a href="#[2b]">TIM4_IRQHandler</a> from stm32f10x.o(.text) referenced from stm32f10x.o(RESET)
  <LI><a href="#[32]">USART1_IRQHandler</a> from stm32f10x.o(.text) referenced from stm32f10x.o(RESET)
  <LI><a href="#[33]">USART2_IRQHandler</a> from stm32f10x.o(.text) referenced from stm32f10x.o(RESET)
@@ -378,9 +378,6 @@ Global Symbols
 <P><STRONG><a name="[27]"></a>TIM1_TRG_COM_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, stm32f10x.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> stm32f10x.o(RESET)
 </UL>
-<P><STRONG><a name="[2a]"></a>TIM3_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, stm32f10x.o(.text))
-<BR>[Address Reference Count : 1]<UL><LI> stm32f10x.o(RESET)
-</UL>
 <P><STRONG><a name="[2b]"></a>TIM4_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, stm32f10x.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> stm32f10x.o(RESET)
 </UL>
@@ -469,7 +466,10 @@ Global Symbols
 <P><STRONG><a name="[28]"></a>TIM1_CC_IRQHandler</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, timer_pwm.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> stm32f10x.o(RESET)
 </UL>
-<P><STRONG><a name="[29]"></a>TIM2_IRQHandler</STRONG> (Thumb, 74 bytes, Stack size 0 bytes, timer_pwm.o(.text))
+<P><STRONG><a name="[29]"></a>TIM2_IRQHandler</STRONG> (Thumb, 60 bytes, Stack size 0 bytes, timer_pwm.o(.text))
+<BR>[Address Reference Count : 1]<UL><LI> stm32f10x.o(RESET)
+</UL>
+<P><STRONG><a name="[2a]"></a>TIM3_IRQHandler</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, timer_pwm.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> stm32f10x.o(RESET)
 </UL>
 <P><STRONG><a name="[83]"></a>micros_10us</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, timer_pwm.o(.text), UNUSED)
@@ -509,7 +509,7 @@ Global Symbols
 <LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_for
 </UL>
 
-<P><STRONG><a name="[43]"></a>main</STRONG> (Thumb, 86 bytes, Stack size 0 bytes, timer_pwm.o(.text))
+<P><STRONG><a name="[43]"></a>main</STRONG> (Thumb, 184 bytes, Stack size 0 bytes, timer_pwm.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = main &rArr; stm32_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stm32_Init
