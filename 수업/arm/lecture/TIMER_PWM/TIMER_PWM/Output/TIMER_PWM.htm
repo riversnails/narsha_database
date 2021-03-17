@@ -3,11 +3,11 @@
 <title>Static Call Graph - [.\Output\TIMER_PWM.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Output\TIMER_PWM.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Mon Nov 04 12:09:30 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Wed Mar 17 15:42:15 2021
 <BR><P>
 <H3>Maximum Stack Usage =          8 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-TIM2_IRQHandler &rArr; set_74595
+__rt_entry_sh &rArr; __user_setup_stackheap
 <P>
 <H3>
 Functions with no stack information
@@ -199,8 +199,8 @@ Global Symbols
 <P><STRONG><a name="[77]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[42]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8 + Unknown Stack Size
-<LI>Call Chain = __rt_entry_main &rArr; main &rArr; charLCD_set_data &rArr; latch_74595
+<BR><BR>[Stack]<UL><LI>Max Depth = 4 + Unknown Stack Size
+<LI>Call Chain = __rt_entry_main &rArr; main &rArr; stm32_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
 <LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -459,7 +459,7 @@ Global Symbols
 
 <P><STRONG><a name="[82]"></a>Delay</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, timer_pwm.o(.text), UNUSED)
 
-<P><STRONG><a name="[51]"></a>TimingDelay_Decrement</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, timer_pwm.o(.text))
+<P><STRONG><a name="[4f]"></a>TimingDelay_Decrement</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, timer_pwm.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
 </UL>
 
@@ -469,27 +469,7 @@ Global Symbols
 <P><STRONG><a name="[28]"></a>TIM1_CC_IRQHandler</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, timer_pwm.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> stm32f10x.o(RESET)
 </UL>
-<P><STRONG><a name="[50]"></a>delay_for</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, timer_pwm.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;charLCD_set_data
-<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;charLCD_set_inst
-<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;latch_74595
-<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_74595
-</UL>
-
-<P><STRONG><a name="[4f]"></a>set_74595</STRONG> (Thumb, 136 bytes, Stack size 4 bytes, timer_pwm.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = set_74595
-</UL>
-<BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_for
-</UL>
-<BR>[Called By]<UL><LI><a href="#[29]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_IRQHandler
-</UL>
-
-<P><STRONG><a name="[29]"></a>TIM2_IRQHandler</STRONG> (Thumb, 122 bytes, Stack size 4 bytes, timer_pwm.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = TIM2_IRQHandler &rArr; set_74595
-</UL>
-<BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_74595
-</UL>
+<P><STRONG><a name="[29]"></a>TIM2_IRQHandler</STRONG> (Thumb, 74 bytes, Stack size 0 bytes, timer_pwm.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> stm32f10x.o(RESET)
 </UL>
 <P><STRONG><a name="[83]"></a>micros_10us</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, timer_pwm.o(.text), UNUSED)
@@ -497,44 +477,42 @@ Global Symbols
 <P><STRONG><a name="[c]"></a>SysTick_Handler</STRONG> (Thumb, 8 bytes, Stack size 4 bytes, timer_pwm.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = SysTick_Handler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TimingDelay_Decrement
+<BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TimingDelay_Decrement
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> stm32f10x.o(RESET)
 </UL>
-<P><STRONG><a name="[52]"></a>latch_74595</STRONG> (Thumb, 32 bytes, Stack size 4 bytes, timer_pwm.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = latch_74595
+<P><STRONG><a name="[51]"></a>delay_for</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, timer_pwm.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;charLCD_set_data
+<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;charLCD_set_inst
+<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;latch_74595
+<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_74595
 </UL>
-<BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_for
+
+<P><STRONG><a name="[50]"></a>set_74595</STRONG> (Thumb, 136 bytes, Stack size 4 bytes, timer_pwm.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_for
+</UL>
+
+<P><STRONG><a name="[52]"></a>latch_74595</STRONG> (Thumb, 32 bytes, Stack size 4 bytes, timer_pwm.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_for
 </UL>
 <BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;charLCD_set_data
 <LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;charLCD_set_inst
 </UL>
 
-<P><STRONG><a name="[53]"></a>charLCD_set_inst</STRONG> (Thumb, 154 bytes, Stack size 4 bytes, timer_pwm.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = charLCD_set_inst &rArr; latch_74595
-</UL>
-<BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;latch_74595
-<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_for
-</UL>
-<BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<P><STRONG><a name="[53]"></a>charLCD_set_inst</STRONG> (Thumb, 154 bytes, Stack size 4 bytes, timer_pwm.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;latch_74595
+<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_for
 </UL>
 
-<P><STRONG><a name="[54]"></a>charLCD_set_data</STRONG> (Thumb, 100 bytes, Stack size 4 bytes, timer_pwm.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = charLCD_set_data &rArr; latch_74595
-</UL>
-<BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;latch_74595
-<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_for
-</UL>
-<BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<P><STRONG><a name="[54]"></a>charLCD_set_data</STRONG> (Thumb, 100 bytes, Stack size 4 bytes, timer_pwm.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;latch_74595
+<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_for
 </UL>
 
-<P><STRONG><a name="[43]"></a>main</STRONG> (Thumb, 308 bytes, Stack size 0 bytes, timer_pwm.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = main &rArr; charLCD_set_data &rArr; latch_74595
+<P><STRONG><a name="[43]"></a>main</STRONG> (Thumb, 86 bytes, Stack size 0 bytes, timer_pwm.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = main &rArr; stm32_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;charLCD_set_data
-<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;charLCD_set_inst
-<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_for
-<LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stm32_Init
+<BR>[Calls]<UL><LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stm32_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>

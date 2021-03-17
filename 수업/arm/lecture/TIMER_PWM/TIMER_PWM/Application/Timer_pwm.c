@@ -101,52 +101,77 @@ unsigned short value_74595=0x0000;
 /*----------------------------------------------------------*\
                         |
 \*----------------------------------------------------------*/
+//void TIM2_IRQHandler (void) {
+
+//  if ((TIM2->SR & 0x0001) != 0) {                 // check interrupt source
+
+//		// all row off
+//		value_74595 = 0x0000;
+//		set_74595(value_74595);  // 
+//		// column value
+//		value_74595 |= num[row_num] << 8;
+//		set_74595(value_74595);  // 
+//		// one row on
+//		value_74595 |= 0x01 << row_num;
+//		set_74595(value_74595);  //
+//		// row value
+//		row_num++;
+//		if(row_num == 8) row_num = 0;
+//		
+//		
+//	
+//		
+//	//	GPIOA->ODR |=   (0x01 << 5);
+//		
+////	ledLight2 = ~ledLight2;
+////	if( ledLight2 )
+////    	GPIOA->ODR &= ~(0x01 << 5);                           // switch on LED
+////	else
+////    	GPIOA->ODR |=   (0x01 << 5);                          // switch off LED
+
+////		timer_count++;
+////		if(timer_count == 100){
+////			timer_count = 0;
+////			GPIOA->ODR |=   (0x01 << 5);
+////		}
+////		else if(timer_count == pwm_var)
+////			GPIOA->ODR &= ~(0x01 << 5);
+////	
+//	
+//    TIM2->SR &= ~(1<<0);                          // clear UIF flag
+// }
+//	
+////   if ((TIM2->SR & 0x0002) != 0) {                 // check interrupt source
+
+////			GPIOA->ODR &= ~(0x01 << 5);
+////			
+////    TIM2->SR &= ~(1<<1);                          // clear UIF flag
+//// }
+// 
+//} // end TIM2_UP_IRQHandler
+
+
+
+int timer2_toggle = 0;
+
+
 void TIM2_IRQHandler (void) {
 
-  if ((TIM2->SR & 0x0001) != 0) {                 // check interrupt source
-
-		// all row off
-		value_74595 = 0x0000;
-		set_74595(value_74595);  // 
-		// column value
-		value_74595 |= num[row_num] << 8;
-		set_74595(value_74595);  // 
-		// one row on
-		value_74595 |= 0x01 << row_num;
-		set_74595(value_74595);  //
-		// row value
-		row_num++;
-		if(row_num == 8) row_num = 0;
-		
-		
-	//	GPIOA->ODR |=   (0x01 << 5);
-		
-//	ledLight2 = ~ledLight2;
-//	if( ledLight2 )
-//    	GPIOA->ODR &= ~(0x01 << 5);                           // switch on LED
-//	else
-//    	GPIOA->ODR |=   (0x01 << 5);                          // switch off LED
-
-//		timer_count++;
-//		if(timer_count == 100){
-//			timer_count = 0;
-//			GPIOA->ODR |=   (0x01 << 5);
-//		}
-//		else if(timer_count == pwm_var)
-//			GPIOA->ODR &= ~(0x01 << 5);
-//	
-	
-    TIM2->SR &= ~(1<<0);                          // clear UIF flag
- }
-	
-//   if ((TIM2->SR & 0x0002) != 0) {                 // check interrupt source
-
-//			GPIOA->ODR &= ~(0x01 << 5);
-//			
-//    TIM2->SR &= ~(1<<1);                          // clear UIF flag
-// }
- 
-} // end TIM2_UP_IRQHandler
+	 if ((TIM2->SR & 0x0001) != 0) { 
+		 
+		 if(timer2_toggle == 0) {
+			 GPIOA->ODR |= 0x02;
+			 timer2_toggle = 1;
+		 }
+		 else {
+			 GPIOA->ODR &= ~0x02;
+			 timer2_toggle = 0;
+		 }
+		 
+		 TIM2->SR &= ~(1<<0); // clear UIF flag
+	 }
+	 
+}
 
 
 unsigned long micros_10us()
@@ -311,6 +336,28 @@ void charLCD_set_data(char data)
 int main (void) {
   stm32_Init ();                                // STM32 setup
  
+	
+	//*((volatile unsigned int *)0xE000E100) |= 0x01 << 28; // NVIC TIM2
+//	*((volatile unsigned int *)0x40000000) |= 0x01 << 0; // TIM2_CR1 cen
+//	*((volatile unsigned int *)0x4000000C) |= 0x01 << 0; // TIM2_DIER uie
+	
+	//GPIOA.1
+	//*((volatile unsigned int *)0x40021018) |= 0x01 << 2; // RCC base 0x40021000
+	RCC->APB2ENR |= (0x01 << 2); // GPIOA enable
+	GPIOA->CRL = (0x03 << 4);
+	
+	//TIMER2
+	RCC->APB1ENR |= 0x01;
+	TIM2->CR1 = 0x01;
+	TIM2->DIER = 0x01;
+	TIM2->PSC = 7100;
+	TIM2->ARR = 9999;
+	
+	//NVIC
+	NVIC->ISER[0] |= (0x01 << 28); // timer2 UIE
+	
+	while(1);
+	
 		NVIC->ICER[0] |= (0x01 << 25);  // timer1 update interrupt clear
 		RCC->APB2ENR &= ~(0x01 << 11);  // timer 1 clock disable
 	

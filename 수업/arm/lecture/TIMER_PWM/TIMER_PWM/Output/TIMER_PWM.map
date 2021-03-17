@@ -223,15 +223,15 @@ Image Symbol Table
     .text                                    0x08000188   Section       52  stm32f10x.o(.text)
     .text                                    0x080001bc   Section        0  stm32_init.o(.text)
     .text                                    0x080004c0   Section        0  timer_pwm.o(.text)
-    .text                                    0x080008dc   Section        0  heapauxi.o(.text)
-    .text                                    0x080008e2   Section       74  sys_stackheap_outer.o(.text)
-    .text                                    0x0800092c   Section        0  exit.o(.text)
-    .text                                    0x08000938   Section        8  libspace.o(.text)
-    .text                                    0x08000940   Section        0  sys_exit.o(.text)
-    .text                                    0x0800094c   Section        2  use_no_semi.o(.text)
-    .text                                    0x0800094e   Section        0  indicate_semi.o(.text)
-    .data                                    0x20000000   Section       81  timer_pwm.o(.data)
-    .bss                                     0x20000054   Section       96  libspace.o(.bss)
+    .text                                    0x080007b4   Section        0  heapauxi.o(.text)
+    .text                                    0x080007ba   Section       74  sys_stackheap_outer.o(.text)
+    .text                                    0x08000804   Section        0  exit.o(.text)
+    .text                                    0x08000810   Section        8  libspace.o(.text)
+    .text                                    0x08000818   Section        0  sys_exit.o(.text)
+    .text                                    0x08000824   Section        2  use_no_semi.o(.text)
+    .text                                    0x08000826   Section        0  indicate_semi.o(.text)
+    .data                                    0x20000000   Section       85  timer_pwm.o(.data)
+    .bss                                     0x20000058   Section       96  libspace.o(.bss)
     HEAP                                     0x200000b8   Section        0  stm32f10x.o(HEAP)
     STACK                                    0x200000b8   Section     1024  stm32f10x.o(STACK)
     Heap_Mem                                 0x200000b8   Data           0  stm32f10x.o(HEAP)
@@ -388,29 +388,29 @@ Image Symbol Table
     TimingDelay_Decrement                    0x080004d1   Thumb Code    18  timer_pwm.o(.text)
     TIM1_UP_IRQHandler                       0x080004e3   Thumb Code    36  timer_pwm.o(.text)
     TIM1_CC_IRQHandler                       0x08000507   Thumb Code    36  timer_pwm.o(.text)
-    delay_for                                0x0800052b   Thumb Code    14  timer_pwm.o(.text)
-    set_74595                                0x08000539   Thumb Code   136  timer_pwm.o(.text)
-    TIM2_IRQHandler                          0x080005c1   Thumb Code   122  timer_pwm.o(.text)
-    micros_10us                              0x0800063b   Thumb Code     6  timer_pwm.o(.text)
-    SysTick_Handler                          0x08000641   Thumb Code     8  timer_pwm.o(.text)
-    latch_74595                              0x08000649   Thumb Code    32  timer_pwm.o(.text)
-    charLCD_set_inst                         0x08000669   Thumb Code   154  timer_pwm.o(.text)
-    charLCD_set_data                         0x08000703   Thumb Code   100  timer_pwm.o(.text)
-    main                                     0x08000767   Thumb Code   308  timer_pwm.o(.text)
-    __use_two_region_memory                  0x080008dd   Thumb Code     2  heapauxi.o(.text)
-    __rt_heap_escrow$2region                 0x080008df   Thumb Code     2  heapauxi.o(.text)
-    __rt_heap_expand$2region                 0x080008e1   Thumb Code     2  heapauxi.o(.text)
-    __user_setup_stackheap                   0x080008e3   Thumb Code    74  sys_stackheap_outer.o(.text)
-    exit                                     0x0800092d   Thumb Code    12  exit.o(.text)
-    __user_libspace                          0x08000939   Thumb Code     8  libspace.o(.text)
-    __user_perproc_libspace                  0x08000939   Thumb Code     0  libspace.o(.text)
-    __user_perthread_libspace                0x08000939   Thumb Code     0  libspace.o(.text)
-    _sys_exit                                0x08000941   Thumb Code     8  sys_exit.o(.text)
-    __I$use$semihosting                      0x0800094d   Thumb Code     0  use_no_semi.o(.text)
-    __use_no_semihosting_swi                 0x0800094d   Thumb Code     2  use_no_semi.o(.text)
-    __semihosting_library_function           0x0800094f   Thumb Code     0  indicate_semi.o(.text)
-    Region$$Table$$Base                      0x08000950   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x08000970   Number         0  anon$$obj.o(Region$$Table)
+    TIM2_IRQHandler                          0x0800052b   Thumb Code    74  timer_pwm.o(.text)
+    micros_10us                              0x08000575   Thumb Code     6  timer_pwm.o(.text)
+    SysTick_Handler                          0x0800057b   Thumb Code     8  timer_pwm.o(.text)
+    delay_for                                0x08000583   Thumb Code    14  timer_pwm.o(.text)
+    set_74595                                0x08000591   Thumb Code   136  timer_pwm.o(.text)
+    latch_74595                              0x08000619   Thumb Code    32  timer_pwm.o(.text)
+    charLCD_set_inst                         0x08000639   Thumb Code   154  timer_pwm.o(.text)
+    charLCD_set_data                         0x080006d3   Thumb Code   100  timer_pwm.o(.text)
+    main                                     0x08000737   Thumb Code    86  timer_pwm.o(.text)
+    __use_two_region_memory                  0x080007b5   Thumb Code     2  heapauxi.o(.text)
+    __rt_heap_escrow$2region                 0x080007b7   Thumb Code     2  heapauxi.o(.text)
+    __rt_heap_expand$2region                 0x080007b9   Thumb Code     2  heapauxi.o(.text)
+    __user_setup_stackheap                   0x080007bb   Thumb Code    74  sys_stackheap_outer.o(.text)
+    exit                                     0x08000805   Thumb Code    12  exit.o(.text)
+    __user_libspace                          0x08000811   Thumb Code     8  libspace.o(.text)
+    __user_perproc_libspace                  0x08000811   Thumb Code     0  libspace.o(.text)
+    __user_perthread_libspace                0x08000811   Thumb Code     0  libspace.o(.text)
+    _sys_exit                                0x08000819   Thumb Code     8  sys_exit.o(.text)
+    __I$use$semihosting                      0x08000825   Thumb Code     0  use_no_semi.o(.text)
+    __use_no_semihosting_swi                 0x08000825   Thumb Code     2  use_no_semi.o(.text)
+    __semihosting_library_function           0x08000827   Thumb Code     0  indicate_semi.o(.text)
+    Region$$Table$$Base                      0x08000828   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08000848   Number         0  anon$$obj.o(Region$$Table)
     count                                    0x20000000   Data           4  timer_pwm.o(.data)
     ledLight                                 0x20000004   Data           4  timer_pwm.o(.data)
     ledLight1                                0x20000008   Data           4  timer_pwm.o(.data)
@@ -429,10 +429,11 @@ Image Symbol Table
     reg_data                                 0x2000003c   Data           4  timer_pwm.o(.data)
     row_num                                  0x20000040   Data           4  timer_pwm.o(.data)
     num                                      0x20000044   Data           8  timer_pwm.o(.data)
-    ii                                       0x2000004c   Data           4  timer_pwm.o(.data)
-    data                                     0x20000050   Data           1  timer_pwm.o(.data)
-    __libspace_start                         0x20000054   Data          96  libspace.o(.bss)
-    __temporary_stack_top$libspace           0x200000b4   Data           0  libspace.o(.bss)
+    timer2_toggle                            0x2000004c   Data           4  timer_pwm.o(.data)
+    ii                                       0x20000050   Data           4  timer_pwm.o(.data)
+    data                                     0x20000054   Data           1  timer_pwm.o(.data)
+    __libspace_start                         0x20000058   Data          96  libspace.o(.bss)
+    __temporary_stack_top$libspace           0x200000b8   Data           0  libspace.o(.bss)
 
 
 
@@ -442,9 +443,9 @@ Memory Map of the image
 
   Image Entry point : 0x080000ed
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000009c4, Max: 0x00020000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000008a0, Max: 0x00020000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00000970, Max: 0x00020000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00000848, Max: 0x00020000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -497,26 +498,25 @@ Memory Map of the image
     0x08000186   0x00000002   PAD
     0x08000188   0x00000034   Code   RO            4    .text               stm32f10x.o
     0x080001bc   0x00000304   Code   RO           10    .text               stm32_init.o
-    0x080004c0   0x0000041c   Code   RO          110    .text               timer_pwm.o
-    0x080008dc   0x00000006   Code   RO          134    .text               c_w.l(heapauxi.o)
-    0x080008e2   0x0000004a   Code   RO          154    .text               c_w.l(sys_stackheap_outer.o)
-    0x0800092c   0x0000000c   Code   RO          156    .text               c_w.l(exit.o)
-    0x08000938   0x00000008   Code   RO          164    .text               c_w.l(libspace.o)
-    0x08000940   0x0000000c   Code   RO          225    .text               c_w.l(sys_exit.o)
-    0x0800094c   0x00000002   Code   RO          236    .text               c_w.l(use_no_semi.o)
-    0x0800094e   0x00000000   Code   RO          238    .text               c_w.l(indicate_semi.o)
-    0x0800094e   0x00000002   PAD
-    0x08000950   0x00000020   Data   RO          290    Region$$Table       anon$$obj.o
+    0x080004c0   0x000002f4   Code   RO          110    .text               timer_pwm.o
+    0x080007b4   0x00000006   Code   RO          134    .text               c_w.l(heapauxi.o)
+    0x080007ba   0x0000004a   Code   RO          154    .text               c_w.l(sys_stackheap_outer.o)
+    0x08000804   0x0000000c   Code   RO          156    .text               c_w.l(exit.o)
+    0x08000810   0x00000008   Code   RO          164    .text               c_w.l(libspace.o)
+    0x08000818   0x0000000c   Code   RO          225    .text               c_w.l(sys_exit.o)
+    0x08000824   0x00000002   Code   RO          236    .text               c_w.l(use_no_semi.o)
+    0x08000826   0x00000000   Code   RO          238    .text               c_w.l(indicate_semi.o)
+    0x08000826   0x00000002   PAD
+    0x08000828   0x00000020   Data   RO          290    Region$$Table       anon$$obj.o
 
 
     Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x000004b8, Max: 0x00005000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x00000051   Data   RW          111    .data               timer_pwm.o
-    0x20000051   0x00000003   PAD
-    0x20000054   0x00000060   Zero   RW          165    .bss                c_w.l(libspace.o)
-    0x200000b4   0x00000004   PAD
+    0x20000000   0x00000055   Data   RW          111    .data               timer_pwm.o
+    0x20000055   0x00000003   PAD
+    0x20000058   0x00000060   Zero   RW          165    .bss                c_w.l(libspace.o)
     0x200000b8   0x00000000   Zero   RW            2    HEAP                stm32f10x.o
     0x200000b8   0x00000400   Zero   RW            1    STACK               stm32f10x.o
 
@@ -528,12 +528,12 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       772         74          0          0          0       3677   stm32_init.o
-        52         18        236          0       1024        808   stm32f10x.o
-      1052         66          0         81          0       4096   timer_pwm.o
+       772         74          0          0          0       3693   stm32_init.o
+        52         18        236          0       1024        820   stm32f10x.o
+       756         40          0         85          0       3978   timer_pwm.o
 
     ----------------------------------------------------------------------
-      1876        158        268         84       1024       8581   Object Totals
+      1580        132        268         88       1024       8491   Object Totals
          0          0         32          0          0          0   (incl. Generated)
          0          0          0          3          0          0   (incl. Padding)
 
@@ -563,8 +563,8 @@ Image component sizes
          2          0          0          0          0         68   use_no_semi.o
 
     ----------------------------------------------------------------------
-       272         16          0          0        100        576   Library Totals
-         6          0          0          0          4          0   (incl. Padding)
+       272         16          0          0         96        576   Library Totals
+         6          0          0          0          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -573,7 +573,7 @@ Image component sizes
        266         16          0          0         96        576   c_w.l
 
     ----------------------------------------------------------------------
-       272         16          0          0        100        576   Library Totals
+       272         16          0          0         96        576   Library Totals
 
     ----------------------------------------------------------------------
 
@@ -582,15 +582,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      2148        174        268         84       1124       8893   Grand Totals
-      2148        174        268         84       1124       8893   ELF Image Totals
-      2148        174        268         84          0          0   ROM Totals
+      1852        148        268         88       1120       8803   Grand Totals
+      1852        148        268         88       1120       8803   ELF Image Totals
+      1852        148        268         88          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 2416 (   2.36kB)
+    Total RO  Size (Code + RO Data)                 2120 (   2.07kB)
     Total RW  Size (RW Data + ZI Data)              1208 (   1.18kB)
-    Total ROM Size (Code + RO Data + RW Data)       2500 (   2.44kB)
+    Total ROM Size (Code + RO Data + RW Data)       2208 (   2.16kB)
 
 ==============================================================================
 

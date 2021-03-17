@@ -345,6 +345,9 @@ void TIM2_IRQHandler (void) {
 
 
 
+
+
+
 //void TIM3_IRQHandler (void) {
 
 //	 if ((TIM3->SR & 0x0001) != 0) { // check update interrupt source
@@ -491,7 +494,6 @@ int main (void) {
 	
 	
 	
-	while(1);
 	
 	
 	// systick
