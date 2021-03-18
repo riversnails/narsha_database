@@ -26,12 +26,63 @@ void Delay(unsigned int nTime){
 	while(TimingDelay != 0);
 }
 
+void Delay_10us(unsigned int nTime){
+	TimingDelay=nTime;
+	while(TimingDelay != 0);
+}
+
 void TimingDelay_Decrement(void)
 {
 	if(TimingDelay != 0x00)
 		TimingDelay--;
 }
 
+unsigned int micris_10us();
+
+volatile int exti0_toggle = 0;
+unsigned int rising_time = 0;
+unsigned int falling_time = 0;
+unsigned int diff_time = 0;
+float distance = 0;
+
+void EXTI0_IRQHandler(void)
+{
+	if (EXTI->PR & (1<<0)) {   
+		unsigned short in_a = GPIOA->IDR;
+		
+		if(in_a & 0x01)  // high
+		{
+			rising_time = micris_10us();
+		}
+		else // low
+		{
+			falling_time = micris_10us();
+			diff_time = (falling_time - rising_time) * 10;
+			distance = (float)(diff_time * 0.017);
+		}
+		 
+		EXTI->PR = (1<<0);                          // clear pending interrupt
+	}
+}
+
+
+
+//void EXTI0_IRQHandler(void)
+//{
+//	if (EXTI->PR & (1<<0)) {   
+//		if(exti0_toggle == 0) {
+//		GPIOC->ODR |= (0x01 << 6);
+//			exti0_toggle = 1;
+//		}
+//		else {
+//		GPIOC->ODR &= ~(0x01 << 6);
+//			exti0_toggle = 0;
+//		}
+//		
+//		 
+//		EXTI->PR = (1<<0);                          // clear pending interrupt
+//	}
+//}
 
 
 /*----------------------------------------------------------*\
@@ -160,17 +211,19 @@ volatile int servo_diff = 44;
 volatile int ccr1_count = 0;
 
 
+
 void TIM1_UP_IRQHandler (void) { // cmpa 핸들러가 분리되어있음 따라서 코딩이 더 편함
 	
 	 if ((TIM1->SR & 0x0001) != 0) { 
 		 
-		 if(ccr1_count >= 990) {
-			 ccr1_count = 10;
-		 }
-		 ccr1_count+=10;
-		 TIM1->CCR1 = ccr1_count;
+//		 if(ccr1_count >= 990) {
+//			 ccr1_count = 10;
+//		 }
+//		 ccr1_count+=10;
+//		 TIM1->CCR1 = ccr1_count;
 		 
 		 
+			TIM1->CCR1 = ccr1_count;
 			GPIOC->ODR |= (0x01 << 6);
 		 
 		 
@@ -192,13 +245,14 @@ void TIM2_IRQHandler (void) {
 	
 	 if ((TIM2->SR & 0x0001) != 0) { 
 		 
-		 if(ccr1_count >= 990) {
-			 ccr1_count = 10;
-		 }
-		 ccr1_count+=10;
+//		 if(ccr1_count >= 990) {
+//			 ccr1_count = 10;
+//		 }
+//		 ccr1_count+=10;
+//		 TIM2->CCR1 = ccr1_count;
+		 
+		 
 		 TIM2->CCR1 = ccr1_count;
-		 
-		 
 			GPIOC->ODR |= (0x01 << 6);
 		 
 		 
@@ -327,12 +381,29 @@ unsigned long micros_10us()
 		return count;
 }
 
+volatile unsigned int count_10us = 0;
+
+unsigned int micris_10us(void){
+	return count_10us;
+}
 
 void SysTick_Handler(void)
  {
+	 count_10us++;
+	 TimingDelay_Decrement();
+	 
+//	 if(timer2_toggle == 0) {
+//			 GPIOC->ODR |= (0x07 << 6);
+//			 timer2_toggle = 1;
+//		 }
+//		 else {
+//			 GPIOC->ODR &= ~(0x07 << 6);
+//			 timer2_toggle = 0;
+//		 }
+	 
+	 
 //		count++;
 	 
-		TimingDelay_Decrement();
 	 
 	 
 //if(	 ledLight1 = !ledLight1){
@@ -477,13 +548,220 @@ void charLCD_set_data(char data)
  
  unsigned long ii;
  char data;
+unsigned int cal_data = 0;
  
-/*----------------------------------------------------------*\
+/*----------------------------------------------------------*\----------------------------------------------------------*\----------------------------------------------------------*\
  | MIAN ENTRY                                               |
-\*----------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*\----------------------------------------------------------*\*/
 int main (void) {
+	
+	unsigned int curr_10us;
+	unsigned int pre_10us;
+	int hip = 0;
   stm32_Init ();                                // STM32 setup
  
+	
+//	RCC->APB2ENR &= ~(0x01 << 11); // default timer off
+//	NVIC->ICER[0] |= (0x01 << 25); // timer1 UIE
+//	NVIC->ICER[0] |= (0x01 << 27); // timer1 CAP_COM
+	
+	RCC->APB2ENR |= (0x01 << 3);
+	GPIOB->CRL &= ~(0x0f << 4 * 5);
+	GPIOB->CRL |= (0x04 << 4 * 5);
+		//------------------------------------------------------------
+	//GPIOA
+	RCC->APB2ENR |= (0x01 << 2); // GPIOA enable
+	//GPIOA.0
+	GPIOA->CRL |= (0x04 << 4 * 0);
+	//GPIOA.1
+	GPIOA->CRL |= (0x03 << 4 * 1);
+	//GPIOC
+	RCC->APB2ENR |= (0x01 << 4); // GPIOC enable
+	//GPIOC.6
+	GPIOC->CRL = (0x03 << 24);
+	
+	//TIMER2
+	RCC->APB1ENR |= 0x01 << 0;
+	TIM2->CR1 = 0x81;
+  TIM2->DIER = 0x03;
+	TIM2->PSC = 719;
+	TIM2->ARR = 999; 
+	TIM2->CNT = 0;
+	
+	TIM2->CCMR1 = 0x68;
+	TIM2->CCER = 0x01;
+	TIM2->CCR1 = 10;
+	
+	
+	//SysTick
+	SysTick->LOAD = 719;
+	SysTick->CTRL = 0x07;
+	
+	// EXTI PORTA.0
+	EXTI->RTSR = 0x01;
+	EXTI->FTSR = 0x01;
+	EXTI->IMR = 0x01;
+	
+	//NVIC
+	NVIC->ISER[0] |= (0x01 << 6); // exti 0
+	NVIC->ISER[0] |= (0x01 << 28); // timer2 UIE
+	
+	
+	while(1) {
+		curr_10us = count_10us;
+		
+		//UltraSonic Trigger
+		if(curr_10us - pre_10us > 10000) 
+		{
+			pre_10us = curr_10us;
+			GPIOA->ODR |= (0x01 << 1);
+			Delay_10us(1);
+			GPIOA->ODR &= ~(0x01 << 1);
+			Delay_10us(1);
+		}
+		
+		cal_data = (int)(distance * 20);
+		if(cal_data >= 1000) cal_data = 990;
+		else if(cal_data <= 0) cal_data = 10;
+		
+		ccr1_count = 1000 - cal_data;
+		
+	}
+	//------------------------------------------------------------
+	
+	
+	
+	//------------------------------------------------------------
+	//GPIOA.0
+	RCC->APB2ENR |= (0x01 << 2); // GPIOA enable
+	GPIOA->CRL = (0x04 << 0);
+	
+	//GPIOC.6
+	RCC->APB2ENR |= (0x01 << 4); // GPIOC enable
+	GPIOC->CRL = (0x03 << 24);
+	
+	// EXTI PORTA.0
+	EXTI->RTSR = 0x01;
+	EXTI->FTSR = 0x01;
+	EXTI->IMR = 0x01;
+	
+	NVIC->ISER[0] |= (0x01 << 6);
+	
+	while(1);
+	//------------------------------------------------------------
+	
+	
+	
+	
+	//------------------------------------------------------------
+	//GPIOC.6
+	RCC->APB2ENR |= (0x01 << 4); // GPIOC enable
+	GPIOC->CRL = (0x03 << 24);
+	
+	//SysTick
+	SysTick->LOAD = 719;
+	SysTick->CTRL = 0x07;
+	
+	
+	while(1){
+			 GPIOC->ODR |= (0x07 << 6);
+		Delay_10us(100000);
+			 GPIOC->ODR &= ~(0x07 << 6);
+		Delay_10us(100000);
+	}
+	
+	
+		while(1){
+		curr_10us = count_10us;
+		if(curr_10us - pre_10us > 100000)
+		{
+		 pre_10us = curr_10us;
+			if(timer2_toggle == 0) {
+			 GPIOC->ODR |= (0x07 << 6);
+			 timer2_toggle = 1;
+		 }
+		 else {
+			 GPIOC->ODR &= ~(0x07 << 6);
+			 timer2_toggle = 0;
+		 }
+		}
+	}
+	//------------------------------------------------------------
+	
+	
+	
+	//------------------------------------------------------------
+	//GPIOC.6
+	RCC->APB2ENR |= (0x01 << 4); // GPIOC enable
+	GPIOC->CRL = (0x03 << 24);
+	
+	//TIMER2
+	RCC->APB1ENR |= 0x01 << 0;
+	TIM2->CR1 = 0x81;
+  TIM2->DIER = 0x03;
+	TIM2->PSC = 719;
+	TIM2->ARR = 999; 
+	TIM2->CNT = 0;
+	
+	TIM2->CCMR1 = 0x68;
+	TIM2->CCER = 0x01;
+	TIM2->CCR1 = 10;
+	
+	//NVIC
+	NVIC->ISER[0] |= (0x01 << 28); // timer2 UIE
+	
+	//SysTick
+	SysTick->LOAD = 719;
+	SysTick->CTRL = 0x07;
+	
+	
+	while(1){
+		curr_10us = count_10us;
+		if(curr_10us - pre_10us > 2000)
+		{
+			pre_10us = curr_10us;
+		 if(ccr1_count >= 900) {
+			 ccr1_count = 10;
+		 }
+		 ccr1_count+=10;
+		}
+		
+	}
+	//------------------------------------------------------------
+	
+	
+	
+	//------------------------------------------------------------
+	//GPIOC.6
+//	RCC->APB2ENR |= (0x01 << 4); // GPIOC enable
+//	GPIOC->CRL = (0x03 << 24);
+	
+//	//SysTick
+//	SysTick->LOAD = 719;
+//	SysTick->CTRL = 0x07;
+//	
+//	while(1){
+//		curr_10us = count_10us;
+//		if(curr_10us - pre_10us > 100000)
+//		{
+//		 pre_10us = curr_10us;
+//			if(timer2_toggle == 0) {
+//			 GPIOC->ODR |= (0x07 << 6);
+//			 timer2_toggle = 1;
+//		 }
+//		 else {
+//			 GPIOC->ODR &= ~(0x07 << 6);
+//			 timer2_toggle = 0;
+//		 }
+//		}
+//		
+//	}
+	//------------------------------------------------------------
+	
+	
+	
+	
+	//------------------------------------------------------------
 //	RCC->APB2ENR |= (0x01 << 4); // GPIOC enable
 //	GPIOC->CRL = (0x03 << 24);
 //	
@@ -494,8 +772,11 @@ int main (void) {
 //	TIM2->ARR = 9999; // 1us * 16 == 16us
 //	
 //	NVIC->ISER[0] |= (0x01 << 28); // timer2 UIE
+	//------------------------------------------------------------
 	
 	
+	
+	//------------------------------------------------------------
 //	//GPIOC.6
 //	RCC->APB2ENR |= (0x01 << 4); // GPIOC enable
 //	GPIOC->CRL = (0x03 << 24);
@@ -551,54 +832,52 @@ int main (void) {
 //	TIM2->ARR = 9999; // 1us * 16 == 16us
 	
 	
+	//------------------------------------------------------------
 	//GPIOC.6
-	RCC->APB2ENR |= (0x01 << 4); // GPIOC enable
-	GPIOC->CRL = (0x03 << 24);
-	
-	//TIMER1
-	RCC->APB2ENR |= 0x01 << 11;
-	TIM1->CR1 = 0x81;
-  TIM1->DIER = 0x03;
-	TIM1->PSC = 719;
-	TIM1->ARR = 999; 
-	TIM1->CNT = 0;
-	
-	TIM1->CCMR1 = 0x68;
-	TIM1->CCER = 0x01;
-	TIM1->CCR1 = 10;
-	
-	//TIMER2
-	RCC->APB1ENR |= 0x01 << 0;
-	TIM2->CR1 = 0x81;
-  TIM2->DIER = 0x03;
-	TIM2->PSC = 719;
-	TIM2->ARR = 999; 
-	TIM2->CNT = 0;
-	
-	TIM2->CCMR1 = 0x68;
-	TIM2->CCER = 0x01;
-	TIM2->CCR1 = 10;
-	
-	//TIMER3
-	RCC->APB1ENR |= 0x01 << 1;
-	TIM3->CR1 = 0x01;
-	TIM3->DIER = 0x01;
-	TIM3->PSC = 719;
-	TIM3->ARR = 999;
-	
-	//NVIC
-	NVIC->ISER[0] |= (0x01 << 25); // timer1 UIE
-	NVIC->ISER[0] |= (0x01 << 27); // timer1 CAP_COM
-	//NVIC->ISER[0] |= (0x01 << 28); // timer2 UIE
-	NVIC->ISER[0] |= (0x01 << 29); // timer3 UIE
-	
-	
-	
-	
+//	RCC->APB2ENR |= (0x01 << 4); // GPIOC enable
+//	GPIOC->CRL = (0x03 << 24);
+//	
+//	//TIMER1
+//	RCC->APB2ENR |= 0x01 << 11;
+//	TIM1->CR1 = 0x81;
+//  TIM1->DIER = 0x03;
+//	TIM1->PSC = 719;
+//	TIM1->ARR = 999; 
+//	TIM1->CNT = 0;
+//	
+//	TIM1->CCMR1 = 0x68;
+//	TIM1->CCER = 0x01;
+//	TIM1->CCR1 = 10;
+//	
+//	//TIMER2
+//	RCC->APB1ENR |= 0x01 << 0;
+//	TIM2->CR1 = 0x81;
+//  TIM2->DIER = 0x03;
+//	TIM2->PSC = 719;
+//	TIM2->ARR = 999; 
+//	TIM2->CNT = 0;
+//	
+//	TIM2->CCMR1 = 0x68;
+//	TIM2->CCER = 0x01;
+//	TIM2->CCR1 = 10;
+//	
+//	//TIMER3
+//	RCC->APB1ENR |= 0x01 << 1;
+//	TIM3->CR1 = 0x01;
+//	TIM3->DIER = 0x01;
+//	TIM3->PSC = 719;
+//	TIM3->ARR = 999;
+//	
+//	//NVIC
+//	NVIC->ISER[0] |= (0x01 << 25); // timer1 UIE
+//	NVIC->ISER[0] |= (0x01 << 27); // timer1 CAP_COM
+//	//NVIC->ISER[0] |= (0x01 << 28); // timer2 UIE
+//	NVIC->ISER[0] |= (0x01 << 29); // timer3 UIE
 	
 	
 	while(1);
 	
+	//------------------------------------------------------------
 	
 	
 	

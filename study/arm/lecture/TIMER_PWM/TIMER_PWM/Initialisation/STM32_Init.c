@@ -4951,7 +4951,7 @@ void stm32_Init () {
 #endif
 
 #if __TIMER_SETUP
-  stm32_TimerSetup ();
+  //stm32_TimerSetup ();
 #endif
 
 #if __AFREMAP_SETUP
