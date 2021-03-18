@@ -37,45 +37,45 @@ void TimingDelay_Decrement(void)
 /*----------------------------------------------------------*\
  | Timer1 Update Interrupt Handler                          |
 \*----------------------------------------------------------*/
-void TIM1_UP_IRQHandler (void) {
+//void TIM1_UP_IRQHandler (void) {
 
-  if ((TIM1->SR & 0x0001) != 0) {                 // check interrupt source
+//  if ((TIM1->SR & 0x0001) != 0) {                 // check interrupt source
 
-//	ledLight = ~ledLight;
-//	if( ledLight )
-//    	GPIOC->ODR &= ~(0x01 << 13);                           // switch on LED
-//	else
-//    	GPIOC->ODR |=  0x01 << 13;                           // switch off LED
+////	ledLight = ~ledLight;
+////	if( ledLight )
+////    	GPIOC->ODR &= ~(0x01 << 13);                           // switch on LED
+////	else
+////    	GPIOC->ODR |=  0x01 << 13;                           // switch off LED
+
+////		
+////		GPIOC->ODR |= 0x01 << 13; 
+////		
+//		
+//		GPIOA->ODR |=   (0x01 << 5);
+//		
+//    TIM1->SR &= ~(1<<0);                          // clear UIF flag
+//		
+
+// }
+//} // end TIM1_UP_IRQHandler
+
+
+//void TIM1_CC_IRQHandler (void) {
+
+//  if ((TIM1->SR & 0x0002) != 0) {                 // check interrupt source
+
+////	ledLight = ~ledLight;
+////	if( ledLight )
+//    	//GPIOC->ODR &= ~(0x01 << 13);                           // switch on LED
+////	else
+////    	GPIOB->ODR |=  LED;                           // switch off LED
 
 //		
-//		GPIOC->ODR |= 0x01 << 13; 
+//		GPIOA->ODR &= ~(0x01 << 5);
 //		
-		
-		GPIOA->ODR |=   (0x01 << 5);
-		
-    TIM1->SR &= ~(1<<0);                          // clear UIF flag
-		
-
- }
-} // end TIM1_UP_IRQHandler
-
-
-void TIM1_CC_IRQHandler (void) {
-
-  if ((TIM1->SR & 0x0002) != 0) {                 // check interrupt source
-
-//	ledLight = ~ledLight;
-//	if( ledLight )
-    	//GPIOC->ODR &= ~(0x01 << 13);                           // switch on LED
-//	else
-//    	GPIOB->ODR |=  LED;                           // switch off LED
-
-		
-		GPIOA->ODR &= ~(0x01 << 5);
-		
-    TIM1->SR &= ~(1<<1);                          // clear UIF flag
- }
-} // end TIM1_UP_IRQHandler
+//    TIM1->SR &= ~(1<<1);                          // clear UIF flag
+// }
+//} // end TIM1_UP_IRQHandler
 
 
 int timer_count=0;
@@ -153,37 +153,168 @@ unsigned short value_74595=0x0000;
 
 
 volatile int timer2_toggle = 0;
+volatile int led_count = 0;
+volatile int led_diff = 10;
 volatile int servo_count = 0;
-int servo_diff = 44;
+volatile int servo_diff = 44;
+volatile int ccr1_count = 0;
+
+
+void TIM1_UP_IRQHandler (void) { // cmpa 핸들러가 분리되어있음 따라서 코딩이 더 편함
+	
+	 if ((TIM1->SR & 0x0001) != 0) { 
+		 
+		 if(ccr1_count >= 990) {
+			 ccr1_count = 10;
+		 }
+		 ccr1_count+=10;
+		 TIM1->CCR1 = ccr1_count;
+		 
+		 
+			GPIOC->ODR |= (0x01 << 6);
+		 
+		 
+		 TIM1->SR &= ~(1<<0); // clear UIF flag
+	 }
+}
+
+void TIM1_CC_IRQHandler (void) {
+	 if ((TIM1->SR & 0x0002) != 0) { 
+		GPIOC->ODR &= ~(0x07 << 6);
+		 
+		 
+	 TIM1->SR &= ~(1<<1); // clear UIF flag
+	 }
+}
+
 
 void TIM2_IRQHandler (void) {
-
+	
 	 if ((TIM2->SR & 0x0001) != 0) { 
 		 
-		 if(timer2_toggle == 0) {
-			 //GPIOA->ODR |= 0x02;
-			 timer2_toggle = 1;
+		 if(ccr1_count >= 990) {
+			 ccr1_count = 10;
 		 }
-		 else {
-			 //GPIOA->ODR &= ~0x02;
-			 timer2_toggle = 0;
-		 }
-		servo_count++;
+		 ccr1_count+=10;
+		 TIM2->CCR1 = ccr1_count;
+		 
+		 
+			GPIOC->ODR |= (0x01 << 6);
+		 
 		 
 		 TIM2->SR &= ~(1<<0); // clear UIF flag
 	 }
+	 else if ((TIM2->SR & 0x0002) != 0) { 
+		GPIOC->ODR &= ~(0x07 << 6);
+		 
+		 
+	 TIM2->SR &= ~(1<<1); // clear UIF flag
+	 }
 	 
 }
+
+
+//void TIM2_IRQHandler (void) {
+
+//	 if ((TIM2->SR & 0x0002) != 0) { 
+//		 
+//		 if(timer2_toggle == 0) {
+//			 GPIOC->ODR |= (0x01 << 6);
+//			 timer2_toggle = 1;
+//		 }
+//		 else {
+//			 GPIOC->ODR &= ~(0x07 << 6);
+//			 timer2_toggle = 0;
+//		 }
+//		 
+//		 TIM2->SR &= ~(1<<1); // clear UIF flag
+//	 }
+//	 
+//}
+
+
+
+//void TIM2_IRQHandler (void) {
+
+//	 if ((TIM2->SR & 0x0001) != 0) { 
+//		 
+//		 if(led_count >= 100) {
+//			 GPIOC->ODR |= (0x01 << 6);
+//			 led_count = 0;
+//		 }
+//		 else if(led_count >= led_diff) {
+//			 GPIOC->ODR &= ~(0x07 << 6);
+//		 }
+//		 
+//		 led_count++;
+//		 
+//		 TIM2->SR &= ~(1<<0); // clear UIF flag
+//	 }
+//	 
+//}
+
+
+//void TIM2_IRQHandler (void) {
+
+//	 if ((TIM2->SR & 0x0001) != 0) { 
+//		 
+//		 if(timer2_toggle == 0) {
+//			 GPIOC->ODR |= (0x01 << 6);
+//			 timer2_toggle = 1;
+//		 }
+//		 else {
+//			 GPIOC->ODR &= ~(0x07 << 6);
+//			 timer2_toggle = 0;
+//		 }
+//		 
+//		 TIM2->SR &= ~(1<<0); // clear UIF flag
+//	 }
+//	 
+//}
+
+
+
+//void TIM2_IRQHandler (void) {
+
+//	 if ((TIM2->SR & 0x0001) != 0) { 
+//		 
+//		 if(timer2_toggle == 0) {
+//			 //GPIOA->ODR |= 0x02;
+//			 timer2_toggle = 1;
+//		 }
+//		 else {
+//			 //GPIOA->ODR &= ~0x02;
+//			 timer2_toggle = 0;
+//		 }
+//		servo_count++;
+//		 
+//		 TIM2->SR &= ~(1<<0); // clear UIF flag
+//	 }
+//	 
+//}
+
+//------------------------------------------------------  TIMER3
+
+//void TIM3_IRQHandler (void) {
+
+//	 if ((TIM3->SR & 0x0001) != 0) { 
+//		 
+//		 if(servo_diff >= 143) {
+//			 servo_diff = 44;
+//		 }
+//		 servo_diff++;
+//		 
+//		 TIM3->SR &= ~(1<<0); // clear UIF flag
+//	 }
+//	 
+//}
 
 
 void TIM3_IRQHandler (void) {
 
 	 if ((TIM3->SR & 0x0001) != 0) { 
 		 
-		 if(servo_diff >= 143) {
-			 servo_diff = 44;
-		 }
-		 servo_diff++;
+		 
 		 
 		 TIM3->SR &= ~(1<<0); // clear UIF flag
 	 }
@@ -353,6 +484,128 @@ void charLCD_set_data(char data)
 int main (void) {
   stm32_Init ();                                // STM32 setup
  
+//	RCC->APB2ENR |= (0x01 << 4); // GPIOC enable
+//	GPIOC->CRL = (0x03 << 24);
+//	
+//	RCC->APB1ENR |= 0x01 << 0;
+//	TIM2->CR1 = 0x01;
+//	TIM2->DIER = 0x01;
+//	TIM2->PSC = 7199; // 분주비 710 == 1000hz == 주기 1us
+//	TIM2->ARR = 9999; // 1us * 16 == 16us
+//	
+//	NVIC->ISER[0] |= (0x01 << 28); // timer2 UIE
+	
+	
+//	//GPIOC.6
+//	RCC->APB2ENR |= (0x01 << 4); // GPIOC enable
+//	GPIOC->CRL = (0x03 << 24);
+//	
+//	//TIMER2
+//	RCC->APB1ENR |= 0x01 << 0;
+//	TIM2->CR1 = 0x01;
+//	TIM2->DIER = 0x01;
+//	TIM2->PSC = 71;
+//	TIM2->ARR = 99; 
+//	
+//	//TIMER3
+//	RCC->APB1ENR |= 0x01 << 1;
+//	TIM3->CR1 = 0x01;
+//	TIM3->DIER = 0x01;
+//	TIM3->PSC = 719; // 분주비 710 == 100hz == 주기 10us
+//	TIM3->ARR = 9999; // 10us * 1000 == 10ms
+//	
+//	//NVIC
+//	NVIC->ISER[0] |= (0x01 << 28); // timer2 UIE
+//	NVIC->ISER[0] |= (0x01 << 29); // timer3 UIE
+	
+	
+	//-----------------------------------------------------------
+//	//GPIOC.6
+//	RCC->APB2ENR |= (0x01 << 4); // GPIOC enable
+//	GPIOC->CRL = (0x03 << 24);
+//	
+//	//TIMER2
+//	RCC->APB1ENR |= 0x01 << 0;
+//	TIM2->CR1 = 0x81;
+//	TIM2->DIER = 0x03;
+//	TIM2->PSC = 7199;
+//	TIM2->ARR = 9999; 
+//	
+//	TIM2->CCMR1 = 0x68;
+//	TIM2->CCR1 = 4999;
+//	TIM2->CCER = 0x01;
+//	
+//	//NVIC
+//	NVIC->ISER[0] |= (0x01 << 28); // timer2 UIE
+//	NVIC->ISER[0] |= (0x01 << 29); // timer3 UIE
+
+	
+	//------------------------------------------------------------
+//	RCC->APB2ENR |= (0x01 << 4); // GPIOC enable
+//	GPIOC->CRL = (0x03 << 24);
+//	
+//	RCC->APB1ENR |= 0x01 << 0;
+//	TIM2->CR1 = 0x01;
+//	TIM2->DIER = 0x01;
+//	TIM2->PSC = 7199; // 분주비 710 == 1000hz == 주기 1us
+//	TIM2->ARR = 9999; // 1us * 16 == 16us
+	
+	
+	//GPIOC.6
+	RCC->APB2ENR |= (0x01 << 4); // GPIOC enable
+	GPIOC->CRL = (0x03 << 24);
+	
+	//TIMER1
+	RCC->APB2ENR |= 0x01 << 11;
+	TIM1->CR1 = 0x81;
+  TIM1->DIER = 0x03;
+	TIM1->PSC = 719;
+	TIM1->ARR = 999; 
+	TIM1->CNT = 0;
+	
+	TIM1->CCMR1 = 0x68;
+	TIM1->CCER = 0x01;
+	TIM1->CCR1 = 10;
+	
+	//TIMER2
+	RCC->APB1ENR |= 0x01 << 0;
+	TIM2->CR1 = 0x81;
+  TIM2->DIER = 0x03;
+	TIM2->PSC = 719;
+	TIM2->ARR = 999; 
+	TIM2->CNT = 0;
+	
+	TIM2->CCMR1 = 0x68;
+	TIM2->CCER = 0x01;
+	TIM2->CCR1 = 10;
+	
+	//TIMER3
+	RCC->APB1ENR |= 0x01 << 1;
+	TIM3->CR1 = 0x01;
+	TIM3->DIER = 0x01;
+	TIM3->PSC = 719;
+	TIM3->ARR = 999;
+	
+	//NVIC
+	NVIC->ISER[0] |= (0x01 << 25); // timer1 UIE
+	NVIC->ISER[0] |= (0x01 << 27); // timer1 CAP_COM
+	//NVIC->ISER[0] |= (0x01 << 28); // timer2 UIE
+	NVIC->ISER[0] |= (0x01 << 29); // timer3 UIE
+	
+	
+	
+	
+	
+	
+	while(1);
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//*((volatile unsigned int *)0xE000E100) |= 0x01 << 28; // NVIC TIM2
 //	*((volatile unsigned int *)0x40000000) |= 0x01 << 0; // TIM2_CR1 cen
@@ -367,15 +620,15 @@ int main (void) {
 	RCC->APB1ENR |= 0x01;
 	TIM2->CR1 = 0x01;
 	TIM2->DIER = 0x01;
-	TIM2->PSC = 71;
-	TIM2->ARR = 15;
+	TIM2->PSC = 71; // 분주비 710 == 1000hz == 주기 1us
+	TIM2->ARR = 15; // 1us * 16 == 16us
 	
 	//TIMER3
 	RCC->APB1ENR |= 0x01 << 1;
 	TIM3->CR1 = 0x01;
 	TIM3->DIER = 0x01;
-	TIM3->PSC = 710;
-	TIM3->ARR = 1000;
+	TIM3->PSC = 719; // 분주비 710 == 100hz == 주기 10us
+	TIM3->ARR = 999; // 10us * 1000 == 10ms
 	
 	//NVIC
 	NVIC->ISER[0] |= (0x01 << 28); // timer2 UIE

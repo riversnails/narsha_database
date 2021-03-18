@@ -1,5 +1,5 @@
 Dependencies for Project 'TIMER_PWM', Target 'TIMER_PWM': (DO NOT MODIFY !)
-F (.\Initialisation\STM32F10x.s)(0x6049C4C2)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F10x--pd "__UVISION_VERSION SETA 514"--list .\output\stm32f10x.lst --xref -o .\output\stm32f10x.o --depend .\output\stm32f10x.d)
+F (.\Initialisation\STM32F10x.s)(0x60529CD3)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F10x--pd "__UVISION_VERSION SETA 514"--list .\output\stm32f10x.lst --xref -o .\output\stm32f10x.o --depend .\output\stm32f10x.d)
 F (.\Initialisation\STM32_Init.c)(0x6049C4C2)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Initialisation -I.\Drivers -I.\STM32F10x-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F10x-D__UVISION_VERSION="514"-o .\output\stm32_init.o --omf_browse .\output\stm32_init.crf --depend .\output\stm32_init.d)
 I (.\STM32F10x\stm32f10x_lib.h)(0x6049C4C2)
 I (.\STM32F10x\stm32f10x_map.h)(0x6049C4C2)
@@ -30,7 +30,7 @@ I (.\STM32F10x\stm32f10x_tim.h)(0x6049C4C2)
 I (.\STM32F10x\stm32f10x_usart.h)(0x6049C4C2)
 I (.\STM32F10x\stm32f10x_wwdg.h)(0x6049C4C2)
 I (Initialisation\STM32_Reg.h)(0x6049C4C2)
-F (.\Application\Timer_pwm.c)(0x6051A986)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Initialisation -I.\Drivers -I.\STM32F10x-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F10x-D__UVISION_VERSION="514"-o .\output\timer_pwm.o --omf_browse .\output\timer_pwm.crf --depend .\output\timer_pwm.d)
+F (.\Application\Timer_pwm.c)(0x6052C4D1)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I.\Initialisation -I.\Drivers -I.\STM32F10x-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F10x-D__UVISION_VERSION="514"-o .\output\timer_pwm.o --omf_browse .\output\timer_pwm.crf --depend .\output\timer_pwm.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5475E4F0)
 I (.\STM32F10x\stm32f10x_lib.h)(0x6049C4C2)
 I (.\STM32F10x\stm32f10x_map.h)(0x6049C4C2)
