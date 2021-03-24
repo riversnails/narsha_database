@@ -136,18 +136,38 @@ int main (void) {
 	int i;
 	
 	stm32_Init ();                                // STM32 setup
-
+	
+	
+	//RCc Clock
+	RCC->APB2ENR |= (0x01 << 9); // ADC 1
+	RCC->AHBENR |= 0x01; // DMA1
+	
+	
+	// DMA
+	DMA1_Channel1->CPAR = (unsigned int)&ADC1->DR; // ADC1 data register
+	DMA1_Channel1->CMAR = (unsigned int)analog; // arr = pointer
+	DMA1_Channel1->CNDTR = 0x03; // DMA count
+	DMA1_Channel1->CCR = 0x05A1; // DMA setting(CIRC, MINC, EN)
+	
+	
+	// ADC
+	ADC1->CR1 = 0x0100;
+	ADC1->SQR3 = 0x0820;
+	ADC1->SQR1 = 0x00200000;
+	ADC1->SMPR2 = 0x016D;
+	ADC1->CR2 = 0x005E0103;	//0x001E0103;
+	
 	
 //adc_Init();
 	
-	*((unsigned int *)0x20002020) = 0x12345678;
+	//*((unsigned int *)0x20002020) = 0x12345678;
 
 	for(;;) {
 		
-		printf("%p\n",analog);
+		//printf("%p\n",analog);
 		
 		//printf("% 4.2fV \r\n", (float)( ( *(unsigned short *)(0x20002000) ) * 3.3 / 0xFFF));
-		//printf("% 4.2fV \r\n", (float)(analog[0] * 3.3 / 0xFFF));
+		printf("% 4.2fV \r\n", (((float)analog[0] / 0xFFF) * 3.3));
 		//printf("% 4.2fV , p=%p\r\n", (float)(analog[0] * 3.3 / 0xFFF), &analog[0]);
 	}
 

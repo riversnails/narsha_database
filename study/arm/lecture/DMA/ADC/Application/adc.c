@@ -128,9 +128,16 @@ void adc_Init (void) {
 void Delay(vu32 nCount) {
   for(; nCount != 0; nCount--);
   }
+
+		
+unsigned int *addr_var;
+unsigned int test_var = 0x12345678;
+	
+	
 /*----------------------------------------------------------*\
  | MIAN ENTRY                                               |
 \*----------------------------------------------------------*/
+	
 int main (void) {
   	char s[20];
 	int i;
@@ -140,8 +147,19 @@ int main (void) {
 	
 	
 	
+	
 	stm32_Init ();                                // STM32 setup
 
+	addr_var = &test_var;
+	
+	
+	
+	while(1)
+		{
+			
+		}
+	
+	
   //adc_Init();
 	
 	//*(volatile unsigned int *)(0x20002000) = 0x12345678;
