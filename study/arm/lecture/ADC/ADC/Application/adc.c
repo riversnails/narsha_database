@@ -138,7 +138,12 @@ int main (void) {
 	stm32_Init ();                                // STM32 setup
 	
 	
-	//RCc Clock
+	//GPIOA.0/1/2
+	RCC->APB2ENR |= (0x01 << 2); // GPIOA
+	GPIOA->CRL = 0x00; // ALLAnalogin
+	
+	
+	//RCC Clock
 	RCC->APB2ENR |= (0x01 << 9); // ADC 1
 	RCC->AHBENR |= 0x01; // DMA1
 	
@@ -151,11 +156,13 @@ int main (void) {
 	
 	
 	// ADC
-	ADC1->CR1 = 0x0100;
-	ADC1->SQR3 = 0x0820;
-	ADC1->SQR1 = 0x00200000;
-	ADC1->SMPR2 = 0x016D;
-	ADC1->CR2 = 0x005E0103;	//0x001E0103;
+	ADC1->CR1 = (0x01 << 8); // SCAN
+	ADC1->CR2 = (0x01 <<0) | (0x01 << 1) | (0x01 << 8) | (0x01 << 20) | (0x07 << 17); // ADON, CONT, DMA, EXTTRIG, EXTSEL:SWSTART
+	//ADC1->SQR3 = (0x00 << 0) | (0x01 << 5) | (0x02 << 10); //SQ1 , SQ2, SQ3
+	ADC1->SQR3 = 0x0820; //SQ1 , SQ2, SQ3
+	ADC1->SMPR2 = 0x016D; //  SMPCYCLE
+	ADC1->SQR1 = (0x02 << 20); // LEVEL
+	ADC1->CR2 |= (0x01 << 22); // SWSTART
 	
 	
 //adc_Init();
@@ -164,10 +171,18 @@ int main (void) {
 
 	for(;;) {
 		
+//		printf("0 = % 4.2fV \r\n", (((float)analog[0] / 0xFFF) * 3.3));
+//		printf("1 = % 4.2fV \r\n", (((float)analog[1] / 0xFFF) * 3.3));
+//		printf("2 = % 4.2fV \r\n", (((float)analog[2] / 0xFFF) * 3.3));
+		
 		//printf("%p\n",analog);
 		
 		//printf("% 4.2fV \r\n", (float)( ( *(unsigned short *)(0x20002000) ) * 3.3 / 0xFFF));
-		printf("% 4.2fV \r\n", (((float)analog[0] / 0xFFF) * 3.3));
+		
+//		printf("analog0 = % 4.2fV \r\n", (((float)analog[0] / 0xFFF) * 3.3));
+//		printf("analog1 = % 4.2fV \r\n", (((float)analog[1] / 0xFFF) * 3.3));
+//		printf("analog2 = % 4.2fV \r\n", (((float)analog[2] / 0xFFF) * 3.3));
+		
 		//printf("% 4.2fV , p=%p\r\n", (float)(analog[0] * 3.3 / 0xFFF), &analog[0]);
 	}
 
