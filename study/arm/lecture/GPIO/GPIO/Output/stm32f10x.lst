@@ -436,8 +436,8 @@ ARM Macro Assembler    Page 7
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=.\output\stm32f10x.d -o.\output\stm32f10x.o -IC:\Keil_v5\ARM\RV31\
 INC -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Keil_v5\ARM\Inc\ST\STM32F10x --predefin
-e="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 514" --list=.\output\
-stm32f10x.lst source\STM32F10x.s
+e="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSIO
+N SETA 514" --list=.\output\stm32f10x.lst source\STM32F10x.s
 
 
 
@@ -1118,4 +1118,4 @@ Symbol: __main
       At line 117 in file source\STM32F10x.s
 Comment: __main used once
 1 symbol
-401 symbols in table
+402 symbols in table

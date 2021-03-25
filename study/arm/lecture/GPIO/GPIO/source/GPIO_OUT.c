@@ -1,6 +1,31 @@
 
 #include <stm32f10x_lib.h>                        // STM32F10x Library Definitions
 #include "STM32_Init.h"                           // STM32 Initialization
+
+#include <stdio.h>
+
+
+#ifdef __GNUC__
+  /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
+     set to 'Yes') calls __io_putchar() */
+  #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+  #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif /* __GNUC__ */
+
+	
+	
+	PUTCHAR_PROTOTYPE
+{
+	while(!(USART1->SR & (0x01 << 7)));
+  USART1->DR = (unsigned char)ch;
+	
+  return ch;
+}
+	
+	
+//		USART1->DR = 0x30 + i;
+	
 /*----------------------------------------------------------*\
  | HARDWARE DEFINE                                          |
 \*----------------------------------------------------------*/
@@ -52,7 +77,6 @@ int remocon_value = 0;
 int remocon_pre_value = 0;
 
 unsigned short adc_value_x = 0;
-
 
 
 unsigned long micros_10us()
@@ -181,6 +205,94 @@ void EXTI2_IRQHandler(void)
 }
 
 
+//EXTI3---------------------------------------------------------------------------------------------------------------------------
+int rem_count1 = 0;
+unsigned long falling_edge_timing[40];
+unsigned long diff_falling_edge_timing[33];
+int falling_edge_index = 0;
+int value_bit[32];
+unsigned char value_hex = 0;
+unsigned char value_num[10] = {0x16, 0x0C, 0x18, 0x5E, 0x08, 0x1C, 0x5A, 0x42, 0x52, 0x4A};
+unsigned char remocon_num = 0;
+
+void EXTI3_IRQHandler(void)
+{
+	int i, j, rem_count = 0;
+	
+	
+	if (EXTI->PR & (1<<3)) {                       // EXTI0 interrupt pending?
+		//printf("%d \r\n", rem_count1++);
+		
+		falling_edge_timing[falling_edge_index] = micros_10us() * 10;
+		if(falling_edge_index > 0)
+		{
+			int diff_time = 0;
+			diff_falling_edge_timing[falling_edge_index - 1] = 
+			falling_edge_timing[falling_edge_index] - falling_edge_timing[falling_edge_index - 1];
+			
+			diff_time = diff_falling_edge_timing[falling_edge_index - 1];
+			
+			if(diff_time > 13000 && diff_time < 14000)
+			{
+				//printf("Lead Code\r\n");
+				falling_edge_index = 1;
+			}
+			else if(diff_time > 11000 && diff_time < 12000)
+			{
+				printf("%d\r\n", remocon_num);
+				//printf("R\r\n");
+				falling_edge_index = -1;
+			}
+		}
+		
+		
+		falling_edge_index++;
+		if(falling_edge_index == 34)
+		{
+			printf("data_print\r\n");
+			falling_edge_index = 0;
+			
+			for(i = 0; i < 32; i++)
+			{
+				if(diff_falling_edge_timing[i + 1] > 1000 && diff_falling_edge_timing[i + 1] < 1500) value_bit[i] = 0;
+				else if(diff_falling_edge_timing[i + 1] > 2000 && diff_falling_edge_timing[i + 1] < 2500) value_bit[i] = 1;
+			}
+			
+//			for(i = 0; i <32; i++)
+//			{
+//				//printf("%d \r\n", (int)falling_edge_timing[i]);
+//				printf("%d \r\n", (int)value_bit[i]);
+//			}
+			
+			for(i = 0; i < 8; i++)
+			{
+				value_hex >>= 1;
+				
+				if(value_bit[i+16] == 1) 
+				{
+					value_hex |= 0x80;
+				}
+			}
+			
+			//printf("%02x\r\n", value_hex);
+			
+			for(i = 0; i< 10; i++)
+			{
+				if(value_num[i] == value_hex) 
+				{
+					remocon_num = i;
+				}
+			}
+			
+			printf("%d\r\n", remocon_num);
+		}
+		
+		
+		EXTI->PR = (1<<3);                          // clear pending interrupt
+	}
+}
+
+
 		
 void EXTI15_10_IRQHandler(void)
 {
@@ -241,16 +353,108 @@ void TIM3_IRQHandler (void) {
 
 
 
-/*----------------------------------------------------------*\
- | MIAN ENTRY                                               |
-\*----------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*\
+ | MIAN ENTRY                                               																																																													|
+\*--------------------------------------------------------------------------------------------------------------------*/
 int main (void) {
 //  	int a =5;
+	int i = 0;
+	unsigned long c_micros = 0, p_micros = 0;
+	int test_toggle = 0;
+	
 	
 	stm32_Init ();                                  // STM32 setup
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	//SysTick
+	SysTick->LOAD = 720;
+	SysTick->CTRL = 0x07;
+	
+	
+	//RCC clock
+	RCC->APB2ENR |= (0x01 << 2) | (0x01 << 14); // GPIOA, USART1
+	
+	//GPIOA
+	GPIOA->CRH &= (~0x0F << 4); // CLEAR:9
+	GPIOA->CRH &= (~0x0F << 8); // CLEAR:10
+	GPIOA->CRH |= (0x0B<< 4) | (0x04 << 8); // Altemate:9, Floatin:10
+	
+	GPIOA->CRL &= ~(0x0F << 4* 4);
+	GPIOA->CRL |= (0x03 << 4 * 4);
+	
+	
+	//USART 1
+	USART1->CR1 = (0x01 << 2) | (0x01 << 3 )| (0x01 << 13); // RE, TE, UE
+	USART1->CR2 = 0x00;
+	USART1->CR3 = 0x00;
+	USART1->BRR = 0x271; // BRR:115200
+	
+	
+	//EXTI 3
+	EXTI->IMR |= (0x01 << 3);
+	EXTI->FTSR |= (0x01 << 3);
+	AFIO->EXTICR[0] |= (0x00 << 3);  // PA.0 interrupt
+	
+	
+	//NVIC
+	NVIC->ISER[0] |= 0x01 << 9; //EXTI3 interrupt
+	
+	
+	
+	
+	
+//USART1->DR = 0x33; // DATA:1
+	
+	
+	
+//	for(i = 0; i < 10; i++) {
+//		while(!(USART1->SR & (0x01 << 7)));
+//		USART1->DR = 0x30 + i;
+//	}
+	
+	
+//	for(i = 0; i < 10; i++) {
+//		printf("%d\r\n", i);
+//	}
+	
+	printf("\r\ninit_finish\r\n");
+	
+	
+	while(1) 
+	{
+		//c_micros = micros_10us();
+		if(c_micros - p_micros > 100) // 100 == 1ms
+		{
+				p_micros = c_micros;
+			if(test_toggle == 0) 
+			{
+				GPIOA->ODR |= (0x01 << 4);
+				test_toggle = 1;
+			}
+			else 
+			{
+				GPIOA->ODR &= ~(0x01 << 4);
+				test_toggle = 0;
+			}
+		}
+		
+	}
+	
+	
 	while(1);
+	
+	
+	
+	
+	
 	
 	
 	// systick

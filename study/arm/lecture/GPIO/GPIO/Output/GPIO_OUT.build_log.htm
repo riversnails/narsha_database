@@ -5,10 +5,10 @@
 <h2>Tool Versions:</h2>
 IDE-Version: •ÏVision V5.14.0.0
 Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: heartha ha, newstarit, LIC=X4HGK-ZBR0M-4IU51-CW9RR-RR772-1LXLN
+License Information: ∞≠ ¥Ÿ«ı, ., LIC=----
  
 Tool Versions:
-Toolchain:       MDK-ARM Basic (256K)  Version: 5.14.0.0
+Toolchain:       MDK-Lite  Version: 5.14.0.0
 Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
 C Compiler:      Armcc.exe V5.05 update 1 (build 106)
 Assembler:       Armasm.exe V5.05 update 1 (build 106)
@@ -17,16 +17,35 @@ Library Manager: ArmAr.exe V5.05 update 1 (build 106)
 Hex Converter:   FromElf.exe V5.05 update 1 (build 106)
 CPU DLL:         SARMCM3.DLL V5.14.0.0
 Dialog DLL:      DARMSTM.DLL V1.65.0.0
-Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.14.0_KEIL
+Target DLL:      Segger\JL2CM3.dll V2.99.13.0
 Dialog DLL:      TARMSTM.DLL V1.64.0.0
  
 <h2>Project:</h2>
-D:\data\edu\ARM_IOT\lecture\GPIO\GPIO\GPIO.uvproj
-Project File Date:  03/01/2020
+D:\git\narsha_database\study\arm\lecture\GPIO\GPIO\GPIO.uvproj
+Project File Date:  03/11/2021
 
 <h2>Output:</h2>
 Build target 'GPIO'
-".\Output\GPIO_OUT.axf" - 0 Error(s), 0 Warning(s).
+compiling GPIO_OUT.c...
+source\GPIO_OUT.c(220): warning:  #177-D: variable "j" was declared but never referenced
+        int i, j, rem_count = 0;
+source\GPIO_OUT.c(220): warning:  #177-D: variable "rem_count" was declared but never referenced
+        int i, j, rem_count = 0;
+source\GPIO_OUT.c(385): warning:  #68-D: integer conversion resulted in a change of sign
+        GPIOA->CRH &= (~0x0F << 4); // CLEAR:9
+source\GPIO_OUT.c(386): warning:  #68-D: integer conversion resulted in a change of sign
+        GPIOA->CRH &= (~0x0F << 8); // CLEAR:10
+source\GPIO_OUT.c(451): warning:  #128-D: loop is not reachable
+        while(1);
+source\GPIO_OUT.c(460): warning:  #111-D: statement is unreachable
+        SysTick->LOAD = 720;
+source\GPIO_OUT.c(685): warning:  #111-D: statement is unreachable
+                                *(volatile unsigned int *)0x40021018 |= 0x08;
+source\GPIO_OUT.c: 7 warnings, 0 errors
+linking...
+Program Size: Code=1996 RO-data=268 RW-data=112 ZI-data=1416  
+FromELF: creating hex file...
+".\Output\GPIO_OUT.axf" - 0 Error(s), 7 Warning(s).
 </pre>
 </body>
 </html>

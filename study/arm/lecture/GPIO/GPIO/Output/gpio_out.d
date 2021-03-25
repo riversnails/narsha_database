@@ -28,3 +28,4 @@
 .\output\gpio_out.o: .\STM32F10x\stm32f10x_usart.h
 .\output\gpio_out.o: .\STM32F10x\stm32f10x_wwdg.h
 .\output\gpio_out.o: source\STM32_Init.h
+.\output\gpio_out.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
