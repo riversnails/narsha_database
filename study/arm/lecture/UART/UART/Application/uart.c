@@ -270,6 +270,9 @@ int main (void) {
 	
 								
 								
+	while(1);
+								
+								
 	//aaa = "hello";
 	
 	//printf("addr of hello = %p\n",aaa);
