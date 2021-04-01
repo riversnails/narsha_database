@@ -79,6 +79,9 @@ int remocon_pre_value = 0;
 unsigned short adc_value_x = 0;
 
 
+void exit_callback_func();
+
+
 unsigned long micros_10us()
 {
 	return sys_count;
@@ -214,6 +217,9 @@ int value_bit[32];
 unsigned char value_hex = 0;
 unsigned char value_num[10] = {0x16, 0x0C, 0x18, 0x5E, 0x08, 0x1C, 0x5A, 0x42, 0x52, 0x4A};
 unsigned char remocon_num = 0;
+char exti_callback_flag = 0;
+int servo_duty_1 = 70;
+int servo_millis_enable = 0;
 
 void EXTI3_IRQHandler(void)
 {
@@ -249,8 +255,19 @@ void EXTI3_IRQHandler(void)
 		falling_edge_index++;
 		if(falling_edge_index == 34)
 		{
-			printf("data_print\r\n");
 			falling_edge_index = 0;
+			exti_callback_flag = 1;
+		}
+		
+		
+		EXTI->PR = (1<<3);                          // clear pending interrupt
+	}
+}
+
+
+void exit_callback_func()
+{
+	//printf("data_print\r\n");
 			
 			for(i = 0; i < 32; i++)
 			{
@@ -285,27 +302,60 @@ void EXTI3_IRQHandler(void)
 			}
 			
 			printf("%d\r\n", remocon_num);
+			
+			if(remocon_num == 1) 
+		{
+			servo_millis_enable = 0;
+			servo_duty_1 = 70;
 		}
-		
-		
-		EXTI->PR = (1<<3);                          // clear pending interrupt
-	}
+		else if(remocon_num == 2)
+		{
+			servo_millis_enable = 0;
+			servo_duty_1 = 230;
+		}
+		else if(remocon_num == 3)
+		{
+			servo_millis_enable = 0;
+			servo_duty_1 = 160;
+		}
+		else if(remocon_num == 4)
+		{
+			servo_millis_enable = 1;
+		}
 }
 
-
 		
+//void EXTI15_10_IRQHandler(void)
+//{
+//	if (EXTI->PR & (1<<13)) {                       // EXTI0 interrupt pending?
+
+//		if( GPIOC->IDR & (0x01 << 13) )
+//		{
+//			rising_time = micros_10us();
+//		}
+//		else
+//		{
+//			falling_time = micros_10us();
+//			diff_time = (falling_time - rising_time) * 10;
+//		}
+//		
+//		
+//		EXTI->PR = (1<<13);                          // clear pending interrupt
+//	}
+//}
+
+
 void EXTI15_10_IRQHandler(void)
 {
 	if (EXTI->PR & (1<<13)) {                       // EXTI0 interrupt pending?
 
 		if( GPIOC->IDR & (0x01 << 13) )
 		{
-			rising_time = micros_10us();
+			printf("Button 6 : up\r\n");
 		}
 		else
 		{
-			falling_time = micros_10us();
-			diff_time = (falling_time - rising_time) * 10;
+			printf("Button 6 : down\r\n");
 		}
 		
 		
@@ -313,21 +363,43 @@ void EXTI15_10_IRQHandler(void)
 	}
 }
 
+
+//void TIM2_IRQHandler (void) {
+
+//	 if ((TIM2->SR & 0x0001) != 0) { // check update interrupt source
+//			
+//			//static_led_pwm();
+//			GPIOA->BSRR = 0x01 << 5;
+//	    
+//			TIM2->SR &= ~(1<<0); // clear UIF flag
+//	 }
+//	 else if ((TIM2->SR & 0x0002) != 0) { // check capture compare interrupt source
+//			
+//			//static_led_pwm();
+//			GPIOA->BRR = 0x01 << 5;
+//	    
+//			TIM2->SR &= ~(1<<1); // clear UIF flag
+//	 }		
+//}
+
+
+//TIMER2--------------------------------------------------------------------------------------------------
+
+
 void TIM2_IRQHandler (void) {
 
 	 if ((TIM2->SR & 0x0001) != 0) { // check update interrupt source
-			
-			//static_led_pwm();
-			GPIOA->BSRR = 0x01 << 5;
-	    
+		 
+			GPIOA->ODR |= (0x01 << 4);
+			TIM2->CCR1 = servo_duty_1;
+		 
 			TIM2->SR &= ~(1<<0); // clear UIF flag
 	 }
 	 else if ((TIM2->SR & 0x0002) != 0) { // check capture compare interrupt source
 			
-			//static_led_pwm();
-			GPIOA->BRR = 0x01 << 5;
+			GPIOA->ODR &= ~(0x01 << 4);
 	    
-			TIM2->SR &= ~(1<<1); // clear UIF flag
+			TIM2->SR &= ~(1<<1); // clear CC1E flag
 	 }		
 }
 
@@ -366,9 +438,62 @@ int main (void) {
 	stm32_Init ();                                  // STM32 setup
 	
 	
+	//SysTick
+	SysTick->LOAD = 720;
+	SysTick->CTRL = 0x07;
+	
+	RCC->APB2ENR |= (0x01 << 2) | (0x01 << 3) | (0x01 << 6) | (0x01 << 14); // GPIOA, GPIOB, GPIOE, USART1
+	
+	//GPIOA
+	GPIOA->CRH &= ~(0x0F << 2 * 4); // GPIO:9
+	GPIOA->CRH &= ~(0x0F << 3 * 4); // GPIO:10
+	GPIOA->CRH |= (0x0B << 1 * 4); // GPIO:9
+	GPIOA->CRH |= (0x04 << 2 * 4); // GPIO:10
+	
+	//GPIOB
+	GPIOB->CRL &= ~(0x0F<< 5 * 4); // GPIOB:5
+	GPIOB->CRL |= (0x03 << 5  * 4); //  
+	
+	//GPIOE
+	GPIOE->CRL &= ~(0x0F<< 2 * 4); // GPIOE:2
+	GPIOE->CRL |= (0x03 << 2  * 4); //
+	
+	//USART 1
+	USART1->CR1 = (0x01 << 2) | (0x01 << 3 )| (0x01 << 13); // RE, TE, UE
+	USART1->CR2 = 0x00;
+	USART1->CR3 = 0x00;
+	USART1->BRR = 0x271; // BRR:115200
+	
+	
+	GPIOB->BSRR = 0x01 << 5; // BSRR:5 ODR에서 HIGH LOW 분리한느낌
+	
+	
+	while(1)
+	{
+		//printf("hehe \r\n");
+		//Delay(100000);
+	}
+	
+	while(1)
+	{
+		GPIOE->BSRR = (0x01 << 2);
+		Delay(100000);
+		GPIOE->BRR = (0x01 << 2);
+		Delay(100000);
+	}
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	while(1);
 	
 	
 	
@@ -381,6 +506,8 @@ int main (void) {
 	
 	//RCC clock
 	RCC->APB2ENR |= (0x01 << 2) | (0x01 << 14); // GPIOA, USART1
+	RCC->APB1ENR |= (0x01 << 0); // TIM2 clock
+	
 	
 	//GPIOA
 	GPIOA->CRH &= (~0x0F << 4); // CLEAR:9
@@ -404,9 +531,22 @@ int main (void) {
 	AFIO->EXTICR[0] |= (0x00 << 3);  // PA.0 interrupt
 	
 	
+	
+	//TIMER2
+	TIM2->CR1 = (0x01 << 0); // CEN
+	TIM2->CR2 = 0x00;
+	TIM2->CNT = 0;
+	TIM2->PSC = 720 - 1;
+	TIM2->ARR = 2000 - 1;
+	TIM2->DIER = (0x01 << 0 )| (0x01 << 1); // UIE, CC1IE
+	TIM2->CCMR1 = 0x68; // CC1S, PWMmode
+	TIM2->CCER = (0x01 << 0); // CC1E
+	TIM2->CCR1 = 70;
+	
+	
 	//NVIC
 	NVIC->ISER[0] |= 0x01 << 9; //EXTI3 interrupt
-	
+	NVIC->ISER[0] |= 0x01 << 28; // TIM2 En
 	
 	
 	
@@ -430,29 +570,43 @@ int main (void) {
 	
 	while(1) 
 	{
-		//c_micros = micros_10us();
-		if(c_micros - p_micros > 100) // 100 == 1ms
+		c_micros = micros_10us();
+		if(c_micros - p_micros > 100 * 20 && servo_millis_enable == 1) // 100000 == 1s
 		{
-				p_micros = c_micros;
-			if(test_toggle == 0) 
-			{
-				GPIOA->ODR |= (0x01 << 4);
-				test_toggle = 1;
-			}
-			else 
-			{
-				GPIOA->ODR &= ~(0x01 << 4);
-				test_toggle = 0;
-			}
+			p_micros = c_micros;
+			
+			servo_duty_1++;
+			if(servo_duty_1 > 230) servo_duty_1 = 70;
+			
+//			if(test_toggle == 0) 
+//			{
+//				//GPIOA->ODR |= (0x01 << 4);
+//				servo_duty_1 = 70;
+//				test_toggle = 1;
+//			}
+//			else 
+//			{
+//				//GPIOA->ODR &= ~(0x01 << 4);
+//				servo_duty_1 = 230;
+//				test_toggle = 0;
+//			}
 		}
 		
+		//----------------------------------
+		//Remocon
+		
+		if(exti_callback_flag == 1)
+		{
+			exti_callback_flag = 0;
+			exit_callback_func();
+		}
 	}
 	
 	
 	while(1);
 	
 	
-	
+	//--------------------------------------------------------------------------------------
 	
 	
 	
