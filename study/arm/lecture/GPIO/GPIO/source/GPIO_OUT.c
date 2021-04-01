@@ -3,6 +3,8 @@
 #include "STM32_Init.h"                           // STM32 Initialization
 
 #include <stdio.h>
+#include<stdarg.h>
+
 
 
 #ifdef __GNUC__
@@ -95,6 +97,10 @@ void Delay(unsigned int nTime)
   while(TimingDelay != 0);
 }
 
+void Delay_ms(unsigned int nTime)
+{ 
+  Delay(nTime * 100);
+}
 
 void TimingDelay_Decrement(void)
 {
@@ -420,10 +426,114 @@ void TIM3_IRQHandler (void) {
 			TIM3->SR &= ~(1<<1); // clear UIF flag
 	 }		 
 } 
-//------------------------------------
+//--------------------------------------------------------------------------------------------------------
+
+#define rs_high() GPIOD->ODR |= (0x01 << 11);
+#define rs_low() GPIOD->ODR &= ~(0x01 << 11);
+#define rw_high() GPIOD->ODR |= (0x01 << 5);
+#define rw_low() GPIOD->ODR &= ~(0x01 << 5);
+#define backlight_on() GPIOE->BSRR = (0x01 << 5);
 
 
+char buff[20];
+int count = 0;
+char key_flag[5];
+char *up_string[5] = {"Left UP", "Right UP", "Up UP", "Down UP", "Enter UP"};
+char *down_string[5] = {"Left DOWN", "Right DOWN", "Up DOWN", "Down DOWN", "Enter DOWN"};
+char *lcd_menu[6] = {"  1. LED On", 
+															"  2. LED Off", 
+															"  3. LED Pwm",
+															"  4. SERVO Left",
+															"  5. SERVO Right", 
+															"  6. SERVO Var", };
 
+enum
+{
+	LEFT_BUTTON = 0,
+	RIGHT_BUTTON,
+	UP_BUTTON,
+	DOWN_BUTTON,
+	ENTER_BUTTON,
+};
+															
+
+void enable_high_low()
+{
+	GPIOD->ODR |= (0x01 << 4);
+	GPIOD->ODR &= ~(0x01 << 4);
+}
+
+void set_value_8bit(unsigned char value)
+{
+	GPIOE->ODR &= ~(0xFF << 8);
+	GPIOE->ODR |= (value << 8);
+}
+
+
+void set_instruction_8bit(unsigned char inst)
+{
+	rs_low();
+	set_value_8bit(inst);
+	enable_high_low();
+	rs_high();
+	Delay(5); // 50us
+}
+
+void set_data_8bit(unsigned char data)
+{
+	set_value_8bit(data);
+	enable_high_low();
+	Delay(5); // 50us
+}
+
+void charLCD_init()
+{
+	backlight_on();
+	rs_high();
+	rw_low();
+	
+	set_instruction_8bit(0x30);
+	set_instruction_8bit(0x30);
+	set_instruction_8bit(0x30);
+	set_instruction_8bit(0x38);
+	set_instruction_8bit(0x06);
+	set_instruction_8bit(0x0C);
+	set_instruction_8bit(0x80);
+	set_instruction_8bit(0x01); // Clear_all
+	Delay(200);
+}
+
+void charLCD_string(char *string)
+{
+	int i;
+	for(i = 0; i < strlen(string); i++)
+	{
+		set_data_8bit(string[i]);
+	}
+}
+
+void set_cursor(char row, char col)
+{
+	if(row == 1)
+	{
+		set_instruction_8bit(0x80 + col);
+	}
+	else if(row == 2)
+	{
+		set_instruction_8bit(0xC0 + col);
+	}
+}
+
+void printf_lcd(char *format, ...)
+{
+	char buf[512];
+	va_list arglist;
+
+	va_start(arglist, format);
+	vsprintf(buf, format, arglist);
+	va_end(arglist);
+	charLCD_string(buf);
+}
 
 /*--------------------------------------------------------------------------------------------------------------------*\
  | MIAN ENTRY                                               																																																													|
@@ -431,11 +541,129 @@ void TIM3_IRQHandler (void) {
 int main (void) {
 //  	int a =5;
 	int i = 0;
+	
+	char now_cursor = 0;
+	
 	unsigned long c_micros = 0, p_micros = 0;
 	int test_toggle = 0;
 	
 	
 	stm32_Init ();                                  // STM32 setup
+	
+	
+	
+	
+	//-------------------------------------------------------------------------------------------------------------
+	//2021-4-1
+	
+	
+	//SysTick
+	SysTick->LOAD = 720;
+	SysTick->CTRL = 0x07;
+	
+	//RCC
+	RCC->APB2ENR |= (0x01 << 3) | (0x01 << 5) | (0x01 << 6); // GPIOB, GPIOD, GPIOE
+	
+	//GPIOB
+	GPIOB->CRL &= ~(0x0F<< 5 * 4); // GPIOB:5
+	GPIOB->CRL |= (0x03 << 5  * 4); //  GPIOB:5
+	GPIOB->BSRR = 0x01 << 5; // BUZZER OFF
+	
+	//GPIOD
+	GPIOD->CRL &= ~(0x0F << 4 * 4); // GPIO:4 , EN
+	GPIOD->CRL &= ~(0x0F << 5 * 4); // GPIO:5 , RW
+	GPIOD->CRH &= ~(0x0F << 3 * 4); // GPIO:11 , RS
+	GPIOD->CRL |= (0x03 << 4 * 4); // GPIO:4
+	GPIOD->CRL |= (0x03 << 5 * 4); // GPIO:5
+	GPIOD->CRH |= (0x03 << 3 * 4); // GPIO:1
+
+	//GPIOE
+	GPIOE->CRL &= ~(0x0F << 5 * 4); // GPIO:5
+	GPIOE->CRH &= ~(0xFFFFFFFF); // CLEAR_ALL
+	GPIOE->CRL |= (0x03 << 5 * 4); // GPIO:5
+	GPIOE->CRH |= (0x33333333); // 
+	
+	//Key
+	RCC->APB2ENR |= (0x01 << 4); // GPIOC
+	GPIOC->CRL &= ~(0x0FFFFF); // GPIO:0 , left, GPIO:1 , right, GPIO:2 , up, GPIO:3 , down, GPIO:4 , enter
+	GPIOC->CRL |= (0x044444); // GPIO:0 GPIO:1 GPIO:2  GPIO:3 GPIO:4
+	
+	// Char LCD
+//	GPIOD->BRR = (0x01 << 5); // RW_LOW
+//	GPIOD->BRR = (0x01 << 11); // RS_LOW
+//	GPIOE->BSRR = (0x30 << 8); // PUSH_DATA
+//	GPIOD->BSRR = (0x01 << 4); // EN_HIGH
+//	GPIOD->BRR = (0x01 << 4); // EN_LOW
+//	// data 타이밍 빨라서 조심 적용되는데 시간필요
+//	GPIOD->BSRR = (0x01 << 11); // RS_HIGH
+	
+	
+	
+	charLCD_init();
+	
+	//charLCD_string("hello_world");
+	
+	set_cursor(1,0);
+	printf_lcd(lcd_menu[0]);
+	set_cursor(2,0);
+	printf_lcd(lcd_menu[1]);
+	set_cursor(1,0);
+	printf_lcd(">");
+	
+	while(1)
+	{
+		for(i = 0; i < 5; i++)
+		{
+			if(GPIOC->IDR & (0x01 << i)) // up
+			{
+				if(key_flag[i] == 0)
+				{
+					key_flag[i] = 1;
+					set_cursor(1,0);
+					//printf_lcd(up_string[i]);
+				}
+			}
+			else
+			{ 
+				if(key_flag[i] == 1) // down
+				{
+					key_flag[i] = 0;
+					set_cursor(1,0);
+					//printf_lcd(down_string[i]);
+					
+					if(i == DOWN_BUTTON)
+				}
+			}
+		}
+		Delay_ms(10);
+		
+		
+	}
+	
+	while(1)
+	{
+		set_cursor(1,0);
+		printf_lcd("count = %d", count++);
+		//set_data_8bit(0x31);
+		Delay_ms(1000);
+	}
+	
+	
+	while(1)
+	{
+		GPIOE->BSRR = (0x01 << 5);
+		Delay(50000);
+		GPIOE->BRR = (0x01 << 5);
+		Delay(50000);
+	}
+	
+	
+	
+	while(1);
+	
+	
+	//-------------------------------------------------------------------------------------------------------------
+	//2021-3-31
 	
 	
 	//SysTick
@@ -483,19 +711,11 @@ int main (void) {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	while(1);
 	
 	
+	//-------------------------------------------------------------------------------------------------------------
 	
 	
 	

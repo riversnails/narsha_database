@@ -22,11 +22,54 @@ Dialog DLL:      TARMSTM.DLL V1.64.0.0
  
 <h2>Project:</h2>
 D:\git\narsha_database\study\arm\lecture\GPIO\GPIO\GPIO.uvproj
-Project File Date:  03/25/2021
+Project File Date:  03/31/2021
 
 <h2>Output:</h2>
 Build target 'GPIO'
-".\Output\GPIO_OUT.axf" - 0 Error(s), 0 Warning(s).
+compiling GPIO_OUT.c...
+source\GPIO_OUT.c(84): warning:  #1295-D: Deprecated declaration exit_callback_func - give arg types
+  void exit_callback_func();
+source\GPIO_OUT.c(232): warning:  #177-D: variable "i" was declared but never referenced
+        int i, j, rem_count = 0;
+source\GPIO_OUT.c(232): warning:  #177-D: variable "j" was declared but never referenced
+        int i, j, rem_count = 0;
+source\GPIO_OUT.c(232): warning:  #177-D: variable "rem_count" was declared but never referenced
+        int i, j, rem_count = 0;
+source\GPIO_OUT.c(500): warning:  #223-D: function "strlen" declared implicitly
+        for(i = 0; i < strlen(string); i++)
+source\GPIO_OUT.c(632): warning:  #128-D: loop is not reachable
+        while(1)
+source\GPIO_OUT.c(641): warning:  #128-D: loop is not reachable
+        while(1)
+source\GPIO_OUT.c(651): warning:  #128-D: loop is not reachable
+        while(1);
+source\GPIO_OUT.c(659): warning:  #111-D: statement is unreachable
+        SysTick->LOAD = 720;
+source\GPIO_OUT.c(694): warning:  #128-D: loop is not reachable
+        while(1)
+source\GPIO_OUT.c(704): warning:  #128-D: loop is not reachable
+        while(1);
+source\GPIO_OUT.c(712): warning:  #111-D: statement is unreachable
+        SysTick->LOAD = 720;
+source\GPIO_OUT.c(722): warning:  #68-D: integer conversion resulted in a change of sign
+        GPIOA->CRH &= (~0x0F << 4); // CLEAR:9
+source\GPIO_OUT.c(723): warning:  #68-D: integer conversion resulted in a change of sign
+        GPIOA->CRH &= (~0x0F << 8); // CLEAR:10
+source\GPIO_OUT.c(815): warning:  #128-D: loop is not reachable
+        while(1);
+source\GPIO_OUT.c(824): warning:  #111-D: statement is unreachable
+        SysTick->LOAD = 720;
+source\GPIO_OUT.c(1049): warning:  #111-D: statement is unreachable
+                                *(volatile unsigned int *)0x40021018 |= 0x08;
+source\GPIO_OUT.c(536): warning:  #177-D: variable "now_cursor" was declared but never referenced
+        char now_cursor = 0;
+source\GPIO_OUT.c(539): warning:  #177-D: variable "test_toggle" was declared but never referenced
+        int test_toggle = 0;
+source\GPIO_OUT.c: 19 warnings, 0 errors
+linking...
+Program Size: Code=5984 RO-data=468 RW-data=188 ZI-data=1412  
+FromELF: creating hex file...
+".\Output\GPIO_OUT.axf" - 0 Error(s), 19 Warning(s).
 </pre>
 </body>
 </html>
