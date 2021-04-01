@@ -392,47 +392,98 @@ void EXTI15_10_IRQHandler(void)
 //TIMER2--------------------------------------------------------------------------------------------------
 
 
-void TIM2_IRQHandler (void) {
+//void TIM2_IRQHandler (void) {
 
-	 if ((TIM2->SR & 0x0001) != 0) { // check update interrupt source
-		 
-			GPIOA->ODR |= (0x01 << 4);
-			TIM2->CCR1 = servo_duty_1;
-		 
-			TIM2->SR &= ~(1<<0); // clear UIF flag
-	 }
-	 else if ((TIM2->SR & 0x0002) != 0) { // check capture compare interrupt source
-			
-			GPIOA->ODR &= ~(0x01 << 4);
-	    
-			TIM2->SR &= ~(1<<1); // clear CC1E flag
-	 }		
-}
-
-
-void TIM3_IRQHandler (void) {
-
-	 if ((TIM3->SR & 0x0001) != 0) { // check update interrupt source
-			
-			//static_servo();
-			GPIOA->BSRR = 0x01 << 8;
-	    
-			TIM3->SR &= ~(1<<0); // clear UIF flag
-	 }	
-	 else if ((TIM3->SR & 0x0002) != 0) { // check capture compare interrupt source
-			
-			GPIOA->BRR = 0x01 << 8;
-	    
-			TIM3->SR &= ~(1<<1); // clear UIF flag
-	 }		 
-} 
-//--------------------------------------------------------------------------------------------------------
+//	 if ((TIM2->SR & 0x0001) != 0) { // check update interrupt source
+//		 
+//			GPIOA->ODR |= (0x01 << 4);
+//			TIM2->CCR1 = servo_duty_1;
+//		 
+//			TIM2->SR &= ~(1<<0); // clear UIF flag
+//	 }
+//	 else if ((TIM2->SR & 0x0002) != 0) { // check capture compare interrupt source
+//			
+//			GPIOA->ODR &= ~(0x01 << 4);
+//	    
+//			TIM2->SR &= ~(1<<1); // clear CC1E flag
+//	 }		
+//}
 
 #define rs_high() GPIOD->ODR |= (0x01 << 11);
 #define rs_low() GPIOD->ODR &= ~(0x01 << 11);
 #define rw_high() GPIOD->ODR |= (0x01 << 5);
 #define rw_low() GPIOD->ODR &= ~(0x01 << 5);
-#define backlight_on() GPIOE->BSRR = (0x01 << 5);
+#define backlight_on() GPIOE->ODR |= (0x01 << 5);
+#define backlight_off() GPIOE->ODR &= ~(0x01 << 5);
+#define bl_touch_high() GPIOD->ODR |= (0x01 << 6);
+#define bl_touch_low() GPIOD->ODR &= ~(0x01 << 6);
+
+
+int backlight_pwm_duty = 20;
+int led_pwm_duty = 20;
+int bl_touch_duty = 65;
+
+void led_on();
+void led_off();
+
+void TIM2_IRQHandler (void) {
+
+	 if ((TIM2->SR & 0x0001) != 0) { // check update interrupt source
+		 backlight_on();
+		 led_on();
+		 TIM2->CCR1 = backlight_pwm_duty;
+		 TIM2->CCR2 = led_pwm_duty;
+		 TIM2->SR &= ~(1<<0); // clear UIF flag
+	 }
+	 else if ((TIM2->SR & 0x0002) != 0) { // check capture compare interrupt source
+			backlight_off();
+	    
+			TIM2->SR &= ~(1<<1); // clear CC1E flag
+	 }		
+	 else if ((TIM2->SR & 0x0004) != 0) { // check capture compare interrupt source
+			led_off();
+	    
+			TIM2->SR &= ~(1<<2); // clear CC1E flag
+	 }		
+}
+
+
+
+void TIM3_IRQHandler (void) {
+
+	 if ((TIM3->SR & 0x0001) != 0) { // check update interrupt source
+		 bl_touch_high();
+		 TIM3->CCR1 = bl_touch_duty;
+		 
+		 TIM3->SR &= ~(1<<0); // clear UIF flag
+	 }
+	 else if ((TIM3->SR & 0x0002) != 0) { // check capture compare interrupt source
+			bl_touch_low();
+	    
+			TIM3->SR &= ~(1<<1); // clear CC1E flag
+	 }		
+}
+
+
+//void TIM3_IRQHandler (void) {
+
+//	 if ((TIM3->SR & 0x0001) != 0) { // check update interrupt source
+//			
+//			//static_servo();
+//			GPIOA->BSRR = 0x01 << 8;
+//	    
+//			TIM3->SR &= ~(1<<0); // clear UIF flag
+//	 }	
+//	 else if ((TIM3->SR & 0x0002) != 0) { // check capture compare interrupt source
+//			
+//			GPIOA->BRR = 0x01 << 8;
+//	    
+//			TIM3->SR &= ~(1<<1); // clear UIF flag
+//	 }		 
+//} 
+//--------------------------------------------------------------------------------------------------------
+
+
 
 
 char buff[20];
@@ -440,12 +491,12 @@ int count = 0;
 char key_flag[5];
 char *up_string[5] = {"Left UP", "Right UP", "Up UP", "Down UP", "Enter UP"};
 char *down_string[5] = {"Left DOWN", "Right DOWN", "Up DOWN", "Down DOWN", "Enter DOWN"};
-char *lcd_menu[6] = {"  1. LED On", 
-															"  2. LED Off", 
-															"  3. LED Pwm",
-															"  4. SERVO Left",
+char *lcd_menu[6] = {"  1. LED On     ", 
+															"  2. LED Off    ", 
+															"  3. LED Pwm    ",
+															"  4. SERVO Left ",
 															"  5. SERVO Right", 
-															"  6. SERVO Var", };
+															"  6. SERVO Var  ", };
 
 enum
 {
@@ -455,7 +506,18 @@ enum
 	DOWN_BUTTON,
 	ENTER_BUTTON,
 };
-															
+
+char enter_position = 0;
+
+enum
+{
+	ENTER_POSITION_UPPER = 0,
+	ENTER_POSITION_LOWER,
+};
+
+char menu_index = 0;
+char enter_index = 0;
+
 
 void enable_high_low()
 {
@@ -535,6 +597,36 @@ void printf_lcd(char *format, ...)
 	charLCD_string(buf);
 }
 
+void enter_character(char upper_lower)
+{
+	if(upper_lower == ENTER_POSITION_UPPER)
+	{
+		set_cursor(2,0);
+		printf_lcd(" ");
+		set_cursor(1,0);
+		printf_lcd(">");
+	}
+	else if(upper_lower == ENTER_POSITION_LOWER)
+	{
+		set_cursor(1,0);
+		printf_lcd(" ");
+		set_cursor(2,0);
+		printf_lcd(">");
+	}
+	
+}
+
+void led_on()
+{
+	GPIOE->ODR |= (0x01 << 4);
+}
+
+void led_off()
+{
+	GPIOE->ODR &= ~(0x01 << 4);
+}
+
+
 /*--------------------------------------------------------------------------------------------------------------------*\
  | MIAN ENTRY                                               																																																													|
 \*--------------------------------------------------------------------------------------------------------------------*/
@@ -545,8 +637,9 @@ int main (void) {
 	char now_cursor = 0;
 	
 	unsigned long c_micros = 0, p_micros = 0;
+	unsigned long curr_millis = 0, prev_millis_button = 0, prev_millis_pwm = 0, prev_millis_pwm_led = 0, prev_millis_bl_touch = 0;
 	int test_toggle = 0;
-	
+	char bl_touch_toggle = 0;
 	
 	stm32_Init ();                                  // STM32 setup
 	
@@ -588,6 +681,39 @@ int main (void) {
 	GPIOC->CRL &= ~(0x0FFFFF); // GPIO:0 , left, GPIO:1 , right, GPIO:2 , up, GPIO:3 , down, GPIO:4 , enter
 	GPIOC->CRL |= (0x044444); // GPIO:0 GPIO:1 GPIO:2  GPIO:3 GPIO:4
 	
+	//BL Touch
+	GPIOD->CRL &= ~(0x0F << 6*4);
+	GPIOD->CRL |= (0x03 << 6*4);
+	
+	//TIMER2
+	RCC->APB1ENR |= (0x01 << 0);
+	TIM2->CR1 = 0x01;
+	TIM2->DIER = 0x03;
+	TIM2->CNT = 0;
+	TIM2->PSC = 71;
+	TIM2->ARR = 1999;
+	TIM2->CCMR1 = 0x6868;
+	TIM2->CCER = 0x11;
+	TIM2->CCR1 = 200;
+	TIM2->CCR2 = 200;
+	NVIC->ISER[0] |= 0x01 << 28; // TIM2 En
+	
+	//TIMER3
+	RCC->APB1ENR |= (0x01 << 1);
+	TIM3->CR1 = 0x01;
+	TIM3->DIER = 0x03;
+	TIM3->CNT = 0;
+	TIM3->PSC = 719;
+	TIM3->ARR = 1999;
+	TIM3->CCMR1 = 0x68;
+	TIM3->CCER = 0x01;
+	TIM3->CCR1 = 70;
+	NVIC->ISER[0] |= 0x01 << 29; // TIM3 En
+	
+	//PE.4
+	GPIOE->CRL &= ~(0x0F << 4 * 4);
+	GPIOE->CRL |= (0x03 << 4 * 4);
+	
 	// Char LCD
 //	GPIOD->BRR = (0x01 << 5); // RW_LOW
 //	GPIOD->BRR = (0x01 << 11); // RS_LOW
@@ -602,7 +728,6 @@ int main (void) {
 	charLCD_init();
 	
 	//charLCD_string("hello_world");
-	
 	set_cursor(1,0);
 	printf_lcd(lcd_menu[0]);
 	set_cursor(2,0);
@@ -610,34 +735,133 @@ int main (void) {
 	set_cursor(1,0);
 	printf_lcd(">");
 	
+	
 	while(1)
 	{
-		for(i = 0; i < 5; i++)
+		curr_millis = micros_10us();
+		
+		if(curr_millis - prev_millis_button > 1000) // 10ms
 		{
-			if(GPIOC->IDR & (0x01 << i)) // up
+			prev_millis_button = curr_millis;
+			
+			
+			for(i = 0; i < 5; i++)
 			{
-				if(key_flag[i] == 0)
+				if(GPIOC->IDR & (0x01 << i)) // up
 				{
-					key_flag[i] = 1;
-					set_cursor(1,0);
-					//printf_lcd(up_string[i]);
+					if(key_flag[i] == 0)
+					{
+						key_flag[i] = 1;
+						set_cursor(1,0);
+						//printf_lcd(up_string[i]);
+					}
 				}
+				else
+				{ 
+					if(key_flag[i] == 1) // down
+					{
+						key_flag[i] = 0;
+						set_cursor(1,0);
+						//printf_lcd(down_string[i]);
+						
+						if(i == DOWN_BUTTON)
+						{
+							if(enter_position == ENTER_POSITION_UPPER) 
+							{
+								enter_position = ENTER_POSITION_LOWER;
+								enter_character(enter_position);
+							}
+							else if(enter_position == ENTER_POSITION_LOWER)
+							{
+								
+								menu_index++;
+								if(menu_index > 4) menu_index = 4;
+								
+								set_cursor(1,0);
+								printf_lcd(lcd_menu[menu_index]);
+								set_cursor(2,0);
+								printf_lcd(lcd_menu[menu_index + 1]);
+								enter_character(enter_position);
+							}
+							
+							enter_index = enter_position + menu_index;
+						}
+						else if(i == UP_BUTTON)
+						{
+							if(enter_position == ENTER_POSITION_LOWER)
+							{
+								enter_position = ENTER_POSITION_UPPER;
+								enter_character(enter_position);
+							}
+							else if(enter_position == ENTER_POSITION_UPPER && menu_index != 0)
+							{
+								menu_index--;
+								if(menu_index < 0) menu_index = 0;
+								
+								set_cursor(1,0);
+								printf_lcd(lcd_menu[menu_index]);
+								set_cursor(2,0);
+								printf_lcd(lcd_menu[menu_index + 1]);
+								enter_character(enter_position);
+							}
+							
+							enter_index = enter_position + menu_index;
+						}
+						else if(i == ENTER_BUTTON)
+						{
+							if(enter_index == 0)
+							{
+								TIM2->DIER &= ~(0x01 << 2);
+								led_on();
+							}
+							else if(enter_index == 1)
+							{
+								TIM2->DIER &= ~(0x01 << 2);
+								led_off();
+							}
+							else if(enter_index == 2)
+							{
+								TIM2->DIER |= (0x01 << 2);
+							}
+						}
+						
+					}
+				}
+			}
+			
+		}
+		
+		if(curr_millis - prev_millis_pwm > 1000) // 10ms
+		{
+			prev_millis_pwm = curr_millis;
+			
+			backlight_pwm_duty+= 20;
+			if(backlight_pwm_duty > 1980) backlight_pwm_duty = 20;
+		}
+		
+		if(curr_millis - prev_millis_pwm_led > 1000)
+		{
+			prev_millis_pwm_led = curr_millis;
+			
+			led_pwm_duty += 60;
+			if(led_pwm_duty > 1980) led_pwm_duty = 20;
+		}
+		
+		if(curr_millis - prev_millis_bl_touch > 10000)
+		{
+			prev_millis_bl_touch = curr_millis;
+			
+			if(bl_touch_toggle == 0)
+			{
+				bl_touch_toggle = 1;
+				bl_touch_duty = 65;
 			}
 			else
-			{ 
-				if(key_flag[i] == 1) // down
-				{
-					key_flag[i] = 0;
-					set_cursor(1,0);
-					//printf_lcd(down_string[i]);
-					
-					if(i == DOWN_BUTTON)
-				}
+			{
+				bl_touch_toggle = 0;
+				bl_touch_duty = 147;
 			}
 		}
-		Delay_ms(10);
-		
-		
 	}
 	
 	while(1)
@@ -762,6 +986,7 @@ int main (void) {
 	TIM2->CCMR1 = 0x68; // CC1S, PWMmode
 	TIM2->CCER = (0x01 << 0); // CC1E
 	TIM2->CCR1 = 70;
+	
 	
 	
 	//NVIC
