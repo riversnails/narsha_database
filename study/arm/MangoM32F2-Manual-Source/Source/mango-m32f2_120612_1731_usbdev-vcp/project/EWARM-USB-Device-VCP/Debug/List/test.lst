@@ -1,0 +1,145 @@
+###############################################################################
+#                                                                             #
+#                                                       12/Jun/2012  17:25:04 #
+# IAR ANSI C/C++ Compiler V6.30.8.23653/W32 EVALUATION for ARM                #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  D:\Wk.Src\Mango-M32F2\src\test.c                         #
+#    Command line =  D:\Wk.Src\Mango-M32F2\src\test.c -D                      #
+#                    USE_STDPERIPH_DRIVER -D USB_TEST -lcN                    #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \List\ -o D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device #
+#                    -VCP\Debug\Obj\ --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0                           #
+#                    Evaluation\arm\INC\c\DLib_Config_Full.h" -I              #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\CMSIS\Device\ST\STM32F2xx\Include\ -I         #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32F2xx_StdPeriph_Driver\inc\ -I            #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \src\ -I D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device- #
+#                    VCP\..\..\src\USB-Device-VCP\inc\ -I                     #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_OTG_Driver\inc\ -I                  #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_Device_Library\Core\inc\ -I         #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_Device_Library\Class\cdc\inc\ -Ohs  #
+#                    -I "C:\Program Files\IAR Systems\Embedded Workbench 6.0  #
+#                    Evaluation\arm\CMSIS\Include\"                           #
+#    List file    =  D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \List\test.lst                                           #
+#    Object file  =  D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \Obj\test.o                                              #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+D:\Wk.Src\Mango-M32F2\src\test.c
+      1          /*
+      2           * (C) COPYRIGHT 2012 CRZ
+      3           *
+      4           * File Name : test.c
+      5           * Author    : POOH
+      6           * Version   : V1.0
+      7           * Date      : 04/13/2012
+      8           */
+      9          
+     10          /* includes */
+     11          
+     12          #include "hw_config.h"
+     13          
+     14          /* static functions */
+     15          
+     16          /**
+     17            * @brief  Inserts a delay time.
+     18            * @param  nCount: specifies the delay time length.
+     19            * @retval None
+     20            */
+     21          static void delay_time_consume(__IO uint32_t nCount)
+     22          {
+     23              /* Decrement nCount value */
+     24              while (nCount != 0)
+     25              {
+     26                  nCount--;
+     27              }
+     28          }
+     29          
+     30          static void delay_1_second(void)
+     31          {
+     32              delay_time_consume(0x4FFFFF);
+     33          }
+     34          
+     35          static void led_on_all (void)
+     36          {
+     37              DevCtrl_LED_On(LED1);
+     38              DevCtrl_LED_On(LED2);
+     39              DevCtrl_LED_On(LED3);
+     40          }
+     41          
+     42          static void led_off_all (void)
+     43          {
+     44              DevCtrl_LED_Off(LED1);
+     45              DevCtrl_LED_Off(LED2);
+     46              DevCtrl_LED_Off(LED3);
+     47          }
+     48          
+     49          static void led_on_off_all_mult(uint32_t count)
+     50          {
+     51              for(; count > 0; count --)
+     52              {
+     53                  DevCtrl_LED_Off(LED1);
+     54                  DevCtrl_LED_On(LED2);
+     55                  DevCtrl_LED_On(LED3);
+     56                  delay_1_second();
+     57          
+     58                  DevCtrl_LED_On(LED1);
+     59                  DevCtrl_LED_Off(LED2);
+     60                  DevCtrl_LED_On(LED3);
+     61                  delay_1_second();
+     62          
+     63                  DevCtrl_LED_On(LED1);
+     64                  DevCtrl_LED_On(LED2);
+     65                  DevCtrl_LED_Off(LED3);
+     66                  delay_1_second();
+     67              }
+     68          }
+     69          
+     70          /* global functions */
+     71          
+     72          void Test_LED(void)
+     73          {
+     74              led_on_all();
+     75              delay_1_second();
+     76              led_off_all();
+     77              delay_1_second();
+     78          
+     79              led_on_off_all_mult(2);
+     80          }
+     81          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       16  Test_LED
+             16 -> DevCtrl_LED_Off
+             16 -> DevCtrl_LED_On
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+     184  Test_LED
+
+ 
+ 184 bytes in section .text
+ 
+ 184 bytes of CODE memory
+
+Errors: none
+Warnings: none

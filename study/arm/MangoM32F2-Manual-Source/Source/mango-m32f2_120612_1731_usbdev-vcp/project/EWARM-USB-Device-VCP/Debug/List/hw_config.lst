@@ -1,0 +1,534 @@
+###############################################################################
+#                                                                             #
+#                                                       12/Jun/2012  17:25:03 #
+# IAR ANSI C/C++ Compiler V6.30.8.23653/W32 EVALUATION for ARM                #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  D:\Wk.Src\Mango-M32F2\src\hw_config.c                    #
+#    Command line =  D:\Wk.Src\Mango-M32F2\src\hw_config.c -D                 #
+#                    USE_STDPERIPH_DRIVER -D USB_TEST -lcN                    #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \List\ -o D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device #
+#                    -VCP\Debug\Obj\ --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0                           #
+#                    Evaluation\arm\INC\c\DLib_Config_Full.h" -I              #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\CMSIS\Device\ST\STM32F2xx\Include\ -I         #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32F2xx_StdPeriph_Driver\inc\ -I            #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \src\ -I D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device- #
+#                    VCP\..\..\src\USB-Device-VCP\inc\ -I                     #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_OTG_Driver\inc\ -I                  #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_Device_Library\Core\inc\ -I         #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_Device_Library\Class\cdc\inc\ -Ohs  #
+#                    -I "C:\Program Files\IAR Systems\Embedded Workbench 6.0  #
+#                    Evaluation\arm\CMSIS\Include\"                           #
+#    List file    =  D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \List\hw_config.lst                                      #
+#    Object file  =  D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \Obj\hw_config.o                                         #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+D:\Wk.Src\Mango-M32F2\src\hw_config.c
+      1          /*
+      2           * (C) COPYRIGHT 2012 CRZ
+      3           *
+      4           * File Name : hw_config.c
+      5           * Author    : POOH
+      6           * Version   : V1.0
+      7           * Date      : 04/12/2012
+      8           */
+      9          
+     10          /* includes */
+     11          
+     12          #include "hw_config.h"
+     13          
+     14          /* defines */
+     15          
+     16          #ifdef __GNUC__
+     17            /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
+     18               set to 'Yes') calls __io_putchar() */
+     19              #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+     20          #else
+     21              #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+     22          #endif /* __GNUC__ */
+     23          
+     24          /* global variables */
+     25          
+     26          /** @defgroup STM322xG_EVAL_LOW_LEVEL_Private_Variables
+     27            * @{
+     28            */ 
+     29          GPIO_TypeDef* GPIO_PORT[LEDn] = {LED1_GPIO_PORT, LED2_GPIO_PORT, LED3_GPIO_PORT};
+     30          const uint16_t GPIO_PIN[LEDn] = {LED1_PIN, LED2_PIN, LED3_PIN};
+     31          const uint32_t GPIO_CLK[LEDn] = {LED1_GPIO_CLK, LED2_GPIO_CLK, LED3_GPIO_CLK};
+     32          
+     33          GPIO_TypeDef* BUTTON_PORT[BUTTONn] = {KEY1_BUTTON_GPIO_PORT, KEY2_BUTTON_GPIO_PORT}; 
+     34          const uint16_t BUTTON_PIN[BUTTONn] = {KEY1_BUTTON_PIN, KEY2_BUTTON_PIN}; 
+     35          const uint32_t BUTTON_CLK[BUTTONn] = {KEY1_BUTTON_GPIO_CLK, KEY2_BUTTON_GPIO_CLK};
+     36          
+     37          const uint16_t BUTTON_EXTI_LINE[BUTTONn] = {KEY1_BUTTON_EXTI_LINE, KEY2_BUTTON_EXTI_LINE};
+     38          const uint8_t BUTTON_PORT_SOURCE[BUTTONn] = {KEY1_BUTTON_EXTI_PORT_SOURCE, KEY2_BUTTON_EXTI_PORT_SOURCE};
+     39          const uint8_t BUTTON_PIN_SOURCE[BUTTONn] = {KEY1_BUTTON_EXTI_PIN_SOURCE, KEY2_BUTTON_EXTI_PIN_SOURCE}; 
+     40          const uint8_t BUTTON_IRQn[BUTTONn] = {KEY1_BUTTON_EXTI_IRQn, KEY2_BUTTON_EXTI_IRQn};
+     41          
+     42          USART_TypeDef* COM_USART[COMn] = {EVAL_COM0, EVAL_COM1};
+     43          GPIO_TypeDef* COM_TX_PORT[COMn] = {EVAL_COM0_TX_GPIO_PORT, EVAL_COM1_TX_GPIO_PORT};
+     44          GPIO_TypeDef* COM_RX_PORT[COMn] = {EVAL_COM0_RX_GPIO_PORT, EVAL_COM1_RX_GPIO_PORT};
+     45          const uint32_t COM_USART_CLK[COMn] = {EVAL_COM0_CLK, EVAL_COM1_CLK};
+     46          const uint32_t COM_TX_PORT_CLK[COMn] = {EVAL_COM0_TX_GPIO_CLK, EVAL_COM1_TX_GPIO_CLK};
+     47          const uint32_t COM_RX_PORT_CLK[COMn] = {EVAL_COM0_RX_GPIO_CLK, EVAL_COM1_RX_GPIO_CLK};
+     48          const uint16_t COM_TX_PIN[COMn] = {EVAL_COM0_TX_PIN, EVAL_COM1_TX_PIN};
+     49          const uint16_t COM_RX_PIN[COMn] = {EVAL_COM0_RX_PIN, EVAL_COM1_RX_PIN};
+     50          const uint8_t COM_TX_PIN_SOURCE[COMn] = {EVAL_COM0_TX_SOURCE, EVAL_COM1_TX_SOURCE};
+     51          const uint8_t COM_RX_PIN_SOURCE[COMn] = {EVAL_COM0_RX_SOURCE, EVAL_COM1_RX_SOURCE};
+     52          const uint8_t COM_TX_AF[COMn] = {EVAL_COM0_TX_AF, EVAL_COM1_TX_AF};
+     53          const uint8_t COM_RX_AF[COMn] = {EVAL_COM0_RX_AF, EVAL_COM1_RX_AF};
+     54          
+     55          /* functions */
+     56          
+     57          /**
+     58            * @brief  Configures LED GPIO.
+     59            * @param  Led: Specifies the Led to be configured. 
+     60            *   This parameter can be one of following parameters:
+     61            *     @arg LED1
+     62            *     @arg LED2
+     63            *     @arg LED3
+     64            * @retval None
+     65            */
+     66          void STM_EVAL_LEDInit(Led_TypeDef Led)
+     67          {
+     68              GPIO_InitTypeDef  GPIO_InitStructure;
+     69          
+     70              /* Enable the GPIO_LED Clock */
+     71              RCC_AHB1PeriphClockCmd(GPIO_CLK[Led], ENABLE);
+     72          
+     73              /* Configure the GPIO_LED pin */
+     74              GPIO_InitStructure.GPIO_Pin = GPIO_PIN[Led];
+     75              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+     76              GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+     77              GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+     78              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+     79              GPIO_Init(GPIO_PORT[Led], &GPIO_InitStructure);
+     80          }
+     81          
+     82          /**
+     83            * @brief  Turns selected LED On.
+     84            * @param  Led: Specifies the Led to be set on. 
+     85            *   This parameter can be one of following parameters:
+     86            *     @arg LED1
+     87            *     @arg LED2
+     88            *     @arg LED3
+     89            * @retval None
+     90            */
+     91          void STM_EVAL_LEDOn(Led_TypeDef Led)
+     92          {
+     93              GPIO_PORT[Led]->BSRRL = GPIO_PIN[Led];
+     94          }
+     95          
+     96          /**
+     97            * @brief  Turns selected LED Off.
+     98            * @param  Led: Specifies the Led to be set off. 
+     99            *   This parameter can be one of following parameters:
+    100            *     @arg LED1
+    101            *     @arg LED2
+    102            *     @arg LED3
+    103            * @retval None
+    104            */
+    105          void STM_EVAL_LEDOff(Led_TypeDef Led)
+    106          {
+    107              GPIO_PORT[Led]->BSRRH = GPIO_PIN[Led];  
+    108          }
+    109          
+    110          /**
+    111            * @brief  Toggles the selected LED.
+    112            * @param  Led: Specifies the Led to be toggled. 
+    113            *   This parameter can be one of following parameters:
+    114            *     @arg LED1
+    115            *     @arg LED2
+    116            *     @arg LED3
+    117            * @retval None
+    118            */
+    119          void STM_EVAL_LEDToggle(Led_TypeDef Led)
+    120          {
+    121              GPIO_PORT[Led]->ODR ^= GPIO_PIN[Led];
+    122          }
+    123          
+    124          /**
+    125            * @brief  Configures Button GPIO and EXTI Line.
+    126            * @param  Button: Specifies the Button to be configured.
+    127            *   This parameter can be one of following parameters:   
+    128            *     @arg BUTTON_KEY1: Key 1 Push Button 
+    129            *     @arg BUTTON_KEY2: Key 2 Push Button 
+    130            * @param  Button_Mode: Specifies Button mode.
+    131            *   This parameter can be one of following parameters:   
+    132            *     @arg BUTTON_MODE_GPIO: Button will be used as simple IO 
+    133            *     @arg BUTTON_MODE_EXTI: Button will be connected to EXTI line with interrupt
+    134            *                     generation capability  
+    135            * @retval None
+    136            */
+    137          void STM_EVAL_PBInit(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode)
+    138          {
+    139              GPIO_InitTypeDef GPIO_InitStructure;
+    140              EXTI_InitTypeDef EXTI_InitStructure;
+    141              NVIC_InitTypeDef NVIC_InitStructure;
+    142          
+    143              /* Enable the BUTTON Clock */
+    144              RCC_AHB1PeriphClockCmd(BUTTON_CLK[Button], ENABLE);
+    145              RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+    146          
+    147              /* Configure Button pin as input */
+    148              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+    149              GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+    150              GPIO_InitStructure.GPIO_Pin = BUTTON_PIN[Button];
+    151              GPIO_Init(BUTTON_PORT[Button], &GPIO_InitStructure);
+    152          
+    153              if (Button_Mode == BUTTON_MODE_EXTI)
+    154              {
+    155                  /* Connect Button EXTI Line to Button GPIO Pin */
+    156                  SYSCFG_EXTILineConfig(BUTTON_PORT_SOURCE[Button], BUTTON_PIN_SOURCE[Button]);
+    157          
+    158                  /* Configure Button EXTI line */
+    159                  EXTI_InitStructure.EXTI_Line = BUTTON_EXTI_LINE[Button];
+    160                  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+    161                  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;  
+    162                  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+    163                  EXTI_Init(&EXTI_InitStructure);
+    164          
+    165                  /* Enable and set Button EXTI Interrupt to the lowest priority */
+    166                  NVIC_InitStructure.NVIC_IRQChannel = BUTTON_IRQn[Button];
+    167                  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
+    168                  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
+    169                  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    170          
+    171                  NVIC_Init(&NVIC_InitStructure); 
+    172              }
+    173          }
+    174          
+    175          /**
+    176            * @brief  Returns the selected Button state.
+    177            * @param  Button: Specifies the Button to be checked.
+    178            *   This parameter can be one of following parameters:    
+    179            *     @arg BUTTON_KEY1: Key 1 Push Button 
+    180            *     @arg BUTTON_KEY2: Key 2 Push Button 
+    181            * @retval The Button GPIO pin value.
+    182            */
+    183          uint32_t STM_EVAL_PBGetState(Button_TypeDef Button)
+    184          {
+    185            return GPIO_ReadInputDataBit(BUTTON_PORT[Button], BUTTON_PIN[Button]);
+    186          }
+    187          
+    188          /**
+    189            * @brief  Configures COM port.
+    190            * @param  COM: Specifies the COM port to be configured.
+    191            *   This parameter can be one of following parameters:    
+    192            *     @arg COM1
+    193            *     @arg COM2  
+    194            * @param  USART_InitStruct: pointer to a USART_InitTypeDef structure that
+    195            *   contains the configuration information for the specified USART peripheral.
+    196            * @retval None
+    197            */
+    198          void STM_EVAL_COMInit(COM_TypeDef COM, USART_InitTypeDef* USART_InitStruct)
+    199          {
+    200              GPIO_InitTypeDef GPIO_InitStructure;
+    201          
+    202              /* Enable GPIO clock */
+    203              RCC_AHB1PeriphClockCmd(COM_TX_PORT_CLK[COM] | COM_RX_PORT_CLK[COM], ENABLE);
+    204          
+    205              if(COM == COM0)
+    206              {
+    207                  /* Enable UART clock */
+    208                  RCC_APB2PeriphClockCmd(COM_USART_CLK[COM], ENABLE);
+    209              }
+    210              else if(COM == COM1)
+    211              {
+    212                  /* Enable UART clock */
+    213                  RCC_APB1PeriphClockCmd(COM_USART_CLK[COM], ENABLE);
+    214              }
+    215          
+    216              /* Connect PXx to USARTx_Tx*/
+    217              GPIO_PinAFConfig(COM_TX_PORT[COM], COM_TX_PIN_SOURCE[COM], COM_TX_AF[COM]);
+    218          
+    219              /* Connect PXx to USARTx_Rx*/
+    220              GPIO_PinAFConfig(COM_RX_PORT[COM], COM_RX_PIN_SOURCE[COM], COM_RX_AF[COM]);
+    221          
+    222              /* Configure USART Tx as alternate function  */
+    223              GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+    224              GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+    225              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+    226          
+    227              GPIO_InitStructure.GPIO_Pin = COM_TX_PIN[COM];
+    228              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    229              GPIO_Init(COM_TX_PORT[COM], &GPIO_InitStructure);
+    230          
+    231              /* Configure USART Rx as alternate function  */
+    232              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+    233              GPIO_InitStructure.GPIO_Pin = COM_RX_PIN[COM];
+    234              GPIO_Init(COM_RX_PORT[COM], &GPIO_InitStructure);
+    235          
+    236              /* USART configuration */
+    237              USART_Init(COM_USART[COM], USART_InitStruct);
+    238          
+    239              /* Enable USART */
+    240              USART_Cmd(COM_USART[COM], ENABLE);
+    241          }
+    242          
+    243          /*
+    244           * Name : USART_Debug_Initialization
+    245           */
+    246          void USART_Debug_Initialization(void)
+    247          {
+    248              USART_InitTypeDef USART_InitStructure;
+    249          
+    250              /* USARTx configured as follow:
+    251                    - BaudRate = 115200 baud  
+    252                    - Word Length = 8 Bits
+    253                    - One Stop Bit
+    254                    - No parity
+    255                    - Hardware flow control disabled (RTS and CTS signals)
+    256                    - Receive and transmit enabled
+    257              */
+    258              USART_InitStructure.USART_BaudRate   = 115200;
+    259              USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+    260              USART_InitStructure.USART_StopBits   = USART_StopBits_1;
+    261              USART_InitStructure.USART_Parity     = USART_Parity_No;
+    262              USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+    263              USART_InitStructure.USART_Mode       = USART_Mode_Rx | USART_Mode_Tx;
+    264              
+    265              STM_EVAL_COMInit(COM0, &USART_InitStructure);
+    266          }
+    267          
+    268          /*
+    269           * Name : LED_Initialization
+    270           */
+    271          void LED_Initialization(void)
+    272          {
+    273              STM_EVAL_LEDInit(LED1);
+    274              STM_EVAL_LEDInit(LED2);
+    275              STM_EVAL_LEDInit(LED3);
+    276          
+    277              DevCtrl_LED_Off(LED1);
+    278              DevCtrl_LED_Off(LED2);
+    279              DevCtrl_LED_Off(LED3);
+    280          }
+    281          
+    282          void DevCtrl_LED_On(Led_TypeDef Led) { STM_EVAL_LEDOff(Led); }
+    283          void DevCtrl_LED_Off(Led_TypeDef Led) { STM_EVAL_LEDOn(Led); }
+    284          void DevCtrl_LED_Toggle(Led_TypeDef Led) { STM_EVAL_LEDToggle(Led); }
+    285          
+    286          /*
+    287           * Name : Key_Initialization
+    288           */
+    289          void Key_Initialization(void)
+    290          {
+    291              STM_EVAL_PBInit(BUTTON_KEY1, BUTTON_MODE_EXTI);
+    292              STM_EVAL_PBInit(BUTTON_KEY2, BUTTON_MODE_EXTI);
+    293          }
+    294          
+    295          /*
+    296           * Name : SysTick_Initialization
+    297           */
+    298          void SysTick_Initialization(void)
+    299          {
+    300              RCC_ClocksTypeDef RCC_Clocks;
+    301          
+    302              /* Configure Systick clock source as HCLK */
+    303              SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK);
+    304              
+    305              /* SystTick configuration: an interrupt every 10ms */
+    306              RCC_GetClocksFreq(&RCC_Clocks);
+    307              SysTick_Config(RCC_Clocks.HCLK_Frequency / 100);  
+    308          }
+    309          
+    310          /**
+    311            * @brief  Retargets the C library printf function to the USART.
+    312            * @param  None
+    313            * @retval None
+    314            */
+    315          PUTCHAR_PROTOTYPE
+    316          {
+    317              /* Write a character to the USART */  
+    318              if( ch == '\n') {
+    319                  USART_SendData(EVAL_COM0, '\r');
+    320                  /* Loop until the end of transmission */
+    321                  while (USART_GetFlagStatus(EVAL_COM0, USART_FLAG_TC) == RESET){}
+    322                  USART_SendData(EVAL_COM0, '\n');
+    323              }else {
+    324                  /* Place your implementation of fputc here */
+    325                  /* e.g. write a character to the USART */
+    326                  USART_SendData(EVAL_COM0, (uint8_t) ch);
+    327              }
+    328          
+    329              /* Loop until the end of transmission */
+    330              while (USART_GetFlagStatus(EVAL_COM0, USART_FLAG_TC) == RESET){}
+    331          
+    332              return ch;
+    333          }
+    334          
+    335          uint8_t DebugUart_GetChar(void)
+    336          {
+    337              uint8_t data;
+    338          
+    339              /* Loop until the end of transmission */
+    340              while(USART_GetFlagStatus(EVAL_COM0, USART_FLAG_RXNE) == RESET);
+    341          
+    342              /* Write a character to the USART */
+    343              data = USART_ReceiveData(EVAL_COM0);
+    344          
+    345              USART_SendData(EVAL_COM0, data);
+    346              while(USART_GetFlagStatus(EVAL_COM0, USART_FLAG_TXE) == RESET);
+    347          
+    348              if( data == '\r' )  return (int)('\n');
+    349              else                return(data);
+    350          }
+    351          
+    352          #ifdef  USE_FULL_ASSERT
+    353          
+    354          /**
+    355            * @brief  Reports the name of the source file and the source line number
+    356            *         where the assert_param error has occurred.
+    357            * @param  file: pointer to the source file name
+    358            * @param  line: assert_param error line source number
+    359            * @retval None
+    360            */
+    361          void assert_failed(uint8_t* file, uint32_t line)
+    362          { 
+    363            /* User can add his own implementation to report the file name and line number,
+    364               ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+    365          
+    366            printf("ERROR !! %s - File:%s, Line:%d\n", __func__, file, line);
+    367          
+    368            /* Infinite loop */
+    369            while (1)
+    370            {
+    371            }
+    372          }
+    373          #endif
+    374          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       16  DebugUart_GetChar
+             16 -> USART_GetFlagStatus
+             16 -> USART_ReceiveData
+             16 -> USART_SendData
+        0  DevCtrl_LED_Off
+        0  DevCtrl_LED_On
+        0  DevCtrl_LED_Toggle
+       56  Key_Initialization
+             56 -> EXTI_Init
+             56 -> GPIO_Init
+             56 -> NVIC_Init
+             56 -> RCC_AHB1PeriphClockCmd
+             56 -> RCC_APB2PeriphClockCmd
+             56 -> SYSCFG_EXTILineConfig
+       48  LED_Initialization
+             48 -> GPIO_Init
+             48 -> RCC_AHB1PeriphClockCmd
+       32  STM_EVAL_COMInit
+             32 -> GPIO_Init
+             32 -> GPIO_PinAFConfig
+             32 -> RCC_AHB1PeriphClockCmd
+             32 -> RCC_APB1PeriphClockCmd
+             32 -> RCC_APB2PeriphClockCmd
+             32 -> USART_Cmd
+             32 -> USART_Init
+       16  STM_EVAL_LEDInit
+             16 -> GPIO_Init
+             16 -> RCC_AHB1PeriphClockCmd
+        0  STM_EVAL_LEDOff
+        0  STM_EVAL_LEDOn
+        0  STM_EVAL_LEDToggle
+        0  STM_EVAL_PBGetState
+              0 -> GPIO_ReadInputDataBit
+       32  STM_EVAL_PBInit
+             32 -> EXTI_Init
+             32 -> GPIO_Init
+             32 -> NVIC_Init
+             32 -> RCC_AHB1PeriphClockCmd
+             32 -> RCC_APB2PeriphClockCmd
+             32 -> SYSCFG_EXTILineConfig
+       24  SysTick_Initialization
+             24 -> RCC_GetClocksFreq
+             24 -> SysTick_CLKSourceConfig
+       24  USART_Debug_Initialization
+             24 -> STM_EVAL_COMInit
+        8  assert_failed
+              8 -> printf
+       16  fputc
+             16 -> USART_GetFlagStatus
+             16 -> USART_SendData
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      32  ?<Constant "ERROR !! %s - File:%s...">
+       4  ??DataTable33
+       4  ??DataTable33_1
+       4  ??DataTable33_2
+       4  ??DataTable33_3
+       4  ??DataTable33_4
+       8  BUTTON_CLK
+       4  BUTTON_EXTI_LINE
+       2  BUTTON_IRQn
+       4  BUTTON_PIN
+       2  BUTTON_PIN_SOURCE
+       8  BUTTON_PORT
+       2  BUTTON_PORT_SOURCE
+       2  COM_RX_AF
+       4  COM_RX_PIN
+       2  COM_RX_PIN_SOURCE
+       8  COM_RX_PORT_CLK
+       2  COM_TX_AF
+       4  COM_TX_PIN
+       2  COM_TX_PIN_SOURCE
+       8  COM_TX_PORT_CLK
+      24  COM_USART
+          COM_TX_PORT
+          COM_RX_PORT
+       8  COM_USART_CLK
+      58  DebugUart_GetChar
+      18  DevCtrl_LED_Off
+      18  DevCtrl_LED_On
+      22  DevCtrl_LED_Toggle
+      12  GPIO_CLK
+       8  GPIO_PIN
+      12  GPIO_PORT
+     218  Key_Initialization
+     160  LED_Initialization
+     192  STM_EVAL_COMInit
+      72  STM_EVAL_LEDInit
+      20  STM_EVAL_LEDOff
+      20  STM_EVAL_LEDOn
+      24  STM_EVAL_LEDToggle
+      18  STM_EVAL_PBGetState
+     156  STM_EVAL_PBInit
+      58  SysTick_Initialization
+      40  USART_Debug_Initialization
+      22  assert_failed
+      62  fputc
+      16  -- Other
+
+ 
+    44 bytes in section .data
+     8 bytes in section .rodata
+ 1 320 bytes in section .text
+ 
+ 1 320 bytes of CODE  memory
+     8 bytes of CONST memory
+    44 bytes of DATA  memory
+
+Errors: none
+Warnings: none

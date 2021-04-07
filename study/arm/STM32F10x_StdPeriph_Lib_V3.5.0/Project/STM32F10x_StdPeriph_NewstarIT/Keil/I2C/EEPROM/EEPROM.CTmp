@@ -1,0 +1,28 @@
+signal void ReadI2CData()
+{
+ //  printf("Sent: Read request to address 0x28\r\n");
+ //  I2C1_IN = 0x0100; //Initiate transfer
+ //  I2C1_IN = 0x28 | 0x01; //from the address of the slave
+
+   printf("Sent: 1 \r\n");
+
+   wwatch(I2C1_OUT); // Wait for data from Microcontroller
+
+   printf("Sent: 2 \r\n");
+
+   I2C1_IN = 0xFF00; //Initiate transfer
+/*
+   if ( I2C1_OUT == 0xFF00 ) //Slave sent an ACK
+   {  printf("Received: ACK\r\n"); }
+   else
+   {  printf("Received: %d!\r\n"); return; }
+*/
+while(1);
+
+   while (1)
+   {
+      wwatch(I2C1_OUT); //Wait for data from Microcontroller
+      printf("Received: %d\r\n", I2C1_OUT);
+      I2C1_IN = 0xFF00; //Send the ACK! (This doesn't trigger the interrupt in the application)
+   }
+}

@@ -1,0 +1,381 @@
+###############################################################################
+#                                                                             #
+#                                                       12/Jun/2012  17:25:04 #
+# IAR ANSI C/C++ Compiler V6.30.8.23653/W32 EVALUATION for ARM                #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  D:\Wk.Src\Mango-M32F2\src\stm32f2xx_it.c                 #
+#    Command line =  D:\Wk.Src\Mango-M32F2\src\stm32f2xx_it.c -D              #
+#                    USE_STDPERIPH_DRIVER -D USB_TEST -lcN                    #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \List\ -o D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device #
+#                    -VCP\Debug\Obj\ --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0                           #
+#                    Evaluation\arm\INC\c\DLib_Config_Full.h" -I              #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\CMSIS\Device\ST\STM32F2xx\Include\ -I         #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32F2xx_StdPeriph_Driver\inc\ -I            #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \src\ -I D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device- #
+#                    VCP\..\..\src\USB-Device-VCP\inc\ -I                     #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_OTG_Driver\inc\ -I                  #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_Device_Library\Core\inc\ -I         #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_Device_Library\Class\cdc\inc\ -Ohs  #
+#                    -I "C:\Program Files\IAR Systems\Embedded Workbench 6.0  #
+#                    Evaluation\arm\CMSIS\Include\"                           #
+#    List file    =  D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \List\stm32f2xx_it.lst                                   #
+#    Object file  =  D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \Obj\stm32f2xx_it.o                                      #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+D:\Wk.Src\Mango-M32F2\src\stm32f2xx_it.c
+      1          /**
+      2            ******************************************************************************
+      3            * @file    USART/USART_Printf/stm32f2xx_it.c 
+      4            * @author  MCD Application Team
+      5            * @version V1.0.0
+      6            * @date    18-April-2011
+      7            * @brief   Main Interrupt Service Routines.
+      8            *          This file provides template for all exceptions handler and 
+      9            *          peripherals interrupt service routine.
+     10            ******************************************************************************
+     11            * @attention
+     12            *
+     13            * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+     14            * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
+     15            * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
+     16            * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
+     17            * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
+     18            * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+     19            *
+     20            * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
+     21            ******************************************************************************
+     22            */ 
+     23          
+     24          /* Includes ------------------------------------------------------------------*/
+     25          #include "stm32f2xx_it.h"
+     26          #include "hw_config.h"
+     27          
+     28          /** @addtogroup STM32F2xx_StdPeriph_Examples
+     29            * @{
+     30            */
+     31          
+     32          /** @addtogroup USART_Printf
+     33            * @{
+     34            */ 
+     35          
+     36          /* Private typedef -----------------------------------------------------------*/
+     37          /* Private define ------------------------------------------------------------*/
+     38          /* Private macro -------------------------------------------------------------*/
+     39          /* Private variables ---------------------------------------------------------*/
+     40          /* Private function prototypes -----------------------------------------------*/
+     41          
+     42          #ifdef USB_TEST
+     43          extern USB_OTG_CORE_HANDLE           USB_OTG_dev;
+     44          extern uint32_t USBD_OTG_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
+     45          
+     46          #ifdef USB_OTG_HS_DEDICATED_EP1_ENABLED 
+     47          extern uint32_t USBD_OTG_EP1IN_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
+     48          extern uint32_t USBD_OTG_EP1OUT_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
+     49          #endif
+     50          #endif
+     51          
+     52          /******************************************************************************/
+     53          /*            Cortex-M3 Processor Exceptions Handlers                         */
+     54          /******************************************************************************/
+     55          
+     56          /**
+     57            * @brief   This function handles NMI exception.
+     58            * @param  None
+     59            * @retval None
+     60            */
+     61          void NMI_Handler(void)
+     62          {
+     63          }
+     64          
+     65          /**
+     66            * @brief  This function handles Hard Fault exception.
+     67            * @param  None
+     68            * @retval None
+     69            */
+     70          void HardFault_Handler(void)
+     71          {
+     72            /* Go to infinite loop when Hard Fault exception occurs */
+     73            while (1)
+     74            {
+     75            }
+     76          }
+     77          
+     78          /**
+     79            * @brief  This function handles Memory Manage exception.
+     80            * @param  None
+     81            * @retval None
+     82            */
+     83          void MemManage_Handler(void)
+     84          {
+     85            /* Go to infinite loop when Memory Manage exception occurs */
+     86            while (1)
+     87            {
+     88            }
+     89          }
+     90          
+     91          /**
+     92            * @brief  This function handles Bus Fault exception.
+     93            * @param  None
+     94            * @retval None
+     95            */
+     96          void BusFault_Handler(void)
+     97          {
+     98            /* Go to infinite loop when Bus Fault exception occurs */
+     99            while (1)
+    100            {
+    101            }
+    102          }
+    103          
+    104          /**
+    105            * @brief  This function handles Usage Fault exception.
+    106            * @param  None
+    107            * @retval None
+    108            */
+    109          void UsageFault_Handler(void)
+    110          {
+    111            /* Go to infinite loop when Usage Fault exception occurs */
+    112            while (1)
+    113            {
+    114            }
+    115          }
+    116          
+    117          /**
+    118            * @brief  This function handles SVCall exception.
+    119            * @param  None
+    120            * @retval None
+    121            */
+    122          void SVC_Handler(void)
+    123          {
+    124          }
+    125          
+    126          /**
+    127            * @brief  This function handles Debug Monitor exception.
+    128            * @param  None
+    129            * @retval None
+    130            */
+    131          void DebugMon_Handler(void)
+    132          {
+    133          }
+    134          
+    135          /**
+    136            * @brief  This function handles PendSVC exception.
+    137            * @param  None
+    138            * @retval None
+    139            */
+    140          void PendSV_Handler(void)
+    141          {
+    142          }
+    143          
+    144          /**
+    145            * @brief  This function handles SysTick Handler.
+    146            * @param  None
+    147            * @retval None
+    148            */
+    149          void SysTick_Handler(void)
+    150          {
+    151              /* Update the LocalTime by adding SYSTEMTICK_PERIOD_MS each SysTick interrupt */
+    152              Time_Update();
+    153          }
+    154          
+    155          /**
+    156            * @brief  This function handles OTG_FS_WKUP_IRQHandler Handler.
+    157            * @param  None
+    158            * @retval None
+    159            */
+    160          #ifdef USE_USB_OTG_FS  
+    161          void OTG_FS_WKUP_IRQHandler(void)
+    162          {
+    163            if(USB_OTG_dev.cfg.low_power)
+    164            {
+    165              *(uint32_t *)(0xE000ED10) &= 0xFFFFFFF9 ; 
+    166              SystemInit();
+    167              USB_OTG_UngateClock(&USB_OTG_dev);
+    168            }
+    169            EXTI_ClearITPendingBit(EXTI_Line18);
+    170          }
+    171          #endif
+    172          
+    173          /**
+    174            * @brief  This function handles OTG_HS_WKUP Handler.
+    175            * @param  None
+    176            * @retval None
+    177            */
+    178          #ifdef USE_USB_OTG_HS  
+    179          void OTG_HS_WKUP_IRQHandler(void)
+    180          {
+    181            if(USB_OTG_dev.cfg.low_power)
+    182            {
+    183              *(uint32_t *)(0xE000ED10) &= 0xFFFFFFF9 ; 
+    184              SystemInit();
+    185              USB_OTG_UngateClock(&USB_OTG_dev);
+    186            }
+    187            EXTI_ClearITPendingBit(EXTI_Line20);
+    188          }
+    189          #endif
+    190          
+    191          /**
+    192            * @brief  This function handles OTG_HS Handler.
+    193            * @param  None
+    194            * @retval None
+    195            */
+    196          #ifdef USE_USB_OTG_HS  
+    197          void OTG_HS_IRQHandler(void)
+    198          #else
+    199          void OTG_FS_IRQHandler(void)
+    200          #endif
+    201          {
+    202            USBD_OTG_ISR_Handler (&USB_OTG_dev);
+    203          }
+    204          
+    205          #ifdef USB_OTG_HS_DEDICATED_EP1_ENABLED 
+    206          /**
+    207            * @brief  This function handles EP1_IN Handler.
+    208            * @param  None
+    209            * @retval None
+    210            */
+    211          void OTG_HS_EP1_IN_IRQHandler(void)
+    212          {
+    213            USBD_OTG_EP1IN_ISR_Handler (&USB_OTG_dev);
+    214          }
+    215          
+    216          /**
+    217            * @brief  This function handles EP1_OUT Handler.
+    218            * @param  None
+    219            * @retval None
+    220            */
+    221          void OTG_HS_EP1_OUT_IRQHandler(void)
+    222          {
+    223            USBD_OTG_EP1OUT_ISR_Handler (&USB_OTG_dev);
+    224          }
+    225          #endif
+    226          
+    227          /**
+    228            * @brief  This function handles External lines 15 to 10 interrupt request.
+    229            * @param  None
+    230            * @retval None
+    231            */
+    232          void EXTI15_10_IRQHandler(void)
+    233          {
+    234              if(EXTI_GetITStatus(KEY1_BUTTON_EXTI_LINE) != RESET)
+    235              {
+    236                  /* Toggle LED1 */
+    237                  DevCtrl_LED_Toggle(LED1);
+    238          
+    239                  /* Clear the EXTI line pending bit */
+    240                  EXTI_ClearITPendingBit(KEY1_BUTTON_EXTI_LINE);
+    241              }
+    242          
+    243              if(EXTI_GetITStatus(KEY2_BUTTON_EXTI_LINE) != RESET)
+    244              {
+    245                  /* Toggle LED2 */
+    246                  DevCtrl_LED_Toggle(LED2);
+    247          
+    248                  /* Clear the EXTI line pending bit */
+    249                  EXTI_ClearITPendingBit(KEY2_BUTTON_EXTI_LINE);
+    250              }
+    251          
+    252          #ifdef ETHERNET_TEST
+    253              if(EXTI_GetITStatus(ETH_LINK_EXTI_LINE) != RESET)
+    254              {
+    255                  Eth_Link_ITHandler(DP83848_PHY_ADDRESS);
+    256                  /* Clear interrupt pending bit */
+    257                  EXTI_ClearITPendingBit(ETH_LINK_EXTI_LINE);
+    258              }
+    259          #endif
+    260          }
+    261          
+    262          /******************************************************************************/
+    263          /*                 STM32F2xx Peripherals Interrupt Handlers                   */
+    264          /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
+    265          /*  available peripheral interrupt handler's name please refer to the startup */
+    266          /*  file (startup_stm32f2xx.s).                                               */
+    267          /******************************************************************************/
+    268          
+    269          /**
+    270            * @brief  This function handles PPP interrupt request.
+    271            * @param  None
+    272            * @retval None
+    273            */
+    274          /*void PPP_IRQHandler(void)
+    275          {
+    276          }*/
+    277          
+    278          /**
+    279            * @}
+    280            */ 
+    281          
+    282          /**
+    283            * @}
+    284            */ 
+    285          
+    286          /******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+        0  BusFault_Handler
+        0  DebugMon_Handler
+        8  EXTI15_10_IRQHandler
+             8 -> DevCtrl_LED_Toggle
+             0 -> EXTI_ClearITPendingBit
+             8 -> EXTI_ClearITPendingBit
+             8 -> EXTI_GetITStatus
+        0  HardFault_Handler
+        0  MemManage_Handler
+        0  NMI_Handler
+        0  OTG_FS_IRQHandler
+             0 -> USBD_OTG_ISR_Handler
+        8  OTG_FS_WKUP_IRQHandler
+             0 -> EXTI_ClearITPendingBit
+             8 -> SystemInit
+             8 -> USB_OTG_UngateClock
+        0  PendSV_Handler
+        0  SVC_Handler
+        0  SysTick_Handler
+             0 -> Time_Update
+        0  UsageFault_Handler
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable1
+       4  ??DataTable1_1
+       2  BusFault_Handler
+       2  DebugMon_Handler
+      62  EXTI15_10_IRQHandler
+       2  HardFault_Handler
+       2  MemManage_Handler
+       2  NMI_Handler
+       6  OTG_FS_IRQHandler
+      40  OTG_FS_WKUP_IRQHandler
+       2  PendSV_Handler
+       2  SVC_Handler
+       4  SysTick_Handler
+       2  UsageFault_Handler
+
+ 
+ 136 bytes in section .text
+ 
+ 136 bytes of CODE memory
+
+Errors: none
+Warnings: none

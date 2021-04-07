@@ -1,0 +1,51 @@
+*** Creating Trace Output File '.\STM3210B-EVAL\STM3210B-EVAL.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_it.o"'
+### List of Objects: adding '".\stm3210b-eval\main.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_rcc.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_gpio.o"'
+### List of Objects: adding '".\stm3210b-eval\misc.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_exti.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_spi.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_fsmc.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_usart.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_sdio.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_dma.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_i2c.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_adc.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_bkp.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_can.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_cec.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_crc.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_dac.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_dbgmcu.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_flash.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_iwdg.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_pwr.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_rtc.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_tim.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32f10x_wwdg.o"'
+### List of Objects: adding '".\stm3210b-eval\core_cm3.o"'
+### List of Objects: adding '".\stm3210b-eval\system_stm32f10x.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32_eval.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32_eval_spi_sd.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32_eval_i2c_tsensor.o"'
+### List of Objects: adding '".\stm3210b-eval\stm32_eval_spi_flash.o"'
+### List of Objects: adding '".\stm3210b-eval\stm3210b_eval_lcd.o"'
+### List of Objects: adding '".\stm3210b-eval\startup_stm32f10x_md.o"'
+### ADS-LD Command completed:
+--cpu Cortex-M3 ".\stm3210b-eval\stm32f10x_it.o" ".\stm3210b-eval\main.o" ".\stm3210b-eval\stm32f10x_rcc.o" ".\stm3210b-eval\stm32f10x_gpio.o" ".\stm3210b-eval\misc.o" ".\stm3210b-eval\stm32f10x_exti.o" ".\stm3210b-eval\stm32f10x_spi.o" ".\stm3210b-eval\stm32f10x_fsmc.o" ".\stm3210b-eval\stm32f10x_usart.o" ".\stm3210b-eval\stm32f10x_sdio.o" ".\stm3210b-eval\stm32f10x_dma.o" ".\stm3210b-eval\stm32f10x_i2c.o" ".\stm3210b-eval\stm32f10x_adc.o" ".\stm3210b-eval\stm32f10x_bkp.o" ".\stm3210b-eval\stm32f10x_can.o" ".\stm3210b-eval\stm32f10x_cec.o" ".\stm3210b-eval\stm32f10x_crc.o" ".\stm3210b-eval\stm32f10x_dac.o" ".\stm3210b-eval\stm32f10x_dbgmcu.o" ".\stm3210b-eval\stm32f10x_flash.o" ".\stm3210b-eval\stm32f10x_iwdg.o" ".\stm3210b-eval\stm32f10x_pwr.o" ".\stm3210b-eval\stm32f10x_rtc.o" ".\stm3210b-eval\stm32f10x_tim.o" ".\stm3210b-eval\stm32f10x_wwdg.o" ".\stm3210b-eval\core_cm3.o" ".\stm3210b-eval\system_stm32f10x.o" ".\stm3210b-eval\stm32_eval.o" ".\stm3210b-eval\stm32_eval_spi_sd.o" ".\stm3210b-eval\stm32_eval_i2c_tsensor.o" ".\stm3210b-eval\stm32_eval_spi_flash.o" ".\stm3210b-eval\stm3210b_eval_lcd.o" ".\stm3210b-eval\startup_stm32f10x_md.o" --library_type=microlib --strict --scatter ".\STM3210B-EVAL\STM3210B-EVAL.sct" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\STM3210B-EVAL\STM3210B-EVAL.map" -o ".\STM3210B-EVAL\STM3210B-EVAL.axf"### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: '.\STM3210B-EVAL\STM3210B-EVAL.axf'
+### ADS-LD Command File: '.\STM3210B-EVAL\STM3210B-EVAL.lnp'
+### Checking for dirty Components...
+### Creating CmdFile '.\STM3210B-EVAL\STM3210B-EVAL.lnp', Handle=0x00000254
+### Writing '.lnp' file
+### ADS-LD Command file '.\STM3210B-EVAL\STM3210B-EVAL.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

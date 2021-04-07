@@ -1,0 +1,8 @@
+--cpu Cortex-M3
+".\stm322xg_eval\main.o"
+".\stm322xg_eval\stm32f2xx_it.o"
+".\stm322xg_eval\system_stm32f2xx.o"
+--library_type=microlib --strict --scatter ".\STM322xG_EVAL\STM322xG_EVAL.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\STM322xG_EVAL\STM322xG_EVAL.map" -o .\STM322xG_EVAL\STM322xG_EVAL.axf

@@ -1,0 +1,238 @@
+###############################################################################
+#                                                                             #
+#                                                       12/Jun/2012  17:25:03 #
+# IAR ANSI C/C++ Compiler V6.30.8.23653/W32 EVALUATION for ARM                #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  D:\Wk.Src\Mango-M32F2\src\main.c                         #
+#    Command line =  D:\Wk.Src\Mango-M32F2\src\main.c -D                      #
+#                    USE_STDPERIPH_DRIVER -D USB_TEST -lcN                    #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \List\ -o D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device #
+#                    -VCP\Debug\Obj\ --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0                           #
+#                    Evaluation\arm\INC\c\DLib_Config_Full.h" -I              #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\CMSIS\Device\ST\STM32F2xx\Include\ -I         #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32F2xx_StdPeriph_Driver\inc\ -I            #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \src\ -I D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device- #
+#                    VCP\..\..\src\USB-Device-VCP\inc\ -I                     #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_OTG_Driver\inc\ -I                  #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_Device_Library\Core\inc\ -I         #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_Device_Library\Class\cdc\inc\ -Ohs  #
+#                    -I "C:\Program Files\IAR Systems\Embedded Workbench 6.0  #
+#                    Evaluation\arm\CMSIS\Include\"                           #
+#    List file    =  D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \List\main.lst                                           #
+#    Object file  =  D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \Obj\main.o                                              #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+D:\Wk.Src\Mango-M32F2\src\main.c
+      1          /*
+      2           * (C) COPYRIGHT 2012 CRZ
+      3           *
+      4           * File Name : hw_config.c
+      5           * Author    : POOH
+      6           * Version   : V1.0
+      7           * Date      : 04/12/2012
+      8           */
+      9          
+     10          /* includes */
+     11          
+     12          #include "hw_config.h"
+     13          
+     14          /* Private typedef -----------------------------------------------------------*/
+     15          
+     16          /* Private define ------------------------------------------------------------*/
+     17          #define SYSTEMTICK_PERIOD_MS  10
+     18          
+     19          /* Private macro -------------------------------------------------------------*/
+     20          
+     21          /* Private variables ---------------------------------------------------------*/
+     22          __IO uint32_t LocalTime = 0; /* this variable is used to create a time reference incremented by 10ms */
+     23          uint32_t timingdelay;
+     24          
+     25          /* Private function prototypes -----------------------------------------------*/
+     26          /* Private functions ---------------------------------------------------------*/
+     27          
+     28          /**
+     29            * @brief  Inserts a delay time.
+     30            * @param  nCount: number of 10ms periods to wait for.
+     31            * @retval None
+     32            */
+     33          void Delay(uint32_t nCount)
+     34          {
+     35              /* Capture the current local time */
+     36              timingdelay = LocalTime + nCount;  
+     37          
+     38              /* wait until the desired delay finish */  
+     39              while(timingdelay > LocalTime)
+     40              {     
+     41              }
+     42          }
+     43          
+     44          /**
+     45            * @brief  Updates the system local time
+     46            * @param  None
+     47            * @retval None
+     48            */
+     49          void Time_Update(void)
+     50          {
+     51              LocalTime += SYSTEMTICK_PERIOD_MS;
+     52          }
+     53          
+     54          void System_Information()
+     55          {
+     56              RCC_ClocksTypeDef  rcc_clocks;
+     57          
+     58              RCC_GetClocksFreq(&rcc_clocks);
+     59          
+     60              printf("SYSCLK_Frequency = %d\n",rcc_clocks.SYSCLK_Frequency );
+     61              printf("HCLK_Frequency = %d\n",rcc_clocks.HCLK_Frequency );
+     62              printf("PCLK1_Frequency = %d\n",rcc_clocks.PCLK1_Frequency );
+     63              printf("PCLK2_Frequency = %d\n",rcc_clocks.PCLK2_Frequency );
+     64          }
+     65          
+     66          /**
+     67            * @brief  Main program
+     68            * @param  None
+     69            * @retval None
+     70            */
+     71          int main(void)
+     72          {
+     73              uint8_t ch;
+     74          
+     75              /*!< At this stage the microcontroller clock setting is already configured, 
+     76                 this is done through SystemInit() function which is called from startup
+     77                 file (startup_stm32f2xx.s) before to branch to application main.
+     78                 To reconfigure the default setting of SystemInit() function, refer to
+     79                 system_stm32f2xx.c file
+     80               */
+     81          
+     82              LED_Initialization();
+     83              Key_Initialization();
+     84              USART_Debug_Initialization();
+     85              printf("USART_Debug_Initialization done.\n");
+     86              printf("Mango-M32F2 Test - %s, %s\n", __DATE__, __TIME__);
+     87          
+     88              SysTick_Initialization();
+     89              printf("SysTick_Initialization done.\n");
+     90          
+     91              while(1)
+     92              {
+     93                  printf("\n---------------------\n");
+     94                  printf("Press menu key\n");
+     95                  printf("---------------------\n");
+     96                  printf("0> System Information\n");
+     97                  printf("---------------------\n");
+     98                  printf("1> Test LED\n");
+     99          #ifdef ETHERNET_TEST
+    100                  printf("2> Test HTTP Server\n");
+    101          #endif
+    102          #ifdef USB_TEST
+    103                  printf("2> Test USB Device VCP\n");
+    104          #endif
+    105                  printf("---------------------\n");
+    106                  printf("x> quit\n\n");
+    107          
+    108                  ch = DebugUart_GetChar();
+    109                  printf(" is selected\n\n");
+    110          
+    111                  switch((char)ch)
+    112                  {
+    113                  case '0':
+    114                      System_Information();
+    115                      break;
+    116          
+    117                  case '1':
+    118                      Test_LED();
+    119                      break;
+    120          
+    121                  case '2':
+    122          #ifdef ETHERNET_TEST
+    123                      Test_HttpServer();
+    124          #endif
+    125          #ifdef USB_TEST
+    126                      Test_USB_Device_VCP();
+    127          #endif
+    128                      break;
+    129                  }
+    130          
+    131                  if('x' == (char)ch)
+    132                  {
+    133                      break;
+    134                  }
+    135              }
+    136          }
+    137          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+        0  Delay
+       24  System_Information
+             24 -> RCC_GetClocksFreq
+             24 -> printf
+        0  Time_Update
+       56  main
+             56 -> DebugUart_GetChar
+             56 -> Key_Initialization
+             56 -> LED_Initialization
+             56 -> RCC_GetClocksFreq
+             56 -> SysTick_Initialization
+             56 -> Test_LED
+             56 -> Test_USB_Device_VCP
+             56 -> USART_Debug_Initialization
+             56 -> printf
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      16  ?<Constant " is selected\n\n">
+      24  ?<Constant "---------------------\n">
+      24  ?<Constant "0> System Information\n">
+      12  ?<Constant "17:25:03">
+      16  ?<Constant "1> Test LED\n">
+      24  ?<Constant "2> Test USB Device VCP\n">
+      24  ?<Constant "HCLK_Frequency = %d\n">
+      12  ?<Constant "Jun 12 2012">
+      28  ?<Constant "Mango-M32F2 Test - %s...">
+      24  ?<Constant "PCLK1_Frequency = %d\n">
+      24  ?<Constant "PCLK2_Frequency = %d\n">
+      16  ?<Constant "Press menu key\n">
+      24  ?<Constant "SYSCLK_Frequency = %d\n">
+      32  ?<Constant "SysTick_Initializatio...">
+      36  ?<Constant "USART_Debug_Initializ...">
+      24  ?<Constant "\n---------------------\n">
+      12  ?<Constant "x> quit\n\n">
+       4  ??DataTable18
+      16  Delay
+       8  LocalTime
+          timingdelay
+      54  System_Information
+      10  Time_Update
+     234  main
+
+ 
+   8 bytes in section .bss
+ 690 bytes in section .text
+ 
+ 690 bytes of CODE memory
+   8 bytes of DATA memory
+
+Errors: none
+Warnings: none

@@ -1,0 +1,295 @@
+###############################################################################
+#                                                                             #
+#                                                       12/Jun/2012  13:52:22 #
+# IAR ANSI C/C++ Compiler V6.30.8.23653/W32 EVALUATION for ARM                #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  D:\Wk.Src\Mango-M32F2\Libraries\STM32F2xx_StdPeriph_Driv #
+#                    er\src\stm32f2xx_syscfg.c                                #
+#    Command line =  D:\Wk.Src\Mango-M32F2\Libraries\STM32F2xx_StdPeriph_Driv #
+#                    er\src\stm32f2xx_syscfg.c -D USE_STDPERIPH_DRIVER -D     #
+#                    USB_TEST -lcN D:\Wk.Src\Mango-M32F2\project\EWARM-USB-De #
+#                    vice-VCP\Debug\List\ -o D:\Wk.Src\Mango-M32F2\project\EW #
+#                    ARM-USB-Device-VCP\Debug\Obj\ --debug --endian=little    #
+#                    --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program  #
+#                    Files\IAR Systems\Embedded Workbench 6.0                 #
+#                    Evaluation\arm\INC\c\DLib_Config_Full.h" -I              #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\CMSIS\Device\ST\STM32F2xx\Include\ -I         #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32F2xx_StdPeriph_Driver\inc\ -I            #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \src\ -I D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device- #
+#                    VCP\..\..\src\USB-Device-VCP\inc\ -I                     #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_OTG_Driver\inc\ -I                  #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_Device_Library\Core\inc\ -I         #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_Device_Library\Class\cdc\inc\ -Ohs  #
+#                    -I "C:\Program Files\IAR Systems\Embedded Workbench 6.0  #
+#                    Evaluation\arm\CMSIS\Include\"                           #
+#    List file    =  D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \List\stm32f2xx_syscfg.lst                               #
+#    Object file  =  D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \Obj\stm32f2xx_syscfg.o                                  #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+D:\Wk.Src\Mango-M32F2\Libraries\STM32F2xx_StdPeriph_Driver\src\stm32f2xx_syscfg.c
+      1          /**
+      2            ******************************************************************************
+      3            * @file    stm32f2xx_syscfg.c
+      4            * @author  MCD Application Team
+      5            * @version V1.1.2
+      6            * @date    05-March-2012 
+      7            * @brief   This file provides firmware functions to manage the SYSCFG peripheral.
+      8            *
+      9            *  @verbatim
+     10            *  
+     11            *          ===================================================================
+     12            *                                 How to use this driver
+     13            *          ===================================================================
+     14            *                  
+     15            *          This driver provides functions for:
+     16            *          
+     17            *          1. Remapping the memory accessible in the code area using SYSCFG_MemoryRemapConfig()
+     18            *              
+     19            *          2. Manage the EXTI lines connection to the GPIOs using SYSCFG_EXTILineConfig()
+     20            *            
+     21            *          3. Select the ETHERNET media interface (RMII/RII) using SYSCFG_ETH_MediaInterfaceConfig()
+     22            *
+     23            *  @note  SYSCFG APB clock must be enabled to get write access to SYSCFG registers,
+     24            *         using RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+     25            *                 
+     26            *  @endverbatim
+     27            *      
+     28            ******************************************************************************
+     29            * @attention
+     30            *
+     31            * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+     32            *
+     33            * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+     34            * You may not use this file except in compliance with the License.
+     35            * You may obtain a copy of the License at:
+     36            *
+     37            *        http://www.st.com/software_license_agreement_liberty_v2
+     38            *
+     39            * Unless required by applicable law or agreed to in writing, software 
+     40            * distributed under the License is distributed on an "AS IS" BASIS, 
+     41            * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     42            * See the License for the specific language governing permissions and
+     43            * limitations under the License.
+     44            *
+     45            ******************************************************************************
+     46            */
+     47          
+     48          /* Includes ------------------------------------------------------------------*/
+     49          #include "stm32f2xx_syscfg.h"
+     50          #include "stm32f2xx_rcc.h"
+     51          
+     52          /** @addtogroup STM32F2xx_StdPeriph_Driver
+     53            * @{
+     54            */
+     55          
+     56          /** @defgroup SYSCFG 
+     57            * @brief SYSCFG driver modules
+     58            * @{
+     59            */ 
+     60          
+     61          /* Private typedef -----------------------------------------------------------*/
+     62          /* Private define ------------------------------------------------------------*/
+     63          /* ------------ RCC registers bit address in the alias region ----------- */
+     64          #define SYSCFG_OFFSET             (SYSCFG_BASE - PERIPH_BASE)
+     65          /* ---  PMC Register ---*/ 
+     66          /* Alias word address of MII_RMII_SEL bit */ 
+     67          #define PMC_OFFSET                (SYSCFG_OFFSET + 0x04) 
+     68          #define MII_RMII_SEL_BitNumber    ((uint8_t)0x17) 
+     69          #define PMC_MII_RMII_SEL_BB       (PERIPH_BB_BASE + (PMC_OFFSET * 32) + (MII_RMII_SEL_BitNumber * 4)) 
+     70          
+     71          /* ---  CMPCR Register ---*/ 
+     72          /* Alias word address of CMP_PD bit */ 
+     73          #define CMPCR_OFFSET              (SYSCFG_OFFSET + 0x20) 
+     74          #define CMP_PD_BitNumber          ((uint8_t)0x00) 
+     75          #define CMPCR_CMP_PD_BB           (PERIPH_BB_BASE + (CMPCR_OFFSET * 32) + (CMP_PD_BitNumber * 4)) 
+     76          
+     77          /* Private macro -------------------------------------------------------------*/
+     78          /* Private variables ---------------------------------------------------------*/
+     79          /* Private function prototypes -----------------------------------------------*/
+     80          /* Private functions ---------------------------------------------------------*/
+     81          
+     82          /** @defgroup SYSCFG_Private_Functions
+     83            * @{
+     84            */ 
+     85          
+     86          /**
+     87            * @brief  Deinitializes the Alternate Functions (remap and EXTI configuration)
+     88            *   registers to their default reset values.
+     89            * @param  None
+     90            * @retval None
+     91            */
+     92          void SYSCFG_DeInit(void)
+     93          {
+     94             RCC_APB2PeriphResetCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+     95             RCC_APB2PeriphResetCmd(RCC_APB2Periph_SYSCFG, DISABLE);
+     96          }
+     97          
+     98          /**
+     99            * @brief  Changes the mapping of the specified pin.
+    100            * @param  SYSCFG_Memory: selects the memory remapping.
+    101            *         This parameter can be one of the following values:
+    102            *            @arg SYSCFG_MemoryRemap_Flash:       Main Flash memory mapped at 0x00000000  
+    103            *            @arg SYSCFG_MemoryRemap_SystemFlash: System Flash memory mapped at 0x00000000
+    104            *            @arg SYSCFG_MemoryRemap_FSMC:        FSMC (Bank1 (NOR/PSRAM 1 and 2) mapped at 0x00000000
+    105            *            @arg SYSCFG_MemoryRemap_SRAM:        Embedded SRAM (112kB) mapped at 0x00000000
+    106            *  
+    107            * @note   In remap mode, the FSMC addressing is fixed to the remap address area only
+    108            *        (Bank1 NOR/PSRAM 1 and NOR/PSRAM 2) and FSMC control registers are not
+    109            *         accessible. The FSMC remap function must be disabled to allows addressing
+    110            *         other memory devices through the FSMC and/or to access FSMC control
+    111            *         registers. 
+    112            *        
+    113            * @retval None
+    114            */
+    115          void SYSCFG_MemoryRemapConfig(uint8_t SYSCFG_MemoryRemap)
+    116          {
+    117            /* Check the parameters */
+    118            assert_param(IS_SYSCFG_MEMORY_REMAP_CONFING(SYSCFG_MemoryRemap));
+    119          
+    120            SYSCFG->MEMRMP = SYSCFG_MemoryRemap;
+    121          }
+    122          
+    123          /**
+    124            * @brief  Selects the GPIO pin used as EXTI Line.
+    125            * @param  EXTI_PortSourceGPIOx : selects the GPIO port to be used as source for
+    126            *          EXTI lines where x can be (A..I).
+    127            * @param  EXTI_PinSourcex: specifies the EXTI line to be configured.
+    128            *           This parameter can be EXTI_PinSourcex where x can be (0..15, except
+    129            *           for EXTI_PortSourceGPIOI x can be (0..11).
+    130            * @retval None
+    131            */
+    132          void SYSCFG_EXTILineConfig(uint8_t EXTI_PortSourceGPIOx, uint8_t EXTI_PinSourcex)
+    133          {
+    134            uint32_t tmp = 0x00;
+    135          
+    136            /* Check the parameters */
+    137            assert_param(IS_EXTI_PORT_SOURCE(EXTI_PortSourceGPIOx));
+    138            assert_param(IS_EXTI_PIN_SOURCE(EXTI_PinSourcex));
+    139          
+    140            tmp = ((uint32_t)0x0F) << (0x04 * (EXTI_PinSourcex & (uint8_t)0x03));
+    141            SYSCFG->EXTICR[EXTI_PinSourcex >> 0x02] &= ~tmp;
+    142            SYSCFG->EXTICR[EXTI_PinSourcex >> 0x02] |= (((uint32_t)EXTI_PortSourceGPIOx) << (0x04 * (EXTI_PinSourcex & (uint8_t)0x03)));
+    143          }
+    144          
+    145          /**
+    146            * @brief  Selects the ETHERNET media interface 
+    147            * @param  SYSCFG_ETH_MediaInterface: specifies the Media Interface mode. 
+    148            *          This parameter can be one of the following values: 
+    149            *            @arg SYSCFG_ETH_MediaInterface_MII: MII mode selected
+    150            *            @arg SYSCFG_ETH_MediaInterface_RMII: RMII mode selected 
+    151            * @retval None 
+    152            */
+    153          void SYSCFG_ETH_MediaInterfaceConfig(uint32_t SYSCFG_ETH_MediaInterface) 
+    154          { 
+    155            assert_param(IS_SYSCFG_ETH_MEDIA_INTERFACE(SYSCFG_ETH_MediaInterface)); 
+    156            /* Configure MII_RMII selection bit */ 
+    157            *(__IO uint32_t *) PMC_MII_RMII_SEL_BB = SYSCFG_ETH_MediaInterface; 
+    158          }
+    159          
+    160          /**
+    161            * @brief  Enables or disables the I/O Compensation Cell.
+    162            * @note   The I/O compensation cell can be used only when the device supply
+    163            *         voltage ranges from 2.4 to 3.6 V.  
+    164            * @param  NewState: new state of the I/O Compensation Cell.
+    165            *          This parameter can be one of the following values:
+    166            *            @arg ENABLE: I/O compensation cell enabled  
+    167            *            @arg DISABLE: I/O compensation cell power-down mode  
+    168            * @retval None
+    169            */
+    170          void SYSCFG_CompensationCellCmd(FunctionalState NewState)
+    171          {
+    172            /* Check the parameters */
+    173            assert_param(IS_FUNCTIONAL_STATE(NewState));
+    174          
+    175            *(__IO uint32_t *) CMPCR_CMP_PD_BB = (uint32_t)NewState;
+    176          }
+    177          
+    178          /**
+    179            * @brief  Checks whether the I/O Compensation Cell ready flag is set or not.
+    180            * @param  None
+    181            * @retval The new state of the I/O Compensation Cell ready flag (SET or RESET)
+    182            */
+    183          FlagStatus SYSCFG_GetCompensationCellStatus(void)
+    184          {
+    185            FlagStatus bitstatus = RESET;
+    186              
+    187            if ((SYSCFG->CMPCR & SYSCFG_CMPCR_READY ) != (uint32_t)RESET)
+    188            {
+    189              bitstatus = SET;
+    190            }
+    191            else
+    192            {
+    193              bitstatus = RESET;
+    194            }
+    195            return bitstatus;
+    196          }
+    197          
+    198          /**
+    199            * @}
+    200            */
+    201          
+    202          /**
+    203            * @}
+    204            */
+    205          
+    206          /**
+    207            * @}
+    208            */
+    209          
+    210          /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/   
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+        8  SYSCFG_CompensationCellCmd
+              8 -> assert_failed
+        8  SYSCFG_DeInit
+              0 -> RCC_APB2PeriphResetCmd
+              8 -> RCC_APB2PeriphResetCmd
+        8  SYSCFG_ETH_MediaInterfaceConfig
+              8 -> assert_failed
+       16  SYSCFG_EXTILineConfig
+             16 -> assert_failed
+        0  SYSCFG_GetCompensationCellStatus
+        8  SYSCFG_MemoryRemapConfig
+              8 -> assert_failed
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      84  ?<Constant "D:\\Wk.Src\\Mango-M32F2...">
+       4  ??DataTable5
+       4  ??DataTable5_1
+       4  ??DataTable5_2
+       4  ??DataTable5_3
+       4  ??DataTable5_4
+      26  SYSCFG_CompensationCellCmd
+      30  SYSCFG_DeInit
+      26  SYSCFG_ETH_MediaInterfaceConfig
+     162  SYSCFG_EXTILineConfig
+      14  SYSCFG_GetCompensationCellStatus
+      34  SYSCFG_MemoryRemapConfig
+
+ 
+ 396 bytes in section .text
+ 
+ 396 bytes of CODE memory
+
+Errors: none
+Warnings: none

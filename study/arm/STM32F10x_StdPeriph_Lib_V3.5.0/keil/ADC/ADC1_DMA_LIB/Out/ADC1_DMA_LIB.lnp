@@ -1,0 +1,4 @@
+--cpu Cortex-M3 ".\out\main.o" ".\out\stm32f10x_it.o" ".\out\system_stm32f10x.o" G:\data\STM32F10x_StdPeriph_Lib_V3.5.0\keil\ADC\ADC1_DMA_LIB\STM32_LIB.lib --library_type=microlib --strict --scatter ".\Out\ADC1_DMA_LIB.sct" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\ADC1_DMA_LIB.map" -o ".\Out\ADC1_DMA_LIB.axf"

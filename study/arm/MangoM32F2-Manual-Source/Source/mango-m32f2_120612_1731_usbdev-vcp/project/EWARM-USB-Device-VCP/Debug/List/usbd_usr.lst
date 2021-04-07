@@ -1,0 +1,311 @@
+###############################################################################
+#                                                                             #
+#                                                       12/Jun/2012  17:25:04 #
+# IAR ANSI C/C++ Compiler V6.30.8.23653/W32 EVALUATION for ARM                #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  D:\Wk.Src\Mango-M32F2\src\USB-Device-VCP\src\usbd_usr.c  #
+#    Command line =  D:\Wk.Src\Mango-M32F2\src\USB-Device-VCP\src\usbd_usr.c  #
+#                    -D USE_STDPERIPH_DRIVER -D USB_TEST -lcN                 #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \List\ -o D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device #
+#                    -VCP\Debug\Obj\ --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0                           #
+#                    Evaluation\arm\INC\c\DLib_Config_Full.h" -I              #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\CMSIS\Device\ST\STM32F2xx\Include\ -I         #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32F2xx_StdPeriph_Driver\inc\ -I            #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \src\ -I D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device- #
+#                    VCP\..\..\src\USB-Device-VCP\inc\ -I                     #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_OTG_Driver\inc\ -I                  #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_Device_Library\Core\inc\ -I         #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_Device_Library\Class\cdc\inc\ -Ohs  #
+#                    -I "C:\Program Files\IAR Systems\Embedded Workbench 6.0  #
+#                    Evaluation\arm\CMSIS\Include\"                           #
+#    List file    =  D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \List\usbd_usr.lst                                       #
+#    Object file  =  D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \Obj\usbd_usr.o                                          #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+D:\Wk.Src\Mango-M32F2\src\USB-Device-VCP\src\usbd_usr.c
+      1          /**
+      2            ******************************************************************************
+      3            * @file    usbd_usr.c
+      4            * @author  MCD Application Team
+      5            * @version V1.1.0
+      6            * @date    19-March-2012
+      7            * @brief   This file includes the user application layer
+      8            ******************************************************************************
+      9            * @attention
+     10            *
+     11            * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+     12            *
+     13            * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+     14            * You may not use this file except in compliance with the License.
+     15            * You may obtain a copy of the License at:
+     16            *
+     17            *        http://www.st.com/software_license_agreement_liberty_v2
+     18            *
+     19            * Unless required by applicable law or agreed to in writing, software 
+     20            * distributed under the License is distributed on an "AS IS" BASIS, 
+     21            * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     22            * See the License for the specific language governing permissions and
+     23            * limitations under the License.
+     24            *
+     25            ******************************************************************************
+     26            */ 
+     27          
+     28          /* Includes ------------------------------------------------------------------*/
+     29          #include "usbd_usr.h"
+     30          #include "usbd_ioreq.h"
+     31          #include "hw_config.h"
+     32          
+     33          /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
+     34          * @{
+     35          */
+     36          
+     37          /** @defgroup USBD_USR 
+     38          * @brief    This file includes the user application layer
+     39          * @{
+     40          */ 
+     41          
+     42          /** @defgroup USBD_USR_Private_TypesDefinitions
+     43          * @{
+     44          */ 
+     45          /**
+     46          * @}
+     47          */ 
+     48          
+     49          
+     50          /** @defgroup USBD_USR_Private_Defines
+     51          * @{
+     52          */ 
+     53          /**
+     54          * @}
+     55          */ 
+     56          
+     57          
+     58          /** @defgroup USBD_USR_Private_Macros
+     59          * @{
+     60          */ 
+     61          /**
+     62          * @}
+     63          */ 
+     64          
+     65          
+     66          /** @defgroup USBD_USR_Private_Variables
+     67          * @{
+     68          */ 
+     69          
+     70          USBD_Usr_cb_TypeDef USR_cb =
+     71          {
+     72              USBD_USR_Init,
+     73              USBD_USR_DeviceReset,
+     74              USBD_USR_DeviceConfigured,
+     75              USBD_USR_DeviceSuspended,
+     76              USBD_USR_DeviceResumed,
+     77          
+     78              USBD_USR_DeviceConnected,
+     79              USBD_USR_DeviceDisconnected,    
+     80          };
+     81          
+     82          /**
+     83          * @}
+     84          */
+     85          
+     86          /** @defgroup USBD_USR_Private_Constants
+     87          * @{
+     88          */ 
+     89          
+     90          /**
+     91          * @}
+     92          */
+     93          
+     94          
+     95          
+     96          /** @defgroup USBD_USR_Private_FunctionPrototypes
+     97          * @{
+     98          */ 
+     99          /**
+    100          * @}
+    101          */ 
+    102          
+    103          
+    104          /** @defgroup USBD_USR_Private_Functions
+    105          * @{
+    106          */ 
+    107          
+    108          /**
+    109          * @brief  USBD_USR_Init 
+    110          *         Displays the message on LCD for host lib initialization
+    111          * @param  None
+    112          * @retval None
+    113          */
+    114          void USBD_USR_Init(void)
+    115          {
+    116          #ifdef USE_USB_OTG_HS 
+    117              printf(" USB OTG HS VCP Device\n");
+    118          #else
+    119              printf(" USB OTG FS VCP Device\n");
+    120          #endif
+    121              printf("> USB device library started.\n"); 
+    122              printf("USB Device Library v1.1.0\n");
+    123          }
+    124          
+    125          /**
+    126          * @brief  USBD_USR_DeviceReset 
+    127          *         Displays the message on LCD on device Reset Event
+    128          * @param  speed : device speed
+    129          * @retval None
+    130          */
+    131          void USBD_USR_DeviceReset(uint8_t speed )
+    132          {
+    133              switch (speed)
+    134              {
+    135              case USB_OTG_SPEED_HIGH: 
+    136                  printf("USB Device Library v1.1.0 [HS]\n" );
+    137                  break;
+    138          
+    139              case USB_OTG_SPEED_FULL: 
+    140                  printf("USB Device Library v1.1.0 [FS]\n" );
+    141                  break;
+    142          
+    143              default:
+    144                  printf("USB Device Library v1.1.0 [??]\n" );
+    145              }
+    146          }
+    147          
+    148          /**
+    149          * @brief  USBD_USR_DeviceConfigured
+    150          *         Displays the message on LCD on device configuration Event
+    151          * @param  None
+    152          * @retval Staus
+    153          */
+    154          void USBD_USR_DeviceConfigured (void)
+    155          {
+    156              printf("> VCP Interface configured.\n");
+    157          }
+    158          
+    159          /**
+    160          * @brief  USBD_USR_DeviceSuspended 
+    161          *         Displays the message on LCD on device suspend Event
+    162          * @param  None
+    163          * @retval None
+    164          */
+    165          void USBD_USR_DeviceSuspended(void)
+    166          {
+    167              printf("> USB Device in Suspend Mode.\n");
+    168              /* Users can do their application actions here for the USB-Reset */
+    169          }
+    170          
+    171          
+    172          /**
+    173          * @brief  USBD_USR_DeviceResumed 
+    174          *         Displays the message on LCD on device resume Event
+    175          * @param  None
+    176          * @retval None
+    177          */
+    178          void USBD_USR_DeviceResumed(void)
+    179          {
+    180              printf("> USB Device in Idle Mode.\n");
+    181              /* Users can do their application actions here for the USB-Reset */
+    182          }
+    183          
+    184          
+    185          /**
+    186          * @brief  USBD_USR_DeviceConnected
+    187          *         Displays the message on LCD on device connection Event
+    188          * @param  None
+    189          * @retval Staus
+    190          */
+    191          void USBD_USR_DeviceConnected (void)
+    192          {
+    193              printf("> USB Device Connected.\n");
+    194          }
+    195          
+    196          
+    197          /**
+    198          * @brief  USBD_USR_DeviceDisonnected
+    199          *         Displays the message on LCD on device disconnection Event
+    200          * @param  None
+    201          * @retval Staus
+    202          */
+    203          void USBD_USR_DeviceDisconnected (void)
+    204          {
+    205              printf("> USB Device Disconnected.\n");
+    206          }
+    207          /**
+    208          * @}
+    209          */ 
+    210          
+    211          /**
+    212          * @}
+    213          */ 
+    214          
+    215          /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+        0  USBD_USR_DeviceConfigured
+             0 -> printf
+        0  USBD_USR_DeviceConnected
+             0 -> printf
+        0  USBD_USR_DeviceDisconnected
+             0 -> printf
+        0  USBD_USR_DeviceReset
+             0 -> printf
+        0  USBD_USR_DeviceResumed
+             0 -> printf
+        0  USBD_USR_DeviceSuspended
+             0 -> printf
+        8  USBD_USR_Init
+             0 -> printf
+             8 -> printf
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      24  ?<Constant " USB OTG FS VCP Device\n">
+      28  ?<Constant "> USB Device Connected.\n">
+      28  ?<Constant "> USB Device Disconne...">
+      28  ?<Constant "> USB Device in Idle ...">
+      32  ?<Constant "> USB Device in Suspe...">
+      32  ?<Constant "> USB device library ...">
+      32  ?<Constant "> VCP Interface confi...">
+      28  ?<Constant "USB Device Library v1...">
+      32  ?<Constant "USB Device Library v1...">_1
+      32  ?<Constant "USB Device Library v1...">_2
+      32  ?<Constant "USB Device Library v1...">_3
+       8  USBD_USR_DeviceConfigured
+       8  USBD_USR_DeviceConnected
+       8  USBD_USR_DeviceDisconnected
+      32  USBD_USR_DeviceReset
+       8  USBD_USR_DeviceResumed
+       8  USBD_USR_DeviceSuspended
+      34  USBD_USR_Init
+      28  USR_cb
+
+ 
+  28 bytes in section .data
+ 434 bytes in section .text
+ 
+ 434 bytes of CODE memory
+  28 bytes of DATA memory
+
+Errors: none
+Warnings: none

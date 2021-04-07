@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Project>
+  <Desktop>
+    <Static>
+      <Debug-Log>
+        
+        
+      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1642</ColumnWidth1></Debug-Log>
+      <Build>
+        
+        
+        
+        
+      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1231</ColumnWidth1><ColumnWidth2>328</ColumnWidth2><ColumnWidth3>82</ColumnWidth3></Build>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>231</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      </Workspace>
+      <Disassembly>
+        <col-names>
+          
+          
+        <item>Disassembly</item><item>_I0</item></col-names>
+        <col-widths>
+          
+          
+        <item>500</item><item>20</item></col-widths>
+        <DisasmHistory/>
+        
+        
+      <ShowCodeCoverage>0</ShowCodeCoverage><ShowInstrProfiling>0</ShowInstrProfiling></Disassembly>
+    </Static>
+    <Windows>
+      
+      
+      
+    <Wnd3>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-226-20167</Identity>
+            <TabName>Debug Log</TabName>
+            <Factory>Debug-Log</Factory>
+            <Session/>
+          </Tab>
+          <Tab>
+            <Identity>TabID-32471-20177</Identity>
+            <TabName>Build</TabName>
+            <Factory>Build</Factory>
+            <Session/>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd3><Wnd4>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-10974-20171</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>project</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd4><Wnd5>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-21723-20174</Identity>
+            <TabName>Disassembly</TabName>
+            <Factory>Disassembly</Factory>
+            <Session/>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd5></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\src\USB-Device-VCP\src\usbd_cdc_vcp.c</Filename><XPos>0</XPos><YPos>86</YPos><SelStart>3903</SelStart><SelEnd>3903</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\src\USB-Device-VCP\src\usbd_usr.c</Filename><XPos>0</XPos><YPos>98</YPos><SelStart>2249</SelStart><SelEnd>2249</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\src\main.c</Filename><XPos>0</XPos><YPos>50</YPos><SelStart>1739</SelStart><SelEnd>1739</SelEnd></Tab><ActiveTab>2</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\src\USB-Device-VCP\src\app.c</Filename><XPos>0</XPos><YPos>82</YPos><SelStart>2217</SelStart><SelEnd>2217</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\Libraries\STM32_USB_Device_Library\Core\src\usbd_core.c</Filename><XPos>0</XPos><YPos>120</YPos><SelStart>3557</SelStart><SelEnd>3557</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\src\USB-Device-VCP\src\usb_bsp.c</Filename><XPos>0</XPos><YPos>127</YPos><SelStart>4673</SelStart><SelEnd>4673</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\src\USB-Device-VCP\inc\usb_conf.h</Filename><XPos>0</XPos><YPos>151</YPos><SelStart>7050</SelStart><SelEnd>7065</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-01376398><key>iaridepm.enu1</key></Toolbar-01376398></Sizes></Row0><Row1><Sizes><Toolbar-04bebc38><key>debuggergui.enu1</key></Toolbar-04bebc38></Sizes></Row1></Top><Left><Row0><Sizes><Wnd4><Rect><Top>-2</Top><Left>-2</Left><Bottom>677</Bottom><Right>305</Right><x>-2</x><y>-2</y><xscreen>162</xscreen><yscreen>190</yscreen><sizeHorzCX>117647</sizeHorzCX><sizeHorzCY>203426</sizeHorzCY><sizeVertCX>222948</sizeVertCX><sizeVertCY>726981</sizeVertCY></Rect></Wnd4></Sizes></Row0></Left><Right><Row0><Sizes><Wnd5><Rect><Top>-2</Top><Left>-2</Left><Bottom>677</Bottom><Right>160</Right><x>-2</x><y>-2</y><xscreen>162</xscreen><yscreen>190</yscreen><sizeHorzCX>117647</sizeHorzCX><sizeHorzCY>203426</sizeHorzCY><sizeVertCX>117647</sizeVertCX><sizeVertCY>726981</sizeVertCY></Rect></Wnd5></Sizes></Row0></Right><Bottom><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>188</Bottom><Right>1379</Right><x>-2</x><y>-2</y><xscreen>1381</xscreen><yscreen>190</yscreen><sizeHorzCX>1002905</sizeHorzCX><sizeHorzCY>203426</sizeHorzCY><sizeVertCX>117647</sizeVertCX><sizeVertCY>203426</sizeVertCY></Rect></Wnd3></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Project>
+
+

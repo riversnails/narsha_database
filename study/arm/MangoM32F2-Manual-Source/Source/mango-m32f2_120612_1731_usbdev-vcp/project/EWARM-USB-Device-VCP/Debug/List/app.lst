@@ -1,0 +1,203 @@
+###############################################################################
+#                                                                             #
+#                                                       12/Jun/2012  17:25:03 #
+# IAR ANSI C/C++ Compiler V6.30.8.23653/W32 EVALUATION for ARM                #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  D:\Wk.Src\Mango-M32F2\src\USB-Device-VCP\src\app.c       #
+#    Command line =  D:\Wk.Src\Mango-M32F2\src\USB-Device-VCP\src\app.c -D    #
+#                    USE_STDPERIPH_DRIVER -D USB_TEST -lcN                    #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \List\ -o D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device #
+#                    -VCP\Debug\Obj\ --debug --endian=little --cpu=Cortex-M3  #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0                           #
+#                    Evaluation\arm\INC\c\DLib_Config_Full.h" -I              #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\CMSIS\Device\ST\STM32F2xx\Include\ -I         #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32F2xx_StdPeriph_Driver\inc\ -I            #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \src\ -I D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device- #
+#                    VCP\..\..\src\USB-Device-VCP\inc\ -I                     #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_OTG_Driver\inc\ -I                  #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_Device_Library\Core\inc\ -I         #
+#                    D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\..\.. #
+#                    \Libraries\STM32_USB_Device_Library\Class\cdc\inc\ -Ohs  #
+#                    -I "C:\Program Files\IAR Systems\Embedded Workbench 6.0  #
+#                    Evaluation\arm\CMSIS\Include\"                           #
+#    List file    =  D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \List\app.lst                                            #
+#    Object file  =  D:\Wk.Src\Mango-M32F2\project\EWARM-USB-Device-VCP\Debug #
+#                    \Obj\app.o                                               #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+D:\Wk.Src\Mango-M32F2\src\USB-Device-VCP\src\app.c
+      1          /**
+      2            ******************************************************************************
+      3            * @file    app.c
+      4            * @author  MCD Application Team
+      5            * @version V1.1.0
+      6            * @date    19-March-2012
+      7            * @brief   This file provides all the Application firmware functions.
+      8            ******************************************************************************
+      9            * @attention
+     10            *
+     11            * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+     12            *
+     13            * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+     14            * You may not use this file except in compliance with the License.
+     15            * You may obtain a copy of the License at:
+     16            *
+     17            *        http://www.st.com/software_license_agreement_liberty_v2
+     18            *
+     19            * Unless required by applicable law or agreed to in writing, software 
+     20            * distributed under the License is distributed on an "AS IS" BASIS, 
+     21            * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     22            * See the License for the specific language governing permissions and
+     23            * limitations under the License.
+     24            *
+     25            ******************************************************************************
+     26            */ 
+     27          
+     28          /* Includes ------------------------------------------------------------------*/ 
+     29          
+     30          #include "hw_config.h"
+     31          
+     32          /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
+     33            * @{
+     34            */
+     35          
+     36          
+     37          /** @defgroup APP_VCP 
+     38            * @brief Mass storage application module
+     39            * @{
+     40            */ 
+     41          
+     42          /** @defgroup APP_VCP_Private_TypesDefinitions
+     43            * @{
+     44            */ 
+     45          /**
+     46            * @}
+     47            */ 
+     48          
+     49          
+     50          /** @defgroup APP_VCP_Private_Defines
+     51            * @{
+     52            */ 
+     53          
+     54          /**
+     55            * @}
+     56            */ 
+     57          
+     58          
+     59          /** @defgroup APP_VCP_Private_Macros
+     60            * @{
+     61            */ 
+     62          /**
+     63            * @}
+     64            */ 
+     65          
+     66          
+     67          /** @defgroup APP_VCP_Private_Variables
+     68            * @{
+     69            */ 
+     70            
+     71          #ifdef USB_OTG_HS_INTERNAL_DMA_ENABLED
+     72            #if defined ( __ICCARM__ ) /*!< IAR Compiler */
+     73              #pragma data_alignment=4   
+     74            #endif
+     75          #endif /* USB_OTG_HS_INTERNAL_DMA_ENABLED */
+     76             
+     77          __ALIGN_BEGIN USB_OTG_CORE_HANDLE    USB_OTG_dev __ALIGN_END ;
+     78          
+     79          /**
+     80            * @}
+     81            */ 
+     82          
+     83          
+     84          /** @defgroup APP_VCP_Private_FunctionPrototypes
+     85            * @{
+     86            */ 
+     87          /**
+     88            * @}
+     89            */ 
+     90          
+     91          
+     92          /** @defgroup APP_VCP_Private_Functions
+     93            * @{
+     94            */ 
+     95          
+     96          /**
+     97            * @brief  Test_USB_Device_VCP
+     98            * @param  None
+     99            * @retval None
+    100            */
+    101          void Test_USB_Device_VCP(void)
+    102          {
+    103            __IO uint32_t i = 0;  
+    104          
+    105            printf("USB Device VCP Test start ...\n");
+    106          
+    107            USBD_Init(&USB_OTG_dev,
+    108          #ifdef USE_USB_OTG_HS 
+    109                      USB_OTG_HS_CORE_ID,
+    110          #else            
+    111                      USB_OTG_FS_CORE_ID,
+    112          #endif  
+    113                      &USR_desc, 
+    114                      &USBD_CDC_cb, 
+    115                      &USR_cb);
+    116            
+    117            /* Main loop */
+    118            while (1)
+    119            {
+    120              if (i++ == 0x100000)
+    121              {
+    122          //      DevCtrl_LED_Toggle(LED1);
+    123          //      DevCtrl_LED_Toggle(LED2);
+    124          //      DevCtrl_LED_Toggle(LED3);
+    125          //        printf(".");
+    126                i = 0;
+    127              }
+    128            }
+    129          } 
+    130          
+    131          /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       16  Test_USB_Device_VCP
+             16 -> USBD_Init
+             16 -> printf
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      32  ?<Constant "USB Device VCP Test s...">
+       4  ??DataTable1
+       4  ??DataTable1_1
+       4  ??DataTable1_2
+       4  ??DataTable1_3
+      50  Test_USB_Device_VCP
+    1524  USB_OTG_dev
+
+ 
+ 1 524 bytes in section .bss
+    98 bytes in section .text
+ 
+    98 bytes of CODE memory
+ 1 524 bytes of DATA memory
+
+Errors: none
+Warnings: none

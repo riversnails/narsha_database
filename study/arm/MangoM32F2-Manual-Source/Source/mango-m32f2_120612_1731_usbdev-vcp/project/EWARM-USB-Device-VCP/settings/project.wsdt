@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>project/Debug</Project></CurrentConfigs></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>209</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      </Workspace>
+    <Build><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>940</ColumnWidth1><ColumnWidth2>250</ColumnWidth2><ColumnWidth3>62</ColumnWidth3></Build><TerminalIO/></Static>
+    <Windows>
+      
+    <Wnd0>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-32144-17360</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>project</ExpandedNode><ExpandedNode>project/Library</ExpandedNode><ExpandedNode>project/USB Device</ExpandedNode><ExpandedNode>project/USB Device/Class</ExpandedNode><ExpandedNode>project/USB Device/Class/CDC</ExpandedNode><ExpandedNode>project/USB Device/Library</ExpandedNode><ExpandedNode>project/USB Drivers</ExpandedNode><ExpandedNode>project/src</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd1><Tabs><Tab><Identity>TabID-24595-17706</Identity><TabName>Build</TabName><Factory>Build</Factory><Session/></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd1></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\src\USB-Device-VCP\src\usbd_cdc_vcp.c</Filename><XPos>0</XPos><YPos>86</YPos><SelStart>3903</SelStart><SelEnd>3903</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\src\USB-Device-VCP\src\usbd_usr.c</Filename><XPos>0</XPos><YPos>98</YPos><SelStart>2249</SelStart><SelEnd>2249</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\src\main.c</Filename><XPos>0</XPos><YPos>50</YPos><SelStart>1739</SelStart><SelEnd>1739</SelEnd></Tab><ActiveTab>2</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\src\USB-Device-VCP\src\app.c</Filename><XPos>0</XPos><YPos>82</YPos><SelStart>2217</SelStart><SelEnd>2217</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\Libraries\STM32_USB_Device_Library\Core\src\usbd_core.c</Filename><XPos>0</XPos><YPos>120</YPos><SelStart>3557</SelStart><SelEnd>3557</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\src\USB-Device-VCP\src\usb_bsp.c</Filename><XPos>0</XPos><YPos>127</YPos><SelStart>4673</SelStart><SelEnd>4673</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\src\USB-Device-VCP\inc\usb_conf.h</Filename><XPos>0</XPos><YPos>151</YPos><SelStart>7050</SelStart><SelEnd>7065</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-01376398><key>iaridepm.enu1</key></Toolbar-01376398></Sizes></Row0><Row1><Sizes/></Row1></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>631</Bottom><Right>300</Right><x>-2</x><y>-2</y><xscreen>194</xscreen><yscreen>190</yscreen><sizeHorzCX>140886</sizeHorzCX><sizeHorzCY>203426</sizeHorzCY><sizeVertCX>219317</sizeVertCX><sizeVertCY>677730</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>258</Bottom><Right>1379</Right><x>-2</x><y>-2</y><xscreen>1381</xscreen><yscreen>260</yscreen><sizeHorzCX>1002905</sizeHorzCX><sizeHorzCY>278373</sizeHorzCY><sizeVertCX>140886</sizeVertCX><sizeVertCY>203426</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+

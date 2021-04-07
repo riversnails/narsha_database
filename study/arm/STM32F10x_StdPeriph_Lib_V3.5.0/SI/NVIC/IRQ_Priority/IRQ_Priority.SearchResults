@@ -1,0 +1,5 @@
+---- USE_STM3210B_EVAL Matches (4 in 2 files) ----
+Stm32_eval.c (g:\data\stm32f10x_stdperiph_lib_v3.5.0\utilities\stm32_eval):#elif defined USE_STM3210B_EVAL
+Stm32_eval.h (g:\data\stm32f10x_stdperiph_lib_v3.5.0\utilities\stm32_eval):#if !defined (USE_STM32100B_EVAL) && !defined (USE_STM3210B_EVAL) &&  !defined (USE_STM3210E_EVAL)\
+Stm32_eval.h (g:\data\stm32f10x_stdperiph_lib_v3.5.0\utilities\stm32_eval): //#define USE_STM3210B_EVAL
+Stm32_eval.h (g:\data\stm32f10x_stdperiph_lib_v3.5.0\utilities\stm32_eval):#elif defined USE_STM3210B_EVAL

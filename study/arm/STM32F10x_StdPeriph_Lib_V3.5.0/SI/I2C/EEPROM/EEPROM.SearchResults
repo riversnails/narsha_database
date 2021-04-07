@@ -1,0 +1,79 @@
+---- I2C2_EV_IRQHandler Matches (78 in 24 files) ----
+Startup_stm32f10x_cl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):                DCD     I2C2_EV_IRQHandler         ; I2C2 Event
+Startup_stm32f10x_cl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):                EXPORT  I2C2_EV_IRQHandler         [WEAK]
+Startup_stm32f10x_cl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):I2C2_EV_IRQHandler
+Startup_stm32f10x_cl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):  .word  I2C2_EV_IRQHandler
+Startup_stm32f10x_cl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):  .weak  I2C2_EV_IRQHandler
+Startup_stm32f10x_cl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):  .thumb_set I2C2_EV_IRQHandler,Default_Handler
+Startup_stm32f10x_cl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        DCD     I2C2_EV_IRQHandler         ; I2C2 Event
+Startup_stm32f10x_cl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        PUBWEAK I2C2_EV_IRQHandler
+Startup_stm32f10x_cl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):I2C2_EV_IRQHandler
+Startup_stm32f10x_cl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        B I2C2_EV_IRQHandler
+Startup_stm32f10x_cl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):	.word	I2C2_EV_IRQHandler
+Startup_stm32f10x_cl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):	.weak	I2C2_EV_IRQHandler
+Startup_stm32f10x_cl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):	.thumb_set I2C2_EV_IRQHandler,Default_Handler
+Startup_stm32f10x_hd.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):                DCD     I2C2_EV_IRQHandler         ; I2C2 Event
+Startup_stm32f10x_hd.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):                EXPORT  I2C2_EV_IRQHandler         [WEAK]
+Startup_stm32f10x_hd.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):I2C2_EV_IRQHandler
+Startup_stm32f10x_hd.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):  .word  I2C2_EV_IRQHandler
+Startup_stm32f10x_hd.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):  .weak  I2C2_EV_IRQHandler
+Startup_stm32f10x_hd.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):  .thumb_set I2C2_EV_IRQHandler,Default_Handler
+Startup_stm32f10x_hd.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        DCD     I2C2_EV_IRQHandler        ; I2C2 Event
+Startup_stm32f10x_hd.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        PUBWEAK I2C2_EV_IRQHandler
+Startup_stm32f10x_hd.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):I2C2_EV_IRQHandler
+Startup_stm32f10x_hd.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        B I2C2_EV_IRQHandler
+Startup_stm32f10x_hd.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):	.word	I2C2_EV_IRQHandler
+Startup_stm32f10x_hd.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):	.weak	I2C2_EV_IRQHandler
+Startup_stm32f10x_hd.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):	.thumb_set I2C2_EV_IRQHandler,Default_Handler
+Startup_stm32f10x_hd_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):                DCD     I2C2_EV_IRQHandler              ; I2C2 Event
+Startup_stm32f10x_hd_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):                EXPORT  I2C2_EV_IRQHandler               [WEAK]
+Startup_stm32f10x_hd_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):I2C2_EV_IRQHandler
+Startup_stm32f10x_hd_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):  .word  I2C2_EV_IRQHandler
+Startup_stm32f10x_hd_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):  .weak  I2C2_EV_IRQHandler
+Startup_stm32f10x_hd_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):  .thumb_set I2C2_EV_IRQHandler,Default_Handler
+Startup_stm32f10x_hd_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        DCD     I2C2_EV_IRQHandler            ; I2C2 Event
+Startup_stm32f10x_hd_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        PUBWEAK I2C2_EV_IRQHandler
+Startup_stm32f10x_hd_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):I2C2_EV_IRQHandler
+Startup_stm32f10x_hd_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        B I2C2_EV_IRQHandler
+Startup_stm32f10x_hd_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):	.word	I2C2_EV_IRQHandler
+Startup_stm32f10x_hd_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):  .weak  I2C2_EV_IRQHandler
+Startup_stm32f10x_hd_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):  .thumb_set I2C2_EV_IRQHandler,Default_Handler
+Startup_stm32f10x_md.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):                DCD     I2C2_EV_IRQHandler         ; I2C2 Event
+Startup_stm32f10x_md.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):                EXPORT  I2C2_EV_IRQHandler         [WEAK]
+Startup_stm32f10x_md.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):I2C2_EV_IRQHandler
+Startup_stm32f10x_md.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):	.word	I2C2_EV_IRQHandler
+Startup_stm32f10x_md.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):	.weak	I2C2_EV_IRQHandler
+Startup_stm32f10x_md.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):	.thumb_set I2C2_EV_IRQHandler,Default_Handler
+Startup_stm32f10x_md.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        DCD     I2C2_EV_IRQHandler        ; I2C2 Event
+Startup_stm32f10x_md.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        PUBWEAK I2C2_EV_IRQHandler
+Startup_stm32f10x_md.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):I2C2_EV_IRQHandler
+Startup_stm32f10x_md.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        B I2C2_EV_IRQHandler
+Startup_stm32f10x_md.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):	.word	I2C2_EV_IRQHandler
+Startup_stm32f10x_md.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):	.weak	I2C2_EV_IRQHandler
+Startup_stm32f10x_md.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):	.thumb_set I2C2_EV_IRQHandler,Default_Handler
+Startup_stm32f10x_md_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):                DCD     I2C2_EV_IRQHandler              ; I2C2 Event
+Startup_stm32f10x_md_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):                EXPORT  I2C2_EV_IRQHandler               [WEAK]
+Startup_stm32f10x_md_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):I2C2_EV_IRQHandler
+Startup_stm32f10x_md_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):  .word  I2C2_EV_IRQHandler
+Startup_stm32f10x_md_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):  .weak  I2C2_EV_IRQHandler
+Startup_stm32f10x_md_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):  .thumb_set I2C2_EV_IRQHandler,Default_Handler
+Startup_stm32f10x_md_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        DCD     I2C2_EV_IRQHandler            ; I2C2 Event
+Startup_stm32f10x_md_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        PUBWEAK I2C2_EV_IRQHandler
+Startup_stm32f10x_md_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):I2C2_EV_IRQHandler
+Startup_stm32f10x_md_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        B I2C2_EV_IRQHandler
+Startup_stm32f10x_md_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):	.word	I2C2_EV_IRQHandler
+Startup_stm32f10x_md_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):  .weak  I2C2_EV_IRQHandler
+Startup_stm32f10x_md_vl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):  .thumb_set I2C2_EV_IRQHandler,Default_Handler
+Startup_stm32f10x_xl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):                DCD     I2C2_EV_IRQHandler            ; I2C2 Event
+Startup_stm32f10x_xl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):                EXPORT  I2C2_EV_IRQHandler            [WEAK]
+Startup_stm32f10x_xl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\arm):I2C2_EV_IRQHandler
+Startup_stm32f10x_xl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):  .word  I2C2_EV_IRQHandler
+Startup_stm32f10x_xl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):  .weak  I2C2_EV_IRQHandler
+Startup_stm32f10x_xl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\gcc_ride7):  .thumb_set I2C2_EV_IRQHandler,Default_Handler
+Startup_stm32f10x_xl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        DCD     I2C2_EV_IRQHandler            ; I2C2 Event
+Startup_stm32f10x_xl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        PUBWEAK I2C2_EV_IRQHandler
+Startup_stm32f10x_xl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):I2C2_EV_IRQHandler
+Startup_stm32f10x_xl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\iar):        B I2C2_EV_IRQHandler
+Startup_stm32f10x_xl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):  .word  I2C2_EV_IRQHandler
+Startup_stm32f10x_xl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):  .weak  I2C2_EV_IRQHandler
+Startup_stm32f10x_xl.s (g:\data\stm32f10x_stdperiph_lib_v3.5.0\libraries\cmsis\cm3\devicesupport\st\stm32f10x\startup\truestudio):  .thumb_set I2C2_EV_IRQHandler,Default_Handler

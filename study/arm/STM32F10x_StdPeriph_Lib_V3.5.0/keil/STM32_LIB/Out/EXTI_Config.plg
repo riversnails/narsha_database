@@ -1,0 +1,13 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+G:\data\STM32F10x_StdPeriph_Lib_V3.5.0\keil\ADC\ADC1_DMA_LIB\STM32_LIB.uvproj
+Project File Date:  10/16/2014
+
+<h2>Output:</h2>
+Rebuild target 'STM32_LIB'
+compiling misc.c...
+misc.c: Error:  #5: cannot open source input file "..\..\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\src\misc.c": No such file or directory
+Target not created
