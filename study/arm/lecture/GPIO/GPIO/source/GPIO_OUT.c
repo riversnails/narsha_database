@@ -7,17 +7,17 @@
 
 
 
-#ifdef __GNUC__
-  /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
-     set to 'Yes') calls __io_putchar() */
-  #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
-#else
-  #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
-#endif /* __GNUC__ */
+//#ifdef __GNUC__
+//  /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
+//     set to 'Yes') calls __io_putchar() */
+//  #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+//#else
+//  #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+//#endif /* __GNUC__ */
 
 	
 	
-	PUTCHAR_PROTOTYPE
+int fputc(int ch, FILE *f)
 {
 	while(!(USART1->SR & (0x01 << 7)));
   USART1->DR = (unsigned char)ch;
@@ -199,15 +199,27 @@ void EXTI1_IRQHandler(void)
 }
 
 
+//void EXTI2_IRQHandler(void)
+//{
+//	if (EXTI->PR & (1<<2)) {                       // EXTI0 interrupt pending?
+//		if(toggle2)
+//			GPIOA->ODR |= 0x01 << 12;
+//		else 
+//			GPIOA->ODR &= ~(0x01 << 12);
+//		
+//		toggle2 = !toggle2;
+//		
+//		EXTI->PR = (1<<2);                          // clear pending interrupt
+//	}
+//}
+
+
+
 void EXTI2_IRQHandler(void)
 {
 	if (EXTI->PR & (1<<2)) {                       // EXTI0 interrupt pending?
-		if(toggle2)
-			GPIOA->ODR |= 0x01 << 12;
-		else 
-			GPIOA->ODR &= ~(0x01 << 12);
 		
-		toggle2 = !toggle2;
+		//printf("haha\r\n");
 		
 		EXTI->PR = (1<<2);                          // clear pending interrupt
 	}
@@ -351,6 +363,18 @@ void exit_callback_func()
 //}
 
 
+void EXTI9_5_IRQHandler(void)
+{
+	if (EXTI->PR & (1<<7)) {                       // EXTI0 interrupt pending?
+
+		printf("haha\r\n");
+		
+		
+		EXTI->PR = (1<<7);                          // clear pending interrupt
+	}
+}
+
+
 void EXTI15_10_IRQHandler(void)
 {
 	if (EXTI->PR & (1<<13)) {                       // EXTI0 interrupt pending?
@@ -415,8 +439,8 @@ void EXTI15_10_IRQHandler(void)
 #define rw_low() GPIOD->ODR &= ~(0x01 << 5);
 #define backlight_on() GPIOE->ODR |= (0x01 << 5);
 #define backlight_off() GPIOE->ODR &= ~(0x01 << 5);
-#define bl_touch_high() GPIOD->ODR |= (0x01 << 6);
-#define bl_touch_low() GPIOD->ODR &= ~(0x01 << 6);
+#define bl_touch_high() GPIOC->ODR |= (0x01 << 6);
+#define bl_touch_low() GPIOC->ODR &= ~(0x01 << 6);
 
 
 int backlight_pwm_duty = 20;
@@ -426,13 +450,20 @@ int bl_touch_duty = 65;
 void led_on();
 void led_off();
 
+char led_on_toggle = 0;
+
 void TIM2_IRQHandler (void) {
 
 	 if ((TIM2->SR & 0x0001) != 0) { // check update interrupt source
 		 backlight_on();
-		 led_on();
 		 TIM2->CCR1 = backlight_pwm_duty;
-		 TIM2->CCR2 = led_pwm_duty;
+		 
+		 if(led_on_toggle)
+		 {
+			 led_on();
+			 TIM2->CCR2 = led_pwm_duty;
+		 }
+		 
 		 TIM2->SR &= ~(1<<0); // clear UIF flag
 	 }
 	 else if ((TIM2->SR & 0x0002) != 0) { // check capture compare interrupt source
@@ -441,8 +472,11 @@ void TIM2_IRQHandler (void) {
 			TIM2->SR &= ~(1<<1); // clear CC1E flag
 	 }		
 	 else if ((TIM2->SR & 0x0004) != 0) { // check capture compare interrupt source
-			led_off();
-	    
+		 if(led_on_toggle)
+		 {
+				led_off();
+		 }
+		 
 			TIM2->SR &= ~(1<<2); // clear CC1E flag
 	 }		
 }
@@ -638,8 +672,11 @@ int main (void) {
 	
 	unsigned long c_micros = 0, p_micros = 0;
 	unsigned long curr_millis = 0, prev_millis_button = 0, prev_millis_pwm = 0, prev_millis_pwm_led = 0, prev_millis_bl_touch = 0;
+	unsigned long prev_millis_bl_touch_switch = 0;
 	int test_toggle = 0;
 	char bl_touch_toggle = 0;
+	char servo_toggle = 0;
+	unsigned short in_bltouch_switch = 0;
 	
 	stm32_Init ();                                  // STM32 setup
 	
@@ -647,7 +684,7 @@ int main (void) {
 	
 	
 	//-------------------------------------------------------------------------------------------------------------
-	//2021-4-1
+	//2021-4-1, 2020-04-07
 	
 	
 	//SysTick
@@ -682,13 +719,13 @@ int main (void) {
 	GPIOC->CRL |= (0x044444); // GPIO:0 GPIO:1 GPIO:2  GPIO:3 GPIO:4
 	
 	//BL Touch
-	GPIOD->CRL &= ~(0x0F << 6*4);
-	GPIOD->CRL |= (0x03 << 6*4);
+	GPIOC->CRL &= ~(0x0F << 6*4);
+	GPIOC->CRL |= (0x03 << 6*4);
 	
 	//TIMER2
 	RCC->APB1ENR |= (0x01 << 0);
 	TIM2->CR1 = 0x01;
-	TIM2->DIER = 0x03;
+	TIM2->DIER = 0x03 | 0x04;
 	TIM2->CNT = 0;
 	TIM2->PSC = 71;
 	TIM2->ARR = 1999;
@@ -724,8 +761,36 @@ int main (void) {
 //	GPIOD->BSRR = (0x01 << 11); // RS_HIGH
 	
 	
+	//USART 1
+	RCC->APB2ENR |= (0x01 << 2) | (0x01 << 14);
+	GPIOA->CRH &= ~(0x0F << 2 * 4); // GPIO:9
+	GPIOA->CRH &= ~(0x0F << 3 * 4); // GPIO:10
+	GPIOA->CRH |= (0x0B << 1 * 4); // GPIO:9
+	GPIOA->CRH |= (0x04 << 2 * 4); // GPIO:10
+	USART1->CR1 = (0x01 << 2) | (0x01 << 3 )| (0x01 << 13); // RE, TE, UE
+	USART1->CR2 = 0x00;
+	USART1->CR3 = 0x00;
+	USART1->BRR = 0x271; // BRR:115200
+	
+	//BlTouch switch
+//	GPIOA->CRL &= ~(0x0f << 2);
+//	GPIOA->CRL |= (0x04 << 2);
+	GPIOC->CRL &= ~(0x0F << 7 * 4);
+	GPIOC->CRL |= (0x04 << 7 * 4);
+	
+	//EIXT
+	RCC->APB2ENR |= (0x01 << 0);
+	EXTI->IMR = (0x01 << 7);
+	EXTI->FTSR |= (0x01 << 7);
+	AFIO->EXTICR[1] |= (0x02 << 3 * 4);
+	
+	NVIC->ISER[0] = (0x01 << 23);
+	
+	
 	
 	charLCD_init();
+	
+	
 	
 	//charLCD_string("hello_world");
 	set_cursor(1,0);
@@ -739,6 +804,7 @@ int main (void) {
 	while(1)
 	{
 		curr_millis = micros_10us();
+		
 		
 		if(curr_millis - prev_millis_button > 1000) // 10ms
 		{
@@ -811,17 +877,31 @@ int main (void) {
 						{
 							if(enter_index == 0)
 							{
-								TIM2->DIER &= ~(0x01 << 2);
+								led_on_toggle = 0;
 								led_on();
 							}
 							else if(enter_index == 1)
 							{
-								TIM2->DIER &= ~(0x01 << 2);
+								led_on_toggle = 0;
 								led_off();
 							}
 							else if(enter_index == 2)
 							{
-								TIM2->DIER |= (0x01 << 2);
+								led_on_toggle = 1;
+							}
+							else if(enter_index == 3)
+							{
+									servo_toggle = 0;
+								 bl_touch_duty = 65;
+							}
+							else if(enter_index == 4)
+							{
+									servo_toggle = 0;
+								 bl_touch_duty = 147;
+							}
+							else if(enter_index == 5)
+							{
+								servo_toggle = 1;
 							}
 						}
 						
@@ -847,22 +927,44 @@ int main (void) {
 			if(led_pwm_duty > 1980) led_pwm_duty = 20;
 		}
 		
-		if(curr_millis - prev_millis_bl_touch > 10000)
+		if(servo_toggle)
 		{
-			prev_millis_bl_touch = curr_millis;
-			
-			if(bl_touch_toggle == 0)
+			if(curr_millis - prev_millis_bl_touch > 100000)
 			{
-				bl_touch_toggle = 1;
-				bl_touch_duty = 65;
-			}
-			else
-			{
-				bl_touch_toggle = 0;
-				bl_touch_duty = 147;
+				prev_millis_bl_touch = curr_millis;
+				
+				if(bl_touch_toggle == 0)
+				{
+					bl_touch_toggle = 1;
+					bl_touch_duty = 65;
+				}
+				else
+				{
+					bl_touch_toggle = 0;
+					bl_touch_duty = 147;
+				}
 			}
 		}
+		
+		if(curr_millis - prev_millis_bl_touch_switch > 10000)  // 1ms
+			{
+				prev_millis_bl_touch_switch = curr_millis;
+				
+//				in_bltouch_switch = GPIOC->IDR;
+//				if(in_bltouch_switch & (0x01 << 7))
+//				{
+//					printf("bltouch up\r\n");
+//				}
+//				else
+//				{
+//					printf("bltouch down\r\n");
+//				}
+			}
+			
+			
 	}
+	
+	
 	
 	while(1)
 	{
