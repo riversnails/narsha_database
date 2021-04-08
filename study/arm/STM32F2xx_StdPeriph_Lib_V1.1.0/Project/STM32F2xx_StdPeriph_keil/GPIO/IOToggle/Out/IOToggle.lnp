@@ -34,6 +34,7 @@
 ".\out\stm32f2xx_usart.o"
 ".\out\stm32f2xx_wwdg.o"
 ".\out\startup_stm32f2xx.o"
+".\out\stm322xg_eval.o"
 --library_type=microlib --strict --scatter ".\Out\IOToggle.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

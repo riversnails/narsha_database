@@ -121,7 +121,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>1</UseSimulator>
+            <UseSimulator>0</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -133,7 +133,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
-            <UseTarget>0</UseTarget>
+            <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -145,7 +145,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>8</TargetSelection>
+          <TargetSelection>11</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -171,9 +171,9 @@
             <Capability>1</Capability>
             <DriverSelection>4103</DriverSelection>
           </Flash1>
-          <bUseTDR>1</bUseTDR>
+          <bUseTDR>0</bUseTDR>
           <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -363,7 +363,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F2XX, USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\Libraries\STM32F2xx_StdPeriph_Driver\inc;..\..\..\..\Libraries\CMSIS\Device\ST\STM32F2xx\Include;..\..\..\..\Libraries\CMSIS\Include;..\..\..\STM32F2xx_StdPeriph_Examples\GPIO\IOToggle;..\..\..\..\Utilities\STM32_EVAL\STM322xG_EVAL</IncludePath>
+              <IncludePath>..\..\..\..\Libraries\STM32F2xx_StdPeriph_Driver\inc;..\..\..\..\Libraries\CMSIS\Device\ST\STM32F2xx\Include;..\..\..\..\Libraries\CMSIS\Include;..\..\..\STM32F2xx_StdPeriph_Examples\GPIO\IOToggle;..\..\..\..\Utilities\STM32_EVAL\STM322xG_EVAL;..\..\..\..\Utilities\STM32_EVAL\Common</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -595,6 +595,13 @@
         </Group>
         <Group>
           <GroupName>EVAL</GroupName>
+          <Files>
+            <File>
+              <FileName>stm322xg_eval.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Utilities\STM32_EVAL\STM322xG_EVAL\stm322xg_eval.c</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>

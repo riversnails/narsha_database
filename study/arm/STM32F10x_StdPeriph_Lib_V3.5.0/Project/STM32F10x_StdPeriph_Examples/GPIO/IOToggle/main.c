@@ -22,6 +22,15 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
 //#include "stm32_eval.h"
+#include <stdio.h>
+
+int fputc(int ch, FILE *f)
+{
+	while(!(USART1->SR & (0x01 << 7)));
+  USART1->DR = (unsigned char)ch;
+	
+  return ch;
+}
 
 /** @addtogroup STM32F10x_StdPeriph_Examples
   * @{
@@ -93,13 +102,28 @@ int main(void)
        system_stm32f10x.c file
      */     
 
-if (SysTick_Config(720))
-{ 
-	/* Capture error */ 
-	while (1);
-}
+//if (SysTick_Config(720))
+//{ 
+//	/* Capture error */ 
+//	while (1);
+//}
 
 
+	//USART 1
+	RCC->APB2ENR |= (0x01 << 2) | (0x01 << 14);
+	GPIOA->CRH &= ~(0x0F << 2 * 4); // GPIO:9
+	GPIOA->CRH &= ~(0x0F << 3 * 4); // GPIO:10
+	GPIOA->CRH |= (0x0B << 1 * 4); // GPIO:9
+	GPIOA->CRH |= (0x04 << 2 * 4); // GPIO:10
+	USART1->CR1 = (0x01 << 2) | (0x01 << 3 )| (0x01 << 13); // RE, TE, UE
+	USART1->CR2 = 0x00;
+	USART1->CR3 = 0x00;
+	USART1->BRR = 0x271; // BRR:115200
+	//NVIC->ISER[1] |= (0x01 << 5); // USART ON
+
+	
+	printf("hello");
+while(1);
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOE, ENABLE);
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;

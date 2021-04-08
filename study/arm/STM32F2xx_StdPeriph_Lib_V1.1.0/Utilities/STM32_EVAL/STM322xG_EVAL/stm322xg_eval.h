@@ -193,13 +193,13 @@ typedef enum
 #define EVAL_COM1                        USART3
 #define EVAL_COM1_CLK                    RCC_APB1Periph_USART3
 #define EVAL_COM1_TX_PIN                 GPIO_Pin_10
-#define EVAL_COM1_TX_GPIO_PORT           GPIOC
-#define EVAL_COM1_TX_GPIO_CLK            RCC_AHB1Periph_GPIOC
+#define EVAL_COM1_TX_GPIO_PORT           GPIOB
+#define EVAL_COM1_TX_GPIO_CLK            RCC_AHB1Periph_GPIOB
 #define EVAL_COM1_TX_SOURCE              GPIO_PinSource10
 #define EVAL_COM1_TX_AF                  GPIO_AF_USART3
 #define EVAL_COM1_RX_PIN                 GPIO_Pin_11
-#define EVAL_COM1_RX_GPIO_PORT           GPIOC
-#define EVAL_COM1_RX_GPIO_CLK            RCC_AHB1Periph_GPIOC
+#define EVAL_COM1_RX_GPIO_PORT           GPIOB
+#define EVAL_COM1_RX_GPIO_CLK            RCC_AHB1Periph_GPIOB
 #define EVAL_COM1_RX_SOURCE              GPIO_PinSource11
 #define EVAL_COM1_RX_AF                  GPIO_AF_USART3
 #define EVAL_COM1_IRQn                   USART3_IRQn

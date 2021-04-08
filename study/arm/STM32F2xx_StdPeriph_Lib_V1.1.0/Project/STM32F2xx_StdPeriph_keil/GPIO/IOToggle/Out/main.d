@@ -33,3 +33,6 @@
 .\out\main.o: ..\..\..\..\Libraries\STM32F2xx_StdPeriph_Driver\inc\stm32f2xx_usart.h
 .\out\main.o: ..\..\..\..\Libraries\STM32F2xx_StdPeriph_Driver\inc\stm32f2xx_wwdg.h
 .\out\main.o: ..\..\..\..\Libraries\STM32F2xx_StdPeriph_Driver\inc\misc.h
+.\out\main.o: ..\..\..\..\Utilities\STM32_EVAL\STM322xG_EVAL\stm322xg_eval.h
+.\out\main.o: ..\..\..\..\Utilities\STM32_EVAL\Common\stm32_eval_legacy.h
+.\out\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

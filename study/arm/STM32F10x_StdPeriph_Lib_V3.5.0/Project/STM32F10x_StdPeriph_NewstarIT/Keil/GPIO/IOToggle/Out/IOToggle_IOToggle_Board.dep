@@ -1,5 +1,5 @@
 Dependencies for Project 'IOToggle', Target 'IOToggle_Board': (DO NOT MODIFY !)
-F (..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\main.c)(0x606E60AC)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\..\..\..\..\Libraries\CMSIS\CM3\CoreSupport -I..\..\..\..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\..\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F10x-D__UVISION_VERSION="514" -DUSE_STDPERIPH_DRIVER -DSTM32F10X_MD -DIOTOGGLE_BOARD-o .\out\main.o --omf_browse .\out\main.crf --depend .\out\main.d)
+F (..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\main.c)(0x606EA545)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\..\..\..\..\Libraries\CMSIS\CM3\CoreSupport -I..\..\..\..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\..\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F10x-D__UVISION_VERSION="514" -DUSE_STDPERIPH_DRIVER -DSTM32F10X_MD -DIOTOGGLE_BOARD-o .\out\main.o --omf_browse .\out\main.crf --depend .\out\main.d)
 I (..\..\..\..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x606E423D)
 I (..\..\..\..\..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x606E423C)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5475E4F0)
@@ -28,6 +28,7 @@ I (..\..\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x60
 I (..\..\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x606E423D)
 I (..\..\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h)(0x606E423D)
 I (..\..\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x606E423D)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5475E4F0)
 F (..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\stm32f10x_it.c)(0x606E5FF8)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\..\..\..\..\Libraries\CMSIS\CM3\CoreSupport -I..\..\..\..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\..\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F10x-D__UVISION_VERSION="514" -DUSE_STDPERIPH_DRIVER -DSTM32F10X_MD -DIOTOGGLE_BOARD-o .\out\stm32f10x_it.o --omf_browse .\out\stm32f10x_it.crf --depend .\out\stm32f10x_it.d)
 I (..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\stm32f10x_it.h)(0x606E423D)
 I (..\..\..\..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x606E423D)
