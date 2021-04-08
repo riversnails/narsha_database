@@ -1,25 +1,0 @@
-Dependencies for Project 'Project', Target 'STM322xG_EVAL': (DO NOT MODIFY !)
-F (..\..\STM32F2xx_StdPeriph_Examples\SysTick\SysTick_Example\main.c)(0x606D9A60)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F2xx-D__UVISION_VERSION="514"-o .\stm322xg_eval\main.o --omf_browse .\stm322xg_eval\main.crf --depend .\stm322xg_eval\main.d)
-I (C:\Keil_v5\ARM\Inc\ST\STM32F2xx\stm32f2xx.h)(0x53BA3504)
-I (C:\Keil_v5\ARM\CMSIS\Include\core_cm3.h)(0x53462B64)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5475E4F0)
-I (C:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h)(0x53462B64)
-I (C:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h)(0x53462B64)
-I (C:\Keil_v5\ARM\Inc\ST\STM32F2xx\system_stm32f2xx.h)(0x53462930)
-I (..\..\STM32F2xx_StdPeriph_Examples\SysTick\SysTick_Example\main.h)(0x4F8848E4)
-F (..\..\STM32F2xx_StdPeriph_Examples\SysTick\SysTick_Example\stm32f2xx_it.c)(0x4F884892)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F2xx-D__UVISION_VERSION="514"-o .\stm322xg_eval\stm32f2xx_it.o --omf_browse .\stm322xg_eval\stm32f2xx_it.crf --depend .\stm322xg_eval\stm32f2xx_it.d)
-I (..\..\STM32F2xx_StdPeriph_Examples\SysTick\SysTick_Example\stm32f2xx_it.h)(0x4F884892)
-I (C:\Keil_v5\ARM\Inc\ST\STM32F2xx\stm32f2xx.h)(0x53BA3504)
-I (C:\Keil_v5\ARM\CMSIS\Include\core_cm3.h)(0x53462B64)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5475E4F0)
-I (C:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h)(0x53462B64)
-I (C:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h)(0x53462B64)
-I (C:\Keil_v5\ARM\Inc\ST\STM32F2xx\system_stm32f2xx.h)(0x53462930)
-I (..\..\STM32F2xx_StdPeriph_Examples\SysTick\SysTick_Example\main.h)(0x4F8848E4)
-F (..\..\STM32F2xx_StdPeriph_Examples\SysTick\SysTick_Example\system_stm32f2xx.c)(0x4F884892)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F2xx-D__UVISION_VERSION="514"-o .\stm322xg_eval\system_stm32f2xx.o --omf_browse .\stm322xg_eval\system_stm32f2xx.crf --depend .\stm322xg_eval\system_stm32f2xx.d)
-I (C:\Keil_v5\ARM\Inc\ST\STM32F2xx\stm32f2xx.h)(0x53BA3504)
-I (C:\Keil_v5\ARM\CMSIS\Include\core_cm3.h)(0x53462B64)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5475E4F0)
-I (C:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h)(0x53462B64)
-I (C:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h)(0x53462B64)
-I (C:\Keil_v5\ARM\Inc\ST\STM32F2xx\system_stm32f2xx.h)(0x53462930)

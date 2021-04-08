@@ -40,6 +40,45 @@ GPIO_InitTypeDef GPIO_InitStructure;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
+volatile unsigned int TimingDelay;	
+volatile unsigned long sys_count;
+
+unsigned long micros_10us()
+{
+	return sys_count;
+}
+
+
+void Delay(unsigned int nTime)
+{ 
+  TimingDelay = nTime;
+
+  while(TimingDelay != 0);
+}
+
+void Delay_ms(unsigned int nTime)
+{ 
+  Delay(nTime * 100);
+}
+
+void TimingDelay_Decrement(void)
+{
+  if (TimingDelay != 0x00)
+  { 
+    TimingDelay--;
+  }
+}
+
+
+// ISR Routine
+//------------------------------------
+
+void SysTick_Handler(void)
+{
+	TimingDelay_Decrement();
+	sys_count++;
+}
+
 /**
   * @brief  Main program.
   * @param  None
@@ -53,6 +92,30 @@ int main(void)
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32f10x.c file
      */     
+
+if (SysTick_Config(720))
+{ 
+	/* Capture error */ 
+	while (1);
+}
+
+
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOE, ENABLE);
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIOE, &GPIO_InitStructure);
+
+while(1)
+{
+ GPIO_SetBits(GPIOE, GPIO_Pin_2); 
+ Delay(100000);
+ GPIO_ResetBits(GPIOE, GPIO_Pin_2);
+ Delay(100000);
+}
+while(1);
+
+
 
 #ifdef IOTOGGLE_BOARD       
   /* GPIOD Periph clock enable */

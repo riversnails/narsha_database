@@ -2,7 +2,7 @@
 .\out\stm32f10x_exti.o: ..\..\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h
 .\out\stm32f10x_exti.o: ..\..\..\..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h
 .\out\stm32f10x_exti.o: ..\..\..\..\..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h
-.\out\stm32f10x_exti.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\out\stm32f10x_exti.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\out\stm32f10x_exti.o: ..\..\..\..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h
 .\out\stm32f10x_exti.o: ..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\stm32f10x_conf.h
 .\out\stm32f10x_exti.o: ..\..\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h

@@ -661,6 +661,29 @@ void led_off()
 }
 
 
+typedef struct
+{
+	int a;
+	int b;
+	int c;
+} aa;
+
+typedef struct
+{
+	volatile unsigned int CRL;
+	volatile unsigned int CRH;
+	volatile unsigned int IDR;
+	volatile unsigned int ODR;
+	volatile unsigned int BSRR;
+	volatile unsigned int BRR;
+	volatile unsigned int LCKR;
+} GPIO_Type;
+
+
+#define GPIOAA (*(volatile unsigned int *)0x40010800)
+#define GPIOAAA ((GPIO_Type *)0x40010800)
+
+
 /*--------------------------------------------------------------------------------------------------------------------*\
  | MIAN ENTRY                                               																																																													|
 \*--------------------------------------------------------------------------------------------------------------------*/
@@ -678,9 +701,49 @@ int main (void) {
 	char servo_toggle = 0;
 	unsigned short in_bltouch_switch = 0;
 	
+	
+	
+	aa a; // 12byte
+	aa *b; // 4byte
+	
+	GPIO_Type GPIOa;
+	
 	stm32_Init ();                                  // STM32 setup
 	
 	
+	
+	//GPIOB
+	GPIOB->CRL &= ~(0x0F<< 5 * 4); // GPIOB:5
+	GPIOB->CRL |= (0x03 << 5  * 4); //  GPIOB:5
+	GPIOB->BSRR = 0x01 << 5; // BUZZER OFF
+	
+	//USART 1
+	RCC->APB2ENR |= (0x01 << 2) | (0x01 << 14);
+	GPIOA->CRH &= ~(0x0F << 2 * 4); // GPIO:9
+	GPIOA->CRH &= ~(0x0F << 3 * 4); // GPIO:10
+	GPIOA->CRH |= (0x0B << 1 * 4); // GPIO:9
+	GPIOA->CRH |= (0x04 << 2 * 4); // GPIO:10
+	USART1->CR1 = (0x01 << 2) | (0x01 << 3 )| (0x01 << 13); // RE, TE, UE
+	USART1->CR2 = 0x00;
+	USART1->CR3 = 0x00;
+	USART1->BRR = 0x271; // BRR:115200
+	NVIC->ISER[1] |= (0x01 << 5); // USART ON
+	//-------------------------------------------------------------------------------------------------------------
+	//2021-4-8
+	
+	b = (aa *)0x20002000;
+	b->a = 3;
+	b->b = 4;
+	b->c = 5;
+	
+	printf("add of a:%p\r\n", &a);
+	printf("add of b:%p\r\n", b);
+	
+	
+	
+	
+	
+	while(1);
 	
 	
 	//-------------------------------------------------------------------------------------------------------------
@@ -800,6 +863,7 @@ int main (void) {
 	set_cursor(1,0);
 	printf_lcd(">");
 	
+	printf("power_on");
 	
 	while(1)
 	{
