@@ -51,6 +51,7 @@ GPIO_InitTypeDef  GPIO_InitStructure;
   * @param  None
   * @retval None
   */
+	int i;
 int main(void)
 {
   /*!< At this stage the microcontroller clock setting is already configured, 
@@ -70,6 +71,17 @@ int main(void)
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
   GPIO_Init(GPIOD, &GPIO_InitStructure);
+
+
+GPIOD->ODR &= ~(0x01 << 13);
+while(1)
+{
+//GPIOD->ODR &= ~(0x01 << 13);
+	for(i = 0; i < 1000; i++);
+//GPIOD->ODR |= (0x01 << 13);
+	for(i = 0; i < 1000; i++);
+}
+
 
   /* To achieve GPIO toggling maximum frequency, the following  sequence is mandatory. 
      You can monitor PG6 or PG8 on the scope to measure the output signal. 
