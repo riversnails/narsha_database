@@ -409,17 +409,17 @@
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\main.c</FilePath>
+              <FilePath>..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\main.c</FilePath>
             </File>
             <File>
               <FileName>stm32f10x_it.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\stm32f10x_it.c</FilePath>
+              <FilePath>..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\stm32f10x_it.c</FilePath>
             </File>
             <File>
               <FileName>system_stm32f10x.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\system_stm32f10x.c</FilePath>
+              <FilePath>..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\system_stm32f10x.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -968,17 +968,17 @@
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\main.c</FilePath>
+              <FilePath>..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\main.c</FilePath>
             </File>
             <File>
               <FileName>stm32f10x_it.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\stm32f10x_it.c</FilePath>
+              <FilePath>..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\stm32f10x_it.c</FilePath>
             </File>
             <File>
               <FileName>system_stm32f10x.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\system_stm32f10x.c</FilePath>
+              <FilePath>..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\system_stm32f10x.c</FilePath>
             </File>
           </Files>
         </Group>
