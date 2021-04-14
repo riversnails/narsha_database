@@ -1,4 +1,4 @@
-.\out\main.o: ..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\main.c
+.\out\main.o: ..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\main.c
 .\out\main.o: ..\..\..\..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h
 .\out\main.o: ..\..\..\..\..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h
 .\out\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h

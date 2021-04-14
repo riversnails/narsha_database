@@ -5,7 +5,7 @@
 <h2>Tool Versions:</h2>
 IDE-Version: •ÏVision V5.14.0.0
 Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: . ., ., LIC=----
+License Information: ∞≠ ¥Ÿ«ı, ., LIC=----
  
 Tool Versions:
 Toolchain:       MDK-Lite  Version: 5.14.0.0
@@ -21,20 +21,21 @@ Target DLL:      UL2CM3.DLL V1.155.0.0
 Dialog DLL:      TARMSTM.DLL V1.64.0.0
  
 <h2>Project:</h2>
-D:\github\narsha_database\study\arm\STM32F10x_StdPeriph_Lib_V3.5.0\Project\STM32F10x_StdPeriph_NewstarIT\Keil\DGSW\test_1\test.uvproj
+D:\git\narsha_database\study\arm\STM32F10x_StdPeriph_Lib_V3.5.0\Project\STM32F10x_StdPeriph_NewstarIT\Keil\DGSW\test_1\test.uvproj
 Project File Date:  04/14/2021
 
 <h2>Output:</h2>
 Build target 'IOToggle'
 compiling main.c...
-..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\main.c(127): warning:  #111-D: statement is unreachable
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOE, ENABLE);
-..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\main.c(140): warning:  #128-D: loop is not reachable
-  while(1);
-..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\main.c(158): warning:  #111-D: statement is unreachable
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
-..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\main.c: 3 warnings, 0 errors
+..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\main.c(147): warning:  #128-D: loop is not reachable
+        while(1)
+..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\main.c(175): warning:  #1-D: last line of file ends without a newline
+  }
+..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\main.c: 2 warnings, 0 errors
 compiling stm32f10x_it.c...
+..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\stm32f10x_it.c(144): warning:  #223-D: function "TimingDelay_Decrement" declared implicitly
+        TimingDelay_Decrement();
+..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\stm32f10x_it.c: 1 warning, 0 errors
 compiling system_stm32f10x.c...
 compiling misc.c...
 compiling stm32f10x_adc.c...
@@ -60,12 +61,10 @@ compiling stm32f10x_tim.c...
 compiling stm32f10x_usart.c...
 compiling stm32f10x_wwdg.c...
 compiling core_cm3.c...
-assembling startup_stm32f10x_md.s...
 linking...
-.\Out\IOToggle.axf: error: L6002U: Could not open file .\out\core_cm3.o: No such file or directory
-Finished: 0 information, 0 warning, 0 error and 1 fatal error messages.
-".\Out\IOToggle.axf" - 1 Error(s), 3 Warning(s).
-Target not created.
+Program Size: Code=1744 RO-data=268 RW-data=36 ZI-data=1044  
+FromELF: creating hex file...
+".\Out\IOToggle.axf" - 0 Error(s), 3 Warning(s).
 </pre>
 </body>
 </html>

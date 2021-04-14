@@ -861,11 +861,11 @@ ARM Macro Assembler    Page 14
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\output\startup_stm32f4xx.d -o.\output\startup_stm32f4xx.o -ID
-:\github\narsha_database\study\arm\STM32F4\GPIO_Key_LED\Project\RTE -IC:\Keil_v
-5\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0 -IC:\Keil_v5\ARM\CMSIS\Include --predefine
-="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 514" --predefine="STM32F40
-7xx SETA 1" --list=.\listing\startup_stm32f4xx.lst ..\Libraries\CMSIS\Device\ST
-\STM32F4xx\Source\Templates\arm\startup_stm32f4xx.s
+:\git\narsha_database\study\arm\STM32F4\GPIO_Key_LED\Project\RTE -IC:\Keil_v5\A
+RM\PACK\Keil\STM32F4xx_DFP\2.15.0 -IC:\Keil_v5\ARM\CMSIS\Include --predefine="_
+_EVAL SETA 1" --predefine="__UVISION_VERSION SETA 514" --predefine="STM32F407xx
+ SETA 1" --list=.\listing\startup_stm32f4xx.lst ..\Libraries\CMSIS\Device\ST\ST
+M32F4xx\Source\Templates\arm\startup_stm32f4xx.s
 
 
 

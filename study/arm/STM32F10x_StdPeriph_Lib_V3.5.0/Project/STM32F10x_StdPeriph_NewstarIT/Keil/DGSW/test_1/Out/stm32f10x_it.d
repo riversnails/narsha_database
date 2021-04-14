@@ -1,5 +1,5 @@
-.\out\stm32f10x_it.o: ..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\stm32f10x_it.c
-.\out\stm32f10x_it.o: ..\..\..\..\STM32F10x_StdPeriph_Examples\GPIO\IOToggle\stm32f10x_it.h
+.\out\stm32f10x_it.o: ..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\stm32f10x_it.c
+.\out\stm32f10x_it.o: ..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\stm32f10x_it.h
 .\out\stm32f10x_it.o: ..\..\..\..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h
 .\out\stm32f10x_it.o: ..\..\..\..\..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h
 .\out\stm32f10x_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
