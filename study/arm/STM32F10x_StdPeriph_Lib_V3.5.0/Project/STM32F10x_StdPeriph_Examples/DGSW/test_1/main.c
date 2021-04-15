@@ -2,6 +2,26 @@
 //#include "stm32_eval.h"
 #include <stdio.h>
 
+enum rotary_state{
+	ROTARY_STATE_1 = 1,
+	ROTARY_STATE_2,
+	ROTARY_STATE_3,
+	ROTARY_STATE_4,
+};
+
+enum rotary_state_left{
+	ROTARY_STATE_LEFT_1 = 1,
+	ROTARY_STATE_LEFT_2,
+	ROTARY_STATE_LEFT_3,
+	ROTARY_STATE_LEFT_4,
+};
+
+enum rotary_state_right{
+	ROTARY_STATE_RIGHT_1 = 1,
+	ROTARY_STATE_RIGHT_2,
+	ROTARY_STATE_RIGHT_3,
+	ROTARY_STATE_RIGHT_4,
+};
 
 int fputc(int ch, FILE *f)
 {
@@ -48,7 +68,10 @@ void TimingDelay_Decrement(void)
 int main(void)
 {
 	unsigned short in_data = 0;
-	char toggle = 0;
+	char rotary_state = 0, rotary_state_left = 0, rotary_state_right = 0;
+	char right_state_flag = 0, left_state_flag = 0;
+	int output_a = 0, output_b = 0;
+	int rotary_count = 0;
 //	SysTick->LOAD = 720;
 //	SysTick->CTRL = 0x07;
 //	
@@ -117,6 +140,8 @@ int main(void)
 	while(1)
 	{
 		in_data = GPIOC->IDR;
+		output_a = (in_data & (0x01 << 6) );
+		output_b = (in_data & (0x01 << 7) );
 //		if( !(in_data & (0x01 << 6)) && (in_data & (0x01 << 7)) ) toggle++;
 //		else if( !(in_data & (0x01 << 6)) && !(in_data & (0x01 << 7)) ) toggle++;
 //		else if( (in_data & (0x01 << 6)) && !(in_data & (0x01 << 7)) ) toggle++;
@@ -129,18 +154,111 @@ int main(void)
 //		}
 		
 		
-		if(in_data & (0x01 << 6) && toggle == 0) 
+//		if(in_data & (0x01 << 6) ) 
+//		{
+//			//toggle = 1;
+//			printf("pc6 = high  ");
+//		}
+//		else if( !(in_data & (0x01 << 6) ) )
+//		{			
+//			//toggle = 0;
+//			printf("pc6 = low  ");
+//		}
+//		
+//		if(in_data & (0x01 << 7) ) 
+//		{
+//			//toggle = 1;
+//			printf("pc7 = high  ");
+//		}
+//		else if( !(in_data & (0x01 << 7) ) )
+//		{			
+//			//toggle = 0;
+//			printf("pc7 = low  ");
+//		}
+		
+		
+		
+//		if( output_a == 0 && output_b > 0 )
+//		{
+//			if(rotary_state == ROTARY_STATE_2)
+//			{
+//				if(right_state_flag == 0) 
+//				{
+//					right_state_flag = 1;
+//					printf("right \r\n");
+//				}
+//			}
+//			rotary_state = ROTARY_STATE_1;
+//		}
+//		else if( output_a == 0 && output_b == 0 )
+//		{
+//			rotary_state = ROTARY_STATE_2;
+//		}
+//		else if( output_a > 0 && output_b == 0 )
+//		{
+//			if(rotary_state == ROTARY_STATE_2)
+//			{
+//				if(left_state_flag == 0) 
+//				{
+//					left_state_flag = 1;
+//					printf("left \r\n");
+//				}
+//			}
+//			rotary_state = ROTARY_STATE_3;
+//		}
+//		else if( output_a > 0 && output_b > 0 )
+//		{
+//			rotary_state = ROTARY_STATE_4;
+//			right_state_flag = 0;
+//			left_state_flag = 0;
+//		}
+		
+		
+		if( output_a == 0 && output_b > 0 )
 		{
-			//toggle = 1;
-			printf("high\r\n");
+			if(rotary_state_right == ROTARY_STATE_RIGHT_2)
+			{
+				if(right_state_flag == 0) 
+				{
+					right_state_flag = 1;
+					printf("right : %5.d \r\n", ++rotary_count);
+				}
+			}
+			rotary_state_left = ROTARY_STATE_LEFT_1;
+			rotary_state_right = ROTARY_STATE_RIGHT_1;
 		}
-		else if( !(in_data & (0x01 << 6) ) && toggle == 0)
-		{			
-			//toggle = 0;
-			printf("low\r\n");
+		else if( output_a == 0 && output_b == 0 )
+		{
+			rotary_state_left = ROTARY_STATE_LEFT_2;
+			rotary_state_right = ROTARY_STATE_RIGHT_2;
+		}
+		else if( output_a > 0 && output_b == 0 )
+		{
+			if(rotary_state_left == ROTARY_STATE_2)
+			{
+				if(left_state_flag == 0) 
+				{
+					left_state_flag = 1;
+					printf("left  : %5.d \r\n", --rotary_count);
+				}
+			}
+			rotary_state_left = ROTARY_STATE_LEFT_3;
+			rotary_state_right = ROTARY_STATE_RIGHT_3;
+		}
+		else if( output_a > 0 && output_b > 0 )
+		{
+			rotary_state_left = ROTARY_STATE_LEFT_4;
+			rotary_state_right = ROTARY_STATE_RIGHT_4;
+			
+			right_state_flag = 0;
+			left_state_flag = 0;
 		}
 		
-		Delay_ms(10);
+		
+		//printf("a = %d b = %d\r\n", output_a, output_b);
+		//printf("state = %d\r\n", rotary_state);
+		//printf("\r\n");
+		Delay_ms(1);
 	}
 	
 	
