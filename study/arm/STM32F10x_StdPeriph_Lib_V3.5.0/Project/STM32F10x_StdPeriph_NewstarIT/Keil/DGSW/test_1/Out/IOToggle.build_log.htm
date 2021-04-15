@@ -27,17 +27,23 @@ Project File Date:  04/14/2021
 <h2>Output:</h2>
 Build target 'IOToggle'
 compiling main.c...
-..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\main.c(265): warning:  #128-D: loop is not reachable
+..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\main.c(356): warning:  #223-D: function "strlen" declared implicitly
+        for(i=0;i<strlen(string);i++)
+..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\main.c(563): warning:  #111-D: statement is unreachable
+        printf("hello world \r\n\n\n\n\n");
+..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\main.c(615): warning:  #128-D: loop is not reachable
+                char_lcd_cursor_set(0,0);
+..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\main.c(625): warning:  #128-D: loop is not reachable
+                rotary_switch_func();
+..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\main.c(834): warning:  #128-D: loop is not reachable
         while(1)
-..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\main.c(71): warning:  #177-D: variable "rotary_state" was declared but never referenced
-        char rotary_state = 0, rotary_state_left = 0, rotary_state_right = 0;
-..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\main.c(293): warning:  #1-D: last line of file ends without a newline
-  }
-..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\main.c: 3 warnings, 0 errors
+..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\main.c(523): warning:  #177-D: variable "buff" was declared but never referenced
+        char buff[50];
+..\..\..\..\STM32F10x_StdPeriph_Examples\DGSW\test_1\main.c: 6 warnings, 0 errors
 linking...
-Program Size: Code=2744 RO-data=268 RW-data=36 ZI-data=1044  
+Program Size: Code=2044 RO-data=368 RW-data=124 ZI-data=1028  
 FromELF: creating hex file...
-".\Out\IOToggle.axf" - 0 Error(s), 3 Warning(s).
+".\Out\IOToggle.axf" - 0 Error(s), 6 Warning(s).
 </pre>
 </body>
 </html>

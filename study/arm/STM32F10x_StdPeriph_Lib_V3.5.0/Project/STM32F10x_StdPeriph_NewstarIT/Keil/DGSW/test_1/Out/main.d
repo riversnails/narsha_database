@@ -29,3 +29,4 @@
 .\out\main.o: ..\..\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h
 .\out\main.o: ..\..\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h
 .\out\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\out\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
