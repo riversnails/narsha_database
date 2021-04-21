@@ -126,6 +126,24 @@ void TimingDelay_Decrement(void)
   }
 }
 
+int timer_toggle_flag = 0;
+void TIM2_IRQHandler (void) 
+{
+	if ((TIM2->SR & 0x0001) != 0) { // check update interrupt source
+		if(timer_toggle_flag == 0)
+		{
+			timer_toggle_flag = 1;
+			GPIOD->BSRR = 0x01 << 6;
+		}
+		else 
+		{
+			timer_toggle_flag = 0;
+			GPIOD->BRR = 0x01 << 6;
+		}
+		 
+		 TIM2->SR &= ~(1<<0); // clear UIF flag
+	}
+}
 
 void systick_func()
 {
@@ -523,39 +541,59 @@ int main(void)
 	char buff[50];
 	//int count = 0;
 	unsigned long c_millis = 0, p_millis = 0;
-	
 	GPIO_InitTypeDef GPIO_InitStructure;
-	
-	systick_func();
+
+	//--------------------------------------------------------
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_12;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_Init(GPIOD, &GPIO_InitStructure);
-
+	//--------------------------------------------------------
+	GPIO_ResetBits(GPIOD, GPIO_Pin_12); 
+	
 	/*
 	while(1)
 	{
 		GPIO_SetBits(GPIOD, GPIO_Pin_12); 
-		Delay(20);
+		Delay(30);
 		GPIO_ResetBits(GPIOD, GPIO_Pin_12);
-		Delay(20);
+		Delay(30);
 	}
 	*/
+	
+	RCC->APB1ENR |= (0x01 << 0);
+	TIM2->CR1 |= (0x01 << 0);
+	TIM2->DIER |= (0x01 << 0);
+	TIM2->PSC = 72-1;
+	TIM2->ARR = 200-1;
+
+	NVIC->ISER[0] |= (0x01 << 28); 
+	
+	
+	
 	
 	systick_func();
 	gpio_set();
 	uart_init();
 	char_lcd_init();
 	
+	while(1);
+	
 	for(i=0;i<6500;i++)
 	{
 		GPIO_SetBits(GPIOD, GPIO_Pin_12); 
 		Delay(20);
 		GPIO_ResetBits(GPIOD, GPIO_Pin_12);
-		Delay(20);
-	}
+		Delay(20);
+
+	}
+
+
+
 	
+	
+		
 	while(1);
 	
 	printf("hello world \r\n\n\n\n\n");
@@ -597,8 +635,10 @@ int main(void)
 				GPIO_SetBits(GPIOD, GPIO_Pin_12); 
 				Delay(20);
 				GPIO_ResetBits(GPIOD, GPIO_Pin_12);
-				Delay(20);
-			}
+				Delay(20);
+
+			}
+
 			printf("hello\r\n");
 		}
 		//Delay_ms(1);

@@ -1,0 +1,5 @@
+--cpu Cortex-M4.fp -g --apcs=interwork --pd "__MICROLIB SETA 1" 
+-I D:\devtools5\ARM\RV31\INC 
+-I D:\devtools5\ARM\CMSIS\Include 
+-I D:\devtools5\ARM\Inc\ST\STM32F4xx 
+--list ".\STM324xG-EVAL\startup_stm32f4xx.lst" --xref -o ".\STM324xG-EVAL\startup_stm32f4xx.o" --depend ".\STM324xG-EVAL\startup_stm32f4xx.d" "..\..\..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f4xx.s"
