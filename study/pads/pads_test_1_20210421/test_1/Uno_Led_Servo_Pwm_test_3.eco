@@ -1,0 +1,533 @@
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- UnoUniversial.pcb -- Thu Apr 22 13:31:30 2021
+
+
+*DELPIN*
+J2.3    $$$1
+D9.1    $$$1
+D9.2    $$$2
+R9.2    $$$2
+D8.1    $$$5
+R8.1    $$$5
+D7.1    $$$6
+R7.1    $$$6
+D6.1    $$$7
+R6.1    $$$7
+D5.1    $$$8
+R5.1    $$$8
+D4.1    $$$9
+R4.1    $$$9
+D3.1    $$$10
+R3.1    $$$10
+D2.1    $$$11
+R2.1    $$$11
+D1.1    $$$12
+R1.1    $$$12
+U1.15    $$$13
+D8.2    $$$13
+J2.2    $$$13
+U1.1    $$$14
+D7.2    $$$14
+J2.1    $$$14
+U1.2    $$$15
+D6.2    $$$15
+J1.10    $$$15
+U1.3    $$$16
+D5.2    $$$16
+J1.9    $$$16
+U1.4    $$$17
+J1.8    $$$17
+D4.2    $$$17
+U1.5    $$$18
+D3.2    $$$18
+J1.7    $$$18
+U1.6    $$$19
+D2.2    $$$19
+J1.6    $$$19
+U1.7    $$$20
+D1.2    $$$20
+J1.5    $$$20
+J4.1    $$$21
+J15.2    $$$21
+J3.1    $$$22
+J15.3    $$$22
+J14.1    5V
+J8.1    5V
+U2.16    5V
+J5.1    5V
+U3.16    5V
+J12.1    5V
+U4.16    5V
+J7.2    5V
+J7.5    5V
+R16.1    5V
+U1.10    5V
+U1.16    5V
+J4.2    5V
+J3.2    5V
+J1.4    GND
+U2.8    GND
+J3.3    GND
+J9.8    GND
+R1.2    GND
+J7.7    GND
+J7.6    GND
+J11.8    GND
+U4.8    GND
+J10.8    GND
+U3.8    GND
+R9.1    GND
+R2.2    GND
+R3.2    GND
+R4.2    GND
+R17.1    GND
+U1.8    GND
+R5.2    GND
+R6.2    GND
+R7.2    GND
+R8.2    GND
+J14.4    GND
+J4.3    GND
+U1.13    $$$3
+J15.1    $$$3
+J2.6    $$$24
+U1.14    $$$24
+J2.5    $$$25
+U1.11    $$$25
+J2.4    $$$26
+U1.12    $$$26
+J13.1    $$$27
+R10.1    $$$27
+J13.3    $$$28
+R12.1    $$$28
+J13.4    $$$29
+R14.1    $$$29
+R16.2    $$$30
+R17.2    $$$30
+J13.2    $$$30
+R10.2    $$$31
+J15.4    $$$31
+R12.2    $$$32
+J15.5    $$$32
+R14.2    $$$33
+J15.6    $$$33
+J2.7    $$$34
+J14.2    $$$34
+J2.8    $$$35
+J14.3    $$$35
+J8.2    $$$36
+U2.15    $$$36
+J8.3    $$$37
+U2.14    $$$37
+J8.4    $$$38
+U2.13    $$$38
+J8.5    $$$39
+U2.12    $$$39
+J8.6    $$$40
+U2.11    $$$40
+J8.7    $$$41
+U2.10    $$$41
+J8.8    $$$42
+U2.9    $$$42
+U2.1    $$$43
+J9.1    $$$43
+U2.2    $$$44
+J9.2    $$$44
+U2.3    $$$45
+J9.3    $$$45
+U2.4    $$$46
+J9.4    $$$46
+U2.5    $$$47
+J9.5    $$$47
+U2.6    $$$48
+J9.6    $$$48
+U2.7    $$$49
+J9.7    $$$49
+J5.2    $$$50
+U3.15    $$$50
+J5.3    $$$51
+U3.14    $$$51
+J5.4    $$$52
+U3.13    $$$52
+J5.5    $$$53
+U3.12    $$$53
+J5.6    $$$54
+U3.11    $$$54
+J5.7    $$$55
+U3.10    $$$55
+J5.8    $$$56
+U3.9    $$$56
+U3.1    $$$57
+J10.1    $$$57
+U3.2    $$$58
+J10.2    $$$58
+U3.3    $$$59
+J10.3    $$$59
+U3.4    $$$60
+J10.4    $$$60
+U3.5    $$$61
+J10.5    $$$61
+U3.6    $$$62
+J10.6    $$$62
+U3.7    $$$63
+J10.7    $$$63
+J12.2    $$$64
+U4.15    $$$64
+J12.3    $$$65
+U4.14    $$$65
+J12.4    $$$66
+U4.13    $$$66
+J12.5    $$$67
+U4.12    $$$67
+J12.6    $$$68
+U4.11    $$$68
+J12.7    $$$69
+U4.10    $$$69
+J12.8    $$$70
+U4.9    $$$70
+U4.1    $$$71
+J11.1    $$$71
+U4.2    $$$72
+J11.2    $$$72
+U4.3    $$$73
+J11.3    $$$73
+U4.4    $$$74
+J11.4    $$$74
+U4.5    $$$75
+J11.5    $$$75
+U4.6    $$$76
+J11.6    $$$76
+U4.7    $$$77
+J11.7    $$$77
+
+*NET*
+*SIGNAL* $$$1 0.2
+D1.2 J1.6
+*SIGNAL* $$$2 0.2
+D1.1 R1.1
+*SIGNAL* $$$3 0.2
+D2.1 R2.1
+*SIGNAL* $$$4 0.2
+D3.1 R3.1
+*SIGNAL* $$$5 0.2
+D4.1 R4.1
+*SIGNAL* $$$6 0.2
+D5.1 R5.1
+*SIGNAL* $$$7 0.2
+D6.1 R6.1
+*SIGNAL* $$$8 0.2
+R7.1 D7.1
+*SIGNAL* $$$9 0.2
+D8.1 R8.1
+*SIGNAL* $$$10 0.2
+R1.2 R2.2
+R2.2 R3.2
+R3.2 R4.2
+R4.2 R5.2
+R5.2 R6.2
+R6.2 R7.2
+R7.2 R8.2
+
+*DELPIN*
+D1.2    $$$1
+J1.6    $$$1
+
+*NET*
+*SIGNAL* $$$1 0.2
+J1.10 D6.2
+*SIGNAL* $$$11 0.2
+J2.2 D8.2
+*SIGNAL* $$$12 0.2
+D7.2 J2.1
+*SIGNAL* $$$13 0.2
+J1.9 D5.2
+*SIGNAL* $$$14 0.2
+D4.2 J1.8
+*SIGNAL* $$$15 0.2
+D3.2 J1.7
+*SIGNAL* $$$16 0.2
+J1.6 D2.2
+*SIGNAL* $$$17 0.2
+J1.5 D1.2
+
+*NET*
+*SIGNAL* $$$18 0.2
+J2.3 D9.2
+*SIGNAL* $$$19 0.2
+D9.1 R9.1
+*SIGNAL* $$$20 0.2
+R9.2 J7.6
+
+*NET*
+*SIGNAL* $$$21 0.2
+J2.8 J14.3
+*SIGNAL* $$$22 0.2
+J2.7 J14.2
+*SIGNAL* $$$10 0.2
+R8.2 J14.4
+*SIGNAL* $$$23 0.2
+J4.2 J3.2
+*SIGNAL* $$$24 0.2
+J4.3 J3.3
+*SIGNAL* $$$25 0.2
+J4.1 J15.2
+*SIGNAL* $$$26 0.2
+J3.1 J15.3
+
+*DELPIN*
+D9.1    $$$19
+R9.1    $$$19
+R9.2    $$$20
+J7.6    $$$20
+
+*NET*
+*SIGNAL* $$$19 0.2
+D9.1 R9.2
+
+*NET*
+*SIGNAL* $$$20 0.2
+R9.1 J1.4
+
+*NET*
+*SIGNAL* $$$1 0.2
+D6.2 U1.1
+*SIGNAL* $$$27 0.2
+J14.1 J7.5
+
+*RENNET*
+$$$27 5V
+
+*JOINNET*
+$$$23 5V
+
+*RENNET*
+$$$20 GND
+
+*NET*
+*SIGNAL* $$$24 0.2
+J3.3 J7.7
+J7.7 J7.6
+
+*JOINNET*
+$$$24 GND
+
+*DELPIN*
+U1.1    $$$1
+
+*NET*
+*SIGNAL* $$$11 0.2
+D8.2 U1.15
+*SIGNAL* $$$12 0.2
+D7.2 U1.1
+*SIGNAL* $$$1 0.2
+D6.2 U1.2
+*SIGNAL* $$$13 0.2
+D5.2 U1.3
+*SIGNAL* $$$14 0.2
+D4.2 U1.4
+*SIGNAL* $$$15 0.2
+D3.2 U1.5
+*SIGNAL* $$$16 0.2
+D2.2 U1.6
+*SIGNAL* $$$17 0.2
+D1.2 U1.7
+
+*NET*
+*SIGNAL* GND 0.2
+J1.4 U1.8
+*SIGNAL* 5V 0.2
+J7.5 U1.16
+J7.5 J7.2
+
+*DELPIN*
+U1.16    5V
+
+*NET*
+*SIGNAL* 5V 0.2
+J7.5 U1.10
+U1.10 U1.16
+*SIGNAL* $$$20 0.2
+U1.11 J2.5
+*SIGNAL* $$$23 0.2
+U1.12 J2.4
+*SIGNAL* $$$24 0.2
+U1.13 J15.1
+*SIGNAL* $$$27 0.2
+U1.14 J2.6
+*SIGNAL* $$$28 0.2
+J8.1 U2.16
+*SIGNAL* $$$29 0.2
+J8.2 U2.15
+*SIGNAL* $$$30 0.2
+J8.8 U2.9
+*SIGNAL* $$$31 0.2
+J8.7 U2.10
+*SIGNAL* $$$32 0.2
+J8.6 U2.11
+*SIGNAL* $$$33 0.2
+J8.5 U2.12
+*SIGNAL* $$$34 0.2
+J8.4 U2.13
+*SIGNAL* $$$35 0.2
+J8.3 U2.14
+*SIGNAL* $$$36 0.2
+U2.1 J9.1
+*SIGNAL* $$$37 0.2
+U2.8 J9.8
+*SIGNAL* $$$38 0.2
+U2.7 J9.7
+
+*NET*
+*SIGNAL* $$$39 0.2
+U2.6 J9.6
+*SIGNAL* $$$40 0.2
+U2.5 J9.5
+*SIGNAL* $$$41 0.2
+U2.4 J9.4
+*SIGNAL* $$$42 0.2
+U2.3 J9.3
+*SIGNAL* $$$43 0.2
+U2.2 J9.2
+*SIGNAL* $$$28 0.2
+U2.16 J5.1
+J5.1 U3.16
+U3.16 J12.1
+J12.1 U4.16
+
+*JOINNET*
+$$$28 5V
+
+*NET*
+*SIGNAL* $$$37 0.2
+J9.8 U3.8
+U3.8 J10.8
+J10.8 U4.8
+U4.8 J11.8
+
+*JOINNET*
+$$$37 GND
+
+*NET*
+*SIGNAL* $$$28 0.2
+J5.2 U3.15
+*SIGNAL* $$$37 0.2
+J5.3 U3.14
+*SIGNAL* $$$44 0.2
+J5.4 U3.13
+*SIGNAL* $$$45 0.2
+J5.5 U3.12
+*SIGNAL* $$$46 0.2
+J5.6 U3.11
+*SIGNAL* $$$47 0.2
+J5.7 U3.10
+*SIGNAL* $$$48 0.2
+J5.8 U3.9
+*SIGNAL* $$$49 0.2
+U3.2 J10.2
+*SIGNAL* $$$50 0.2
+U3.4 J10.4
+*SIGNAL* $$$51 0.2
+U3.5 J10.5
+*SIGNAL* $$$52 0.2
+U3.6 J10.6
+*SIGNAL* $$$53 0.2
+U3.7 J10.7
+*SIGNAL* $$$54 0.2
+U3.1 J10.1
+*SIGNAL* $$$55 0.2
+U3.3 J10.3
+*SIGNAL* $$$56 0.2
+J12.2 U4.15
+*SIGNAL* $$$57 0.2
+J12.3 U4.14
+*SIGNAL* $$$58 0.2
+J12.4 U4.13
+*SIGNAL* $$$59 0.2
+J12.5 U4.12
+*SIGNAL* $$$60 0.2
+J12.6 U4.11
+*SIGNAL* $$$61 0.2
+J12.7 U4.10
+*SIGNAL* $$$62 0.2
+J12.8 U4.9
+*SIGNAL* $$$63 0.2
+J11.7 U4.7
+*SIGNAL* $$$64 0.2
+U4.6 J11.6
+*SIGNAL* $$$65 0.2
+U4.5 J11.5
+*SIGNAL* $$$66 0.2
+U4.4 J11.4
+*SIGNAL* $$$67 0.2
+U4.3 J11.3
+*SIGNAL* $$$68 0.2
+U4.2 J11.2
+*SIGNAL* $$$69 0.2
+U4.1 J11.1
+
+*NET*
+*SIGNAL* $$$70 0.2
+R10.1 J13.1
+*SIGNAL* $$$71 0.2
+R12.1 J13.3
+*SIGNAL* $$$72 0.2
+R14.1 J13.4
+*SIGNAL* $$$73 0.2
+R10.2 J15.4
+*SIGNAL* $$$74 0.2
+R12.2 J15.5
+*SIGNAL* $$$75 0.2
+R14.2 J15.6
+
+*NET*
+*SIGNAL* $$$76 0.2
+J13.2 R16.2
+J13.2 R17.2
+*SIGNAL* 5V 0.2
+J7.5 R16.1
+*SIGNAL* GND 0.2
+J7.7 R17.1
+*MODIFY_GENERAL_RULES* CLEARANCE
+HIERARCHY_OBJECT  PCB:PCB
+MIN_TRACK_WIDTH           0.01
+REC_TRACK_WIDTH           0.2
+MAX_TRACK_WIDTH           0.3
+TRACK_TO_TRACK            0.2
+VIA_TO_TRACK              0.2
+VIA_TO_VIA                0.2
+PAD_TO_TRACK              0.15
+PAD_TO_VIA                0.15
+PAD_TO_PAD                0.15
+SMD_TO_TRACK              0.2
+SMD_TO_VIA                0.2
+SMD_TO_PAD                0.2
+SMD_TO_SMD                0.2
+COPPER_TO_TRACK           0.2
+COPPER_TO_VIA             0.2
+COPPER_TO_PAD             0.2
+COPPER_TO_SMD             0.2
+COPPER_TO_COPPER          0.2
+TEXT_TO_TRACK             0.1
+TEXT_TO_VIA               0.1
+TEXT_TO_PAD               0.1
+TEXT_TO_SMD               0.1
+OUTLINE_TO_TRACK          0.3
+OUTLINE_TO_VIA            0.3
+OUTLINE_TO_PAD            0.3
+OUTLINE_TO_SMD            0.3
+OUTLINE_TO_COPPER         0.3
+DRILL_TO_TRACK            0.3
+DRILL_TO_VIA              0.3
+DRILL_TO_PAD              0.3
+DRILL_TO_SMD              0.3
+DRILL_TO_COPPER           0.3
+SAME_NET_SMD_TO_VIA       0.2
+SAME_NET_SMD_TO_CRN       0.2
+SAME_NET_VIA_TO_VIA       0.2
+SAME_NET_PAD_TO_CRN       0.2
+SAME_NET_TRACK_TO_CRN     0.2
+DRILL_TO_DRILL            0.3
+BODY_TO_BODY              0.1
+
+*END*
