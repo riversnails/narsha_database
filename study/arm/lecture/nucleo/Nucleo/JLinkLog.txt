@@ -1,0 +1,27 @@
+
+T2DDC 000:307 SEGGER J-Link V4.90e Log File (0000ms, 0261ms total)
+T2DDC 000:307 DLL Compiled: Sep  8 2014 18:46:31 (0000ms, 0261ms total)
+T2DDC 000:307 Logging started @ 2021-04-28 13:58 (0000ms, 0261ms total)
+T2DDC 000:307 JLINK_SetWarnOutHandler(...) (0000ms, 0261ms total)
+T2DDC 000:307 JLINK_OpenEx(...)
+Firmware: J-Link V10 compiled Oct  9 2015 20:36:39
+Hardware: V10.10
+S/N: 260103654
+OEM: SEGGER-EDU
+Feature(s): FlashBP, GDB  returns O.K. (0261ms, 0522ms total)
+T2DDC 000:568 JLINK_SetErrorOutHandler(...) (0000ms, 0522ms total)
+T2DDC 000:568 JLINK_ExecCommand("ProjectFile = "D:\git\narsha_database\study\arm\lecture\nucleo\Nucleo\JLinkSettings.ini"", ...)  returns 0x00 (0000ms, 0522ms total)
+T2DDC 000:570 JLINK_ExecCommand("Device = STM32F103ZE", ...)Device "STM32F103ZE" selected (512 KB flash, 64 KB RAM).  returns 0x00 (0003ms, 0525ms total)
+T2DDC 000:573 JLINK_ExecCommand("DisableConnectionTimeout", ...)  returns 0x01 (0000ms, 0525ms total)
+T2DDC 000:573 JLINK_GetHardwareVersion()  returns 0x18A88 (0000ms, 0525ms total)
+T2DDC 000:573 JLINK_GetDLLVersion()  returns 49005 (0000ms, 0525ms total)
+T2DDC 000:583 JLINK_GetDLLVersion()  returns 49005 (0000ms, 0525ms total)
+T2DDC 000:583 JLINK_GetCompileDateTime() (0000ms, 0525ms total)
+T2DDC 000:584 JLINK_GetFirmwareString(...) (0000ms, 0525ms total)
+T2DDC 000:587 JLINK_GetHardwareVersion()  returns 0x18A88 (0000ms, 0525ms total)
+T2DDC 000:606 JLINK_TIF_Select(JLINKARM_TIF_JTAG)  returns 0x00 (0001ms, 0526ms total)
+T2DDC 000:607 JLINK_SetSpeed(20000) (0000ms, 0526ms total)
+T2DDC 000:607 JLINK_GetIdData(...) (0000ms, 0526ms total)
+T2DDC 001:547 JLINK_Close() (0000ms, 0526ms total)
+T2DDC 001:547  (0000ms, 0526ms total)
+T2DDC 001:547 Closed (0000ms, 0526ms total)

@@ -1,0 +1,47 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: •ÏVision V5.14.0.0
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: ∞≠ ¥Ÿ«ı, ., LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.14.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.05 update 1 (build 106)
+Assembler:       Armasm.exe V5.05 update 1 (build 106)
+Linker/Locator:  ArmLink.exe V5.05 update 1 (build 106)
+Library Manager: ArmAr.exe V5.05 update 1 (build 106)
+Hex Converter:   FromElf.exe V5.05 update 1 (build 106)
+CPU DLL:         SARMCM3.DLL V5.14.0.0
+Dialog DLL:      DARMSTM.DLL V1.65.0.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.14.0_KEIL
+Dialog DLL:      TARMSTM.DLL V1.64.0.0
+ 
+<h2>Project:</h2>
+D:\git\narsha_database\study\arm\lecture\nucleo\Nucleo\GPIO.uvproj
+Project File Date:  04/08/2021
+
+<h2>Output:</h2>
+Rebuild target 'GPIO'
+compiling GPIO_OUT.c...
+source\GPIO_OUT.c(162): warning:  #223-D: function "strlen" declared implicitly
+        for(i = 0; i < strlen(string); i++)
+source\GPIO_OUT.c(195): warning:  #61-D: integer operation result is out of range
+        GPIOC->CRL &= ~(0x0F << (7 * 4)); // D9
+source\GPIO_OUT.c(197): warning:  #61-D: integer operation result is out of range
+        GPIOA->CRL &= ~(0x0F << (7 * 4)); // D11
+source\GPIO_OUT.c(245): warning:  #1-D: last line of file ends without a newline
+  // D12 == a6
+source\GPIO_OUT.c: 4 warnings, 0 errors
+compiling STM32_Init.c...
+assembling STM32F10x.s...
+linking...
+Program Size: Code=1604 RO-data=268 RW-data=12 ZI-data=516  
+FromELF: creating hex file...
+".\Output\GPIO_OUT.axf" - 0 Error(s), 4 Warning(s).
+</pre>
+</body>
+</html>

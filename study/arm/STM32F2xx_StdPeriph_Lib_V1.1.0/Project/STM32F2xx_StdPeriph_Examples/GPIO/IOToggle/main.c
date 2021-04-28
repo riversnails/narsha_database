@@ -83,6 +83,8 @@ USART_InitTypeDef USART_InitStructure;
 
 int main(void)
 {
+	while(1);
+	
   /*!< At this stage the microcontroller clock setting is already configured, 
        this is done through SystemInit() function which is called from startup
        file (startup_stm32f2xx.s) before to branch to application main.

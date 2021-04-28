@@ -25,7 +25,7 @@ D:\git\narsha_database\study\arm\lecture\GPIO\GPIO\GPIO.uvproj
 Project File Date:  04/08/2021
 
 <h2>Output:</h2>
-Build target 'GPIO'
+Rebuild target 'GPIO'
 compiling GPIO_OUT.c...
 source\GPIO_OUT.c(84): warning:  #1295-D: Deprecated declaration exit_callback_func - give arg types
   void exit_callback_func();
@@ -41,8 +41,6 @@ source\GPIO_OUT.c(451): warning:  #1295-D: Deprecated declaration led_off - give
   void led_off();
 source\GPIO_OUT.c(605): warning:  #223-D: function "strlen" declared implicitly
         for(i = 0; i < strlen(string); i++)
-source\GPIO_OUT.c(754): warning:  #111-D: statement is unreachable
-        SysTick->LOAD = 720;
 source\GPIO_OUT.c(841): warning:  #61-D: integer operation result is out of range
         GPIOC->CRL &= ~(0x0F << 7 * 4);
 source\GPIO_OUT.c(929): warning:  #186-D: pointless comparison of unsigned integer with zero
@@ -77,11 +75,17 @@ source\GPIO_OUT.c(699): warning:  #177-D: variable "test_toggle" was declared bu
         int test_toggle = 0;
 source\GPIO_OUT.c(702): warning:  #177-D: variable "in_bltouch_switch" was declared but never referenced
         unsigned short in_bltouch_switch = 0;
-source\GPIO_OUT.c: 25 warnings, 0 errors
+source\GPIO_OUT.c(706): warning:  #177-D: variable "a" was declared but never referenced
+        aa a; // 12byte
+source\GPIO_OUT.c(707): warning:  #177-D: variable "b" was declared but never referenced
+        aa *b; // 4byte
+source\GPIO_OUT.c: 26 warnings, 0 errors
+compiling STM32_Init.c...
+assembling STM32F10x.s...
 linking...
-Program Size: Code=6352 RO-data=388 RW-data=160 ZI-data=1416  
+Program Size: Code=7896 RO-data=492 RW-data=240 ZI-data=1432  
 FromELF: creating hex file...
-".\Output\GPIO_OUT.axf" - 0 Error(s), 25 Warning(s).
+".\Output\GPIO_OUT.axf" - 0 Error(s), 26 Warning(s).
 </pre>
 </body>
 </html>
