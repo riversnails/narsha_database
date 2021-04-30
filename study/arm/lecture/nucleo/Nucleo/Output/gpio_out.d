@@ -30,3 +30,5 @@
 .\output\gpio_out.o: source\STM32_Init.h
 .\output\gpio_out.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\output\gpio_out.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\output\gpio_out.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\output\gpio_out.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
