@@ -15,10 +15,14 @@
 //#endif /* __GNUC__ */
 
 #define MENU_MAX 6
+#define SERVO_PLUS 5
+#define LED_PLUS 10
+#define LED_DUTY_TIME 5000
+#define NOTE_PLUS 10
 
+unsigned long error_parity_garbage[128];
 volatile unsigned int TimingDelay;	
 volatile unsigned long sys_count;
-unsigned long error_parity_garbage[128];
 int i;
 int j;
 
@@ -74,18 +78,22 @@ char *main_menu_text[5] = {" 1. remocon", " 2. utrasonic", " 3. servo", " 4. buz
 char *rem_menu_text[2] = {" rem : ", " exit"};
 char *ultra_menu_text[2] = {" ultra : ", " exit"};
 char *servo_menu_text[2] = {" servo : ", " exit"};
-char *buzzer_menu_text[2] = {" buzzer_hz : ", " exit"};
+char *buzzer_menu_text[2] = {" noteh : ", " exit"};
 char *led_menu_text[3] = {" pwm_on", " pwm_off", " exit"};
 	
+unsigned long curr_millis = 0;
+unsigned long prev_millis = 0;
 int rem_count1 = 0;
 unsigned long falling_edge_timing[40];
 unsigned long diff_falling_edge_timing[33];
 int falling_edge_index = 0;
 int value_bit[32];
 unsigned char value_hex = 0;
-unsigned char value_num[10] = {0x16, 0x0C, 0x18, 0x5E, 0x08, 0x1C, 0x5A, 0x42, 0x52, 0x4A};
+unsigned char value_num[15] = {0x16, 0x0C, 0x18, 0x5E, 0x08, 0x1C, 0x5A, 0x42, 0x52, 0x4A, 
+																						0x46, 0x15, 0x44, 0x43, 0x40};
 unsigned char remocon_num = 0;
 char exti_callback_flag = 0;
+int rem_print_toggle = 0;
 int ultrasonic_toggle = -1;
 int ultrasonic_distance = 0;
 unsigned long ultrasonic_difftime = 0;
@@ -106,8 +114,12 @@ int left_flag = 0;
 int enter_flag = 0;
 int print_toggle = 0;
 int cursor_toggle = 0;
-
-
+int led_duty = 1;
+int prev_led_millis = 0;
+int led_en_toggle = 0;
+int note_cycle = 1;
+int note_duty = 1000;
+int note_toggle = 0;
 
 void EXTI4_IRQHandler(void)
 {
@@ -189,11 +201,13 @@ void exit_callback_func()
 				else if(diff_falling_edge_timing[i + 1] > 2000 && diff_falling_edge_timing[i + 1] < 2500) value_bit[i] = 1;
 			}
 			
-			for(i = 0; i <32; i++)
-			{
-				//printf("%d \r\n", (int)diff_falling_edge_timing[i]);
-				//printf("%d \r\n", (int)value_bit[i]);
-			}
+//			for(i = 1; i <32; i++)
+//			{
+//				//printf("%d \r\n", (int)diff_falling_edge_timing[i]);
+//				printf("%d ", (int)value_bit[i]);
+//			}
+//			printf("\r\n");
+			
 			
 			for(i = 0; i < 8; i++)
 			{
@@ -214,7 +228,19 @@ void exit_callback_func()
 					remocon_num = i;
 				}
 			}
-			
+			for(i = 0; i < 5; i++)
+			{
+				if(value_num[i + 10] == value_hex) 
+				{
+					if(i == 0) up_flag = 1;
+					else if(i == 1) down_flag = 1;
+					else if(i == 2) left_flag = 1;
+					else if(i == 3) right_flag = 1;
+					else if(i == 4) enter_flag = 1;
+					//printf("%x \r\n", value_num[i + 10]);
+				}
+			}
+			//printf("%d %d %d %d %d \r\n", up_flag, down_flag, left_flag, right_flag, enter_flag);
 			//printf("rem:%d\r\n", remocon_num);
 }
 
@@ -232,6 +258,31 @@ void TIM2_IRQHandler (void) {
 
 		TIM2->SR &= ~(1<<2); // clear CC1E flag
 	}	
+}
+
+void TIM3_IRQHandler (void) {
+	if ((TIM3->SR & 0x0001) != 0) { // check update interrupt source
+		GPIOA->ODR |= (0x01 << 5);
+		TIM3->SR &= ~(1<<0); // clear UIF flag
+	}
+	else if ((TIM3->SR & 0x0002) != 0) { // check capture compare interrupt source
+		GPIOA->ODR &= ~(0x01 << 5);
+		TIM3->CCR1 = led_duty;
+		TIM3->SR &= ~(1<<1); // clear CC1E flag
+	}		
+}
+
+void TIM4_IRQHandler (void) {
+	if ((TIM4->SR & 0x0001) != 0) { // check update interrupt source
+		GPIOB->ODR |= (0x01 << 10);
+		TIM4->ARR = note_cycle;
+		TIM4->SR &= ~(1<<0); // clear UIF flag
+	}
+	else if ((TIM4->SR & 0x0002) != 0) { // check capture compare interrupt source
+		GPIOB->ODR &= ~(0x01 << 10);
+		TIM4->CCR1 = note_duty;
+		TIM4->SR &= ~(1<<1); // clear CC1E flag
+	}		
 }
 
 void rs_high()
@@ -321,6 +372,9 @@ void charLCD_init()
 	rs_high();
   Delay(100);
 	
+	set_instruction_4bit(0x20); // 4 bit mode
+	set_instruction_4bit(0x20); // 4 bit mode
+	set_instruction_4bit(0x20); // 4 bit mode
 	set_instruction_4bit(0x28); // 4 bit mode
 	set_instruction_4bit(0x06); // entry mode set
 	set_instruction_4bit(0x0C); // display on
@@ -408,7 +462,16 @@ void clear_move_menu()
 	curr_up_down = 0;
 }
 
-void print_menu()
+void clear_flag()
+{
+	up_flag = 0;
+	down_flag = 0;
+	left_flag = 0;
+	right_flag = 0;
+	enter_flag = 0;
+}
+
+void print_menu() // print menu -------------------------------------------------------------
 {
 	char var[10];
 	
@@ -503,17 +566,16 @@ void print_menu()
 				CharLcd_idx = 0;
 				clear_move_menu();
 			}
-			if(exti_callback_flag == 1)
-			{
-				exti_callback_flag = 0;
-				exit_callback_func();
-				printf("rem:%d\r\n", remocon_num);
-				sprintf(var, "%d", remocon_num);
-				set_cursor(1, 7);
-				charLCD_string("      ");
-				set_cursor(1, 7);
-				charLCD_string(var);
-			}
+		}
+		if(rem_print_toggle == 1)
+		{
+			rem_print_toggle = 0;
+			printf("rem:%d\r\n", remocon_num);
+			sprintf(var, "%d", remocon_num);
+			set_cursor(1, 7);
+			charLCD_string("      ");
+			set_cursor(1, 7);
+			charLCD_string(var);
 		}
 	}
 	else if(CharLcd_idx == 2) // ultrasonic menu
@@ -547,15 +609,35 @@ void print_menu()
 	{
 		if(enter_flag == 1)
 		{
-			if(servo_en_toggle == 0)
+			enter_flag = 0;
+			
+			if(curr_pos == 0)
 			{
-				servo_en_toggle = 1;
-				TIM2->CR1 |= 0x01;  // timer2 count enable
+				if(servo_en_toggle == 0)
+				{
+					servo_en_toggle = 1;
+					TIM2->CR1 |= 0x01;  // timer2 count enable
+					sprintf(var, "%d", servo_duty);
+					set_cursor(1, 9);
+					charLCD_string("     EN");
+					set_cursor(1, 9);
+					charLCD_string(var);
+				}
+				else
+				{
+					servo_en_toggle = 0;
+					TIM2->CR1 &= ~0x01;  // timer2 count unable
+					sprintf(var, "%d", servo_duty);
+					set_cursor(1, 9);
+					charLCD_string("     UN");
+					set_cursor(1, 9);
+					charLCD_string(var);
+				}
 			}
-			else
+			else if(curr_pos == 1)
 			{
-				servo_en_toggle = 0;
-				TIM2->CR1 &= ~0x00;  // timer2 count unable
+				CharLcd_idx = 0;
+				clear_move_menu();
 			}
 		}
 		if(right_flag == 1)
@@ -563,18 +645,33 @@ void print_menu()
 			right_flag = 0;
 			if(curr_pos == 0)
 			{
-				servo_duty += 5;
+				servo_duty += SERVO_PLUS;
 				if(servo_duty >= 230)
 				{
 					servo_duty = 230;
 				}
+				sprintf(var, "%d", servo_duty);
+				set_cursor(1, 9);
+				charLCD_string("   ");
+				set_cursor(1, 9);
+				charLCD_string(var);
 			}
 		}
 		if(left_flag == 1)
 		{
-			if(servo_duty >= 70)
+			left_flag = 0;
+			if(curr_pos == 0)
 			{
-				servo_duty = 70;
+				servo_duty -= SERVO_PLUS;
+				if(servo_duty <= 70)
+				{
+					servo_duty = 70;
+				}
+				sprintf(var, "%d", servo_duty);
+				set_cursor(1, 9);
+				charLCD_string("   ");
+				set_cursor(1, 9);
+				charLCD_string(var);
 			}
 		}
 	}
@@ -582,26 +679,105 @@ void print_menu()
 	{
 		if(enter_flag == 1)
 		{
+			enter_flag = 0;
 			
+			if(curr_pos == 0)
+			{
+				if(servo_en_toggle == 0)
+				{
+					servo_en_toggle = 1;
+					TIM4->CR1 |= 0x01;  // timer4 count enable
+					sprintf(var, "%d", note_duty);
+					set_cursor(1, 9);
+					charLCD_string("     EN");
+					set_cursor(1, 9);
+					charLCD_string(var);
+				}
+				else
+				{
+					servo_en_toggle = 0;
+					TIM4->CR1 &= ~0x01;  // timer4 count unable
+					sprintf(var, "%d", note_duty);
+					set_cursor(1, 9);
+					charLCD_string("     UN");
+					set_cursor(1, 9);
+					charLCD_string(var);
+				}
+			}
+			else if(curr_pos == 1)
+			{
+				CharLcd_idx = 0;
+				clear_move_menu();
+			}
 		}
 		if(right_flag == 1)
 		{
-			
+			right_flag = 0;
+			if(curr_pos == 0)
+			{
+				note_duty += NOTE_PLUS;
+				note_cycle = note_duty * 2;
+				if(note_duty >= 10000)
+				{
+					note_duty = 9999;
+				}
+				sprintf(var, "%d", note_duty);
+				set_cursor(1, 9);
+				charLCD_string("    ");
+				set_cursor(1, 9);
+				charLCD_string(var);
+			}
 		}
 		if(left_flag == 1)
 		{
-			
+			left_flag = 0;
+			if(curr_pos == 0)
+			{
+				note_duty -= NOTE_PLUS;
+				note_cycle = note_duty * 2;
+				if(note_duty <= 2)
+				{
+					note_duty = 2;
+				}
+				sprintf(var, "%d", note_duty);
+				set_cursor(1, 9);
+				charLCD_string("    ");
+				set_cursor(1, 9);
+				charLCD_string(var);
+			}
 		}
 	}
 	else if(CharLcd_idx == 5) // led menu
 	{
 		if(enter_flag == 1)
 		{
+			enter_flag = 0;
 			
+			if(curr_pos == 0)
+			{
+				if(led_en_toggle == 0)
+				{
+					led_en_toggle = 1;
+					TIM3->CR1 |= 0x01;  // timer5 count enable
+				}
+			}
+			else if(curr_pos == 1)
+			{
+				if(led_en_toggle == 1)
+				{
+					led_en_toggle = 0;
+					TIM3->CR1 &= ~0x01;  // timer5 count enable
+				}
+			}
+			else if(curr_pos == 2)
+			{
+				CharLcd_idx = 0;
+				clear_move_menu();
+			}
 		}
 	}
 	
-	if(print_toggle) // need reload menu?
+	if(print_toggle) // reload menu?
 	{
 		print_toggle = 0;
 		clear_menu();
@@ -609,8 +785,46 @@ void print_menu()
 		charLCD_string(charLcd_arr[CharLcd_idx]->text_menu[curr_print_pos]);
 		set_cursor(2, 0);
 		charLCD_string(charLcd_arr[CharLcd_idx]->text_menu[curr_print_pos + 1]);
+		if(CharLcd_idx == 3)
+		{
+			if(servo_en_toggle == 1)
+			{
+				sprintf(var, "%d", servo_duty);
+				set_cursor(1, 9);
+				charLCD_string("     EN");
+				set_cursor(1, 9);
+				charLCD_string(var);
+			}
+			else
+			{
+				sprintf(var, "%d", servo_duty);
+				set_cursor(1, 9);
+				charLCD_string("     UN");
+				set_cursor(1, 9);
+				charLCD_string(var);
+			}
+		}
+		else if(CharLcd_idx == 4)
+		{
+			if(servo_en_toggle == 1)
+			{
+				sprintf(var, "%d", note_duty);
+				set_cursor(1, 9);
+				charLCD_string("     EN");
+				set_cursor(1, 9);
+				charLCD_string(var);
+			}
+			else
+			{
+				sprintf(var, "%d", note_duty);
+				set_cursor(1, 9);
+				charLCD_string("     UN");
+				set_cursor(1, 9);
+				charLCD_string(var);
+			}
+		}
 	}
-	if(cursor_toggle)
+	if(cursor_toggle) // reload cursor?
 	{
 		cursor_toggle = 0;
 		if(curr_up_down == 0)
@@ -628,7 +842,23 @@ void print_menu()
 			charLCD_string(">");
 		}
 	}
+	if(exti_callback_flag == 1) // rem control 
+	{
+		exti_callback_flag = 0;
+		rem_print_toggle = 1;
+		exit_callback_func();
+	}
 	
+	if(led_en_toggle == 1) // led control 
+	{
+		if(curr_millis - prev_led_millis > LED_DUTY_TIME)
+		{
+			prev_led_millis = curr_millis;
+			led_duty += LED_PLUS;
+			if(led_duty >= 199) led_duty = 1;
+		}
+	}
+	//clear_flag();
 }
 
 void usart_pirnt_menu()
@@ -647,8 +877,6 @@ void usart_pirnt_menu()
  | MIAN ENTRY                                               																																																													|
 \*--------------------------------------------------------------------------------------------------------------------*/
 int main (void) {
-	unsigned long curr_millis = 0;
-	unsigned long prev_millis = 0;
 	
 	stm32_Init();
 	
@@ -714,78 +942,91 @@ int main (void) {
 	TIM2->CCR1 = 70 - 1; // PWM count
 	//TIM2->CR1 |= 0x01;  // timer2 count enable
 
-	printf("init charlcd-------------------------------------------- \r\n");
-	
+	// led
+	RCC->APB1ENR |= (0x01 << 1);
+	GPIOA->CRL &= ~(0x0F << (5 * 4)); // D13
+	GPIOA->CRL |= (0x03 << (5 * 4)); // D13
+	TIM3->PSC = 720 - 1;  // 10us
+	TIM3->ARR = 200 - 1;
+	TIM3->CNT = 0x00;
+	TIM3->DIER |= 0x03; // update/capture compare interrupt enable
+	TIM3->CCMR1 = 0x68; // PWM mode
+	TIM3->CCER = 0x01;
+	TIM3->CCR1 = 1; // PWM count
+	//TIM3->CR1 |= 0x01;  // timer3 count enable
+
+	// note
+	RCC->APB1ENR |= (0x01 << 2);
+	GPIOB->CRH &= ~(0x0F << (2 * 4)); // D6
+	GPIOB->CRH |= (0x03 << (2 * 4)); // D6
+	TIM4->PSC = 72 - 1;  // 10us
+	note_cycle = note_duty * 2;
+	TIM4->ARR = note_cycle;
+	TIM4->CNT = 0x00;
+	TIM4->DIER |= 0x03; // update/capture compare interrupt enable
+	TIM4->CCMR1 = 0x68; // PWM mode
+	TIM4->CCER = 0x01;
+	TIM4->CCR1 = note_duty; // PWM count
+	//TIM3->CR1 |= 0x01;  // timer3 count enable
+
 	charLCD_init();
-	
+	clear_menu();
 	init_menu();
-	//usart_pirnt_menu();
+	
 	//while(1);
-	printf("%d %d\r\n", curr_pos, curr_print_pos);
+	//printf("%d %d\r\n", curr_pos, curr_print_pos);
 	
 	NVIC->ISER[0] |= (0x01 << 10); //EXTI 4
 	NVIC->ISER[0] |= (0x01 << 28); // TIMER 2
+	NVIC->ISER[0] |= (0x01 << 29); // TIMER 3
+	NVIC->ISER[0] |= (0x01 << 30); // TIMER 4
 	NVIC->ISER[1] |= (0x01 << 6); //USART 2
 	NVIC->ISER[1] |= (0x01 << (40-32)); //EXTI 10-15
 	Delay_ms(1000);
 	
 	printf("loop-------------------------------------------- \r\n");
 	
-	down_flag = 1;
-	print_menu();
-	printf("%d %d\r\n", curr_pos, curr_print_pos);
-	Delay_ms(1000);
-	down_flag = 1;
-	print_menu();
-	printf("%d %d\r\n", curr_pos, curr_print_pos);
-	Delay_ms(1000);
-	down_flag = 1;
-	print_menu();
-	printf("%d %d\r\n", curr_pos, curr_print_pos);
-	Delay_ms(1000);
-	down_flag = 1;
-	print_menu();
-	printf("%d %d\r\n", curr_pos, curr_print_pos);
-	Delay_ms(1000);
-	down_flag = 1;
-	print_menu();
-	printf("%d %d\r\n", curr_pos, curr_print_pos);
-	Delay_ms(1000);
-	down_flag = 1;
-	print_menu();
-	printf("%d %d\r\n", curr_pos, curr_print_pos);
-	Delay_ms(1000);
+//	down_flag = 1;
+//	print_menu();
+//	printf("%d %d\r\n", curr_pos, curr_print_pos);
+//	Delay_ms(1000);
+//	down_flag = 1;
+//	print_menu();
+//	printf("%d %d\r\n", curr_pos, curr_print_pos);
+//	Delay_ms(1000);
+//	down_flag = 1;
+//	print_menu();
+//	printf("%d %d\r\n", curr_pos, curr_print_pos);
+//	Delay_ms(1000);
+//	down_flag = 1;
+//	print_menu();
+//	printf("%d %d\r\n", curr_pos, curr_print_pos);
+//	Delay_ms(1000);
 	
-	up_flag = 1;
-	print_menu();
-	printf("%d %d\r\n", curr_pos, curr_print_pos);
-	Delay_ms(1000);
-	up_flag = 1;
-	print_menu();
-	printf("%d %d\r\n", curr_pos, curr_print_pos);
-	Delay_ms(1000);
-	up_flag = 1;
-	print_menu();
-	printf("%d %d\r\n", curr_pos, curr_print_pos);
-	Delay_ms(1000);
-	up_flag = 1;
-	print_menu();
-	printf("%d %d\r\n", curr_pos, curr_print_pos);
-	Delay_ms(1000);	
-	up_flag = 1;
-	print_menu();
-	printf("%d %d\r\n", curr_pos, curr_print_pos);
-	Delay_ms(1000);
-	up_flag = 1;
-	print_menu();
-	printf("%d %d\r\n", curr_pos, curr_print_pos);
-	Delay_ms(1000);
+//	up_flag = 1;
+//	print_menu();
+//	printf("%d %d\r\n", curr_pos, curr_print_pos);
+//	Delay_ms(1000);
 	
-	enter_flag = 1;
-	print_menu();
-	printf("%d %d\r\n", curr_pos, curr_print_pos);
-	Delay_ms(1000);
+//	enter_flag = 1;
+//	print_menu();
+//	printf("%d %d\r\n", curr_pos, curr_print_pos);
+//	Delay_ms(1000);
+//	
+//	enter_flag = 1;
+//	print_menu();
+//	printf("%d %d\r\n", curr_pos, curr_print_pos);
+//	Delay_ms(1000);
 	
+	
+//	right_flag = 1;
+//	print_menu();
+//	Delay_ms(1000);
+//	enter_flag = 1;
+//	print_menu();
+//	Delay_ms(1000);
+	
+	//while(1);
 	
 	while(1)
 	{
@@ -801,11 +1042,8 @@ int main (void) {
 			//set_data_4bit(0x31);
 			//ultrasonic();
 			//servo_duty += 30;
-			enter_flag = 1;
-			if(servo_duty >= 230)
-			{
-				servo_duty = 70;
-			}
+			//enter_flag = 1;
+			//right_flag = 1;
 		}
 		
 //		if(exti_callback_flag == 1)

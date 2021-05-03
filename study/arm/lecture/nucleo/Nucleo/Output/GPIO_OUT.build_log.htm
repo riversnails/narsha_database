@@ -27,17 +27,17 @@ Project File Date:  04/28/2021
 <h2>Output:</h2>
 Rebuild target 'GPIO'
 compiling GPIO_OUT.c...
-source\GPIO_OUT.c(628): warning:  #61-D: integer operation result is out of range
+source\GPIO_OUT.c(902): warning:  #61-D: integer operation result is out of range
         GPIOC->CRL &= ~(0x0F << (7 * 4)); // D9
-source\GPIO_OUT.c(630): warning:  #61-D: integer operation result is out of range
+source\GPIO_OUT.c(904): warning:  #61-D: integer operation result is out of range
         GPIOA->CRL &= ~(0x0F << (7 * 4)); // D11
-source\GPIO_OUT.c(805): warning:  #1-D: last line of file ends without a newline
+source\GPIO_OUT.c(1089): warning:  #1-D: last line of file ends without a newline
   // D12 == a6
 source\GPIO_OUT.c: 3 warnings, 0 errors
 compiling STM32_Init.c...
 assembling STM32F10x.s...
 linking...
-Program Size: Code=5752 RO-data=404 RW-data=208 ZI-data=1472  
+Program Size: Code=7068 RO-data=400 RW-data=232 ZI-data=1472  
 FromELF: creating hex file...
 ".\Output\GPIO_OUT.axf" - 0 Error(s), 3 Warning(s).
 </pre>
