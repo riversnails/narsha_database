@@ -1,0 +1,681 @@
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 12:11:24 2021
+
+
+*DELPIN*
+J1.4    GND
+J1.5    $$$17
+J1.6    $$$16
+J1.7    $$$15
+J1.8    $$$14
+J1.9    $$$13
+J1.10    $$$1
+
+*DELPART*
+J1 SIP-10P
+
+*DELPIN*
+J2.1    $$$12
+J2.2    $$$11
+J2.3    $$$18
+D9.2    $$$18
+U1.12    $$$23
+J2.4    $$$23
+U1.11    $$$20
+J2.5    $$$20
+U1.14    $$$27
+J2.6    $$$27
+J2.7    $$$22
+J14.2    $$$22
+J2.8    $$$21
+J14.3    $$$21
+
+*DELPART*
+J2 SIP-8P
+
+*DELPIN*
+J7.2    5V
+J7.5    5V
+J7.6    GND
+J7.7    GND
+
+*DELPART*
+J7 SIP-8P
+
+*DELPIN*
+D1.1    $$$2
+R1.1    $$$2
+D1.2    $$$17
+U1.7    $$$17
+
+*DELPART*
+D1 LD1608
+
+*DELPIN*
+D2.1    $$$3
+R2.1    $$$3
+D2.2    $$$16
+U1.6    $$$16
+
+*DELPART*
+D2 LD1608
+
+*DELPIN*
+D3.1    $$$4
+R3.1    $$$4
+D3.2    $$$15
+U1.5    $$$15
+
+*DELPART*
+D3 LD1608
+
+*DELPIN*
+D4.1    $$$5
+R4.1    $$$5
+D4.2    $$$14
+U1.4    $$$14
+
+*DELPART*
+D4 LD1608
+
+*DELPIN*
+D5.1    $$$6
+R5.1    $$$6
+D5.2    $$$13
+U1.3    $$$13
+
+*DELPART*
+D5 LD1608
+
+*DELPIN*
+D6.1    $$$7
+R6.1    $$$7
+D6.2    $$$1
+U1.2    $$$1
+
+*DELPART*
+D6 LD1608
+
+*DELPIN*
+R7.1    $$$8
+D7.1    $$$8
+D7.2    $$$12
+U1.1    $$$12
+
+*DELPART*
+D7 LD1608
+
+*DELPIN*
+D8.1    $$$9
+R8.1    $$$9
+D8.2    $$$11
+U1.15    $$$11
+
+*DELPART*
+D8 LD1608
+
+*DELPIN*
+R1.2    $$$10
+
+*DELPART*
+R1 R1608
+
+*DELPIN*
+R2.2    $$$10
+
+*DELPART*
+R2 R1608
+
+*DELPIN*
+R3.2    $$$10
+
+*DELPART*
+R3 R1608
+
+*DELPIN*
+R4.2    $$$10
+
+*DELPART*
+R4 R1608
+
+*DELPIN*
+R5.2    $$$10
+
+*DELPART*
+R5 R1608
+
+*DELPIN*
+R6.2    $$$10
+
+*DELPART*
+R6 R1608
+
+*DELPIN*
+R7.2    $$$10
+
+*DELPART*
+R7 R1608
+
+*DELPIN*
+R8.2    $$$10
+J14.4    $$$10
+
+*DELPART*
+R8 R1608
+
+*DELPIN*
+J3.1    $$$26
+J15.3    $$$26
+J3.2    5V
+J3.3    GND
+
+*DELPART*
+J3 HEADER1X3
+
+*DELPIN*
+J4.1    $$$25
+J15.2    $$$25
+J4.2    5V
+J4.3    GND
+
+*DELPART*
+J4 HEADER1X3
+
+*DELPIN*
+U1.8    GND
+U1.10    5V
+U1.13    $$$24
+J15.1    $$$24
+U1.16    5V
+
+*DELPART*
+U1 SP3232_WIDE
+
+*DELPIN*
+R9.1    GND
+D9.1    $$$19
+R9.2    $$$19
+
+*DELPART*
+R9 R1608
+D9 LD1608
+
+*DELPIN*
+J5.1    5V
+J5.2    $$$28
+U3.15    $$$28
+J5.3    $$$37
+U3.14    $$$37
+J5.4    $$$44
+U3.13    $$$44
+J5.5    $$$45
+U3.12    $$$45
+J5.6    $$$46
+U3.11    $$$46
+J5.7    $$$47
+U3.10    $$$47
+J5.8    $$$48
+U3.9    $$$48
+
+*DELPART*
+J5 SIP-8P
+
+*DELPIN*
+J8.1    5V
+J8.2    $$$29
+U2.15    $$$29
+J8.3    $$$35
+U2.14    $$$35
+J8.4    $$$34
+U2.13    $$$34
+J8.5    $$$33
+U2.12    $$$33
+J8.6    $$$32
+U2.11    $$$32
+J8.7    $$$31
+U2.10    $$$31
+J8.8    $$$30
+U2.9    $$$30
+
+*DELPART*
+J8 SIP-8P
+
+*DELPIN*
+U2.1    $$$36
+J9.1    $$$36
+U2.2    $$$43
+J9.2    $$$43
+U2.3    $$$42
+J9.3    $$$42
+U2.4    $$$41
+J9.4    $$$41
+U2.5    $$$40
+J9.5    $$$40
+U2.6    $$$39
+J9.6    $$$39
+U2.7    $$$38
+J9.7    $$$38
+J9.8    GND
+
+*DELPART*
+J9 SIP-8P
+
+*DELPIN*
+U3.1    $$$54
+J10.1    $$$54
+U3.2    $$$49
+J10.2    $$$49
+U3.3    $$$55
+J10.3    $$$55
+U3.4    $$$50
+J10.4    $$$50
+U3.5    $$$51
+J10.5    $$$51
+U3.6    $$$52
+J10.6    $$$52
+U3.7    $$$53
+J10.7    $$$53
+J10.8    GND
+
+*DELPART*
+J10 SIP-8P
+
+*DELPIN*
+U4.1    $$$69
+J11.1    $$$69
+U4.2    $$$68
+J11.2    $$$68
+U4.3    $$$67
+J11.3    $$$67
+U4.4    $$$66
+J11.4    $$$66
+U4.5    $$$65
+J11.5    $$$65
+U4.6    $$$64
+J11.6    $$$64
+J11.7    $$$63
+U4.7    $$$63
+J11.8    GND
+
+*DELPART*
+J11 SIP-8P
+
+*DELPIN*
+J12.1    5V
+J12.2    $$$56
+U4.15    $$$56
+J12.3    $$$57
+U4.14    $$$57
+J12.4    $$$58
+U4.13    $$$58
+J12.5    $$$59
+U4.12    $$$59
+J12.6    $$$60
+U4.11    $$$60
+J12.7    $$$61
+U4.10    $$$61
+J12.8    $$$62
+U4.9    $$$62
+
+*DELPART*
+J12 SIP-8P
+
+*DELPIN*
+R10.1    $$$70
+J13.1    $$$70
+J13.2    $$$76
+R12.1    $$$71
+J13.3    $$$71
+R14.1    $$$72
+J13.4    $$$72
+
+*DELPART*
+J13 HEADER04
+
+*DELPIN*
+R10.2    $$$73
+J15.4    $$$73
+
+*DELPART*
+R10 R1608
+
+*DELPIN*
+R12.2    $$$74
+J15.5    $$$74
+
+*DELPART*
+R12 R1608
+
+*DELPIN*
+R14.2    $$$75
+J15.6    $$$75
+
+*DELPART*
+R14 R1608
+
+*DELPIN*
+R16.1    5V
+R16.2    $$$76
+R17.2    $$$76
+
+*DELPART*
+R16 R1608
+
+*DELPIN*
+R17.1    GND
+
+*DELPART*
+R17 R1608
+
+*DELPIN*
+J14.1    5V
+
+*DELPART*
+J14 HEADER04
+
+*DELPIN*
+U2.8    GND
+U2.16    5V
+
+*DELPART*
+U2 DIP16
+J15 HEADER06
+
+*DELPIN*
+U3.8    GND
+U4.8    GND
+U4.16    5V
+U3.16    5V
+
+*DELPART*
+U3 DIP16
+U4 DIP16
+*END*
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 12:18:10 2021
+
+
+*PART*
+R1 R1608
+*END*
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 13:28:20 2021
+
+*END*
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 13:32:02 2021
+
+*END*
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 13:33:24 2021
+
+
+*PART*
+VR1 3323P
+*END*
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 13:35:54 2021
+
+
+*PART*
+SW1 TACT-1101S
+*END*
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 13:38:22 2021
+
+*END*
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 13:38:45 2021
+
+*END*
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 13:39:17 2021
+
+
+*PART*
+BZ1 BUZZER_1205
+*END*
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 13:40:40 2021
+
+
+*PART*
+J1 HEADER1X5
+*END*
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 13:43:49 2021
+
+
+*DELPART*
+J1 HEADER1X5
+*END*
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 14:13:44 2021
+
+*END*
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 14:14:07 2021
+
+*END*
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 14:19:45 2021
+
+*END*
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 14:23:01 2021
+
+
+*DELPIN*
+R1.1    GND_POWER
+J3.3    CHARLCD_V0
+R1.2    CHARLCD_V0
+
+*DELPART*
+R1 R1608
+VR1 3323P
+
+*DELPIN*
+SW1.1    GND_POWER
+SW1.2    D2_REMOCON
+
+*DELPART*
+SW1 TACT-1101S
+
+*DELPIN*
+BZ1.1    N21093937
+R5.2    N21093937
+BZ1.2    GND_POWER
+
+*DELPART*
+BZ1 BUZZER_1205
+
+*DELPIN*
+J1.2    GND_POWER
+J1.3    GND_POWER
+J1.4    VDD_5V
+J1.5    VDD_3V3
+J1.6    GND_POWER
+
+*DELPART*
+J1 HEADER1X8
+
+*DELPIN*
+J6.6    D5_SERVO
+J10.1    D5_SERVO
+J10.2    VDD_5V
+J10.3    GND_POWER
+
+*DELPART*
+J10 HEADER1X3
+
+*DELPIN*
+J11.1    D2_REMOCON
+J11.2    GND_POWER
+J11.3    VDD_5V
+
+*DELPART*
+J11 HEADER1X3
+
+*DELPIN*
+J12.1    VDD_5V
+J6.5    D4_TRIGGER
+J12.2    D4_TRIGGER
+J6.4    D3_ECHO
+J12.3    D3_ECHO
+J12.4    GND_POWER
+
+*DELPART*
+J12 HEADER1X4
+
+*DELPIN*
+J2.1    D8_CHARLCD_E
+J3.6    D8_CHARLCD_E
+J2.2    D9_CHARLCD_DATA4
+J3.11    D9_CHARLCD_DATA4
+J2.3    D10_CHARLCD_DATA5
+J3.12    D10_CHARLCD_DATA5
+J2.4    D11_CHARLCD_DATA6
+J3.13    D11_CHARLCD_DATA6
+J2.5    D12_CHARLCD_DATA7
+J3.14    D12_CHARLCD_DATA7
+J2.6    PWM_LED
+R4.2    PWM_LED
+J2.7    GND_POWER
+J2.9    SDA_PCF8574
+J7.3    SDA_PCF8574
+J2.10    SCL_PCF8575
+J7.4    SCL_PCF8575
+
+*DELPART*
+J2 HEADER1X10
+
+*DELPIN*
+J3.1    GND_POWER
+J3.2    VDD_5V
+J6.8    D7_CHARLCD_RS
+J3.4    D7_CHARLCD_RS
+J3.5    GND_POWER
+J3.15    VDD_5V
+J3.16    GND_POWER
+
+*DELPART*
+J3 HEADER1X16
+
+*DELPIN*
+J4.1    VDD_3V3
+R3.2    VDD_3V3
+J4.2    D0_RX
+J6.1    D0_RX
+J4.3    D1_TX
+J6.2    D1_TX
+J4.4    GND_POWER
+J4.5    VDD_5V
+
+*DELPART*
+J4 HEADER1X5
+
+*DELPIN*
+J5.1    A5_LCD_B
+J9.5    A5_LCD_B
+J5.2    A4_LCD_G
+J9.4    A4_LCD_G
+J5.3    A3_LCD_R
+J9.3    A3_LCD_R
+J5.4    A2_JOYSTICK_BTN
+J8.5    A2_JOYSTICK_BTN
+J5.5    A1_JOYSTICK_Y
+J8.4    A1_JOYSTICK_Y
+J5.6    A0_JOYSTICK_X
+J8.3    A0_JOYSTICK_X
+
+*DELPART*
+J5 HEADER1X6
+
+*DELPIN*
+J6.3    D2_REMOCON
+R2.1    D2_REMOCON
+R5.1    D6_BUZZER
+J6.7    D6_BUZZER
+
+*DELPART*
+J6 HEADER1X8
+
+*DELPIN*
+J7.1    GND_POWER
+J7.2    VDD_5V
+
+*DELPART*
+J7 HEADER1X4
+
+*DELPIN*
+J8.1    GND_POWER
+J8.2    VDD_5V
+
+*DELPART*
+J8 HEADER1X5
+
+*DELPIN*
+J9.1    GND_POWER
+R2.2    VDD_5V
+J9.2    VDD_5V
+
+*DELPART*
+J9 HEADER1X5
+
+*DELPIN*
+R4.1    N21132973
+LD1.1    N21132973
+LD1.2    GND_POWER
+
+*DELPART*
+LD1 LD2012
+R2 R2012
+
+*DELPIN*
+R3.1    GND_POWER
+
+*DELPART*
+R3 R2012
+R4 R2012
+R5 R2012
+
+*DELPIN*
+RESET_SW1.2    GND_POWER
+RESET_SW1.1    GND_POWER
+
+*DELPART*
+RESET_SW1 TACT-1101S
+*END*
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 15:52:35 2021
+
+*END*
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 16:06:32 2021
+
+*END*
+*PADS-ECO-V10.0-METRIC*
+
+*REMARK* -- uno_extension_1.pcb -- Thu May 06 20:07:32 2021
+
+
+*RENNET*
+GND_POWER GND
+*END*

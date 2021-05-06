@@ -92,6 +92,8 @@ unsigned char value_hex = 0;
 unsigned char value_num[15] = {0x16, 0x0C, 0x18, 0x5E, 0x08, 0x1C, 0x5A, 0x42, 0x52, 0x4A, 
 																						0x46, 0x15, 0x44, 0x43, 0x40};
 unsigned char remocon_num = 0;
+char rep_remocon_flag = 0;
+unsigned long rem_prev_millis = 0;
 char exti_callback_flag = 0;
 int rem_print_toggle = 0;
 int ultrasonic_toggle = -1;
@@ -173,6 +175,8 @@ void EXTI15_10_IRQHandler(void)
 			{
 				//printf("%d\r\n", remocon_num);
 				//printf("R\r\n");
+				//exti_callback_flag = 1;
+				rep_remocon_flag = 1;
 				falling_edge_index = -1;
 			}
 		}
@@ -190,58 +194,105 @@ void EXTI15_10_IRQHandler(void)
 	}
 }
 
+void exit_repet_func()
+{
+	for(i = 0; i < 5; i++)
+	{
+		if(remocon_num == 10) 
+		{
+			up_flag = 1;
+		}
+		else if(remocon_num == 11)
+		{ 
+			down_flag = 1;
+		}
+		else if(remocon_num == 12) 
+		{
+			left_flag = 1;
+		}
+		else if(remocon_num == 13) 
+		{
+			right_flag = 1;
+		}
+//		else if(remocon_num == 14)
+//		{
+//			enter_flag = 1;
+//		}
+	}
+}
 
 void exit_callback_func()
 {
 	//printf("data_print\r\n");
-			
-			for(i = 0; i < 32; i++)
+	
+	for(i = 0; i < 32; i++)
+	{
+		if(diff_falling_edge_timing[i + 1] > 1000 && diff_falling_edge_timing[i + 1] < 1500) value_bit[i] = 0;
+		else if(diff_falling_edge_timing[i + 1] > 2000 && diff_falling_edge_timing[i + 1] < 2500) value_bit[i] = 1;
+	}
+		
+//		for(i = 1; i <32; i++)
+//		{
+//			//printf("%d \r\n", (int)diff_falling_edge_timing[i]);
+//			printf("%d ", (int)value_bit[i]);
+//		}
+//		printf("\r\n");
+		
+		
+	for(i = 0; i < 8; i++)
+	{
+		value_hex >>= 1;
+		
+		if(value_bit[i+16] == 1) 
+		{
+			value_hex |= 0x80;
+		}
+	}
+	
+	//printf("%02x\r\n", value_hex);
+	
+	for(i = 0; i< 10; i++)
+	{
+		if(value_num[i] == value_hex) 
+		{
+			remocon_num = i;
+		}
+	}
+	for(i = 0; i < 5; i++)
+	{
+		if(value_num[i + 10] == value_hex) 
+		{
+			if(i == 0) 
 			{
-				if(diff_falling_edge_timing[i + 1] > 1000 && diff_falling_edge_timing[i + 1] < 1500) value_bit[i] = 0;
-				else if(diff_falling_edge_timing[i + 1] > 2000 && diff_falling_edge_timing[i + 1] < 2500) value_bit[i] = 1;
+				remocon_num = i + 10;
+				up_flag = 1;
 			}
-			
-//			for(i = 1; i <32; i++)
-//			{
-//				//printf("%d \r\n", (int)diff_falling_edge_timing[i]);
-//				printf("%d ", (int)value_bit[i]);
-//			}
-//			printf("\r\n");
-			
-			
-			for(i = 0; i < 8; i++)
+			else if(i == 1)
+			{ 
+				remocon_num = i + 10;
+				down_flag = 1;
+			}
+			else if(i == 2) 
 			{
-				value_hex >>= 1;
-				
-				if(value_bit[i+16] == 1) 
-				{
-					value_hex |= 0x80;
-				}
+				remocon_num = i + 10;
+				left_flag = 1;
 			}
-			
-			//printf("%02x\r\n", value_hex);
-			
-			for(i = 0; i< 10; i++)
+			else if(i == 3) 
 			{
-				if(value_num[i] == value_hex) 
-				{
-					remocon_num = i;
-				}
+				remocon_num = i + 10;
+				right_flag = 1;
 			}
-			for(i = 0; i < 5; i++)
+			else if(i == 4)
 			{
-				if(value_num[i + 10] == value_hex) 
-				{
-					if(i == 0) up_flag = 1;
-					else if(i == 1) down_flag = 1;
-					else if(i == 2) left_flag = 1;
-					else if(i == 3) right_flag = 1;
-					else if(i == 4) enter_flag = 1;
-					//printf("%x \r\n", value_num[i + 10]);
-				}
+				remocon_num = i + 10;
+				enter_flag = 1;
 			}
-			//printf("%d %d %d %d %d \r\n", up_flag, down_flag, left_flag, right_flag, enter_flag);
-			//printf("rem:%d\r\n", remocon_num);
+			//printf("%x \r\n", value_num[i + 10]);
+		}
+	}
+	//printf("%d %d %d %d %d \r\n", up_flag, down_flag, left_flag, right_flag, enter_flag);
+	//printf("rem:%d\r\n", remocon_num);
+	
 }
 
 void TIM2_IRQHandler (void) {
@@ -846,7 +897,18 @@ void print_menu() // print menu ------------------------------------------------
 	{
 		exti_callback_flag = 0;
 		rem_print_toggle = 1;
+		rem_prev_millis = curr_millis + 100000;
 		exit_callback_func();
+	}
+	
+	if(curr_millis - rem_prev_millis > 30000)
+	{
+		rem_prev_millis = curr_millis;
+		if(rep_remocon_flag == 1 && exti_callback_flag == 0)
+		{
+			//rep_remocon_flag = 0;
+			//exit_repet_func();
+		}
 	}
 	
 	if(led_en_toggle == 1) // led control 
