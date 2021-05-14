@@ -1,0 +1,552 @@
+(PCB "AM32F103-V1"
+ (description
+  (timeStamp "2021 05 06 05 23 33")
+  (program "CAPTURE.EXE" (Version "16.5.0.p001"))
+  (source "Original data from OrCAD/CAPTURE schematic")
+  (title "")
+  (date "Thursday, May 06, 2021")
+  (document "AT91SAM7S")
+  (revision "1.0")
+  (organization "DGSW First PCB (Dahyeok Kang)")
+  (address1 "Arduino / ARM Extension")
+  (address2 "")
+  (address3 "")
+  (address4 "")
+  (partvaluecombine "{Value}")
+  (pcbfootprintcombine "{PCB Footprint}"))
+ (structure )
+ (placement
+  (component R_0
+   (place R4
+    (property 
+     ("PCB Footprint" R2012)
+     (timestamp 01427652)
+     ("Source Package" R_0)
+     (Value 330))))
+  (component "HEADER 16"
+   (place J3
+    (property 
+     ("PCB Footprint" HEADER1X16)
+     (timestamp 01428D84)
+     ("Source Package" "HEADER 16")
+     (Value "HEADER 16"))))
+  (component LED
+   (place LD1
+    (property 
+     ("PCB Footprint" LD2012)
+     (timestamp 0142764A)
+     ("Source Package" LED)
+     (Value "BL-HG036A-AV-TRB"))))
+  (component "HEADER 3"
+   (place J10
+    (property 
+     ("PCB Footprint" HEADER1X3)
+     (timestamp 0142843C)
+     ("Source Package" "HEADER 3")
+     (Value "HEADER 3")))
+   (place J11
+    (property 
+     ("PCB Footprint" HEADER1X3)
+     (timestamp 014280D2)
+     ("Source Package" "HEADER 3")
+     (Value "HEADER 3"))))
+  (component "HEADER 4"
+   (place J12
+    (property 
+     ("PCB Footprint" HEADER1X4)
+     (timestamp 0142818A)
+     ("Source Package" "HEADER 4")
+     (Value "HEADER 4")))
+   (place J7
+    (property 
+     ("PCB Footprint" HEADER1X4)
+     (timestamp 01429BDA)
+     ("Source Package" "HEADER 4")
+     (Value "HEADER 4"))))
+  (component "HEADER 5"
+   (place J4
+    (property 
+     ("PCB Footprint" HEADER1X5)
+     (timestamp 01420B0F)
+     ("Source Package" "HEADER 5")
+     (Value "HEADER 5")))
+   (place J8
+    (property 
+     ("PCB Footprint" HEADER1X5)
+     (timestamp 01429EAC)
+     ("Source Package" "HEADER 5")
+     (Value "HEADER 5")))
+   (place J9
+    (property 
+     ("PCB Footprint" HEADER1X5)
+     (timestamp 0142A67D)
+     ("Source Package" "HEADER 5")
+     (Value "HEADER 5"))))
+  (component "HEADER 10"
+   (place J2
+    (property 
+     ("PCB Footprint" HEADER1X10)
+     (timestamp 014274E3)
+     ("Source Package" "HEADER 10")
+     (Value "HEADER 10"))))
+  (component "RESISTOR VAR"
+   (place R1
+    (property 
+     ("PCB Footprint" 3323P)
+     (timestamp 014290B5)
+     ("Source Package" "RESISTOR VAR")
+     (Value vr1))))
+  (component "HEADER 6"
+   (place J5
+    (property 
+     ("PCB Footprint" HEADER1X6)
+     (timestamp 0142755B)
+     ("Source Package" "HEADER 6")
+     (Value "HEADER 6"))))
+  (component R
+   (place R2
+    (property 
+     ("PCB Footprint" R2012)
+     (timestamp 014286F7)
+     ("Source Package" R)
+     (Value 10K)))
+   (place R3
+    (property 
+     ("PCB Footprint" R2012)
+     (timestamp 013EF6C9)
+     ("Source Package" R)
+     (Value 10k)))
+   (place R5
+    (property 
+     ("PCB Footprint" R2012)
+     (timestamp 0141DE1F)
+     ("Source Package" R)
+     (Value 1K))))
+  (component BUZZER
+   (place BZ1
+    (property 
+     ("PCB Footprint" BUZZER_1205)
+     (timestamp 0141DE13)
+     ("Source Package" BUZZER)
+     (Value BUZZER))))
+  (component "SW PUSHBUTTON"
+   (place RESET_SW1
+    (property 
+     ("PCB Footprint" "TACT-1101S")
+     (timestamp 013EF6C2)
+     ("Source Package" "SW PUSHBUTTON")
+     (Value "SW PUSHBUTTON")))
+   (place SW1
+    (property 
+     ("PCB Footprint" "TACT-1101S")
+     (timestamp 0142867B)
+     ("Source Package" "SW PUSHBUTTON")
+     (Value "SW PUSHBUTTON"))))
+  (component "HEADER 8"
+   (place J1
+    (property 
+     ("PCB Footprint" HEADER1X8)
+     (timestamp 01427078)
+     ("Source Package" "HEADER 8")
+     (Value "HEADER 1")))
+   (place J6
+    (property 
+     ("PCB Footprint" HEADER1X8)
+     (timestamp 01427638)
+     ("Source Package" "HEADER 8")
+     (Value "HEADER 8")))))
+ (library
+  (image LED
+   (property 
+    (sourcelib "C:\\PROGRAM FILES\\ORCAD_92\\CAPTURE\\LIBRARY\\DISCRETE.OLB"))
+   (pin 999 1
+    (property 
+     (pinname ANODE)
+     (pintype 4)))
+   (pin 999 2
+    (property 
+     (pinname CATHODE)
+     (pintype 4))))
+  (image "RESISTOR VAR"
+   (property 
+    (sourcelib C:\\CADENCE\\SPB_16.5\\TOOLS\\CAPTURE\\LIBRARY\\DISCRETE.OLB))
+   (pin 999 1
+    (property 
+     (pinname A)
+     (pintype 4)))
+   (pin 999 3
+    (property 
+     (pinname B)
+     (pintype 4)))
+   (pin 999 2
+    (property 
+     (pinname WIPER)
+     (pintype 4))))
+  (image R
+   (property 
+    (sourcelib "C:\\PROGRAM FILES\\ORCAD\\CAPTURE\\LIBRARY\\DISCRETE.OLB"))
+   (pin 999 1
+    (property 
+     (pinname 1)
+     (pintype 4)))
+   (pin 999 2
+    (property 
+     (pinname 2)
+     (pintype 4))))
+  (image R_0
+   (property 
+    (sourcelib "C:\\ARM\\T_KIT\\T-KIT\\ARM_SCH\\MM\\EVBOARD_ATMEGA128_SCHEMATIC.DSN"))
+   (pin 999 1
+    (property 
+     (pinname 1)
+     (pintype 4)))
+   (pin 999 2
+    (property 
+     (pinname 2)
+     (pintype 4))))
+  (image "HEADER 3"
+   (property 
+    (sourcelib C:\\CADENCE\\SPB_16.5\\TOOLS\\CAPTURE\\LIBRARY\\CONNECTOR.OLB))
+   (pin 999 1
+    (property 
+     (pinname 1)
+     (pintype 4)))
+   (pin 999 2
+    (property 
+     (pinname 2)
+     (pintype 4)))
+   (pin 999 3
+    (property 
+     (pinname 3)
+     (pintype 4))))
+  (image "HEADER 4"
+   (property 
+    (sourcelib C:\\CADENCE\\SPB_16.5\\TOOLS\\CAPTURE\\LIBRARY\\CONNECTOR.OLB))
+   (pin 999 1
+    (property 
+     (pinname 1)
+     (pintype 4)))
+   (pin 999 2
+    (property 
+     (pinname 2)
+     (pintype 4)))
+   (pin 999 3
+    (property 
+     (pinname 3)
+     (pintype 4)))
+   (pin 999 4
+    (property 
+     (pinname 4)
+     (pintype 4))))
+  (image "SW PUSHBUTTON"
+   (property 
+    (sourcelib C:\\ORCAD\\ORCAD_10.5\\TOOLS\\CAPTURE\\LIBRARY\\DISCRETE.OLB))
+   (pin 999 1
+    (property 
+     (pinname 1)
+     (pintype 4)))
+   (pin 999 2
+    (property 
+     (pinname 2)
+     (pintype 4))))
+  (image BUZZER
+   (property 
+    (sourcelib C:\\ORCAD\\ORCAD_10.5\\TOOLS\\CAPTURE\\LIBRARY\\ELECTROMECHANICAL.OLB))
+   (pin 999 1
+    (property 
+     (pinname A)
+     (pintype 4)))
+   (pin 999 2
+    (property 
+     (pinname B)
+     (pintype 4))))
+  (image "HEADER 8"
+   (property 
+    (sourcelib C:\\CADENCE\\SPB_16.5\\TOOLS\\CAPTURE\\LIBRARY\\CONNECTOR.OLB))
+   (pin 999 1
+    (property 
+     (pinname 1)
+     (pintype 4)))
+   (pin 999 2
+    (property 
+     (pinname 2)
+     (pintype 4)))
+   (pin 999 3
+    (property 
+     (pinname 3)
+     (pintype 4)))
+   (pin 999 4
+    (property 
+     (pinname 4)
+     (pintype 4)))
+   (pin 999 5
+    (property 
+     (pinname 5)
+     (pintype 4)))
+   (pin 999 6
+    (property 
+     (pinname 6)
+     (pintype 4)))
+   (pin 999 7
+    (property 
+     (pinname 7)
+     (pintype 4)))
+   (pin 999 8
+    (property 
+     (pinname 8)
+     (pintype 4))))
+  (image "HEADER 10"
+   (property 
+    (sourcelib C:\\CADENCE\\SPB_16.5\\TOOLS\\CAPTURE\\LIBRARY\\CONNECTOR.OLB))
+   (pin 999 1
+    (property 
+     (pinname 1)
+     (pintype 4)))
+   (pin 999 2
+    (property 
+     (pinname 2)
+     (pintype 4)))
+   (pin 999 3
+    (property 
+     (pinname 3)
+     (pintype 4)))
+   (pin 999 4
+    (property 
+     (pinname 4)
+     (pintype 4)))
+   (pin 999 5
+    (property 
+     (pinname 5)
+     (pintype 4)))
+   (pin 999 6
+    (property 
+     (pinname 6)
+     (pintype 4)))
+   (pin 999 7
+    (property 
+     (pinname 7)
+     (pintype 4)))
+   (pin 999 8
+    (property 
+     (pinname 8)
+     (pintype 4)))
+   (pin 999 9
+    (property 
+     (pinname 9)
+     (pintype 4)))
+   (pin 999 10
+    (property 
+     (pinname 10)
+     (pintype 4))))
+  (image "HEADER 16"
+   (property 
+    (sourcelib C:\\CADENCE\\SPB_16.5\\TOOLS\\CAPTURE\\LIBRARY\\CONNECTOR.OLB))
+   (pin 999 1
+    (property 
+     (pinname 1)
+     (pintype 4)))
+   (pin 999 2
+    (property 
+     (pinname 2)
+     (pintype 4)))
+   (pin 999 3
+    (property 
+     (pinname 3)
+     (pintype 4)))
+   (pin 999 4
+    (property 
+     (pinname 4)
+     (pintype 4)))
+   (pin 999 5
+    (property 
+     (pinname 5)
+     (pintype 4)))
+   (pin 999 6
+    (property 
+     (pinname 6)
+     (pintype 4)))
+   (pin 999 7
+    (property 
+     (pinname 7)
+     (pintype 4)))
+   (pin 999 8
+    (property 
+     (pinname 8)
+     (pintype 4)))
+   (pin 999 9
+    (property 
+     (pinname 9)
+     (pintype 4)))
+   (pin 999 10
+    (property 
+     (pinname 10)
+     (pintype 4)))
+   (pin 999 11
+    (property 
+     (pinname 11)
+     (pintype 4)))
+   (pin 999 12
+    (property 
+     (pinname 12)
+     (pintype 4)))
+   (pin 999 13
+    (property 
+     (pinname 13)
+     (pintype 4)))
+   (pin 999 14
+    (property 
+     (pinname 14)
+     (pintype 4)))
+   (pin 999 15
+    (property 
+     (pinname 15)
+     (pintype 4)))
+   (pin 999 16
+    (property 
+     (pinname 16)
+     (pintype 4))))
+  (image "HEADER 5"
+   (property 
+    (sourcelib C:\\ORCAD\\ORCAD_16.6_LITE\\TOOLS\\CAPTURE\\LIBRARY\\CONNECTOR.OLB))
+   (pin 999 1
+    (property 
+     (pinname 1)
+     (pintype 4)))
+   (pin 999 2
+    (property 
+     (pinname 2)
+     (pintype 4)))
+   (pin 999 3
+    (property 
+     (pinname 3)
+     (pintype 4)))
+   (pin 999 4
+    (property 
+     (pinname 4)
+     (pintype 4)))
+   (pin 999 5
+    (property 
+     (pinname 5)
+     (pintype 4))))
+  (image "HEADER 6"
+   (property 
+    (sourcelib C:\\CADENCE\\SPB_16.5\\TOOLS\\CAPTURE\\LIBRARY\\CONNECTOR.OLB))
+   (pin 999 1
+    (property 
+     (pinname 1)
+     (pintype 4)))
+   (pin 999 2
+    (property 
+     (pinname 2)
+     (pintype 4)))
+   (pin 999 3
+    (property 
+     (pinname 3)
+     (pintype 4)))
+   (pin 999 4
+    (property 
+     (pinname 4)
+     (pintype 4)))
+   (pin 999 5
+    (property 
+     (pinname 5)
+     (pintype 4)))
+   (pin 999 6
+    (property 
+     (pinname 6)
+     (pintype 4)))))
+ (network
+  (net A0_JOYSTICK_X
+   (pins
+     J5-6 J8-3))
+  (net A1_JOYSTICK_Y
+   (pins
+     J5-5 J8-4))
+  (net A2_JOYSTICK_BTN
+   (pins
+     J5-4 J8-5))
+  (net A3_LCD_R
+   (pins
+     J5-3 J9-3))
+  (net A4_LCD_G
+   (pins
+     J5-2 J9-4))
+  (net A5_LCD_B
+   (pins
+     J5-1 J9-5))
+  (net CHARLCD_V0
+   (pins
+     J3-3 R1-2))
+  (net D0_RX
+   (pins
+     J4-2 J6-1))
+  (net D10_CHARLCD_DATA5
+   (pins
+     J2-3 J3-12))
+  (net D11_CHARLCD_DATA6
+   (pins
+     J2-4 J3-13))
+  (net D12_CHARLCD_DATA7
+   (pins
+     J2-5 J3-14))
+  (net D1_TX
+   (pins
+     J4-3 J6-2))
+  (net D2_REMOCON
+   (pins
+     J6-3 J11-1 SW1-2 R2-1))
+  (net D3_ECHO
+   (pins
+     J6-4 J12-3))
+  (net D4_TRIGGER
+   (pins
+     J6-5 J12-2))
+  (net D5_SERVO
+   (pins
+     J6-6 J10-1))
+  (net D6_BUZZER
+   (pins
+     R5-1 J6-7))
+  (net D7_CHARLCD_RS
+   (pins
+     J6-8 J3-4))
+  (net D8_CHARLCD_E
+   (pins
+     J2-1 J3-6))
+  (net D9_CHARLCD_DATA4
+   (pins
+     J2-2 J3-11))
+  (net GND_POWER
+    (property 
+     (nettype S))
+   (pins
+     RESET_SW1-1 RESET_SW1-2 R3-1 BZ1-2 J4-4 J1-2 J1-3 J1-6 J2-7
+     LD1-2 J11-2 J12-4 J10-3 SW1-1 J3-1 J3-5 J3-16 J7-1
+     J8-1 J9-1 R1-1))
+  (net N21093937
+   (pins
+     BZ1-1 R5-2))
+  (net N21132973
+   (pins
+     R4-1 LD1-1))
+  (net PWM_LED
+   (pins
+     J2-6 R4-2))
+  (net SCL_PCF8575
+   (pins
+     J2-10 J7-4))
+  (net SDA_PCF8574
+   (pins
+     J2-9 J7-3))
+  (net VDD_3V3
+    (property 
+     (nettype S))
+   (pins
+     R3-2 J4-1 J1-5))
+  (net VDD_5V
+    (property 
+     (nettype S))
+   (pins
+     J4-5 J1-4 J11-3 J12-1 J10-2 R2-2 J3-2 J3-15 J7-2
+     J8-2 J9-2 R1-3)))
+)

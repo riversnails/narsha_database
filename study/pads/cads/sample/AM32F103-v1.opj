@@ -87,15 +87,7 @@
   (GlobalState
     (FileView
       (Path "Design Resources")
-      (Path "Design Resources"
-         "D:\git\narsha_database\study\pads\test\am32f103-v1.dsn")
-      (Path "Design Resources"
-         "D:\git\narsha_database\study\pads\test\am32f103-v1.dsn" "SCHEMATIC1")
-      (Path "Design Resources" "Library")
-      (Path "Outputs")
-      (Select "Design Resources"
-         "D:\git\narsha_database\study\pads\test\am32f103-v1.dsn" "SCHEMATIC1"
-         "1_STM32F103"))
+      (Path "Outputs"))
     (HierarchyView)
     (Doc
       (Type "COrCapturePMDoc")
@@ -106,8 +98,8 @@
       (Type "COrSchematicDoc")
       (Frame
         (Placement "44 2 3 -1 -1 -8 -31 104 1741 104 608")
-        (Scroll "2047 1134")
-        (Zoom "256")
+        (Scroll "45 180")
+        (Zoom "146")
         (Occurrence "/"))
       (Path "D:\GIT\NARSHA_DATABASE\STUDY\PADS\TEST\AM32F103-V1.DSN")
       (Schematic "SCHEMATIC1")

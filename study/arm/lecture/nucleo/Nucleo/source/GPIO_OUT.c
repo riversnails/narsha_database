@@ -874,6 +874,8 @@ void print_menu() // print menu ------------------------------------------------
 				charLCD_string(var);
 			}
 		}
+		
+		printf("%d %d",CharLcd_idx, curr_print_pos);
 	}
 	if(cursor_toggle) // reload cursor?
 	{
