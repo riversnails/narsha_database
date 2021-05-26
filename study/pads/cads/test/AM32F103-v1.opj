@@ -87,7 +87,10 @@
   (GlobalState
     (FileView
       (Path "Design Resources")
-      (Path "Outputs"))
+      (Path "Design Resources" ".\am32f103-v1.dsn")
+      (Path "Design Resources" ".\am32f103-v1.dsn" "SCHEMATIC1")
+      (Path "Outputs")
+      (Select "Design Resources" ".\am32f103-v1.dsn" "SCHEMATIC1" "1_STM32F103"))
     (HierarchyView)
     (Doc
       (Type "COrCapturePMDoc")
@@ -97,11 +100,11 @@
     (Doc
       (Type "COrSchematicDoc")
       (Frame
-        (Placement "44 2 3 -1 -1 -8 -31 104 1741 104 608")
-        (Scroll "45 180")
-        (Zoom "146")
+        (Placement "44 2 3 -1 -1 -8 -31 52 1637 52 661")
+        (Scroll "-316 -5")
+        (Zoom "73")
         (Occurrence "/"))
-      (Path "D:\GIT\NARSHA_DATABASE\STUDY\PADS\TEST\AM32F103-V1.DSN")
+      (Path "D:\GIT\NARSHA_DATABASE\STUDY\PADS\CADS\TEST\AM32F103-V1.DSN")
       (Schematic "SCHEMATIC1")
       (Page "1_STM32F103")))
   (PartMRUSelector
