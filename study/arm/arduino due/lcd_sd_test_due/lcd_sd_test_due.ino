@@ -16,12 +16,15 @@
 #define WHITE 0xffff
 #define BLACK 0x0000
 
+#define APPLY_MODE 2
+
 #define WIDTH 128
 #define HEIGET 64
 
 #define size_arr WIDTH*HEIGET*3
 
 char pin_num[5] = {CLK, MOSI, RES, CS, DS};
+//unsigned char arr[size_arr];
 unsigned char arr[size_arr];
 File myFile;
 
@@ -63,72 +66,69 @@ void setup()
   delay(1000);
   clear_screen(BLACK);
 
-//  myFile = SD.open("test24.bmp", FILE_READ);
-//
-//  if (myFile)       //file has really been opened
-//  {
-//    Serial.println("file_open");
-//    Serial.println(myFile.name());
-//    Serial.println(myFile.size());
-//
-//    //myFile.seek(0x46);
-//    myFile.seek(0x0A);
-//    myFile.read(arr, size_arr);
-//  }
-//  else
-//  {
-//    Serial.println("open_failed!");
-//    while (1);
-//  }
-//  myFile.close();
+  //  myFile = SD.open("test24.bmp", FILE_READ);
+  //
+  //  if (myFile)       //file has really been opened
+  //  {
+  //    Serial.println("file_open");
+  //    Serial.println(myFile.name());
+  //    Serial.println(myFile.size());
+  //
+  //    myFile.seek(0x36);
+  //    myFile.read(arr, size_arr);
+  //  }
+  //  else
+  //  {
+  //    Serial.println("open_failed!");
+  //    while (1);
+  //  }
+  //  myFile.close();
+  //  draw_bitmap();
+  //  while(1);
 }
 
 String fname;
-int count = 0;
+int count = 1;
 
 void loop()
 {
+  if (count == 2445) while (1);
   fname = "amz";
-  if (count / 10 < 1)
+  if ((float)(count / 10) < 1)
     fname += "000";
-  else if (count / 10 < 10)
+  else if ((float)(count / 10) < 10)
     fname += "00";
-  else if (count / 10 < 100)
+  else if ((float)(count / 10) < 100)
     fname += "0";
 
-  fname += count + ".bmp";
-  
-  myFile = SD.open("amz.bmp", FILE_READ);
+  fname += count;
+  fname += ".bmp";
+  count++;
+
+  read_sdcard(fname);
+
+  //delay(30);
+  draw_bitmap();
+}
+
+void read_sdcard(String fname)
+{
+  myFile = SD.open(fname, FILE_READ);
 
   if (myFile)       //file has really been opened
   {
-    Serial.println("file_open");
-    Serial.println(myFile.name());
-    Serial.println(myFile.size());
-
-    //myFile.seek(0x46);
-    myFile.seek(0x0A);
+    myFile.seek(0x36);
     myFile.read(arr, size_arr);
   }
   else
   {
     Serial.println("open_failed!");
+    Serial.println(fname);
+    Serial.println((float)(count / 10));
+    myFile.close();
     while (1);
   }
   myFile.close();
-
-  draw_bitmap();
-  //  clear_screen(BLACK);
-  //  delay(1000);
-  //  draw_bitmap();
-  //  delay(1000);
-
-  //  clear_screen(BLACK);
-  //  draw_bitmap();
-  //  delay(7);
-  //  delay(16);
-  //    clear_screen(BLACK);
-  //    delay(16);
 }
 
 void shift_out(unsigned char data)
@@ -257,18 +257,18 @@ void clear_screen(unsigned short color)
 
   oled_1351_command(0x15);
   oled_1351_data(0x00);
-  oled_1351_data(WIDTH - 1);
+  oled_1351_data(127);
 
   oled_1351_command(0x75);
   oled_1351_data(0x00);
-  oled_1351_data(HEIGET - 1);
+  oled_1351_data(127);
 
   oled_1351_command(0x5C);
 
   digitalWrite(CS, LOW);
-  for (int j = 0; j < HEIGET; j++)
+  for (int j = 0; j < 128; j++)
   {
-    for (int i = 0; i < WIDTH; i++)
+    for (int i = 0; i < 128; i++)
     {
       oled_1351_data_1byte(first_byte);
       oled_1351_data_1byte(second_byte);
@@ -283,6 +283,10 @@ unsigned char second_byte;
 unsigned char red;
 unsigned char green;
 unsigned char blue;
+
+unsigned char r;
+unsigned char g;
+unsigned char b;
 
 void draw_bitmap()
 {
@@ -300,20 +304,28 @@ void draw_bitmap()
 
   for (int j = 0; j < HEIGET; j++)
   {
+    int y_path = 384 + (j * WIDTH * 3) - 3;
     for (int i = 0; i < WIDTH; i++)
     {
-      red = arr[0 + (i * 3) + (j * WIDTH * 3)];
-      blue = arr[1 + (i * 3) + (j * WIDTH * 3)];
-      green = arr[2 + (i * 3) + (j * WIDTH * 3)];
+      //      first_byte = arr[1 + (i * 2) + (j * WIDTH * 2)];
+      //      second_byte = arr[(i * 2) + (j * WIDTH * 2)];
+      int x_path = (i * 3);
+      b = arr[size_arr - (0 + y_path) + (x_path)];
+      g = arr[size_arr - (2 + y_path) + (x_path)];
+      r = arr[size_arr - (1 + y_path) + (x_path)];
 
-      
-      first_byte = arr[1 + (i * 2) + (j * WIDTH * 2)];
-      second_byte = arr[(i * 2) + (j * WIDTH * 2)];
+      //first_byte = ((r >> 3) << 3) | (g >> 5);
+      //second_byte = ((g >> 5) << 5) | (b >> 3);
+
+      first_byte = (((r & 0b11111000) >> 3) << 3) | (((g & 0b11100000) >> 5));
+      second_byte = (((g & 0b00011100) >> 2) << 5) | (((b & 0b11111000) >> 3));
+
       //      first_byte = myFile.read();
       //      second_byte = myFile.read();
       //      Serial.print(first_byte, HEX);
       //      Serial.print(" ");
       //      Serial.println(second_byte, HEX);
+
       oled_1351_data_1byte(first_byte);
       oled_1351_data_1byte(second_byte);
     }
