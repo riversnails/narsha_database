@@ -1,0 +1,7 @@
+---- USE_USB_CLKSOURCE_CRSHSI48 Matches (6 in 3 files) ----
+Main.c (src):#if defined (USE_USB_CLKSOURCE_CRSHSI48)
+Main.c (src):#if defined (USE_USB_CLKSOURCE_CRSHSI48)
+Main.c (src):#endif /*USE_USB_CLKSOURCE_CRSHSI48*/
+Main.h (inc):#define USE_USB_CLKSOURCE_CRSHSI48   1
+Usbd_conf.c (src):#if defined (USE_USB_CLKSOURCE_CRSHSI48)
+Usbd_conf.c (src):#endif /*USE_USB_CLKSOURCE_CRSHSI48*/

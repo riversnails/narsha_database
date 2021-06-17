@@ -108,7 +108,7 @@ void loop()
 				digitalWrite(colum_pin_num[k], LOW);
 			}
 
-			digitlaWrite(colum_pin_num[toggle], HIGH);
+			digitalWrite(colum_pin_num[toggle], HIGH);
 			in_value[i] = digitalRead(row_pin_num[j]);
 
 			if(in_value[j] == 1)

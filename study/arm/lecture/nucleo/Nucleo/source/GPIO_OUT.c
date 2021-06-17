@@ -463,9 +463,9 @@ void ultrasonic()
 }
 
 void create_menu(int length, char**menu_text) {
-	CharLcd_menu *menu = (CharLcd_menu *)malloc(sizeof(CharLcd_menu));
-	
 	if(CharLcd_idx == MENU_MAX) return;
+	
+	CharLcd_menu *menu = (CharLcd_menu *)malloc(sizeof(CharLcd_menu));
 	
 	menu->length_menu = length;
 	menu->text_menu = (char **)malloc(sizeof(char*) * length);

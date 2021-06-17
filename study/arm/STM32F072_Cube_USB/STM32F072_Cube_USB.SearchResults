@@ -1,0 +1,7 @@
+---- USE_USB_CLKSOURCE_PLL Matches (6 in 4 files) ----
+Main.c (projects\stm32f072b-discovery\applications\usb_device\hid_standalone\src):  *              - PLL(HSE) used as USB clock source (USE_USB_CLKSOURCE_PLL defined in main.h)
+Main.c (projects\stm32f072b-discovery\applications\usb_device\hid_standalone\src):#elif defined (USE_USB_CLKSOURCE_PLL)
+Main.h (projects\stm32f072b-discovery\applications\usb_device\hid_standalone\inc)://#define USE_USB_CLKSOURCE_PLL        1
+Main.h (projects\stm32f072b-discovery\applications\usb_device\hid_standalone\inc):#if !defined (USE_USB_CLKSOURCE_PLL) && !defined (USE_USB_CLKSOURCE_CRSHSI48)
+Readme.txt (projects\stm32f072b-discovery\applications\usb_device\hid_standalone):(USE_USB_CLKSOURCE_CRSHSI48 and USE_USB_CLKSOURCE_PLL).
+Usbd_conf.c (projects\stm32f072b-discovery\applications\usb_device\hid_standalone\src):#elif defined (USE_USB_CLKSOURCE_PLL)

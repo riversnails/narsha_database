@@ -1,0 +1,23 @@
+--cpu Cortex-M0
+"stm32f072b-discovery\startup_stm32f072xb.o"
+"stm32f072b-discovery\system_stm32f0xx.o"
+"stm32f072b-discovery\stm32f0xx_hal.o"
+"stm32f072b-discovery\stm32f0xx_hal_spi.o"
+"stm32f072b-discovery\stm32f0xx_hal_rcc_ex.o"
+"stm32f072b-discovery\stm32f0xx_hal_gpio.o"
+"stm32f072b-discovery\stm32f0xx_hal_rcc.o"
+"stm32f072b-discovery\stm32f0xx_hal_cortex.o"
+"stm32f072b-discovery\stm32f0xx_hal_dma.o"
+"stm32f072b-discovery\stm32f0xx_hal_uart.o"
+"stm32f072b-discovery\stm32f0xx_hal_uart_ex.o"
+"stm32f072b-discovery\stm32f0xx_hal_msp.o"
+"stm32f072b-discovery\stm32f0xx_it.o"
+"stm32f072b-discovery\main.o"
+"stm32f072b-discovery\pn532.o"
+"stm32f072b-discovery\pn532_stm32f1.o"
+"stm32f072b-discovery\stm32f072b_discovery.o"
+--library_type=microlib --strict --scatter "STM32F072B-Discovery\STM32F072B-Discovery.sct"
+
+--diag_suppress=L6329 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "STM32F072B-Discovery.map" -o STM32F072B-Discovery\STM32F072B-Discovery.axf

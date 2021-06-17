@@ -36,7 +36,7 @@ void setup()
     Serial.println(F("Card Initializing failed, or not present"));
     while (1);
   }
-
+  
   Serial.println("START");
   //  pinMode(CLK, OUTPUT);
   //  pinMode(MOSI, OUTPUT);
